@@ -34,7 +34,7 @@ export interface HeadlightData extends PipUUIDInterface {
 	headlightsStatus: boolean
 }
 
-type Sounds = "fart" | "monkey" | "elephant" | "fanfare" | "ufo" | "countdown" | "engine" | "robot noise"
+export type Sounds = "fart" | "monkey" | "elephant" | "fanfare" | "ufo" | "countdown" | "engine" | "robot noise"
 
 export interface SoundData extends PipUUIDInterface {
 	sound: Sounds
