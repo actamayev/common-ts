@@ -5,12 +5,14 @@ import { ESPConnectionStatus, PipConnectionStatus, PipData } from "./pip"
 
 // Auth
 // Requests
-export interface RegisterCredentialsRequest extends LoginInformationRequest {
+export interface RegisterRequest {
+	email: string
+	password: string
 	username: string
 	siteTheme: SiteThemes
 }
 
-export interface LoginInformationRequest {
+export interface LoginRequest {
 	contact: string
 	password: string
 }
