@@ -1,6 +1,6 @@
 /* eslint-disable max-len, complexity, max-lines-per-function, max-depth */
-import { INSTRUCTION_SIZE, MAX_JUMP_DISTANCE, MAX_LED_BRIGHTNESS, MAX_PROGRAM_SIZE, MAX_REGISTERS } from "../utils/constants"
-import { BytecodeOpCode, CommandPatterns, CommandType, ComparisonOp, LedID, SensorType, VarType } from "../types/bytecode-types"
+import { INSTRUCTION_SIZE, MAX_JUMP_DISTANCE, MAX_LED_BRIGHTNESS, MAX_PROGRAM_SIZE, MAX_REGISTERS } from "../types/private/constants"
+import { BytecodeOpCode, CommandPatterns, CommandType, ComparisonOp, LedID, SensorType, VarType } from "../types/public/bytecode-types"
 
 export class CppParser {
 	public static cppToByte(unsanitizedCpp: string): Float32Array {

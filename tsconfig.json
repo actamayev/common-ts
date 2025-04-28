@@ -13,7 +13,7 @@
 	  "lib": ["ES2023", "DOM"],
 	  "rootDir": ".",
 	  "typeRoots": [
-		"./src/types",
+		"./src/types/**.ts",
 		"./node_modules/@types"
 	  ],
 	  "strictNullChecks": true

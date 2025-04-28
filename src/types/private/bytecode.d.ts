@@ -1,4 +1,5 @@
-import { CommandType } from "./bytecode-types"
+// This file is not accessible to the package dependents
+import { CommandType } from "../public/bytecode-types"
 
 declare global {
 	interface BytecodeInstruction {
