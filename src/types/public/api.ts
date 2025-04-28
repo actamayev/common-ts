@@ -81,3 +81,12 @@ export type RetrieveSandboxProjectResponse = {
 export type RetrieveSandboxProjectsResponse = {
 	sandboxProjects: SandboxProject[]
 }
+
+// Common Responses:
+export type SuccessResponse = { success: string }
+export type MessageResponse = { message: string }
+export type ValidationErrorResponse = { validationError: string }
+export type ErrorResponse = { error: string }
+export type ErrorResponses = ValidationErrorResponse | ErrorResponse
+export type NonSuccessResponse = MessageResponse | ErrorResponses
+export type AllCommonResponses = SuccessResponse | NonSuccessResponse

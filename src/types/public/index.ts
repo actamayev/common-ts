@@ -1,5 +1,6 @@
 export * from "./api"
 export * from "./bytecode-types"
+export * from "./garage"
 export * from "./lab"
 export * from "./pip"
 export * from "./sandbox"
