@@ -3,10 +3,10 @@ export type QuestionUUID = string & { readonly __brand: unique symbol }
 export type ProgressStatus = "IN_PROGRESS" | "COMPLETED" | null
 export type ActivityType =
 	| "Reading"
-	// | "Video"
 	| "Code"
 	| "Demo"
 	| "Summary"
+	| "Video"
 export interface UserActivityProgress {
 	status: ProgressStatus
 	activityUUID: ActivityUUID
