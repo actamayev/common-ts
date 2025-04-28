@@ -6,7 +6,7 @@ export interface MotorControlInput {
 	horizontal: -1 | 1 | 0
 }
 
-export interface MotorControlDataToSend extends PipUUIDInterface {
+export interface MotorControlData extends PipUUIDInterface {
 	motorControl: MotorControlInput
 	motorThrottlePercent: number
 }
@@ -17,7 +17,7 @@ interface RGB {
 	b: number
 }
 
-export interface LedControlDataToSend extends PipUUIDInterface {
+export interface LedControlData extends PipUUIDInterface {
 	topLeftColor: RGB
 	topRightColor: RGB
 	middleLeftColor: RGB
@@ -26,17 +26,17 @@ export interface LedControlDataToSend extends PipUUIDInterface {
 	backRightColor: RGB
 }
 
-export interface HornDataToSend extends PipUUIDInterface {
+export interface HornData extends PipUUIDInterface {
 	hornStatus: boolean
 }
 
-export interface HeadlightDataToSend extends PipUUIDInterface {
+export interface HeadlightData extends PipUUIDInterface {
 	headlightsStatus: boolean
 }
 
 type Sounds = "fart" | "monkey" | "elephant" | "fanfare" | "ufo" | "countdown" | "engine" | "robot noise"
 
-export interface SoundDataToSend extends PipUUIDInterface {
+export interface SoundData extends PipUUIDInterface {
 	sound: Sounds
 }
 
