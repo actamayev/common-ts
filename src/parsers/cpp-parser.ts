@@ -3,6 +3,7 @@ import { INSTRUCTION_SIZE, MAX_JUMP_DISTANCE, MAX_LED_BRIGHTNESS, MAX_PROGRAM_SI
 import { BytecodeOpCode, CommandPatterns, CommandType, ComparisonOp, LedID, SensorType, VarType } from "../types/public/bytecode-types"
 
 export class CppParser {
+
 	public static cppToByte(unsanitizedCpp: string): Float32Array {
 		const sanitizedCode = this.sanitizeUserCode(unsanitizedCpp)
 		const validationResult = this.validateBalancedSyntax(sanitizedCode)
