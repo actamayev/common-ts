@@ -135,6 +135,14 @@ export default [
 		},
 	},
 	{
+		files: ["tests/**/*.test.ts"],
+		rules: {
+			"max-lines-per-function": "off",
+			"complexity": "off",
+			"max-depth": "off",
+		},
+	},
+	{
 		ignores: ["dist/*"]
 	}
 ]

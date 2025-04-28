@@ -20,7 +20,11 @@
 	},
 	"include": [
 	  "src/**/*",
-	  "eslint.config.mjs"
+	  "eslint.config.mjs",
+	  "tests/**/*"
 	],
-	"exclude": ["node_modules", "**/*.test.ts", "dist"]
+	"exclude": [
+		"node_modules",
+		"dist"
+	]
   }
