@@ -1,5 +1,5 @@
 import { CppParser } from "../../src"
-import { BytecodeOpCode } from "../../src/types/bytecode-types"
+import { BytecodeOpCode } from "../../src/types/public/bytecode-types"
 
 describe("Motor Command Functionality", () => {
 	describe("Basic Motor Commands", () => {

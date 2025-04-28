@@ -1,6 +1,6 @@
 import { CppParser } from "../../src"
-import { BytecodeOpCode, CommandType, ComparisonOp, SensorType } from "../../src/types/bytecode-types"
-import { MAX_LED_BRIGHTNESS } from "../../src/utils/constants"
+import { BytecodeOpCode, CommandType, ComparisonOp, SensorType } from "../../src/types/public/bytecode-types"
+import { MAX_LED_BRIGHTNESS } from "../../src/types/private/constants"
 
 describe("Control flow", () => {
 	test("should parse basic if-else statement", () => {

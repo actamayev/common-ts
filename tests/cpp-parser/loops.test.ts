@@ -1,5 +1,5 @@
-import { MAX_LED_BRIGHTNESS } from "../../src/utils/constants"
-import { BytecodeOpCode, ComparisonOp } from "../../src/types/bytecode-types"
+import { MAX_LED_BRIGHTNESS } from "../../src/types/private/constants"
+import { BytecodeOpCode, ComparisonOp } from "../../src/types/public/bytecode-types"
 import { CppParser } from "../../src"
 
 describe("While Loop Functionality", () => {
