@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { CppParser } from "../../src"
-import { BytecodeOpCode, CommandType } from "../../src/types/bytecode-types"
+import { BytecodeOpCode, CommandType } from "../../src/types/public/bytecode-types"
 
 describe("Invalid inputs", () => {
 	test("should reject garbage input", () => {

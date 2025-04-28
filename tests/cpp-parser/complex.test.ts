@@ -1,6 +1,6 @@
 import { CppParser } from "../../src"
-import { BytecodeOpCode } from "../../src/types/bytecode-types"
-import { MAX_LED_BRIGHTNESS } from "../../src/utils/constants"
+import { BytecodeOpCode } from "../../src/types/public/bytecode-types"
+import { MAX_LED_BRIGHTNESS } from "../../src/types/private/constants"
 
 describe("Complex Nested Structures", () => {
 	test("should parse a deeply nested structure with 4+ levels", () => {

@@ -1,5 +1,5 @@
 import { CppParser } from "../../src"
-import { BytecodeOpCode, ComparisonOp, SensorType } from "../../src/types/bytecode-types"
+import { BytecodeOpCode, ComparisonOp, SensorType } from "../../src/types/public/bytecode-types"
 
 describe("Sensor Functionality", () => {
 	function testSensorReading(sensorMethod: string, expectedSensorType: SensorType): void {
