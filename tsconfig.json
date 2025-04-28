@@ -1,0 +1,26 @@
+{
+	"compilerOptions": {
+	  "target": "ES2023",
+	  "module": "commonjs",
+	  "declaration": true,
+	  "outDir": "./dist",
+	  "strict": true,
+	  "esModuleInterop": true,
+	  "skipLibCheck": true,
+	  "forceConsistentCasingInFileNames": true,
+	  "moduleResolution": "node",
+	  "resolveJsonModule": true,
+	  "lib": ["ES2023", "DOM"],
+	  "rootDir": ".",
+	  "typeRoots": [
+		"./src/types",
+		"./node_modules/@types"
+	  ],
+	  "strictNullChecks": true
+	},
+	"include": [
+	  "src/**/*",
+	  "eslint.config.mjs"
+	],
+	"exclude": ["node_modules", "**/*.test.ts", "dist"]
+  }
