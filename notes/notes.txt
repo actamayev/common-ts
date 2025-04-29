@@ -1,3 +1,8 @@
-To publish:
-1. Run: `npm run build`
-2. Run: `npm publish`
+To test:
+	1. Run: `npm run build`
+	2. See contents in the /dist directory. That's what will be accessible to the dependents
+
+To publish
+	1. Create a new branch
+	2. Make sure all tests/workflows pass
+	3. Merge into main --> workflow will auto-publish the package and increment the version
