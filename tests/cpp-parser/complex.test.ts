@@ -1,5 +1,5 @@
 import { CppParser } from "../../src"
-import { BytecodeOpCode } from "../../src/types/public/bytecode-types"
+import { BytecodeOpCode, ComparisonOp, SensorType } from "../../src/types/public/bytecode-types"
 import { MAX_LED_BRIGHTNESS } from "../../src/types/private/constants"
 
 describe("Complex Nested Structures", () => {
@@ -399,5 +399,116 @@ describe("Error Handling Edge Cases", () => {
 				CppParser.cppToByte(code)
 			}).toThrow(errorPattern)
 		}
+	})
+})
+
+describe("Proximity Sensor Functionality", () => {
+	describe("Front Proximity Sensor", () => {
+		test("should parse is_object_in_front function", () => {
+			const code = `if (is_object_in_front()) {
+        rgbLed.set_led_red();
+      } else {
+        rgbLed.set_led_green();
+      }`
+
+			const bytecode = CppParser.cppToByte(code)
+
+			// 1. READ_SENSOR instruction for front proximity
+			expect(bytecode[0]).toBe(BytecodeOpCode.READ_SENSOR)
+			expect(bytecode[1]).toBe(SensorType.FRONT_PROXIMITY)
+			expect(bytecode[2]).toBe(0) // Register ID
+			expect(bytecode[3]).toBe(0) // Unused
+			expect(bytecode[4]).toBe(0) // Unused
+
+			// 2. COMPARE instruction (comparing with true/1)
+			expect(bytecode[5]).toBe(BytecodeOpCode.COMPARE)
+			expect(bytecode[6]).toBe(ComparisonOp.EQUAL)
+			expect(bytecode[7]).toBe(0x8000) // Register reference with high bit set
+			expect(bytecode[8]).toBe(1)      // Comparing with boolean true (1)
+			expect(bytecode[9]).toBe(0)      // Unused
+
+			// 3. JUMP_IF_FALSE to else block
+			expect(bytecode[10]).toBe(BytecodeOpCode.JUMP_IF_FALSE)
+
+			// LED instructions should be present
+			let redLedFound = false
+			let greenLedFound = false
+
+			for (let i = 15; i < bytecode.length; i += 5) {
+				if (bytecode[i] === BytecodeOpCode.SET_ALL_LEDS) {
+					if (bytecode[i + 1] === MAX_LED_BRIGHTNESS && bytecode[i + 2] === 0 && bytecode[i + 3] === 0) {
+						redLedFound = true
+					} else if (bytecode[i + 1] === 0 && bytecode[i + 2] === MAX_LED_BRIGHTNESS && bytecode[i + 3] === 0) {
+						greenLedFound = true
+					}
+				}
+			}
+
+			expect(redLedFound).toBe(true)
+			expect(greenLedFound).toBe(true)
+		})
+
+		test("should handle front proximity sensor in loops", () => {
+			const code = `while(true) {
+        if (is_object_in_front()) {
+          rgbLed.set_led_red();
+          delay(100);
+        } else {
+          rgbLed.set_led_green();
+          delay(500);
+        }
+      }`
+
+			const bytecode = CppParser.cppToByte(code)
+
+			// Verify the while loop and front proximity sensor reading
+			expect(bytecode[0]).toBe(BytecodeOpCode.WHILE_START)
+			expect(bytecode[5]).toBe(BytecodeOpCode.READ_SENSOR)
+			expect(bytecode[6]).toBe(SensorType.FRONT_PROXIMITY)
+
+			// Verify we have the correct delay values in each branch
+			let delay100Found = false
+			let delay500Found = false
+
+			for (let i = 0; i < bytecode.length; i += 5) {
+				if (bytecode[i] === BytecodeOpCode.DELAY) {
+					if (bytecode[i + 1] === 100) {
+						delay100Found = true
+					} else if (bytecode[i + 1] === 500) {
+						delay500Found = true
+					}
+				}
+			}
+
+			expect(delay100Found).toBe(true)
+			expect(delay500Found).toBe(true)
+
+			// Verify WHILE_END is present
+			let whileEndFound = false
+			for (let i = 0; i < bytecode.length; i += 5) {
+				if (bytecode[i] === BytecodeOpCode.WHILE_END) {
+					whileEndFound = true
+					break
+				}
+			}
+			expect(whileEndFound).toBe(true)
+		})
+
+		test("should handle assigning front proximity sensor result to variable", () => {
+			const code = `
+        bool objectDetected = is_object_in_front();
+        if (objectDetected) {
+          rgbLed.set_led_red();
+        } else {
+          rgbLed.set_led_green();
+        }
+      `
+
+			// This should throw since direct assignment from is_object_in_front()
+			// to a variable is not supported in the pattern matching
+			expect(() => {
+				CppParser.cppToByte(code)
+			}).toThrow()
+		})
 	})
 })
