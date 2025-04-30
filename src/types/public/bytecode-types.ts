@@ -74,7 +74,9 @@ export enum SensorType {
     ROT_RATE_Z = 9,
     MAG_FIELD_X = 10,
     MAG_FIELD_Y = 11,
-    MAG_FIELD_Z = 12
+    MAG_FIELD_Z = 12,
+    SIDE_LEFT_PROXIMITY = 13,
+    SIDE_RIGHT_PROXIMITY = 14
 }
 
 export enum CommandType {
@@ -115,6 +117,8 @@ export enum CommandType {
 
     MOTOR_FORWARD_DISTANCE = "MOTOR_FORWARD_DISTANCE",
     MOTOR_BACKWARD_DISTANCE = "MOTOR_BACKWARD_DISTANCE",
+
+    SIDE_PROXIMITY_DETECTION = "SIDE_PROXIMITY_DETECTION"
 }
 
 // Command patterns for validation
@@ -157,4 +161,6 @@ export const CommandPatterns: Record<CommandType, RegExp> = {
 
 	[CommandType.MOTOR_FORWARD_DISTANCE]: /^goForwardDistance\(\s*(\d+(?:\.\d+)?)\s*,\s*(\d+)\s*\)$/,
 	[CommandType.MOTOR_BACKWARD_DISTANCE]: /^goBackwardDistance\(\s*(\d+(?:\.\d+)?)\s*,\s*(\d+)\s*\)$/,
+
+	[CommandType.SIDE_PROXIMITY_DETECTION]: /^is_object_near_side_(left|right)\(\)$/
 }
