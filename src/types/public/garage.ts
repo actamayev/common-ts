@@ -1,4 +1,4 @@
-import { PipUUID } from "./utils"
+import { PipUUIDInterface } from "./utils"
 
 export type LightAnimation =
 	| "No animation"
@@ -10,8 +10,7 @@ export type LightAnimation =
 	// | "Pause breathing"
 	// | "Snake"
 
-export interface BalancePidsProps {
-	pipUUID: PipUUID
+export interface BalancePidsProps extends PipUUIDInterface {
 	targetAngle: number
 	pValue: number
 	iValue: number
