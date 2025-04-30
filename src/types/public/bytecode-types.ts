@@ -76,7 +76,8 @@ export enum SensorType {
     MAG_FIELD_Y = 11,
     MAG_FIELD_Z = 12,
     SIDE_LEFT_PROXIMITY = 13,
-    SIDE_RIGHT_PROXIMITY = 14
+    SIDE_RIGHT_PROXIMITY = 14,
+    FRONT_PROXIMITY = 15
 }
 
 export enum CommandType {
@@ -118,7 +119,8 @@ export enum CommandType {
     MOTOR_FORWARD_DISTANCE = "MOTOR_FORWARD_DISTANCE",
     MOTOR_BACKWARD_DISTANCE = "MOTOR_BACKWARD_DISTANCE",
 
-    SIDE_PROXIMITY_DETECTION = "SIDE_PROXIMITY_DETECTION"
+    SIDE_PROXIMITY_DETECTION = "SIDE_PROXIMITY_DETECTION",
+    FRONT_PROXIMITY_DETECTION = "FRONT_PROXIMITY_DETECTION"
 }
 
 // Command patterns for validation
@@ -142,7 +144,7 @@ export const CommandPatterns: Record<CommandType, RegExp> = {
 	[CommandType.VARIABLE_ASSIGNMENT]: /^(float|int|bool)\s+(\w+)\s*=\s*(.+)$/,
 
 	// Updated regex for IF_STATEMENT
-	[CommandType.IF_STATEMENT]: /^if\s*\(\s*(?:is_object_near_side_(left|right)\(\)|(Sensors::getInstance\(\)\.\w+\(\)|[-\d.]+|\w+)\s*([<>=!][=]?)\s*(Sensors::getInstance\(\)\.\w+\(\)|[-\d.]+|\w+))\s*\)$/,
+	[CommandType.IF_STATEMENT]: /^if\s*\(\s*(?:is_object_near_side_(left|right)\(\)|is_object_in_front\(\)|(Sensors::getInstance\(\)\.\w+\(\)|[-\d.]+|\w+)\s*([<>=!][=]?)\s*(Sensors::getInstance\(\)\.\w+\(\)|[-\d.]+|\w+))\s*\)$/,
 	[CommandType.COMPOUND_AND_IF_STATEMENT]: /^if\s*\(\s*\(\s*(Sensors::getInstance\(\)\.\w+\(\)|[-\d.]+|\w+)\s*([<>=!][=]?)\s*(Sensors::getInstance\(\)\.\w+\(\)|[-\d.]+|\w+)\s*\)\s*&&\s*\(\s*(Sensors::getInstance\(\)\.\w+\(\)|[-\d.]+|\w+)\s*([<>=!][=]?)\s*(Sensors::getInstance\(\)\.\w+\(\)|[-\d.]+|\w+)\s*\)\s*\)$/,
 	[CommandType.COMPOUND_OR_IF_STATEMENT]: /^if\s*\(\s*\(\s*(Sensors::getInstance\(\)\.\w+\(\)|[-\d.]+|\w+)\s*([<>=!][=]?)\s*(Sensors::getInstance\(\)\.\w+\(\)|[-\d.]+|\w+)\s*\)\s*\|\|\s*\(\s*(Sensors::getInstance\(\)\.\w+\(\)|[-\d.]+|\w+)\s*([<>=!][=]?)\s*(Sensors::getInstance\(\)\.\w+\(\)|[-\d.]+|\w+)\s*\)\s*\)$/,
 	[CommandType.ELSE_STATEMENT]: /^else$/,
@@ -163,5 +165,6 @@ export const CommandPatterns: Record<CommandType, RegExp> = {
 	[CommandType.MOTOR_FORWARD_DISTANCE]: /^goForwardDistance\(\s*(\d+(?:\.\d+)?)\s*,\s*(\d+)\s*\)$/,
 	[CommandType.MOTOR_BACKWARD_DISTANCE]: /^goBackwardDistance\(\s*(\d+(?:\.\d+)?)\s*,\s*(\d+)\s*\)$/,
 
-	[CommandType.SIDE_PROXIMITY_DETECTION]: /^is_object_near_side_(left|right)\(\)$/
+	[CommandType.SIDE_PROXIMITY_DETECTION]: /^is_object_near_side_(left|right)\(\)$/,
+	[CommandType.FRONT_PROXIMITY_DETECTION]: /^is_object_in_front\(\)$/
 }

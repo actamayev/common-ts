@@ -334,51 +334,87 @@ export class CppParser {
 
 			case CommandType.IF_STATEMENT: {
 				if (command.matches) {
-					// Check if this is a proximity detection function
-					if (command.matches[1] === "left" || command.matches[1] === "right") {
-						// This is a proximity detection function
-						const sensorSide = command.matches[1] // "left" or "right"
-
-						// Allocate a register for the sensor value
-						if (nextRegister >= MAX_REGISTERS) {
+					// Check for front proximity detection first (by full match string)
+					if (command.matches[0].includes("is_object_in_front()")) {
+					  // This is a front proximity detection function
+					  // Allocate a register for the sensor value
+					  if (nextRegister >= MAX_REGISTERS) {
 							throw new Error(`Program exceeds maximum register count (${MAX_REGISTERS})`)
-						}
-						const register = nextRegister++
+					  }
+					  const register = nextRegister++
 
-						// Determine sensor type based on side
-						const sensorType = sensorSide === "left" ?
-							SensorType.SIDE_LEFT_PROXIMITY : SensorType.SIDE_RIGHT_PROXIMITY
-
-						// Read sensor value
-						instructions.push({
+					  // Read sensor value
+					  instructions.push({
 							opcode: BytecodeOpCode.READ_SENSOR,
-							operand1: sensorType,
+							operand1: SensorType.FRONT_PROXIMITY,
 							operand2: register,
 							operand3: 0,
 							operand4: 0
-						})
+					  })
 
-						// Compare with true (1)
-						instructions.push({
+					  // Compare with true (1)
+					  instructions.push({
 							opcode: BytecodeOpCode.COMPARE,
 							operand1: ComparisonOp.EQUAL,
 							operand2: 0x8000 | register,
 							operand3: 1, // true
 							operand4: 0
-						})
+					  })
 
-						// Add conditional jump (to be fixed later)
-						const jumpIndex = instructions.length
-						instructions.push({
+					  // Add conditional jump (to be filled later)
+					  const jumpIndex = instructions.length
+					  instructions.push({
 							opcode: BytecodeOpCode.JUMP_IF_FALSE,
 							operand1: 0, // Will be filled later
 							operand2: 0,
 							operand3: 0,
 							operand4: 0
-						})
+					  })
 
-						// Track this block for later
-						blockStack.push({ type: "if", jumpIndex })
+					  // Track this block for later
+					  blockStack.push({ type: "if", jumpIndex })
+					}
+					// Check if this is a side proximity detection function (existing logic)
+					else if (command.matches[1] === "left" || command.matches[1] === "right") {
+					  // This is a proximity detection function
+					  const sensorType = this.getSensorTypeFromProximity(command.matches[1])
+
+					  // Allocate a register for the sensor value
+					  if (nextRegister >= MAX_REGISTERS) {
+							throw new Error(`Program exceeds maximum register count (${MAX_REGISTERS})`)
+					  }
+					  const register = nextRegister++
+
+					  // Read sensor value
+					  instructions.push({
+							opcode: BytecodeOpCode.READ_SENSOR,
+							operand1: sensorType,
+							operand2: register,
+							operand3: 0,
+							operand4: 0
+					  })
+
+					  // Compare with true (1)
+					  instructions.push({
+							opcode: BytecodeOpCode.COMPARE,
+							operand1: ComparisonOp.EQUAL,
+							operand2: 0x8000 | register,
+							operand3: 1, // true
+							operand4: 0
+					  })
+
+					  // Add conditional jump (to be filled later)
+					  const jumpIndex = instructions.length
+					  instructions.push({
+							opcode: BytecodeOpCode.JUMP_IF_FALSE,
+							operand1: 0, // Will be filled later
+							operand2: 0,
+							operand3: 0,
+							operand4: 0
+					  })
+
+					  // Track this block for later
+					  blockStack.push({ type: "if", jumpIndex })
 					} else {
 						// This is a standard comparison - could be a real one or a mocked test
 
@@ -1029,6 +1065,28 @@ export class CppParser {
 				}
 				break
 			}
+			case CommandType.FRONT_PROXIMITY_DETECTION: {
+				if (command.matches) {
+					// Allocate a register for the boolean result
+					if (nextRegister >= MAX_REGISTERS) {
+						throw new Error(`Program exceeds maximum register count (${MAX_REGISTERS})`)
+					}
+					const boolResultRegister = nextRegister++
+
+					// Use the front proximity sensor type
+					const sensorType = SensorType.FRONT_PROXIMITY
+
+					// Read sensor value
+					instructions.push({
+						opcode: BytecodeOpCode.READ_SENSOR,
+						operand1: sensorType,
+						operand2: boolResultRegister,
+						operand3: 0,
+						operand4: 0
+					})
+				}
+				break
+			}
 			}
 		}
 
@@ -1236,6 +1294,16 @@ export class CppParser {
 				throw new Error(`Undefined variable or invalid number: ${expr}`)
 			}
 			return { operand: value, updatedNextRegister: nextRegister }
+		}
+	}
+
+	// Add this helper method to your CppParser class
+	private static getSensorTypeFromProximity(proximityType: string): SensorType {
+		switch (proximityType) {
+		case "left": return SensorType.SIDE_LEFT_PROXIMITY
+		case "right": return SensorType.SIDE_RIGHT_PROXIMITY
+		case "front": return SensorType.FRONT_PROXIMITY
+		default: throw new Error(`Unknown proximity type: ${proximityType}`)
 		}
 	}
 }
