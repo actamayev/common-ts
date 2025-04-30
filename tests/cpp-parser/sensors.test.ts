@@ -1,4 +1,5 @@
 import { CppParser } from "../../src"
+import { MAX_LED_BRIGHTNESS } from "../../src/types/private/constants"
 import { BytecodeOpCode, ComparisonOp, SensorType } from "../../src/types/public/bytecode-types"
 
 describe("Sensor Functionality", () => {
@@ -169,5 +170,90 @@ describe("Sensor Functionality", () => {
 		} finally {
 			CppParser["parseCppCode"] = originalParseCppCode
 		}
+	})
+
+	describe("Proximity Detection in Conditionals", () => {
+		test("should parse if statement with left proximity detection", () => {
+			const code = `if (is_object_near_side_left()) {
+				rgbLed.set_led_red();
+			} else {
+				rgbLed.set_led_green();
+			}`
+
+			const bytecode = CppParser.cppToByte(code)
+
+			// Find READ_SENSOR instruction for left proximity
+			let sensorReadFound = false
+			let compareFound = false
+			let jumpIfFalseFound = false
+
+			for (let i = 0; i < bytecode.length; i += 5) {
+				if (bytecode[i] === BytecodeOpCode.READ_SENSOR &&
+					bytecode[i + 1] === SensorType.SIDE_LEFT_PROXIMITY) {
+					sensorReadFound = true
+				} else if (bytecode[i] === BytecodeOpCode.COMPARE &&
+						  bytecode[i + 1] === ComparisonOp.EQUAL &&
+						  bytecode[i + 3] === 1) { // Comparing with true (1)
+					compareFound = true
+				} else if (bytecode[i] === BytecodeOpCode.JUMP_IF_FALSE) {
+					jumpIfFalseFound = true
+				}
+			}
+
+			expect(sensorReadFound).toBe(true)
+			expect(compareFound).toBe(true)
+			expect(jumpIfFalseFound).toBe(true)
+
+			// Check for LED colors in both branches
+			let redLEDFound = false
+			let greenLEDFound = false
+
+			for (let i = 0; i < bytecode.length; i += 5) {
+				if (bytecode[i] === BytecodeOpCode.SET_ALL_LEDS) {
+					if (bytecode[i + 1] === MAX_LED_BRIGHTNESS && bytecode[i + 2] === 0 && bytecode[i + 3] === 0) {
+						redLEDFound = true
+					} else if (bytecode[i + 1] === 0 && bytecode[i + 2] === MAX_LED_BRIGHTNESS && bytecode[i + 3] === 0) {
+						greenLEDFound = true
+					}
+				}
+			}
+
+			expect(redLEDFound).toBe(true)
+			expect(greenLEDFound).toBe(true)
+		})
+
+		test("should parse if statement with right proximity detection", () => {
+			const code = `if (is_object_near_side_right()) {
+				rgbLed.set_led_blue();
+			}`
+
+			const bytecode = CppParser.cppToByte(code)
+
+			// Find READ_SENSOR instruction for right proximity
+			let sensorReadFound = false
+
+			for (let i = 0; i < bytecode.length; i += 5) {
+				if (bytecode[i] === BytecodeOpCode.READ_SENSOR &&
+					bytecode[i + 1] === SensorType.SIDE_RIGHT_PROXIMITY) {
+					sensorReadFound = true
+					break
+				}
+			}
+
+			expect(sensorReadFound).toBe(true)
+
+			// Check for blue LED in true branch
+			let blueLEDFound = false
+
+			for (let i = 0; i < bytecode.length; i += 5) {
+				if (bytecode[i] === BytecodeOpCode.SET_ALL_LEDS &&
+					bytecode[i + 1] === 0 && bytecode[i + 2] === 0 && bytecode[i + 3] === MAX_LED_BRIGHTNESS) {
+					blueLEDFound = true
+					break
+				}
+			}
+
+			expect(blueLEDFound).toBe(true)
+		})
 	})
 })
