@@ -1,6 +1,7 @@
 import { BalancePidsProps, LedControlData } from "../../src"
 import { MessageBuilder } from "../../src/message-builder/message-builder"
-import { BalanceStatus, LightAnimationType, MessageType, SoundType, SpeakerStatus } from "../../src/message-builder/protocol"
+import { BalanceStatus, HeadlightStatus, LightAnimationType,
+	MessageType, SoundType, SpeakerStatus } from "../../src/message-builder/protocol"
 
 describe("MessageBuilder", () => {
 	describe("createUpdateAvailableMessage", () => {
@@ -208,6 +209,24 @@ describe("MessageBuilder", () => {
 
 			const view = new DataView(buffer)
 			expect(view.getUint8(1)).toBe(SpeakerStatus.UNMUTED)
+		})
+	})
+
+	describe("createHeadlightMessage", () => {
+		it("should create a headlight on message when true is passed", () => {
+			const buffer = MessageBuilder.createHeadlightMessage(true)
+
+			const view = new DataView(buffer)
+			expect(view.getUint8(0)).toBe(MessageType.UPDATE_HEADLIGHT)
+			expect(view.getUint8(1)).toBe(HeadlightStatus.ON)
+			expect(buffer.byteLength).toBe(2)
+		})
+
+		it("should create a headlight off message when false is passed", () => {
+			const buffer = MessageBuilder.createHeadlightMessage(false)
+
+			const view = new DataView(buffer)
+			expect(view.getUint8(1)).toBe(HeadlightStatus.OFF)
 		})
 	})
 

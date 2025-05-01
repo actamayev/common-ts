@@ -1,5 +1,5 @@
 import { BalancePidsProps, LedControlData } from "../types/public"
-import { BalanceStatus, LightAnimationType, MessageType, SoundType, SpeakerStatus } from "./protocol"
+import { BalanceStatus, HeadlightStatus, LightAnimationType, MessageType, SoundType, SpeakerStatus } from "./protocol"
 
 export class MessageBuilder {
 	static createUpdateAvailableMessage(newFirmwareVersion: number): ArrayBuffer {
@@ -102,6 +102,16 @@ export class MessageBuilder {
 
 		view.setUint8(0, MessageType.SPEAKER_MUTE)
 		view.setUint8(1, audibleStatus ? SpeakerStatus.MUTED : SpeakerStatus.UNMUTED)
+
+		return buffer
+	}
+
+	static createHeadlightMessage(headlightStatus: boolean): ArrayBuffer {
+		const buffer = new ArrayBuffer(2)
+		const view = new DataView(buffer)
+
+		view.setUint8(0, MessageType.UPDATE_HEADLIGHT)
+		view.setUint8(1, headlightStatus ? HeadlightStatus.ON : HeadlightStatus.OFF)
 
 		return buffer
 	}
