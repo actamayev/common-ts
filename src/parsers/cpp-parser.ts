@@ -319,6 +319,14 @@ export class CppParser {
 				this.handleIndividualLed(command.matches, LedID.BACK_RIGHT, instructions)
 				break
 
+			case CommandType.SET_LEFT_HEADLIGHT:
+				this.handleIndividualLed(command.matches, LedID.LEFT_HEADLIGHT, instructions)
+				break
+
+			case CommandType.SET_RIGHT_HEADLIGHT:
+				this.handleIndividualLed(command.matches, LedID.RIGHT_HEADLIGHT, instructions)
+				break
+
 			case CommandType.DELAY:
 				if (command.matches && command.matches.length === 2) {
 					const delayMs = parseInt(command.matches[1], 10)
