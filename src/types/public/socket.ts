@@ -28,6 +28,10 @@ export interface LedControlData extends PipUUIDInterface {
 	rightHeadlightColor: RGB
 }
 
+export interface HeadlightData extends PipUUIDInterface {
+	areHeadlightsOn: boolean
+}
+
 export interface HornData extends PipUUIDInterface {
 	hornStatus: boolean
 }
