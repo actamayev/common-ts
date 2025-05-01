@@ -14,7 +14,8 @@ export enum MessageType {
     OBSTACLE_AVOIDANCE = 10,
     SERIAL_HANDSHAKE = 11,
     SERIAL_KEEPALIVE = 12,
-    SERIAL_END = 13
+    SERIAL_END = 13,
+    UPDATE_HEADLIGHT = 14,
 }
 
 export enum SoundType {
@@ -37,6 +38,11 @@ export enum LightAnimationType {
 export enum SpeakerStatus {
     UNMUTED = 0,
     MUTED = 1
+}
+
+export enum HeadlightStatus {
+    OFF = 0,
+    ON = 1
 }
 
 export enum BalanceStatus {
