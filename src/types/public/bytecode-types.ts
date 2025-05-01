@@ -4,6 +4,7 @@ export enum BytecodeOpCode {
     NOP = 0x00,
     END = 0x01,
     DELAY = 0x02,
+    WAIT_FOR_BUTTON = 0x03,  // Choose an appropriate unused value
     SET_LED = 0x10,
     SET_ALL_LEDS = 0x11,
 
@@ -120,7 +121,8 @@ export enum CommandType {
     MOTOR_BACKWARD_DISTANCE = "MOTOR_BACKWARD_DISTANCE",
 
     SIDE_PROXIMITY_DETECTION = "SIDE_PROXIMITY_DETECTION",
-    FRONT_PROXIMITY_DETECTION = "FRONT_PROXIMITY_DETECTION"
+    FRONT_PROXIMITY_DETECTION = "FRONT_PROXIMITY_DETECTION",
+    WAIT_FOR_BUTTON = "WAIT_FOR_BUTTON",
 }
 
 // Command patterns for validation
@@ -166,5 +168,6 @@ export const CommandPatterns: Record<CommandType, RegExp> = {
 	[CommandType.MOTOR_BACKWARD_DISTANCE]: /^goBackwardDistance\(\s*(\d+(?:\.\d+)?)\s*,\s*(\d+)\s*\)$/,
 
 	[CommandType.SIDE_PROXIMITY_DETECTION]: /^is_object_near_side_(left|right)\(\)$/,
-	[CommandType.FRONT_PROXIMITY_DETECTION]: /^is_object_in_front\(\)$/
+	[CommandType.FRONT_PROXIMITY_DETECTION]: /^is_object_in_front\(\)$/,
+	[CommandType.WAIT_FOR_BUTTON]: /^wait_for_button_press\(\)$/,
 }
