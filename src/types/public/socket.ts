@@ -24,6 +24,8 @@ export interface LedControlData extends PipUUIDInterface {
 	middleRightColor: RGB
 	backLeftColor: RGB
 	backRightColor: RGB
+	leftHeadlightColor: RGB
+	rightHeadlightColor: RGB
 }
 
 export interface HornData extends PipUUIDInterface {

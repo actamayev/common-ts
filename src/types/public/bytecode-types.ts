@@ -59,7 +59,9 @@ export enum LedID {
     MIDDLE_LEFT = 3,
     MIDDLE_RIGHT = 4,
     BACK_LEFT = 5,
-    BACK_RIGHT = 6
+    BACK_RIGHT = 6,
+    LEFT_HEADLIGHT = 7,
+    RIGHT_HEADLIGHT = 8,
 }
 
 export enum SensorType {
@@ -95,6 +97,8 @@ export enum CommandType {
     SET_MIDDLE_RIGHT_LED = "SET_MIDDLE_RIGHT_LED",
     SET_BACK_LEFT_LED = "SET_BACK_LEFT_LED",
     SET_BACK_RIGHT_LED = "SET_BACK_RIGHT_LED",
+    SET_LEFT_HEADLIGHT = "SET_LEFT_HEADLIGHT",
+    SET_RIGHT_HEADLIGHT = "SET_RIGHT_HEADLIGHT",
     DELAY = "DELAY",
 
     VARIABLE_ASSIGNMENT = "VARIABLE_ASSIGNMENT",
@@ -141,6 +145,8 @@ export const CommandPatterns: Record<CommandType, RegExp> = {
 	[CommandType.SET_MIDDLE_RIGHT_LED]: /^rgbLed\.set_middle_right_led\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*\)$/,
 	[CommandType.SET_BACK_LEFT_LED]: /^rgbLed\.set_back_left_led\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*\)$/,
 	[CommandType.SET_BACK_RIGHT_LED]: /^rgbLed\.set_back_right_led\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*\)$/,
+	[CommandType.SET_LEFT_HEADLIGHT]: /^rgbLed\.set_left_headlight\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*\)$/,
+	[CommandType.SET_RIGHT_HEADLIGHT]: /^rgbLed\.set_right_headlight\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*\)$/,
 	[CommandType.DELAY]: /^delay\(\s*(\d+)\s*\)$/,
 
 	[CommandType.VARIABLE_ASSIGNMENT]: /^(float|int|bool)\s+(\w+)\s*=\s*(.+)$/,

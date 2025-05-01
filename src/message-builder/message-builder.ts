@@ -45,8 +45,8 @@ export class MessageBuilder {
 	}
 
 	static createLedMessage(data: Omit<LedControlData, "pipUUID">): ArrayBuffer {
-		// Calculate buffer size: 1 byte for message type + 6 RGB colors × 3 components × 1 byte per uint8
-		const buffer = new ArrayBuffer(1 + 6 * 3 * 1) // 19 bytes total
+		// Calculate buffer size: 1 byte for message type + 8 RGB colors × 3 components × 1 byte per uint8
+		const buffer = new ArrayBuffer(1 + 8 * 3 * 1) // 25 bytes total
 		const view = new DataView(buffer)
 
 		// Set message type
@@ -81,6 +81,16 @@ export class MessageBuilder {
 		view.setUint8(16, data.backRightColor.r)
 		view.setUint8(17, data.backRightColor.g)
 		view.setUint8(18, data.backRightColor.b)
+
+		// Left Headlight Color
+		view.setUint8(19, data.leftHeadlightColor.r)
+		view.setUint8(20, data.leftHeadlightColor.g)
+		view.setUint8(21, data.leftHeadlightColor.b)
+
+		// Right Headlight Color
+		view.setUint8(22, data.rightHeadlightColor.r)
+		view.setUint8(23, data.rightHeadlightColor.g)
+		view.setUint8(24, data.rightHeadlightColor.b)
 
 		return buffer
 	}
