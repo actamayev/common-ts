@@ -1087,6 +1087,16 @@ export class CppParser {
 				}
 				break
 			}
+			case CommandType.WAIT_FOR_BUTTON: {
+				instructions.push({
+					opcode: BytecodeOpCode.WAIT_FOR_BUTTON,
+					operand1: 0,
+					operand2: 0,
+					operand3: 0,
+					operand4: 0
+				})
+				break
+			}
 			}
 		}
 
