@@ -1,18 +1,60 @@
 import { BalancePidsProps, LedControlData } from "../../src"
 import { MessageBuilder } from "../../src/message-builder/message-builder"
-import { BalanceStatus, HeadlightStatus, LightAnimationType,
-	MessageType, SoundType, SpeakerStatus } from "../../src/message-builder/protocol"
+import {
+	BalanceStatus, HeadlightStatus, LightAnimationType,
+	MessageType, SoundType, SpeakerStatus,
+} from "../../src/message-builder/protocol"
+import { END_MARKER, START_MARKER } from "../../src/types/private/constants"
 
 describe("MessageBuilder", () => {
+	// Helper function to validate frame structure
+	function validateFrameStructure(buffer: ArrayBuffer, messageType: MessageType, payloadLength: number): void {
+		const view = new DataView(buffer)
+
+		// Check start marker
+		expect(view.getUint8(0)).toBe(START_MARKER)
+
+		// Check message type
+		expect(view.getUint8(1)).toBe(messageType)
+
+		// Check format flag and length
+		const useLongFormat = view.getUint8(2) !== 0
+
+		if (useLongFormat) {
+			expect(view.getUint16(3, true)).toBe(payloadLength)
+			// Check end marker (header + payload + end marker)
+			expect(view.getUint8(5 + payloadLength)).toBe(END_MARKER)
+		} else {
+			expect(view.getUint8(3)).toBe(payloadLength)
+			// Check end marker (header + payload + end marker)
+			expect(view.getUint8(4 + payloadLength)).toBe(END_MARKER)
+		}
+
+		// Check total buffer length
+		const expectedLength = useLongFormat ?
+			1 + 1 + 1 + 2 + payloadLength + 1 : // START + TYPE + FORMAT + LENGTH(2) + payload + END
+			1 + 1 + 1 + 1 + payloadLength + 1  // START + TYPE + FORMAT + LENGTH(1) + payload + END
+
+		expect(buffer.byteLength).toBe(expectedLength)
+	}
+
+	// Helper function to get the offset where payload begins
+	function getPayloadOffset(buffer: ArrayBuffer): number {
+		const view = new DataView(buffer)
+		const useLongFormat = view.getUint8(2) !== 0
+		return useLongFormat ? 5 : 4  // 5 for long format, 4 for short format
+	}
+
 	describe("createUpdateAvailableMessage", () => {
 		it("should create a valid update available message", () => {
 			const version = 123
 			const buffer = MessageBuilder.createUpdateAvailableMessage(version)
 
+			validateFrameStructure(buffer, MessageType.UPDATE_AVAILABLE, 2)
+
 			const view = new DataView(buffer)
-			expect(view.getUint8(0)).toBe(MessageType.UPDATE_AVAILABLE)
-			expect(view.getUint16(1, true)).toBe(version)
-			expect(buffer.byteLength).toBe(3)
+			const offset = getPayloadOffset(buffer)
+			expect(view.getUint16(offset, true)).toBe(version)
 		})
 	})
 
@@ -23,19 +65,21 @@ describe("MessageBuilder", () => {
 
 			const buffer = MessageBuilder.createMotorControlMessage(leftMotor, rightMotor)
 
+			validateFrameStructure(buffer, MessageType.MOTOR_CONTROL, 4)
+
 			const view = new DataView(buffer)
-			expect(view.getUint8(0)).toBe(MessageType.MOTOR_CONTROL)
-			expect(view.getInt16(1, true)).toBe(leftMotor)
-			expect(view.getInt16(3, true)).toBe(rightMotor)
-			expect(buffer.byteLength).toBe(5)
+			const offset = getPayloadOffset(buffer)
+			expect(view.getInt16(offset, true)).toBe(leftMotor)
+			expect(view.getInt16(offset + 2, true)).toBe(rightMotor)
 		})
 
 		it("should handle zero values", () => {
 			const buffer = MessageBuilder.createMotorControlMessage(0, 0)
 
 			const view = new DataView(buffer)
-			expect(view.getInt16(1, true)).toBe(0)
-			expect(view.getInt16(3, true)).toBe(0)
+			const offset = getPayloadOffset(buffer)
+			expect(view.getInt16(offset, true)).toBe(0)
+			expect(view.getInt16(offset + 2, true)).toBe(0)
 		})
 
 		it("should handle maximum motor values", () => {
@@ -43,8 +87,9 @@ describe("MessageBuilder", () => {
 			const buffer = MessageBuilder.createMotorControlMessage(maxValue, maxValue)
 
 			const view = new DataView(buffer)
-			expect(view.getInt16(1, true)).toBe(maxValue)
-			expect(view.getInt16(3, true)).toBe(maxValue)
+			const offset = getPayloadOffset(buffer)
+			expect(view.getInt16(offset, true)).toBe(maxValue)
+			expect(view.getInt16(offset + 2, true)).toBe(maxValue)
 		})
 
 		it("should handle minimum motor values", () => {
@@ -52,8 +97,9 @@ describe("MessageBuilder", () => {
 			const buffer = MessageBuilder.createMotorControlMessage(minValue, minValue)
 
 			const view = new DataView(buffer)
-			expect(view.getInt16(1, true)).toBe(minValue)
-			expect(view.getInt16(3, true)).toBe(minValue)
+			const offset = getPayloadOffset(buffer)
+			expect(view.getInt16(offset, true)).toBe(minValue)
+			expect(view.getInt16(offset + 2, true)).toBe(minValue)
 		})
 	})
 
@@ -61,24 +107,27 @@ describe("MessageBuilder", () => {
 		it("should create a valid sound message for ALERT type", () => {
 			const buffer = MessageBuilder.createSoundMessage(SoundType.ALERT)
 
+			validateFrameStructure(buffer, MessageType.SOUND_COMMAND, 1)
+
 			const view = new DataView(buffer)
-			expect(view.getUint8(0)).toBe(MessageType.SOUND_COMMAND)
-			expect(view.getUint8(1)).toBe(SoundType.ALERT)
-			expect(buffer.byteLength).toBe(2)
+			const offset = getPayloadOffset(buffer)
+			expect(view.getUint8(offset)).toBe(SoundType.ALERT)
 		})
 
 		it("should create a valid sound message for BEEP type", () => {
 			const buffer = MessageBuilder.createSoundMessage(SoundType.BEEP)
 
 			const view = new DataView(buffer)
-			expect(view.getUint8(1)).toBe(SoundType.BEEP)
+			const offset = getPayloadOffset(buffer)
+			expect(view.getUint8(offset)).toBe(SoundType.BEEP)
 		})
 
 		it("should create a valid sound message for CHIME type", () => {
 			const buffer = MessageBuilder.createSoundMessage(SoundType.CHIME)
 
 			const view = new DataView(buffer)
-			expect(view.getUint8(1)).toBe(SoundType.CHIME)
+			const offset = getPayloadOffset(buffer)
+			expect(view.getUint8(offset)).toBe(SoundType.CHIME)
 		})
 	})
 
@@ -86,10 +135,11 @@ describe("MessageBuilder", () => {
 		it("should create a valid light animation message for NO_ANIMATION", () => {
 			const buffer = MessageBuilder.createLightAnimationMessage(LightAnimationType.NO_ANIMATION)
 
+			validateFrameStructure(buffer, MessageType.UPDATE_LIGHT_ANIMATION, 1)
+
 			const view = new DataView(buffer)
-			expect(view.getUint8(0)).toBe(MessageType.UPDATE_LIGHT_ANIMATION)
-			expect(view.getUint8(1)).toBe(LightAnimationType.NO_ANIMATION)
-			expect(buffer.byteLength).toBe(2)
+			const offset = getPayloadOffset(buffer)
+			expect(view.getUint8(offset)).toBe(LightAnimationType.NO_ANIMATION)
 		})
 
 		it("should create a valid message for each animation type", () => {
@@ -104,7 +154,8 @@ describe("MessageBuilder", () => {
 			animationTypes.forEach(type => {
 				const buffer = MessageBuilder.createLightAnimationMessage(type)
 				const view = new DataView(buffer)
-				expect(view.getUint8(1)).toBe(type)
+				const offset = getPayloadOffset(buffer)
+				expect(view.getUint8(offset)).toBe(type)
 			})
 		})
 	})
@@ -124,50 +175,50 @@ describe("MessageBuilder", () => {
 
 			const buffer = MessageBuilder.createLedMessage(ledData)
 
+			validateFrameStructure(buffer, MessageType.UPDATE_LED_COLORS, 24)
+
 			const view = new DataView(buffer)
-			expect(view.getUint8(0)).toBe(MessageType.UPDATE_LED_COLORS)
+			const offset = getPayloadOffset(buffer)
 
 			// Top Left Color
-			expect(view.getUint8(1)).toBe(255) // r
-			expect(view.getUint8(2)).toBe(0)   // g
-			expect(view.getUint8(3)).toBe(0)   // b
+			expect(view.getUint8(offset)).toBe(255)     // r
+			expect(view.getUint8(offset + 1)).toBe(0)   // g
+			expect(view.getUint8(offset + 2)).toBe(0)   // b
 
 			// Top Right Color
-			expect(view.getUint8(4)).toBe(0)   // r
-			expect(view.getUint8(5)).toBe(255) // g
-			expect(view.getUint8(6)).toBe(0)   // b
+			expect(view.getUint8(offset + 3)).toBe(0)   // r
+			expect(view.getUint8(offset + 4)).toBe(255) // g
+			expect(view.getUint8(offset + 5)).toBe(0)   // b
 
 			// Middle Left Color
-			expect(view.getUint8(7)).toBe(0)   // r
-			expect(view.getUint8(8)).toBe(0)   // g
-			expect(view.getUint8(9)).toBe(255) // b
+			expect(view.getUint8(offset + 6)).toBe(0)   // r
+			expect(view.getUint8(offset + 7)).toBe(0)   // g
+			expect(view.getUint8(offset + 8)).toBe(255) // b
 
 			// Middle Right Color
-			expect(view.getUint8(10)).toBe(255) // r
-			expect(view.getUint8(11)).toBe(255) // g
-			expect(view.getUint8(12)).toBe(0)   // b
+			expect(view.getUint8(offset + 9)).toBe(255)  // r
+			expect(view.getUint8(offset + 10)).toBe(255) // g
+			expect(view.getUint8(offset + 11)).toBe(0)   // b
 
 			// Back Left Color
-			expect(view.getUint8(13)).toBe(255) // r
-			expect(view.getUint8(14)).toBe(0)   // g
-			expect(view.getUint8(15)).toBe(255) // b
+			expect(view.getUint8(offset + 12)).toBe(255) // r
+			expect(view.getUint8(offset + 13)).toBe(0)   // g
+			expect(view.getUint8(offset + 14)).toBe(255) // b
 
 			// Back Right Color
-			expect(view.getUint8(16)).toBe(0)   // r
-			expect(view.getUint8(17)).toBe(255) // g
-			expect(view.getUint8(18)).toBe(255) // b
+			expect(view.getUint8(offset + 15)).toBe(0)   // r
+			expect(view.getUint8(offset + 16)).toBe(255) // g
+			expect(view.getUint8(offset + 17)).toBe(255) // b
 
 			// Left Headlight Color
-			expect(view.getUint8(19)).toBe(255) // r
-			expect(view.getUint8(20)).toBe(255) // g
-			expect(view.getUint8(21)).toBe(255) // b
+			expect(view.getUint8(offset + 18)).toBe(255) // r
+			expect(view.getUint8(offset + 19)).toBe(255) // g
+			expect(view.getUint8(offset + 20)).toBe(255) // b
 
 			// Right Headlight Color
-			expect(view.getUint8(22)).toBe(0)   // r
-			expect(view.getUint8(23)).toBe(0)   // g
-			expect(view.getUint8(24)).toBe(0)   // b
-
-			expect(buffer.byteLength).toBe(25)
+			expect(view.getUint8(offset + 21)).toBe(0)   // r
+			expect(view.getUint8(offset + 22)).toBe(0)   // g
+			expect(view.getUint8(offset + 23)).toBe(0)   // b
 		})
 
 		it("should handle zero values for all colors", () => {
@@ -184,13 +235,14 @@ describe("MessageBuilder", () => {
 
 			const buffer = MessageBuilder.createLedMessage(ledData)
 			const view = new DataView(buffer)
+			const offset = getPayloadOffset(buffer)
 
 			// Sample a few values to ensure they're all 0
-			expect(view.getUint8(1)).toBe(0)
-			expect(view.getUint8(5)).toBe(0)
-			expect(view.getUint8(18)).toBe(0)
-			expect(view.getUint8(20)).toBe(0)
-			expect(view.getUint8(24)).toBe(0)
+			expect(view.getUint8(offset)).toBe(0)
+			expect(view.getUint8(offset + 4)).toBe(0)
+			expect(view.getUint8(offset + 17)).toBe(0)
+			expect(view.getUint8(offset + 19)).toBe(0)
+			expect(view.getUint8(offset + 23)).toBe(0)
 		})
 	})
 
@@ -198,17 +250,19 @@ describe("MessageBuilder", () => {
 		it("should create a mute message when true is passed", () => {
 			const buffer = MessageBuilder.createSpeakerMuteMessage(true)
 
+			validateFrameStructure(buffer, MessageType.SPEAKER_MUTE, 1)
+
 			const view = new DataView(buffer)
-			expect(view.getUint8(0)).toBe(MessageType.SPEAKER_MUTE)
-			expect(view.getUint8(1)).toBe(SpeakerStatus.MUTED)
-			expect(buffer.byteLength).toBe(2)
+			const offset = getPayloadOffset(buffer)
+			expect(view.getUint8(offset)).toBe(SpeakerStatus.MUTED)
 		})
 
 		it("should create an unmute message when false is passed", () => {
 			const buffer = MessageBuilder.createSpeakerMuteMessage(false)
 
 			const view = new DataView(buffer)
-			expect(view.getUint8(1)).toBe(SpeakerStatus.UNMUTED)
+			const offset = getPayloadOffset(buffer)
+			expect(view.getUint8(offset)).toBe(SpeakerStatus.UNMUTED)
 		})
 	})
 
@@ -216,17 +270,19 @@ describe("MessageBuilder", () => {
 		it("should create a headlight on message when true is passed", () => {
 			const buffer = MessageBuilder.createHeadlightMessage(true)
 
+			validateFrameStructure(buffer, MessageType.UPDATE_HEADLIGHT, 1)
+
 			const view = new DataView(buffer)
-			expect(view.getUint8(0)).toBe(MessageType.UPDATE_HEADLIGHT)
-			expect(view.getUint8(1)).toBe(HeadlightStatus.ON)
-			expect(buffer.byteLength).toBe(2)
+			const offset = getPayloadOffset(buffer)
+			expect(view.getUint8(offset)).toBe(HeadlightStatus.ON)
 		})
 
 		it("should create a headlight off message when false is passed", () => {
 			const buffer = MessageBuilder.createHeadlightMessage(false)
 
 			const view = new DataView(buffer)
-			expect(view.getUint8(1)).toBe(HeadlightStatus.OFF)
+			const offset = getPayloadOffset(buffer)
+			expect(view.getUint8(offset)).toBe(HeadlightStatus.OFF)
 		})
 	})
 
@@ -234,17 +290,19 @@ describe("MessageBuilder", () => {
 		it("should create a balance enabled message when true is passed", () => {
 			const buffer = MessageBuilder.createBalanceMessage(true)
 
+			validateFrameStructure(buffer, MessageType.BALANCE_CONTROL, 1)
+
 			const view = new DataView(buffer)
-			expect(view.getUint8(0)).toBe(MessageType.BALANCE_CONTROL)
-			expect(view.getUint8(1)).toBe(BalanceStatus.BALANCED)
-			expect(buffer.byteLength).toBe(2)
+			const offset = getPayloadOffset(buffer)
+			expect(view.getUint8(offset)).toBe(BalanceStatus.BALANCED)
 		})
 
 		it("should create a balance disabled message when false is passed", () => {
 			const buffer = MessageBuilder.createBalanceMessage(false)
 
 			const view = new DataView(buffer)
-			expect(view.getUint8(1)).toBe(BalanceStatus.UNBALANCED)
+			const offset = getPayloadOffset(buffer)
+			expect(view.getUint8(offset)).toBe(BalanceStatus.UNBALANCED)
 		})
 	})
 
@@ -265,19 +323,20 @@ describe("MessageBuilder", () => {
 
 			const buffer = MessageBuilder.createUpdateBalancePidsMessage(pidProps)
 
+			validateFrameStructure(buffer, MessageType.UPDATE_BALANCE_PIDS, 40)
+
 			const view = new DataView(buffer)
-			expect(view.getUint8(0)).toBe(MessageType.UPDATE_BALANCE_PIDS)
-			expect(view.getFloat32(1, true)).toBeCloseTo(1.5)
-			expect(view.getFloat32(5, true)).toBeCloseTo(0.2)
-			expect(view.getFloat32(9, true)).toBeCloseTo(0.1)
-			expect(view.getFloat32(13, true)).toBeCloseTo(0.05)
-			expect(view.getFloat32(17, true)).toBeCloseTo(2.0)
-			expect(view.getFloat32(21, true)).toBeCloseTo(10.0)
-			expect(view.getFloat32(25, true)).toBeCloseTo(5.0)
-			expect(view.getFloat32(29, true)).toBeCloseTo(1.0)
-			expect(view.getFloat32(33, true)).toBeCloseTo(45.0)
-			expect(view.getFloat32(37, true)).toBeCloseTo(20.0)
-			expect(buffer.byteLength).toBe(41)
+			const offset = getPayloadOffset(buffer)
+			expect(view.getFloat32(offset, true)).toBeCloseTo(1.5)
+			expect(view.getFloat32(offset + 4, true)).toBeCloseTo(0.2)
+			expect(view.getFloat32(offset + 8, true)).toBeCloseTo(0.1)
+			expect(view.getFloat32(offset + 12, true)).toBeCloseTo(0.05)
+			expect(view.getFloat32(offset + 16, true)).toBeCloseTo(2.0)
+			expect(view.getFloat32(offset + 20, true)).toBeCloseTo(10.0)
+			expect(view.getFloat32(offset + 24, true)).toBeCloseTo(5.0)
+			expect(view.getFloat32(offset + 28, true)).toBeCloseTo(1.0)
+			expect(view.getFloat32(offset + 32, true)).toBeCloseTo(45.0)
+			expect(view.getFloat32(offset + 36, true)).toBeCloseTo(20.0)
 		})
 
 		it("should handle zero values for all PID parameters", () => {
@@ -296,11 +355,12 @@ describe("MessageBuilder", () => {
 
 			const buffer = MessageBuilder.createUpdateBalancePidsMessage(zeroPidProps)
 			const view = new DataView(buffer)
+			const offset = getPayloadOffset(buffer)
 
 			// Check a few of the values
-			expect(view.getFloat32(1, true)).toBeCloseTo(0)
-			expect(view.getFloat32(17, true)).toBeCloseTo(0)
-			expect(view.getFloat32(37, true)).toBeCloseTo(0)
+			expect(view.getFloat32(offset, true)).toBeCloseTo(0)
+			expect(view.getFloat32(offset + 16, true)).toBeCloseTo(0)
+			expect(view.getFloat32(offset + 36, true)).toBeCloseTo(0)
 		})
 
 		it("should handle negative values for parameters", () => {
@@ -319,11 +379,12 @@ describe("MessageBuilder", () => {
 
 			const buffer = MessageBuilder.createUpdateBalancePidsMessage(negativePidProps)
 			const view = new DataView(buffer)
+			const offset = getPayloadOffset(buffer)
 
-			expect(view.getFloat32(1, true)).toBeCloseTo(-1.5)
-			expect(view.getFloat32(5, true)).toBeCloseTo(-0.2)
-			expect(view.getFloat32(25, true)).toBeCloseTo(5.0) // Should still be positive
-			expect(view.getFloat32(33, true)).toBeCloseTo(-45.0)
+			expect(view.getFloat32(offset, true)).toBeCloseTo(-1.5)
+			expect(view.getFloat32(offset + 4, true)).toBeCloseTo(-0.2)
+			expect(view.getFloat32(offset + 24, true)).toBeCloseTo(5.0) // Should still be positive
+			expect(view.getFloat32(offset + 32, true)).toBeCloseTo(-45.0)
 		})
 	})
 
@@ -332,31 +393,28 @@ describe("MessageBuilder", () => {
 			const bytecodeData = new Float32Array([1.0, 2.0, 3.0, 4.0])
 			const buffer = MessageBuilder.createBytecodeMessage(bytecodeData)
 
+			// Bytecode data is 4 floats * 4 bytes = 16 bytes
+			validateFrameStructure(buffer, MessageType.BYTECODE_PROGRAM, 16)
+
+			// Verify we can recover the original float values from the framed message
 			const view = new DataView(buffer)
-			expect(view.getUint8(0)).toBe(MessageType.BYTECODE_PROGRAM)
+			const offset = getPayloadOffset(buffer)
 
-			// The correct way to check the float values - we need to read from the buffer
-			// using DataView to avoid alignment issues
-			expect(new Float32Array(bytecodeData.buffer)[0]).toBeCloseTo(1.0)
-			expect(new Float32Array(bytecodeData.buffer)[1]).toBeCloseTo(2.0)
-			expect(new Float32Array(bytecodeData.buffer)[2]).toBeCloseTo(3.0)
-			expect(new Float32Array(bytecodeData.buffer)[3]).toBeCloseTo(4.0)
-
-			// Check total buffer size (1 byte for type + 4 floats * 4 bytes)
-			expect(buffer.byteLength).toBe(1 + 16)
+			expect(view.getFloat32(offset, true)).toBeCloseTo(1.0)
+			expect(view.getFloat32(offset + 4, true)).toBeCloseTo(2.0)
+			expect(view.getFloat32(offset + 8, true)).toBeCloseTo(3.0)
+			expect(view.getFloat32(offset + 12, true)).toBeCloseTo(4.0)
 		})
 
 		it("should handle empty bytecode array", () => {
 			const emptyBytecode = new Float32Array([])
 			const buffer = MessageBuilder.createBytecodeMessage(emptyBytecode)
 
-			expect(buffer.byteLength).toBe(1) // Just the message type byte
-			const view = new DataView(buffer)
-			expect(view.getUint8(0)).toBe(MessageType.BYTECODE_PROGRAM)
+			validateFrameStructure(buffer, MessageType.BYTECODE_PROGRAM, 0)
 		})
 
 		it("should handle large bytecode arrays", () => {
-		// Create a larger array
+			// Create a larger array
 			const largeData = new Float32Array(1000)
 			for (let i = 0; i < 1000; i++) {
 				largeData[i] = i * 1.5
@@ -364,13 +422,17 @@ describe("MessageBuilder", () => {
 
 			const buffer = MessageBuilder.createBytecodeMessage(largeData)
 
-			// Check total size
-			expect(buffer.byteLength).toBe(1 + 1000 * 4)
+			// Bytecode data is 1000 floats * 4 bytes = 4000 bytes
+			// For large payloads, we should have the long format (with 2-byte length)
+			validateFrameStructure(buffer, MessageType.BYTECODE_PROGRAM, 4000)
 
-			// Check a few values by using the original array
-			expect(largeData[0]).toBeCloseTo(0)
-			expect(largeData[10]).toBeCloseTo(15)
-			expect(largeData[999]).toBeCloseTo(1498.5)
+			// Sample a few values to ensure they're correct
+			const view = new DataView(buffer)
+			const offset = getPayloadOffset(buffer)
+
+			expect(view.getFloat32(offset, true)).toBeCloseTo(0)
+			expect(view.getFloat32(offset + 40, true)).toBeCloseTo(10 * 1.5)
+			expect(view.getFloat32(offset + 3996, true)).toBeCloseTo(999 * 1.5)
 		})
 	})
 
@@ -378,9 +440,31 @@ describe("MessageBuilder", () => {
 		it("should create a valid stop sandbox message", () => {
 			const buffer = MessageBuilder.createStopSandboxCodeMessage()
 
-			expect(buffer.byteLength).toBe(1)
-			const view = new DataView(buffer)
-			expect(view.getUint8(0)).toBe(MessageType.STOP_SANDBOX_CODE)
+			validateFrameStructure(buffer, MessageType.STOP_SANDBOX_CODE, 0)
+		})
+	})
+
+	describe("createSerialHandshakeMessage", () => {
+		it("should create a valid handshake message", () => {
+			const buffer = MessageBuilder.createSerialHandshakeMessage()
+
+			validateFrameStructure(buffer, MessageType.SERIAL_HANDSHAKE, 0)
+		})
+	})
+
+	describe("createSerialKeepaliveMessage", () => {
+		it("should create a valid keepalive message", () => {
+			const buffer = MessageBuilder.createSerialKeepaliveMessage()
+
+			validateFrameStructure(buffer, MessageType.SERIAL_KEEPALIVE, 0)
+		})
+	})
+
+	describe("createSerialEndMessage", () => {
+		it("should create a valid end message", () => {
+			const buffer = MessageBuilder.createSerialEndMessage()
+
+			validateFrameStructure(buffer, MessageType.SERIAL_END, 0)
 		})
 	})
 })
