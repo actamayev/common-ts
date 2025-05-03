@@ -144,12 +144,38 @@ export class CppParser {
 
 					// Check if value is a sensor reading
 					const sensorMatch = varValue.match(/Sensors::getInstance\(\)\.(\w+)\(\)/)
+
+					// Check if value is a proximity detection function
+					const leftProximityMatch = varValue.match(/is_object_near_side_left\(\)/)
+					const rightProximityMatch = varValue.match(/is_object_near_side_right\(\)/)
+					const frontProximityMatch = varValue.match(/is_object_in_front\(\)/)
+
 					if (sensorMatch) {
 						// This is a sensor reading assignment
 						const sensorMethod = sensorMatch[1]
 						const sensorType = CppParserHelper.getSensorTypeFromMethod(sensorMethod)
 
 						// Add instruction to read sensor into the register
+						instructions.push({
+							opcode: BytecodeOpCode.READ_SENSOR,
+							operand1: sensorType,
+							operand2: register,
+							operand3: 0,
+							operand4: 0
+						})
+					} else if (typeEnum === VarType.BOOL && (leftProximityMatch || rightProximityMatch || frontProximityMatch)) {
+						// This is a proximity sensor assignment to a boolean
+						let sensorType: SensorType
+
+						if (leftProximityMatch) {
+							sensorType = SensorType.SIDE_LEFT_PROXIMITY
+						} else if (rightProximityMatch) {
+							sensorType = SensorType.SIDE_RIGHT_PROXIMITY
+						} else { // frontProximityMatch
+							sensorType = SensorType.FRONT_PROXIMITY
+						}
+
+						// Add instruction to read proximity sensor into the register
 						instructions.push({
 							opcode: BytecodeOpCode.READ_SENSOR,
 							operand1: sensorType,
@@ -188,7 +214,7 @@ export class CppParser {
 							operand3: 0,
 							operand4: 0
 						})
-						// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+					// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 					} else if (typeEnum === VarType.INT) {
 						// Parse integer value
 						const intValue = parseInt(varValue.trim(), 10)
@@ -197,8 +223,6 @@ export class CppParser {
 							throw new Error(`Invalid integer value: ${varValue}`)
 						}
 
-						// Split the integer into 3 bytes (supporting values up to 16,777,215)
-						// We're using 24-bit integers with sign bit
 						instructions.push({
 							opcode: BytecodeOpCode.SET_VAR,
 							operand1: register,
@@ -329,222 +353,70 @@ export class CppParser {
 
 			case CommandType.IF_STATEMENT: {
 				if (command.matches) {
-					// Check for front proximity detection first (by full match string)
-					if (command.matches[0].includes("is_object_in_front()")) {
-					  // This is a front proximity detection function
-					  // Allocate a register for the sensor value
-					  if (nextRegister >= MAX_REGISTERS) {
-							throw new Error(`Program exceeds maximum register count (${MAX_REGISTERS})`)
-					  }
-					  const register = nextRegister++
+					// Extract the condition inside the parentheses
+					const fullIfStatement = command.matches[0]
+					const conditionMatch = fullIfStatement.match(/^if\s*\(\s*(.*?)\s*\)$/)
 
-					  // Read sensor value
-					  instructions.push({
-							opcode: BytecodeOpCode.READ_SENSOR,
-							operand1: SensorType.FRONT_PROXIMITY,
-							operand2: register,
-							operand3: 0,
-							operand4: 0
-					  })
-
-					  // Compare with true (1)
-					  instructions.push({
-							opcode: BytecodeOpCode.COMPARE,
-							operand1: ComparisonOp.EQUAL,
-							operand2: 0x8000 | register,
-							operand3: 1, // true
-							operand4: 0
-					  })
-
-					  // Add conditional jump (to be filled later)
-					  const jumpIndex = instructions.length
-					  instructions.push({
-							opcode: BytecodeOpCode.JUMP_IF_FALSE,
-							operand1: 0, // Will be filled later
-							operand2: 0,
-							operand3: 0,
-							operand4: 0
-					  })
-
-					  // Track this block for later
-					  blockStack.push({ type: "if", jumpIndex })
+					if (!conditionMatch) {
+						throw new Error(`Invalid if statement: ${fullIfStatement}`)
 					}
-					// Check if this is a side proximity detection function (existing logic)
-					else if (command.matches[1] === "left" || command.matches[1] === "right") {
-					  // This is a proximity detection function
-					  const sensorType = CppParserHelper.getSensorTypeFromProximity(command.matches[1])
 
-					  // Allocate a register for the sensor value
-					  if (nextRegister >= MAX_REGISTERS) {
-							throw new Error(`Program exceeds maximum register count (${MAX_REGISTERS})`)
-					  }
-					  const register = nextRegister++
+					const condition = conditionMatch[1]
 
-					  // Read sensor value
-					  instructions.push({
-							opcode: BytecodeOpCode.READ_SENSOR,
-							operand1: sensorType,
-							operand2: register,
-							operand3: 0,
-							operand4: 0
-					  })
+					// Check if this is a comparison (has a comparison operator) or a simple condition
+					const comparisonMatch = condition.match(/(.+?)([<>=!][=]?)(.+)/)
 
-					  // Compare with true (1)
-					  instructions.push({
-							opcode: BytecodeOpCode.COMPARE,
-							operand1: ComparisonOp.EQUAL,
-							operand2: 0x8000 | register,
-							operand3: 1, // true
-							operand4: 0
-					  })
+					if (comparisonMatch) {
+					// This is a comparison expression
+						const leftExpr = comparisonMatch[1].trim()
+						const operator = comparisonMatch[2].trim()
+						const rightExpr = comparisonMatch[3].trim()
 
-					  // Add conditional jump (to be filled later)
-					  const jumpIndex = instructions.length
-					  instructions.push({
-							opcode: BytecodeOpCode.JUMP_IF_FALSE,
-							operand1: 0, // Will be filled later
-							operand2: 0,
-							operand3: 0,
-							operand4: 0
-					  })
+						// Parse comparison operator
+						const compOp = CppParserHelper.parseComparisonOperator(operator)
 
-					  // Track this block for later
-					  blockStack.push({ type: "if", jumpIndex })
-					} else {
-						// This is a standard comparison - could be a real one or a mocked test
+						// Process left and right operands
+						const leftResult = CppParserHelper.processOperand(leftExpr, variables, nextRegister, instructions)
+						nextRegister = leftResult.updatedNextRegister
 
-						// For normal expressions captured by the regex
-						let leftExpr, operator, rightExpr
-
-						// Check which format of matches array we're dealing with
-						if (command.matches.length >= 5 && command.matches[2] && command.matches[3] && command.matches[4]) {
-							// Standard regex match format
-							leftExpr = command.matches[2]
-							operator = command.matches[3]
-							rightExpr = command.matches[4]
-						} else if (command.matches.length >= 4) {
-							// This matches the format used by the mock in tests
-							leftExpr = command.matches[1]
-							operator = command.matches[2]
-							rightExpr = command.matches[3]
-						} else {
-							throw new Error("Invalid command format")
-						}
-
-						// Map operator to ComparisonOp
-						let compOp: ComparisonOp
-						switch (operator) {
-						case ">": compOp = ComparisonOp.GREATER_THAN; break
-						case "<": compOp = ComparisonOp.LESS_THAN; break
-						case ">=": compOp = ComparisonOp.GREATER_EQUAL; break
-						case "<=": compOp = ComparisonOp.LESS_EQUAL; break
-						case "==": compOp = ComparisonOp.EQUAL; break
-						case "!=": compOp = ComparisonOp.NOT_EQUAL; break
-						default: throw new Error(`Unsupported operator: ${operator}`)
-						}
-
-						// Rest of your existing comparison logic...
-						// [Keep all the existing leftOperand and rightOperand handling]
-
-						// Existing code for comparing and setting up conditional branches
-						let leftOperand: number
-						let rightOperand: number
-
-						// Handle left side of comparison
-						const leftSensorMatch = leftExpr.match(/Sensors::getInstance\(\)\.(\w+)\(\)/)
-						if (leftSensorMatch) {
-							// This is a sensor comparison
-							const sensorMethod = leftSensorMatch[1]
-							const sensorType = CppParserHelper.getSensorTypeFromMethod(sensorMethod)
-
-							// Allocate a register for the sensor value
-							if (nextRegister >= MAX_REGISTERS) {
-								throw new Error(`Program exceeds maximum register count (${MAX_REGISTERS})`)
-							}
-							const register = nextRegister++
-
-							// Add instruction to read sensor into register
-							instructions.push({
-								opcode: BytecodeOpCode.READ_SENSOR,
-								operand1: sensorType,
-								operand2: register,
-								operand3: 0,
-								operand4: 0
-							})
-
-							leftOperand = 0x8000 | register  // High bit indicates register reference
-						} else if (variables.has(leftExpr)) {
-							// This is a variable reference
-							const variable = variables.get(leftExpr) as VariableType
-							leftOperand = 0x8000 | variable.register  // High bit indicates register reference
-						} else {
-							// This is a numeric constant
-							const leftValue = parseFloat(leftExpr)
-							if (isNaN(leftValue)) {
-								throw new Error(`Undefined variable or invalid number: ${leftExpr}`)
-							}
-							leftOperand = leftValue
-						}
-
-						// Handle right side of comparison - same as existing logic
-						// [Keep all your existing right operand handling]
-						const rightSensorMatch = rightExpr.match(/Sensors::getInstance\(\)\.(\w+)\(\)/)
-						if (rightSensorMatch) {
-							// This is a sensor comparison on the right side
-							const sensorMethod = rightSensorMatch[1]
-							const sensorType = CppParserHelper.getSensorTypeFromMethod(sensorMethod)
-
-							// Allocate a register for the sensor value
-							if (nextRegister >= MAX_REGISTERS) {
-								throw new Error(`Program exceeds maximum register count (${MAX_REGISTERS})`)
-							}
-							const register = nextRegister++
-
-							// Add instruction to read sensor into register
-							instructions.push({
-								opcode: BytecodeOpCode.READ_SENSOR,
-								operand1: sensorType,
-								operand2: register,
-								operand3: 0,
-								operand4: 0
-							})
-
-							rightOperand = 0x8000 | register  // High bit indicates register reference
-						} else if (variables.has(rightExpr)) {
-							// This is a variable reference
-							const variable = variables.get(rightExpr) as VariableType
-							rightOperand = 0x8000 | variable.register  // High bit indicates register reference
-						} else {
-							// This is a numeric constant
-							const rightValue = parseFloat(rightExpr)
-							if (isNaN(rightValue)) {
-								throw new Error(`Undefined variable or invalid number: ${rightExpr}`)
-							}
-							rightOperand = rightValue
-						}
+						const rightResult = CppParserHelper.processOperand(rightExpr, variables, nextRegister, instructions)
+						nextRegister = rightResult.updatedNextRegister
 
 						// Add comparison instruction
 						instructions.push({
 							opcode: BytecodeOpCode.COMPARE,
 							operand1: compOp,
-							operand2: leftOperand,
-							operand3: rightOperand,
+							operand2: leftResult.operand,
+							operand3: rightResult.operand,
 							operand4: 0
 						})
+					} else {
+					// This is a simple condition (variable, is_object_in_front(), etc.)
+						const result = CppParserHelper.processOperand(condition, variables, nextRegister, instructions)
+						nextRegister = result.updatedNextRegister
 
-						// Add conditional jump (to be fixed later)
-						const jumpIndex = instructions.length
+						// Add comparison with true
 						instructions.push({
-							opcode: BytecodeOpCode.JUMP_IF_FALSE,
-							operand1: 0, // Will be filled later
-							operand2: 0,
-							operand3: 0,
+							opcode: BytecodeOpCode.COMPARE,
+							operand1: ComparisonOp.EQUAL,
+							operand2: result.operand,
+							operand3: 1, // true
 							operand4: 0
 						})
-
-						// Track this block for later
-						blockStack.push({ type: "if", jumpIndex })
 					}
+
+					// Add jump for if/else branching
+					const jumpIndex = instructions.length
+					instructions.push({
+						opcode: BytecodeOpCode.JUMP_IF_FALSE,
+						operand1: 0, // Will be filled later
+						operand2: 0,
+						operand3: 0,
+						operand4: 0
+					})
+
+					// Track this block for later
+					blockStack.push({ type: "if", jumpIndex })
 				}
 				break
 			}

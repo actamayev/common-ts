@@ -91,6 +91,147 @@ describe("Variable assignments", () => {
 			expect(bytecode[8]).toBe(0)
 		})
 	})
+
+	describe("Proximity Sensor Variable Assignments", () => {
+		test("should parse boolean variable assignment with front proximity sensor", () => {
+		  const bytecode = CppParser.cppToByte("bool isObjectInFront = is_object_in_front();")
+
+		  // First instruction: DECLARE_VAR
+		  expect(bytecode[0]).toBe(BytecodeOpCode.DECLARE_VAR)
+		  expect(bytecode[1]).toBe(0)                        // register 0
+		  expect(bytecode[2]).toBe(VarType.BOOL)             // boolean type
+		  expect(bytecode[3]).toBe(0)                        // unused
+		  expect(bytecode[4]).toBe(0)                        // unused
+
+		  // Second instruction: READ_SENSOR (not SET_VAR)
+		  expect(bytecode[5]).toBe(BytecodeOpCode.READ_SENSOR)
+		  expect(bytecode[6]).toBe(SensorType.FRONT_PROXIMITY) // front proximity sensor
+		  expect(bytecode[7]).toBe(0)                        // register 0
+		  expect(bytecode[8]).toBe(0)                        // unused
+		  expect(bytecode[9]).toBe(0)                        // unused
+
+		  // Third instruction: END
+		  expect(bytecode[10]).toBe(BytecodeOpCode.END)
+		  expect(bytecode.length).toBe(15) // 3 instructions * 5
+		})
+
+		test("should parse boolean variable assignment with left proximity sensor", () => {
+		  const bytecode = CppParser.cppToByte("bool isObjectOnLeft = is_object_near_side_left();")
+
+		  // First instruction: DECLARE_VAR
+		  expect(bytecode[0]).toBe(BytecodeOpCode.DECLARE_VAR)
+		  expect(bytecode[1]).toBe(0)                        // register 0
+		  expect(bytecode[2]).toBe(VarType.BOOL)             // boolean type
+
+		  // Second instruction: READ_SENSOR
+		  expect(bytecode[5]).toBe(BytecodeOpCode.READ_SENSOR)
+		  expect(bytecode[6]).toBe(SensorType.SIDE_LEFT_PROXIMITY) // left proximity sensor
+		  expect(bytecode[7]).toBe(0)                        // register 0
+		})
+
+		test("should parse boolean variable assignment with right proximity sensor", () => {
+		  const bytecode = CppParser.cppToByte("bool isObjectOnRight = is_object_near_side_right();")
+
+		  // First instruction: DECLARE_VAR
+		  expect(bytecode[0]).toBe(BytecodeOpCode.DECLARE_VAR)
+		  expect(bytecode[1]).toBe(0)                        // register 0
+		  expect(bytecode[2]).toBe(VarType.BOOL)             // boolean type
+
+		  // Second instruction: READ_SENSOR
+		  expect(bytecode[5]).toBe(BytecodeOpCode.READ_SENSOR)
+		  expect(bytecode[6]).toBe(SensorType.SIDE_RIGHT_PROXIMITY) // right proximity sensor
+		  expect(bytecode[7]).toBe(0)                        // register 0
+		})
+
+		test("should handle multiple proximity sensor variables", () => {
+		  const bytecode = CppParser.cppToByte(`
+			bool front = is_object_in_front();
+			bool left = is_object_near_side_left();
+			bool right = is_object_near_side_right();
+		  `)
+
+		  // Check for three DECLARE_VAR instructions
+		  let declareVarCount = 0
+		  for (let i = 0; i < bytecode.length; i += 5) {
+				if (bytecode[i] === BytecodeOpCode.DECLARE_VAR && bytecode[i + 2] === VarType.BOOL) {
+			  declareVarCount++
+				}
+		  }
+		  expect(declareVarCount).toBe(3)
+
+		  // Check for all three proximity sensor types
+		  let frontFound = false
+		  let leftFound = false
+		  let rightFound = false
+
+		  for (let i = 0; i < bytecode.length; i += 5) {
+				if (bytecode[i] === BytecodeOpCode.READ_SENSOR) {
+			  if (bytecode[i + 1] === SensorType.FRONT_PROXIMITY) {
+						frontFound = true
+			  } else if (bytecode[i + 1] === SensorType.SIDE_LEFT_PROXIMITY) {
+						leftFound = true
+			  } else if (bytecode[i + 1] === SensorType.SIDE_RIGHT_PROXIMITY) {
+						rightFound = true
+			  }
+				}
+		  }
+
+		  expect(frontFound).toBe(true)
+		  expect(leftFound).toBe(true)
+		  expect(rightFound).toBe(true)
+		})
+
+		test("should throw error when assigning proximity sensor to non-boolean type", () => {
+		  // Proximity sensors return boolean values, so they should only be assigned to boolean variables
+		  expect(() => {
+				CppParser.cppToByte("int wrongType = is_object_in_front();")
+		  }).toThrow() // This should throw some kind of error
+		})
+
+		test("should handle proximity sensor with conditional logic", () => {
+		  const bytecode = CppParser.cppToByte(`
+			bool frontObject = is_object_in_front();
+			if (frontObject) {
+			  rgbLed.set_led_red();
+			} else {
+			  rgbLed.set_led_green();
+			}
+		  `)
+
+		  // Check for DECLARE_VAR and READ_SENSOR
+		  expect(bytecode[0]).toBe(BytecodeOpCode.DECLARE_VAR)
+		  expect(bytecode[2]).toBe(VarType.BOOL)
+		  expect(bytecode[5]).toBe(BytecodeOpCode.READ_SENSOR)
+		  expect(bytecode[6]).toBe(SensorType.FRONT_PROXIMITY)
+
+		  // Should find COMPARE instruction that uses the variable
+		  let compareFound = false
+		  for (let i = 10; i < bytecode.length; i += 5) {
+				if (bytecode[i] === BytecodeOpCode.COMPARE) {
+			  if (bytecode[i + 2] === 0x8000) { // Register 0 with high bit set
+						compareFound = true
+						break
+			  }
+				}
+		  }
+		  expect(compareFound).toBe(true)
+
+		  // Should find both red and green LED instructions
+		  let redLedFound = false
+		  let greenLedFound = false
+		  for (let i = 0; i < bytecode.length; i += 5) {
+				if (bytecode[i] === BytecodeOpCode.SET_ALL_LEDS) {
+			  if (bytecode[i + 1] === MAX_LED_BRIGHTNESS && bytecode[i + 2] === 0 && bytecode[i + 3] === 0) {
+						redLedFound = true
+			  } else if (bytecode[i + 1] === 0 && bytecode[i + 2] === MAX_LED_BRIGHTNESS && bytecode[i + 3] === 0) {
+						greenLedFound = true
+			  }
+				}
+		  }
+		  expect(redLedFound).toBe(true)
+		  expect(greenLedFound).toBe(true)
+		})
+	  })
 })
 
 // 2.2 Test LED operations
