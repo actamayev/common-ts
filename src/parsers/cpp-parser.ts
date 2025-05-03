@@ -1,12 +1,13 @@
 /* eslint-disable max-len, complexity, max-lines-per-function, max-depth */
 import { INSTRUCTION_SIZE, MAX_JUMP_DISTANCE, MAX_LED_BRIGHTNESS, MAX_PROGRAM_SIZE, MAX_REGISTERS } from "../types/private/constants"
 import { BytecodeOpCode, CommandPatterns, CommandType, ComparisonOp, LedID, SensorType, VarType } from "../types/public/bytecode-types"
+import { CppParserHelper } from "./cpp-parser-helper"
 
 export class CppParser {
 
 	public static cppToByte(unsanitizedCpp: string): Float32Array {
-		const sanitizedCode = this.sanitizeUserCode(unsanitizedCpp)
-		const validationResult = this.validateBalancedSyntax(sanitizedCode)
+		const sanitizedCode = CppParserHelper.sanitizeUserCode(unsanitizedCpp)
+		const validationResult = CppParserHelper.validateBalancedSyntax(sanitizedCode)
 		if (validationResult !== true) {
 		  throw new Error(`Syntax error: ${validationResult}`)
 		}
@@ -160,7 +161,7 @@ export class CppParser {
 					if (sensorMatch) {
 						// This is a sensor reading assignment
 						const sensorMethod = sensorMatch[1]
-						const sensorType = this.getSensorTypeFromMethod(sensorMethod)
+						const sensorType = CppParserHelper.getSensorTypeFromMethod(sensorMethod)
 
 						// Add instruction to read sensor into the register
 						instructions.push({
@@ -385,7 +386,7 @@ export class CppParser {
 					// Check if this is a side proximity detection function (existing logic)
 					else if (command.matches[1] === "left" || command.matches[1] === "right") {
 					  // This is a proximity detection function
-					  const sensorType = this.getSensorTypeFromProximity(command.matches[1])
+					  const sensorType = CppParserHelper.getSensorTypeFromProximity(command.matches[1])
 
 					  // Allocate a register for the sensor value
 					  if (nextRegister >= MAX_REGISTERS) {
@@ -468,7 +469,7 @@ export class CppParser {
 						if (leftSensorMatch) {
 							// This is a sensor comparison
 							const sensorMethod = leftSensorMatch[1]
-							const sensorType = this.getSensorTypeFromMethod(sensorMethod)
+							const sensorType = CppParserHelper.getSensorTypeFromMethod(sensorMethod)
 
 							// Allocate a register for the sensor value
 							if (nextRegister >= MAX_REGISTERS) {
@@ -505,7 +506,7 @@ export class CppParser {
 						if (rightSensorMatch) {
 							// This is a sensor comparison on the right side
 							const sensorMethod = rightSensorMatch[1]
-							const sensorType = this.getSensorTypeFromMethod(sensorMethod)
+							const sensorType = CppParserHelper.getSensorTypeFromMethod(sensorMethod)
 
 							// Allocate a register for the sensor value
 							if (nextRegister >= MAX_REGISTERS) {
@@ -708,15 +709,15 @@ export class CppParser {
 					const rightExpr2 = command.matches[6]
 
 					// Parse first comparison operator
-					const compOp1 = this.parseComparisonOperator(operator1)
+					const compOp1 = CppParserHelper.parseComparisonOperator(operator1)
 
 					// Handle left operand of first condition
-					const leftOperandResult1 = this.processOperand(leftExpr1, variables, nextRegister, instructions)
+					const leftOperandResult1 = CppParserHelper.processOperand(leftExpr1, variables, nextRegister, instructions)
 					nextRegister = leftOperandResult1.updatedNextRegister
 					const leftOperand1 = leftOperandResult1.operand
 
 					// Handle right operand of first condition
-					const rightOperandResult1 = this.processOperand(rightExpr1, variables, nextRegister, instructions)
+					const rightOperandResult1 = CppParserHelper.processOperand(rightExpr1, variables, nextRegister, instructions)
 					nextRegister = rightOperandResult1.updatedNextRegister
 					const rightOperand1 = rightOperandResult1.operand
 
@@ -741,15 +742,15 @@ export class CppParser {
 					})
 
 					// Parse second comparison operator
-					const compOp2 = this.parseComparisonOperator(operator2)
+					const compOp2 = CppParserHelper.parseComparisonOperator(operator2)
 
 					// Handle left operand of second condition
-					const leftOperandResult2 = this.processOperand(leftExpr2, variables, nextRegister, instructions)
+					const leftOperandResult2 = CppParserHelper.processOperand(leftExpr2, variables, nextRegister, instructions)
 					nextRegister = leftOperandResult2.updatedNextRegister
 					const leftOperand2 = leftOperandResult2.operand
 
 					// Handle right operand of second condition
-					const rightOperandResult2 = this.processOperand(rightExpr2, variables, nextRegister, instructions)
+					const rightOperandResult2 = CppParserHelper.processOperand(rightExpr2, variables, nextRegister, instructions)
 					nextRegister = rightOperandResult2.updatedNextRegister
 					const rightOperand2 = rightOperandResult2.operand
 
@@ -792,15 +793,15 @@ export class CppParser {
 					const rightExpr2 = command.matches[6]
 
 					// Parse first comparison operator
-					const compOp1 = this.parseComparisonOperator(operator1)
+					const compOp1 = CppParserHelper.parseComparisonOperator(operator1)
 
 					// Handle left operand of first condition
-					const leftOperandResult1 = this.processOperand(leftExpr1, variables, nextRegister, instructions)
+					const leftOperandResult1 = CppParserHelper.processOperand(leftExpr1, variables, nextRegister, instructions)
 					nextRegister = leftOperandResult1.updatedNextRegister
 					const leftOperand1 = leftOperandResult1.operand
 
 					// Handle right operand of first condition
-					const rightOperandResult1 = this.processOperand(rightExpr1, variables, nextRegister, instructions)
+					const rightOperandResult1 = CppParserHelper.processOperand(rightExpr1, variables, nextRegister, instructions)
 					nextRegister = rightOperandResult1.updatedNextRegister
 					const rightOperand1 = rightOperandResult1.operand
 
@@ -825,15 +826,15 @@ export class CppParser {
 					})
 
 					// Parse second comparison operator
-					const compOp2 = this.parseComparisonOperator(operator2)
+					const compOp2 = CppParserHelper.parseComparisonOperator(operator2)
 
 					// Handle left operand of second condition
-					const leftOperandResult2 = this.processOperand(leftExpr2, variables, nextRegister, instructions)
+					const leftOperandResult2 = CppParserHelper.processOperand(leftExpr2, variables, nextRegister, instructions)
 					nextRegister = leftOperandResult2.updatedNextRegister
 					const leftOperand2 = leftOperandResult2.operand
 
 					// Handle right operand of second condition
-					const rightOperandResult2 = this.processOperand(rightExpr2, variables, nextRegister, instructions)
+					const rightOperandResult2 = CppParserHelper.processOperand(rightExpr2, variables, nextRegister, instructions)
 					nextRegister = rightOperandResult2.updatedNextRegister
 					const rightOperand2 = rightOperandResult2.operand
 
@@ -1150,178 +1151,5 @@ export class CppParser {
 		})
 
 		return bytecode
-	}
-
-	private static sanitizeUserCode(userCode: string): string {
-		// STEP 1: Find for loop declarations and protect their semicolons
-		let cleanUserCode = userCode
-
-		const forLoopRegex = /for\s*\(\s*int\s+\w+\s*=\s*\d+\s*;\s*\w+\s*[<>=!][=]?\s*\d+\s*;\s*\w+\s*\+\+\s*\)/g
-		cleanUserCode = cleanUserCode.replace(forLoopRegex, (match) => {
-			return match.replace(/;/g, "###SEMICOLON###")
-		})
-
-		// STEP 2: Normal sanitization
-		return cleanUserCode
-			.trim()
-		// Remove comments
-			.replace(/\/\/.*$/gm, "")
-			.replace(/\/\*[\s\S]*?\*\//g, "")
-		// Add spaces around braces and make them separate tokens
-			.replace(/{/g, " ; { ; ")
-			.replace(/}/g, " ; } ; ")
-		// Make sure else is a separate token
-			.replace(/}\s*else/g, "} ; else")
-		// Normalize whitespace
-			.replace(/\s+/g, " ")
-		// Escape single quotes
-			.replace(/'/g, "'\\''")
-
-		// NOTE: We are NOT restoring semicolons here!
-		// We'll restore them after splitting into statements
-	}
-
-	private static validateBalancedSyntax(code: string): boolean | string {
-		const stack: CharacterStack[] = []
-		const pairs: Record<string, string> = {
-			"{": "}",
-			"(": ")",
-			"[": "]"
-		}
-
-		for (let i = 0; i < code.length; i++) {
-			const char = code[i]
-
-			// Skip characters in strings
-			if (char === "\"" || char === "'") {
-				// Simple string skipping - you might need more sophisticated logic
-				const quote = char
-				i++
-				while (i < code.length && code[i] !== quote) {
-					if (code[i] === "\\") i++ // Skip escaped characters
-					i++
-				}
-				continue
-			}
-
-			// Skip comments
-			if (char === "/" && i + 1 < code.length) {
-				if (code[i + 1] === "/") {
-					// Line comment - skip to end of line
-					while (i < code.length && code[i] !== "\n") i++
-					continue
-				} else if (code[i + 1] === "*") {
-					// Block comment - skip to */
-					i += 2
-					while (i + 1 < code.length && !(code[i] === "*" && code[i + 1] === "/")) i++
-					i++ // Skip the closing /
-					continue
-				}
-			}
-
-			// Handle brackets
-			if ("{([".includes(char)) {
-				stack.push({ char, pos: i })
-			} else if ("})]".includes(char)) {
-				if (stack.length === 0) {
-					return `Unexpected closing '${char}' at position ${i}`
-				}
-
-				const lastOpen = stack.pop() as CharacterStack
-				if (pairs[lastOpen.char] !== char) {
-					return `Expected '${pairs[lastOpen.char]}' but found '${char}' at position ${i}`
-				}
-			}
-		}
-
-		if (stack.length > 0) {
-			const unclosed = stack[stack.length - 1]
-			return `Unclosed '${unclosed.char}' at position ${unclosed.pos}`
-		}
-
-		return true
-	}
-
-	private static getSensorTypeFromMethod(sensorMethod: string): number {
-		switch (sensorMethod) {
-		case "getPitch": return SensorType.PITCH
-		case "getRoll": return SensorType.ROLL
-		case "getYaw": return SensorType.YAW
-		case "getXAccel": return SensorType.ACCEL_X
-		case "getYAccel": return SensorType.ACCEL_Y
-		case "getZAccel": return SensorType.ACCEL_Z
-		case "getAccelMagnitude": return SensorType.ACCEL_MAG
-		case "getXRotationRate": return SensorType.ROT_RATE_X
-		case "getYRotationRate": return SensorType.ROT_RATE_Y
-		case "getZRotationRate": return SensorType.ROT_RATE_Z
-		case "getMagneticFieldX": return SensorType.MAG_FIELD_X
-		case "getMagneticFieldY": return SensorType.MAG_FIELD_Y
-		case "getMagneticFieldZ": return SensorType.MAG_FIELD_Z
-		default: throw new Error(`Unknown sensor method: ${sensorMethod}`)
-		}
-	}
-
-	private static parseComparisonOperator(operator: string): ComparisonOp {
-		switch (operator) {
-		case ">": return ComparisonOp.GREATER_THAN
-		case "<": return ComparisonOp.LESS_THAN
-		case ">=": return ComparisonOp.GREATER_EQUAL
-		case "<=": return ComparisonOp.LESS_EQUAL
-		case "==": return ComparisonOp.EQUAL
-		case "!=": return ComparisonOp.NOT_EQUAL
-		default: throw new Error(`Unsupported operator: ${operator}`)
-		}
-	}
-
-
-	private static processOperand(expr: string, variables: Map<string, VariableType>, nextRegister: number, instructions: BytecodeInstruction[]): {
-		operand: number,
-		updatedNextRegister: number
-	} {
-		// Check if this is a sensor reading
-		const sensorMatch = expr.match(/Sensors::getInstance\(\)\.(\w+)\(\)/)
-		if (sensorMatch) {
-			// This is a sensor comparison
-			const sensorMethod = sensorMatch[1]
-			const sensorType = this.getSensorTypeFromMethod(sensorMethod)
-
-			// Allocate a register for the sensor value
-			if (nextRegister >= MAX_REGISTERS) {
-				throw new Error(`Program exceeds maximum register count (${MAX_REGISTERS})`)
-			}
-			const register = nextRegister++
-
-			// Add instruction to read sensor into register
-			instructions.push({
-				opcode: BytecodeOpCode.READ_SENSOR,
-				operand1: sensorType,
-				operand2: register,
-				operand3: 0,
-				operand4: 0
-			})
-
-			return { operand: 0x8000 | register, updatedNextRegister: nextRegister }
-		} else if (variables.has(expr)) {
-			// This is a variable reference
-			const variable = variables.get(expr) as VariableType
-			return { operand: 0x8000 | variable.register, updatedNextRegister: nextRegister }
-		} else {
-			// This is a numeric constant
-			const value = parseFloat(expr)
-			if (isNaN(value)) {
-				throw new Error(`Undefined variable or invalid number: ${expr}`)
-			}
-			return { operand: value, updatedNextRegister: nextRegister }
-		}
-	}
-
-	// Add this helper method to your CppParser class
-	private static getSensorTypeFromProximity(proximityType: string): SensorType {
-		switch (proximityType) {
-		case "left": return SensorType.SIDE_LEFT_PROXIMITY
-		case "right": return SensorType.SIDE_RIGHT_PROXIMITY
-		case "front": return SensorType.FRONT_PROXIMITY
-		default: throw new Error(`Unknown proximity type: ${proximityType}`)
-		}
 	}
 }
