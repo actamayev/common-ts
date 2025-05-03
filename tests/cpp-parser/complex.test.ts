@@ -1,5 +1,5 @@
 import { CppParser } from "../../src"
-import { BytecodeOpCode, ComparisonOp, SensorType } from "../../src/types/public/bytecode-types"
+import { BytecodeOpCode, ComparisonOp, SensorType, VarType } from "../../src/types/public/bytecode-types"
 import { MAX_LED_BRIGHTNESS } from "../../src/types/private/constants"
 
 describe("Complex Nested Structures", () => {
@@ -331,25 +331,21 @@ describe("Boundary Conditions", () => {
 		}
 	})
 
-	test("should handle large compound conditions", () => {
-	// This test can't actually work because the parser only supports simple && and || combinations
-	// But it tests the parser's error handling for complex conditions
-
+	test("should reject complex nested conditions for now", () => {
 		expect(() => {
-			const code = `
-	float x = 10.5;
-	float y = 20.3;
-	float z = 30.7;
-	
-	// A complex condition that would need recursive parsing
-	if ((x > 5 && y < 30) || (z > 20 && x < 15) || (y > 15 && z < 40)) {
-		rgbLed.set_led_red();
-	}
-	`
+		  const code = `
+			float x = 10.5;
+			float y = 20.3;
+			float z = 30.7;
+			
+			if ((x > 5 && y < 30) || (z > 20 && x < 15) || (y > 15 && z < 40)) {
+			  rgbLed.set_led_red();
+			}
+		  `
 
-			CppParser.cppToByte(code)
-		}).toThrow() // This should correctly throw since the parser only handles simple patterns
-	})
+		  CppParser.cppToByte(code)
+		}).toThrow("Complex conditions with multiple logical operators are not supported")
+	  })
 })
 
 describe("Error Handling Edge Cases", () => {
@@ -496,19 +492,49 @@ describe("Proximity Sensor Functionality", () => {
 
 		test("should handle assigning front proximity sensor result to variable", () => {
 			const code = `
-        bool objectDetected = is_object_in_front();
-        if (objectDetected) {
-          rgbLed.set_led_red();
-        } else {
-          rgbLed.set_led_green();
-        }
-      `
+			  bool objectDetected = is_object_in_front();
+			  if (objectDetected) {
+				rgbLed.set_led_red();
+			  } else {
+				rgbLed.set_led_green();
+			  }
+			`
 
-			// This should throw since direct assignment from is_object_in_front()
-			// to a variable is not supported in the pattern matching
-			expect(() => {
-				CppParser.cppToByte(code)
-			}).toThrow()
-		})
+			// Parse the code (should not throw now)
+			const bytecode = CppParser.cppToByte(code)
+
+			// Check for DECLARE_VAR and READ_SENSOR
+			expect(bytecode[0]).toBe(BytecodeOpCode.DECLARE_VAR)
+			expect(bytecode[2]).toBe(VarType.BOOL)
+			expect(bytecode[5]).toBe(BytecodeOpCode.READ_SENSOR)
+			expect(bytecode[6]).toBe(SensorType.FRONT_PROXIMITY)
+
+			// Should find COMPARE instruction that uses the variable
+			let compareFound = false
+			for (let i = 10; i < bytecode.length; i += 5) {
+			  if (bytecode[i] === BytecodeOpCode.COMPARE) {
+					if (bytecode[i + 2] === 0x8000) { // Register 0 with high bit set
+				  compareFound = true
+				  break
+					}
+			  }
+			}
+			expect(compareFound).toBe(true)
+
+			// Should find both red and green LED instructions
+			let redLedFound = false
+			let greenLedFound = false
+			for (let i = 0; i < bytecode.length; i += 5) {
+			  if (bytecode[i] === BytecodeOpCode.SET_ALL_LEDS) {
+					if (bytecode[i + 1] === MAX_LED_BRIGHTNESS && bytecode[i + 2] === 0 && bytecode[i + 3] === 0) {
+				  redLedFound = true
+					} else if (bytecode[i + 1] === 0 && bytecode[i + 2] === MAX_LED_BRIGHTNESS && bytecode[i + 3] === 0) {
+				  greenLedFound = true
+					}
+			  }
+			}
+			expect(redLedFound).toBe(true)
+			expect(greenLedFound).toBe(true)
+		  })
 	})
 })

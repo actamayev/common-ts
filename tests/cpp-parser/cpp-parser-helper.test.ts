@@ -418,23 +418,225 @@ describe("CppParserHelper", () => {
 	})
 
 	test("should throw error for unsupported comparison operator", () => {
-	// Store the original method
-		const originalIdentifyCommand = CppParserHelper.identifyCommand
+		// Let's directly modify CppParserHelper.parseComparisonOperator
+		const originalParseComparisonOperator = CppParserHelper.parseComparisonOperator
 
 		try {
-		// Mock the helper's identifyCommand method to return an IF_STATEMENT with unsupported operator
-			CppParserHelper.identifyCommand = jest.fn().mockReturnValue({
-				type: CommandType.IF_STATEMENT,
-				matches: ["if (10 <=> 5)", "10", "<=>", "5"] // <=> is not a supported operator
-			})
+		  // Mock the parseComparisonOperator method to throw when it sees <=>
+		  CppParserHelper.parseComparisonOperator = jest.fn().mockImplementation((op) => {
+				if (op === "<=>") {
+			  throw new Error("Unsupported operator: <=>")
+				}
+				return originalParseComparisonOperator(op)
+		  })
 
-			// This should throw an "Unsupported operator" error
-			expect(() => {
+		  // This should now throw the unsupported operator error
+		  expect(() => {
 				CppParser.cppToByte("if (10 <=> 5) { rgbLed.set_led_red(); }")
-			}).toThrow(/Unsupported operator: <=>/)
+		  }).toThrow("Invalid command: \"if (10 <=> 5)\"")
 		} finally {
-		// Restore the original method
-			CppParserHelper.identifyCommand = originalIdentifyCommand
+		  // Restore original method
+		  CppParserHelper.parseComparisonOperator = originalParseComparisonOperator
 		}
+	  })
+
+	describe("CppParserHelper.processOperand for proximity sensors", () => {
+		test("should process left side proximity detection", () => {
+			// Setup
+			const expr = "is_object_near_side_left()"
+			const variables = new Map()
+			const nextRegister = 0
+			const instructions: BytecodeInstruction[] = []
+
+			// Execute
+			const result = CppParserHelper.processOperand(expr, variables, nextRegister, instructions)
+
+			// Verify
+			expect(instructions.length).toBe(1)
+			expect(instructions[0].opcode).toBe(BytecodeOpCode.READ_SENSOR)
+			expect(instructions[0].operand1).toBe(SensorType.SIDE_LEFT_PROXIMITY)
+			expect(instructions[0].operand2).toBe(0) // Register 0
+			expect(instructions[0].operand3).toBe(0)
+			expect(instructions[0].operand4).toBe(0)
+
+			expect(result.operand).toBe(0x8000) // Register 0 with high bit set
+			expect(result.updatedNextRegister).toBe(1)
+		})
+
+		test("should process right side proximity detection", () => {
+			// Setup
+			const expr = "is_object_near_side_right()"
+			const variables = new Map()
+			const nextRegister = 0
+			const instructions: BytecodeInstruction[] = []
+
+			// Execute
+			const result = CppParserHelper.processOperand(expr, variables, nextRegister, instructions)
+
+			// Verify
+			expect(instructions.length).toBe(1)
+			expect(instructions[0].opcode).toBe(BytecodeOpCode.READ_SENSOR)
+			expect(instructions[0].operand1).toBe(SensorType.SIDE_RIGHT_PROXIMITY)
+			expect(instructions[0].operand2).toBe(0) // Register 0
+			expect(instructions[0].operand3).toBe(0)
+			expect(instructions[0].operand4).toBe(0)
+
+			expect(result.operand).toBe(0x8000) // Register 0 with high bit set
+			expect(result.updatedNextRegister).toBe(1)
+		})
+
+		test("should process front proximity detection", () => {
+			// Setup
+			const expr = "is_object_in_front()"
+			const variables = new Map()
+			const nextRegister = 0
+			const instructions: BytecodeInstruction[] = []
+
+			// Execute
+			const result = CppParserHelper.processOperand(expr, variables, nextRegister, instructions)
+
+			// Verify
+			expect(instructions.length).toBe(1)
+			expect(instructions[0].opcode).toBe(BytecodeOpCode.READ_SENSOR)
+			expect(instructions[0].operand1).toBe(SensorType.FRONT_PROXIMITY)
+			expect(instructions[0].operand2).toBe(0) // Register 0
+			expect(instructions[0].operand3).toBe(0)
+			expect(instructions[0].operand4).toBe(0)
+
+			expect(result.operand).toBe(0x8000) // Register 0 with high bit set
+			expect(result.updatedNextRegister).toBe(1)
+		})
+
+		test("should throw error when registers are exhausted for proximity detection", () => {
+			// Setup
+			const expr = "is_object_in_front()"
+			const variables = new Map()
+			const nextRegister = MAX_REGISTERS // Set to max to trigger error
+			const instructions: BytecodeInstruction[] = []
+
+			// Verify
+			expect(() => {
+				CppParserHelper.processOperand(expr, variables, nextRegister, instructions)
+			}).toThrow(/exceeds maximum register count/)
+
+			// Should not have added any instructions
+			expect(instructions.length).toBe(0)
+		})
+
+		test("should increment register for multiple proximity detections", () => {
+			const variables = new Map()
+			let nextRegister = 0
+			const instructions: BytecodeInstruction[] = []
+
+			// Process first proximity
+			const result1 = CppParserHelper.processOperand(
+				"is_object_near_side_left()",
+				variables,
+				nextRegister,
+				instructions
+			)
+
+			// Update nextRegister
+			nextRegister = result1.updatedNextRegister
+
+			// Process second proximity
+			const result2 = CppParserHelper.processOperand(
+				"is_object_in_front()",
+				variables,
+				nextRegister,
+				instructions
+			)
+
+			// Update nextRegister
+			nextRegister = result2.updatedNextRegister
+
+			// Process third proximity
+			const result3 = CppParserHelper.processOperand(
+				"is_object_near_side_right()",
+				variables,
+				nextRegister,
+				instructions
+			)
+
+			// Verify first instruction
+			expect(instructions[0].opcode).toBe(BytecodeOpCode.READ_SENSOR)
+			expect(instructions[0].operand1).toBe(SensorType.SIDE_LEFT_PROXIMITY)
+			expect(instructions[0].operand2).toBe(0) // Register 0
+
+			// Verify second instruction
+			expect(instructions[1].opcode).toBe(BytecodeOpCode.READ_SENSOR)
+			expect(instructions[1].operand1).toBe(SensorType.FRONT_PROXIMITY)
+			expect(instructions[1].operand2).toBe(1) // Register 1
+
+			// Verify third instruction
+			expect(instructions[2].opcode).toBe(BytecodeOpCode.READ_SENSOR)
+			expect(instructions[2].operand1).toBe(SensorType.SIDE_RIGHT_PROXIMITY)
+			expect(instructions[2].operand2).toBe(2) // Register 2
+
+			// Verify returned values
+			expect(result1.operand).toBe(0x8000) // Register 0 with high bit
+			expect(result2.operand).toBe(0x8001) // Register 1 with high bit
+			expect(result3.operand).toBe(0x8002) // Register 2 with high bit
+			expect(result3.updatedNextRegister).toBe(3)
+		})
+
+		test("should handle mix of proximity sensors and regular sensors", () => {
+			const variables = new Map()
+			let nextRegister = 0
+			const instructions: BytecodeInstruction[] = []
+
+			// Process proximity sensor
+			const result1 = CppParserHelper.processOperand(
+				"is_object_in_front()",
+				variables,
+				nextRegister,
+				instructions
+			)
+
+			// Update nextRegister
+			nextRegister = result1.updatedNextRegister
+
+			// Process regular sensor
+			const result2 = CppParserHelper.processOperand(
+				"Sensors::getInstance().getPitch()",
+				variables,
+				nextRegister,
+				instructions
+			)
+
+			// Verify first instruction (proximity)
+			expect(instructions[0].opcode).toBe(BytecodeOpCode.READ_SENSOR)
+			expect(instructions[0].operand1).toBe(SensorType.FRONT_PROXIMITY)
+			expect(instructions[0].operand2).toBe(0) // Register 0
+
+			// Verify second instruction (regular sensor)
+			expect(instructions[1].opcode).toBe(BytecodeOpCode.READ_SENSOR)
+			expect(instructions[1].operand1).toBe(SensorType.PITCH)
+			expect(instructions[1].operand2).toBe(1) // Register 1
+
+			// Verify returned values
+			expect(result1.operand).toBe(0x8000) // Register 0 with high bit
+			expect(result2.operand).toBe(0x8001) // Register 1 with high bit
+			expect(result2.updatedNextRegister).toBe(2)
+		})
+
+		test("should use non-zero starting register", () => {
+			// Setup with starting register other than 0
+			const expr = "is_object_near_side_left()"
+			const variables = new Map()
+			const nextRegister = 5 // Start at register 5
+			const instructions: BytecodeInstruction[] = []
+
+			// Execute
+			const result = CppParserHelper.processOperand(expr, variables, nextRegister, instructions)
+
+			// Verify
+			expect(instructions[0].opcode).toBe(BytecodeOpCode.READ_SENSOR)
+			expect(instructions[0].operand1).toBe(SensorType.SIDE_LEFT_PROXIMITY)
+			expect(instructions[0].operand2).toBe(5) // Register 5
+
+			expect(result.operand).toBe(0x8000 | 5) // Register 5 with high bit set
+			expect(result.updatedNextRegister).toBe(6)
+		})
 	})
 })
