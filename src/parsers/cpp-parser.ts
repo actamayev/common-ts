@@ -34,6 +34,10 @@ export class CppParser {
 		const pendingJumps: PendingJumps[] = []
 
 		for (const statement of statements) {
+			// eslint-disable-next-line security/detect-unsafe-regex
+			if (statement.match(/^if\s*\(\s*(?:.*?(?:&&|\|\|).*?){2,}/)) {
+				throw new Error("Complex conditions with multiple logical operators are not supported")
+			  }
 			const command = CppParserHelper.identifyCommand(statement)
 
 			if (!command) {
@@ -558,38 +562,63 @@ export class CppParser {
 				}
 				break
 			case CommandType.COMPOUND_AND_IF_STATEMENT: {
-				if (command.matches && command.matches.length === 7) {
-					const leftExpr1 = command.matches[1]
-					const operator1 = command.matches[2]
-					const rightExpr1 = command.matches[3]
-					const leftExpr2 = command.matches[4]
-					const operator2 = command.matches[5]
-					const rightExpr2 = command.matches[6]
+				if (command.matches) {
+					// Extract the full if statement
+					const fullIfStatement = command.matches[0]
 
-					// Parse first comparison operator
-					const compOp1 = CppParserHelper.parseComparisonOperator(operator1)
+					// Extract the two subconditions using regex
+					const conditionsMatch = fullIfStatement.match(/^if\s*\(\s*\((.+?)\)\s*&&\s*\((.+?)\)\s*\)$/)
 
-					// Handle left operand of first condition
-					const leftOperandResult1 = CppParserHelper.processOperand(leftExpr1, variables, nextRegister, instructions)
-					nextRegister = leftOperandResult1.updatedNextRegister
-					const leftOperand1 = leftOperandResult1.operand
+					if (!conditionsMatch) {
+						throw new Error(`Invalid compound AND statement: ${fullIfStatement}`)
+					}
 
-					// Handle right operand of first condition
-					const rightOperandResult1 = CppParserHelper.processOperand(rightExpr1, variables, nextRegister, instructions)
-					nextRegister = rightOperandResult1.updatedNextRegister
-					const rightOperand1 = rightOperandResult1.operand
+					const condition1 = conditionsMatch[1].trim()
+					const condition2 = conditionsMatch[2].trim()
 
-					// Add first comparison instruction
-					instructions.push({
-						opcode: BytecodeOpCode.COMPARE,
-						operand1: compOp1,
-						operand2: leftOperand1,
-						operand3: rightOperand1,
-						operand4: 0
-					})
+					// Parse first condition
+					const condition1Parts = condition1.match(/(.+?)([<>=!][=]?)(.+)/)
+
+					if (!condition1Parts) {
+					// Handle simple condition (boolean variable or function)
+						const result1 = CppParserHelper.processOperand(condition1, variables, nextRegister, instructions)
+						nextRegister = result1.updatedNextRegister
+
+						// Compare with true
+						instructions.push({
+							opcode: BytecodeOpCode.COMPARE,
+							operand1: ComparisonOp.EQUAL,
+							operand2: result1.operand,
+							operand3: 1, // true
+							operand4: 0
+						})
+					} else {
+					// Handle comparison condition
+						const leftExpr1 = condition1Parts[1].trim()
+						const operator1 = condition1Parts[2].trim()
+						const rightExpr1 = condition1Parts[3].trim()
+
+						// Parse comparison operator
+						const compOp1 = CppParserHelper.parseComparisonOperator(operator1)
+
+						// Process operands
+						const leftResult1 = CppParserHelper.processOperand(leftExpr1, variables, nextRegister, instructions)
+						nextRegister = leftResult1.updatedNextRegister
+
+						const rightResult1 = CppParserHelper.processOperand(rightExpr1, variables, nextRegister, instructions)
+						nextRegister = rightResult1.updatedNextRegister
+
+						// Add comparison instruction
+						instructions.push({
+							opcode: BytecodeOpCode.COMPARE,
+							operand1: compOp1,
+							operand2: leftResult1.operand,
+							operand3: rightResult1.operand,
+							operand4: 0
+						})
+					}
 
 					// For AND, short-circuit if first condition is false
-					// Store jumpIndex to be filled later
 					const firstJumpIndex = instructions.length
 					instructions.push({
 						opcode: BytecodeOpCode.JUMP_IF_FALSE,
@@ -599,27 +628,47 @@ export class CppParser {
 						operand4: 0
 					})
 
-					// Parse second comparison operator
-					const compOp2 = CppParserHelper.parseComparisonOperator(operator2)
+					// Parse second condition (similar to first)
+					const condition2Parts = condition2.match(/(.+?)([<>=!][=]?)(.+)/)
 
-					// Handle left operand of second condition
-					const leftOperandResult2 = CppParserHelper.processOperand(leftExpr2, variables, nextRegister, instructions)
-					nextRegister = leftOperandResult2.updatedNextRegister
-					const leftOperand2 = leftOperandResult2.operand
+					if (!condition2Parts) {
+					// Handle simple condition (boolean variable or function)
+						const result2 = CppParserHelper.processOperand(condition2, variables, nextRegister, instructions)
+						nextRegister = result2.updatedNextRegister
 
-					// Handle right operand of second condition
-					const rightOperandResult2 = CppParserHelper.processOperand(rightExpr2, variables, nextRegister, instructions)
-					nextRegister = rightOperandResult2.updatedNextRegister
-					const rightOperand2 = rightOperandResult2.operand
+						// Compare with true
+						instructions.push({
+							opcode: BytecodeOpCode.COMPARE,
+							operand1: ComparisonOp.EQUAL,
+							operand2: result2.operand,
+							operand3: 1, // true
+							operand4: 0
+						})
+					} else {
+					// Handle comparison condition
+						const leftExpr2 = condition2Parts[1].trim()
+						const operator2 = condition2Parts[2].trim()
+						const rightExpr2 = condition2Parts[3].trim()
 
-					// Add second comparison instruction
-					instructions.push({
-						opcode: BytecodeOpCode.COMPARE,
-						operand1: compOp2,
-						operand2: leftOperand2,
-						operand3: rightOperand2,
-						operand4: 0
-					})
+						// Parse comparison operator
+						const compOp2 = CppParserHelper.parseComparisonOperator(operator2)
+
+						// Process operands
+						const leftResult2 = CppParserHelper.processOperand(leftExpr2, variables, nextRegister, instructions)
+						nextRegister = leftResult2.updatedNextRegister
+
+						const rightResult2 = CppParserHelper.processOperand(rightExpr2, variables, nextRegister, instructions)
+						nextRegister = rightResult2.updatedNextRegister
+
+						// Add comparison instruction
+						instructions.push({
+							opcode: BytecodeOpCode.COMPARE,
+							operand1: compOp2,
+							operand2: leftResult2.operand,
+							operand3: rightResult2.operand,
+							operand4: 0
+						})
+					}
 
 					// Jump to else block if second condition is false
 					const secondJumpIndex = instructions.length
@@ -635,75 +684,120 @@ export class CppParser {
 					blockStack.push({
 						type: "if",
 						jumpIndex: secondJumpIndex,
-						additionalJumps: [firstJumpIndex]  // Store additional jump points
+						additionalJumps: [firstJumpIndex] // Store additional jump points
 					})
 				}
 				break
 			}
 
 			case CommandType.COMPOUND_OR_IF_STATEMENT: {
-				if (command.matches && command.matches.length === 7) {
-					const leftExpr1 = command.matches[1]
-					const operator1 = command.matches[2]
-					const rightExpr1 = command.matches[3]
-					const leftExpr2 = command.matches[4]
-					const operator2 = command.matches[5]
-					const rightExpr2 = command.matches[6]
+				if (command.matches) {
+					// Extract the full if statement
+					const fullIfStatement = command.matches[0]
 
-					// Parse first comparison operator
-					const compOp1 = CppParserHelper.parseComparisonOperator(operator1)
+					// Extract the two subconditions using regex
+					const conditionsMatch = fullIfStatement.match(/^if\s*\(\s*\((.+?)\)\s*\|\|\s*\((.+?)\)\s*\)$/)
 
-					// Handle left operand of first condition
-					const leftOperandResult1 = CppParserHelper.processOperand(leftExpr1, variables, nextRegister, instructions)
-					nextRegister = leftOperandResult1.updatedNextRegister
-					const leftOperand1 = leftOperandResult1.operand
+					if (!conditionsMatch) {
+						throw new Error(`Invalid compound OR statement: ${fullIfStatement}`)
+					}
 
-					// Handle right operand of first condition
-					const rightOperandResult1 = CppParserHelper.processOperand(rightExpr1, variables, nextRegister, instructions)
-					nextRegister = rightOperandResult1.updatedNextRegister
-					const rightOperand1 = rightOperandResult1.operand
+					const condition1 = conditionsMatch[1].trim()
+					const condition2 = conditionsMatch[2].trim()
 
-					// Add first comparison instruction
-					instructions.push({
-						opcode: BytecodeOpCode.COMPARE,
-						operand1: compOp1,
-						operand2: leftOperand1,
-						operand3: rightOperand1,
-						operand4: 0
-					})
+					// Parse first condition (similar to AND case)
+					const condition1Parts = condition1.match(/(.+?)([<>=!][=]?)(.+)/)
 
-					// For OR, we'll add a JUMP_IF_TRUE instruction to skip to the if-body
-					// if the first condition is true (short-circuit)
+					if (!condition1Parts) {
+					// Handle simple condition (boolean variable or function)
+						const result1 = CppParserHelper.processOperand(condition1, variables, nextRegister, instructions)
+						nextRegister = result1.updatedNextRegister
+
+						// Compare with true
+						instructions.push({
+							opcode: BytecodeOpCode.COMPARE,
+							operand1: ComparisonOp.EQUAL,
+							operand2: result1.operand,
+							operand3: 1, // true
+							operand4: 0
+						})
+					} else {
+					// Handle comparison condition
+						const leftExpr1 = condition1Parts[1].trim()
+						const operator1 = condition1Parts[2].trim()
+						const rightExpr1 = condition1Parts[3].trim()
+
+						// Parse comparison operator
+						const compOp1 = CppParserHelper.parseComparisonOperator(operator1)
+
+						// Process operands
+						const leftResult1 = CppParserHelper.processOperand(leftExpr1, variables, nextRegister, instructions)
+						nextRegister = leftResult1.updatedNextRegister
+
+						const rightResult1 = CppParserHelper.processOperand(rightExpr1, variables, nextRegister, instructions)
+						nextRegister = rightResult1.updatedNextRegister
+
+						// Add comparison instruction
+						instructions.push({
+							opcode: BytecodeOpCode.COMPARE,
+							operand1: compOp1,
+							operand2: leftResult1.operand,
+							operand3: rightResult1.operand,
+							operand4: 0
+						})
+					}
+
+					// For OR, short-circuit if first condition is true
 					const jumpToIfBodyIndex = instructions.length
 					instructions.push({
 						opcode: BytecodeOpCode.JUMP_IF_TRUE,
-						operand1: 0, // Will be filled later to point to if-body
+						operand1: 0, // Will be filled later
 						operand2: 0,
 						operand3: 0,
 						operand4: 0
 					})
 
-					// Parse second comparison operator
-					const compOp2 = CppParserHelper.parseComparisonOperator(operator2)
+					// Parse second condition (similar to first)
+					const condition2Parts = condition2.match(/(.+?)([<>=!][=]?)(.+)/)
 
-					// Handle left operand of second condition
-					const leftOperandResult2 = CppParserHelper.processOperand(leftExpr2, variables, nextRegister, instructions)
-					nextRegister = leftOperandResult2.updatedNextRegister
-					const leftOperand2 = leftOperandResult2.operand
+					if (!condition2Parts) {
+					// Handle simple condition (boolean variable or function)
+						const result2 = CppParserHelper.processOperand(condition2, variables, nextRegister, instructions)
+						nextRegister = result2.updatedNextRegister
 
-					// Handle right operand of second condition
-					const rightOperandResult2 = CppParserHelper.processOperand(rightExpr2, variables, nextRegister, instructions)
-					nextRegister = rightOperandResult2.updatedNextRegister
-					const rightOperand2 = rightOperandResult2.operand
+						// Compare with true
+						instructions.push({
+							opcode: BytecodeOpCode.COMPARE,
+							operand1: ComparisonOp.EQUAL,
+							operand2: result2.operand,
+							operand3: 1, // true
+							operand4: 0
+						})
+					} else {
+					// Handle comparison condition
+						const leftExpr2 = condition2Parts[1].trim()
+						const operator2 = condition2Parts[2].trim()
+						const rightExpr2 = condition2Parts[3].trim()
 
-					// Add second comparison instruction
-					instructions.push({
-						opcode: BytecodeOpCode.COMPARE,
-						operand1: compOp2,
-						operand2: leftOperand2,
-						operand3: rightOperand2,
-						operand4: 0
-					})
+						// Parse comparison operator
+						const compOp2 = CppParserHelper.parseComparisonOperator(operator2)
+
+						// Process operands
+						const leftResult2 = CppParserHelper.processOperand(leftExpr2, variables, nextRegister, instructions)
+						nextRegister = leftResult2.updatedNextRegister
+
+						const rightResult2 = CppParserHelper.processOperand(rightExpr2, variables, nextRegister, instructions)
+						nextRegister = rightResult2.updatedNextRegister
+
+						// Add comparison instruction
+						instructions.push({
+							opcode: BytecodeOpCode.COMPARE,
+							operand1: compOp2,
+							operand2: leftResult2.operand,
+							operand3: rightResult2.operand,
+							operand4: 0
+						})
+					}
 
 					// Jump to else block if second condition is also false
 					const jumpToElseIndex = instructions.length
@@ -715,8 +809,7 @@ export class CppParser {
 						operand4: 0
 					})
 
-					// Now we're at the if-body. We need to fix the jumpToIfBodyIndex
-					// to point here
+					// Now we're at the if-body. We need to fix the jumpToIfBodyIndex to point here
 					const ifBodyOffset = (instructions.length - jumpToIfBodyIndex) * INSTRUCTION_SIZE
 					if (ifBodyOffset > MAX_JUMP_DISTANCE) {
 						throw new Error(`Jump distance too large (${ifBodyOffset} bytes, maximum is ${MAX_JUMP_DISTANCE} bytes)`)
@@ -724,8 +817,7 @@ export class CppParser {
 					instructions[jumpToIfBodyIndex].operand1 = ifBodyOffset & 0xFF
 					instructions[jumpToIfBodyIndex].operand2 = (ifBodyOffset >> 8) & 0xFF
 
-					// Track this block for later (we only need to fix the jumpToElseIndex
-					// for the end of the if block)
+					// Track this block for later
 					blockStack.push({
 						type: "if",
 						jumpIndex: jumpToElseIndex

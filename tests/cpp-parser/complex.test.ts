@@ -331,25 +331,21 @@ describe("Boundary Conditions", () => {
 		}
 	})
 
-	test("should handle large compound conditions", () => {
-	// This test can't actually work because the parser only supports simple && and || combinations
-	// But it tests the parser's error handling for complex conditions
-
+	test("should reject complex nested conditions for now", () => {
 		expect(() => {
-			const code = `
-	float x = 10.5;
-	float y = 20.3;
-	float z = 30.7;
-	
-	// A complex condition that would need recursive parsing
-	if ((x > 5 && y < 30) || (z > 20 && x < 15) || (y > 15 && z < 40)) {
-		rgbLed.set_led_red();
-	}
-	`
+		  const code = `
+			float x = 10.5;
+			float y = 20.3;
+			float z = 30.7;
+			
+			if ((x > 5 && y < 30) || (z > 20 && x < 15) || (y > 15 && z < 40)) {
+			  rgbLed.set_led_red();
+			}
+		  `
 
-			CppParser.cppToByte(code)
-		}).toThrow() // This should correctly throw since the parser only handles simple patterns
-	})
+		  CppParser.cppToByte(code)
+		}).toThrow("Complex conditions with multiple logical operators are not supported")
+	  })
 })
 
 describe("Error Handling Edge Cases", () => {
