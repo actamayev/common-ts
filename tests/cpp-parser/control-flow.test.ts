@@ -555,4 +555,367 @@ describe("Bidirectional Comparisons", () => {
 			expect(foundNotEqual).toBe(true)
 		})
 	})
+
+	describe("Compound Conditions with Simple Expressions", () => {
+		describe("AND Operator with Simple Conditions", () => {
+			test("should handle compound AND with boolean variables", () => {
+				const code = `
+        bool a = true;
+        bool b = true;
+        if ((a) && (b)) {
+          rgbLed.set_led_red();
+        }
+      `
+
+				const bytecode = CppParser.cppToByte(code)
+
+				// Check that we have variable declarations and assignments
+				let declareVarCount = 0
+				let setVarCount = 0
+
+				for (let i = 0; i < bytecode.length; i += 5) {
+					if (bytecode[i] === BytecodeOpCode.DECLARE_VAR) {
+						declareVarCount++
+					} else if (bytecode[i] === BytecodeOpCode.SET_VAR) {
+						setVarCount++
+					}
+				}
+
+				expect(declareVarCount).toBe(2) // Two boolean variables
+				expect(setVarCount).toBe(2)     // Two SET_VAR instructions
+
+				// Find the first COMPARE instruction (for first boolean variable)
+				let firstCompareIndex = -1
+				for (let i = 10; i < bytecode.length; i += 5) {
+					if (bytecode[i] === BytecodeOpCode.COMPARE) {
+						firstCompareIndex = i
+						break
+					}
+				}
+				expect(firstCompareIndex).toBeGreaterThan(0)
+
+				// Should be comparing with true (1)
+				expect(bytecode[firstCompareIndex + 1]).toBe(ComparisonOp.EQUAL)
+				expect(bytecode[firstCompareIndex + 3]).toBe(1) // Comparing with true
+
+				// Should have JUMP_IF_FALSE after first comparison (short-circuit)
+				expect(bytecode[firstCompareIndex + 5]).toBe(BytecodeOpCode.JUMP_IF_FALSE)
+
+				// Find the second COMPARE instruction
+				let secondCompareIndex = -1
+				for (let i = firstCompareIndex + 10; i < bytecode.length; i += 5) {
+					if (bytecode[i] === BytecodeOpCode.COMPARE) {
+						secondCompareIndex = i
+						break
+					}
+				}
+				expect(secondCompareIndex).toBeGreaterThan(firstCompareIndex)
+
+				// Should be comparing with true (1)
+				expect(bytecode[secondCompareIndex + 1]).toBe(ComparisonOp.EQUAL)
+				expect(bytecode[secondCompareIndex + 3]).toBe(1) // Comparing with true
+
+				// Should find red LED instruction somewhere after the comparisons
+				let redLedFound = false
+				for (let i = secondCompareIndex; i < bytecode.length; i += 5) {
+					if (bytecode[i] === BytecodeOpCode.SET_ALL_LEDS &&
+            bytecode[i + 1] === MAX_LED_BRIGHTNESS &&
+            bytecode[i + 2] === 0 &&
+            bytecode[i + 3] === 0) {
+						redLedFound = true
+						break
+					}
+				}
+				expect(redLedFound).toBe(true)
+			})
+
+			test("should handle compound AND with proximity sensor functions", () => {
+				const code = `
+        if ((is_object_in_front()) && (is_object_near_side_left())) {
+          rgbLed.set_led_red();
+        }
+      `
+
+				const bytecode = CppParser.cppToByte(code)
+
+				// Find all READ_SENSOR instructions
+				const sensorIndices = []
+				for (let i = 0; i < bytecode.length; i += 5) {
+					if (bytecode[i] === BytecodeOpCode.READ_SENSOR) {
+						sensorIndices.push(i)
+					}
+				}
+
+				// Should have at least 2 sensor reads
+				expect(sensorIndices.length).toBeGreaterThanOrEqual(2)
+
+				// Find the first COMPARE instruction
+				let firstCompareIndex = -1
+				for (let i = 5; i < bytecode.length; i += 5) {
+					if (bytecode[i] === BytecodeOpCode.COMPARE) {
+						firstCompareIndex = i
+						break
+					}
+				}
+				expect(firstCompareIndex).toBeGreaterThan(0)
+
+				// Should have JUMP_IF_FALSE after first comparison (for short-circuit)
+				expect(bytecode[firstCompareIndex + 5]).toBe(BytecodeOpCode.JUMP_IF_FALSE)
+
+				// Should find red LED instruction somewhere in the bytecode
+				let redLedFound = false
+				for (let i = 0; i < bytecode.length; i += 5) {
+					if (bytecode[i] === BytecodeOpCode.SET_ALL_LEDS &&
+            bytecode[i + 1] === MAX_LED_BRIGHTNESS &&
+            bytecode[i + 2] === 0 &&
+            bytecode[i + 3] === 0) {
+						redLedFound = true
+						break
+					}
+				}
+				expect(redLedFound).toBe(true)
+			})
+
+			test("should handle compound AND with mixed simple and comparison conditions", () => {
+				const code = `
+        bool a = true;
+        if ((a) && (5 > 3)) {
+          rgbLed.set_led_red();
+        }
+      `
+
+				const bytecode = CppParser.cppToByte(code)
+
+				// Find the first COMPARE instruction (for boolean variable)
+				let booleanCompareIndex = -1
+				for (let i = 10; i < bytecode.length; i += 5) {
+					if (bytecode[i] === BytecodeOpCode.COMPARE) {
+						booleanCompareIndex = i
+						break
+					}
+				}
+				expect(booleanCompareIndex).toBeGreaterThan(0)
+
+				// Should be comparing with true (1)
+				expect(bytecode[booleanCompareIndex + 1]).toBe(ComparisonOp.EQUAL)
+				expect(bytecode[booleanCompareIndex + 3]).toBe(1) // Comparing with true
+
+				// Should have JUMP_IF_FALSE after first comparison (short-circuit)
+				expect(bytecode[booleanCompareIndex + 5]).toBe(BytecodeOpCode.JUMP_IF_FALSE)
+
+				// Find the second COMPARE instruction (for 5 > 3)
+				let valueCompareIndex = -1
+				for (let i = booleanCompareIndex + 10; i < bytecode.length; i += 5) {
+					if (bytecode[i] === BytecodeOpCode.COMPARE) {
+						valueCompareIndex = i
+						break
+					}
+				}
+				expect(valueCompareIndex).toBeGreaterThan(booleanCompareIndex)
+
+				// Should be comparing 5 > 3
+				expect(bytecode[valueCompareIndex + 1]).toBe(ComparisonOp.GREATER_THAN)
+				expect(bytecode[valueCompareIndex + 2]).toBe(5)
+				expect(bytecode[valueCompareIndex + 3]).toBe(3)
+			})
+		})
+
+		describe("OR Operator with Simple Conditions", () => {
+			test("should handle compound OR with boolean variables", () => {
+				const code = `
+        bool a = false;
+        bool b = true;
+        if ((a) || (b)) {
+          rgbLed.set_led_red();
+        }
+      `
+
+				const bytecode = CppParser.cppToByte(code)
+
+				// Check that we have variable declarations and assignments
+				let declareVarCount = 0
+				let setVarCount = 0
+
+				for (let i = 0; i < bytecode.length; i += 5) {
+					if (bytecode[i] === BytecodeOpCode.DECLARE_VAR) {
+						declareVarCount++
+					} else if (bytecode[i] === BytecodeOpCode.SET_VAR) {
+						setVarCount++
+					}
+				}
+
+				expect(declareVarCount).toBe(2) // Two boolean variables
+				expect(setVarCount).toBe(2)     // Two SET_VAR instructions
+
+				// Find the first COMPARE instruction (for first boolean variable)
+				let firstCompareIndex = -1
+				for (let i = 10; i < bytecode.length; i += 5) {
+					if (bytecode[i] === BytecodeOpCode.COMPARE) {
+						firstCompareIndex = i
+						break
+					}
+				}
+				expect(firstCompareIndex).toBeGreaterThan(0)
+
+				// Should be comparing with true (1)
+				expect(bytecode[firstCompareIndex + 1]).toBe(ComparisonOp.EQUAL)
+				expect(bytecode[firstCompareIndex + 3]).toBe(1) // Comparing with true
+
+				// Should have JUMP_IF_TRUE after first comparison (short-circuit)
+				expect(bytecode[firstCompareIndex + 5]).toBe(BytecodeOpCode.JUMP_IF_TRUE)
+
+				// Find the second COMPARE instruction
+				let secondCompareIndex = -1
+				for (let i = firstCompareIndex + 10; i < bytecode.length; i += 5) {
+					if (bytecode[i] === BytecodeOpCode.COMPARE) {
+						secondCompareIndex = i
+						break
+					}
+				}
+				expect(secondCompareIndex).toBeGreaterThan(firstCompareIndex)
+
+				// Should be comparing with true (1)
+				expect(bytecode[secondCompareIndex + 1]).toBe(ComparisonOp.EQUAL)
+				expect(bytecode[secondCompareIndex + 3]).toBe(1) // Comparing with true
+			})
+
+			test("should handle compound OR with proximity sensor functions", () => {
+				const code = `
+        if ((is_object_in_front()) || (is_object_near_side_right())) {
+          rgbLed.set_led_red();
+        }
+      `
+
+				const bytecode = CppParser.cppToByte(code)
+
+				// Find all READ_SENSOR instructions
+				const sensorIndices = []
+				for (let i = 0; i < bytecode.length; i += 5) {
+					if (bytecode[i] === BytecodeOpCode.READ_SENSOR) {
+						sensorIndices.push(i)
+					}
+				}
+
+				// Should have at least 2 sensor reads
+				expect(sensorIndices.length).toBeGreaterThanOrEqual(2)
+
+				// Find the first COMPARE instruction
+				let firstCompareIndex = -1
+				for (let i = 5; i < bytecode.length; i += 5) {
+					if (bytecode[i] === BytecodeOpCode.COMPARE) {
+						firstCompareIndex = i
+						break
+					}
+				}
+				expect(firstCompareIndex).toBeGreaterThan(0)
+
+				// Should have JUMP_IF_TRUE after first comparison (for short-circuit)
+				expect(bytecode[firstCompareIndex + 5]).toBe(BytecodeOpCode.JUMP_IF_TRUE)
+
+				// Should find red LED instruction somewhere in the bytecode
+				let redLedFound = false
+				for (let i = 0; i < bytecode.length; i += 5) {
+					if (bytecode[i] === BytecodeOpCode.SET_ALL_LEDS &&
+            bytecode[i + 1] === MAX_LED_BRIGHTNESS &&
+            bytecode[i + 2] === 0 &&
+            bytecode[i + 3] === 0) {
+						redLedFound = true
+						break
+					}
+				}
+				expect(redLedFound).toBe(true)
+			})
+
+			test("should handle compound OR with mixed simple and comparison conditions", () => {
+				const code = `
+        if ((is_object_in_front()) || (5 < 10)) {
+          rgbLed.set_led_red();
+        }
+      `
+
+				const bytecode = CppParser.cppToByte(code)
+
+				// Find the sensor read instruction
+				let sensorReadIndex = -1
+				for (let i = 0; i < bytecode.length; i += 5) {
+					if (bytecode[i] === BytecodeOpCode.READ_SENSOR) {
+						sensorReadIndex = i
+						break
+					}
+				}
+				expect(sensorReadIndex).toBeGreaterThan(-1)
+
+				// Find the first COMPARE instruction (for sensor value)
+				let firstCompareIndex = -1
+				for (let i = sensorReadIndex; i < bytecode.length; i += 5) {
+					if (bytecode[i] === BytecodeOpCode.COMPARE) {
+						firstCompareIndex = i
+						break
+					}
+				}
+				expect(firstCompareIndex).toBeGreaterThan(0)
+
+				// Should have JUMP_IF_TRUE after first comparison (short-circuit)
+				expect(bytecode[firstCompareIndex + 5]).toBe(BytecodeOpCode.JUMP_IF_TRUE)
+
+				// Find the second COMPARE instruction (for 5 < 10)
+				let valueCompareIndex = -1
+				for (let i = firstCompareIndex + 10; i < bytecode.length; i += 5) {
+					if (bytecode[i] === BytecodeOpCode.COMPARE) {
+						valueCompareIndex = i
+						break
+					}
+				}
+				expect(valueCompareIndex).toBeGreaterThan(firstCompareIndex)
+
+				// Should be comparing 5 < 10
+				expect(bytecode[valueCompareIndex + 1]).toBe(ComparisonOp.LESS_THAN)
+				expect(bytecode[valueCompareIndex + 2]).toBe(5)
+				expect(bytecode[valueCompareIndex + 3]).toBe(10)
+			})
+		})
+
+		describe("Edge Cases for Simple Conditions", () => {
+			test("should handle boolean variable assigned from proximity sensor in compound condition", () => {
+				const code = `
+        bool frontSensor = is_object_in_front();
+        if ((frontSensor) && (5 > 3)) {
+          rgbLed.set_led_red();
+        }
+      `
+
+				const bytecode = CppParser.cppToByte(code)
+
+				// Should have a READ_SENSOR for front proximity sensor
+				let sensorReadFound = false
+				for (let i = 0; i < bytecode.length; i += 5) {
+					if (bytecode[i] === BytecodeOpCode.READ_SENSOR) {
+						sensorReadFound = true
+						break
+					}
+				}
+				expect(sensorReadFound).toBe(true)
+
+				// Find the first COMPARE instruction (for boolean variable)
+				let booleanCompareIndex = -1
+				for (let i = 10; i < bytecode.length; i += 5) {
+					if (bytecode[i] === BytecodeOpCode.COMPARE) {
+						booleanCompareIndex = i
+						break
+					}
+				}
+				expect(booleanCompareIndex).toBeGreaterThan(0)
+
+				// Should have JUMP_IF_FALSE for AND short-circuit
+				let jumpIfFalseFound = false
+				for (let i = booleanCompareIndex; i < booleanCompareIndex + 10; i += 5) {
+					if (bytecode[i] === BytecodeOpCode.JUMP_IF_FALSE) {
+						jumpIfFalseFound = true
+						break
+					}
+				}
+				expect(jumpIfFalseFound).toBe(true)
+			})
+		})
+	})
 })
