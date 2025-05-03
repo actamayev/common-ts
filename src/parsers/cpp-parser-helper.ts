@@ -145,10 +145,40 @@ export class CppParserHelper {
 		nextRegister: number,
 		instructions: BytecodeInstruction[]
 	): {
-    operand: number,
-    updatedNextRegister: number
-  } {
-		// Check if this is a sensor reading
+		operand: number,
+		updatedNextRegister: number
+	} {
+		// Check if this is a proximity detection function
+		const proximityMatch = expr.match(/is_object_near_side_(left|right)\(\)/) || expr.match(/is_object_in_front\(\)/)
+		if (proximityMatch) {
+			// Determine the sensor type based on the function name
+			let sensorType: SensorType
+			if (proximityMatch[0] === "is_object_in_front()") {
+				sensorType = SensorType.FRONT_PROXIMITY
+			} else {
+				const side = proximityMatch[1] // 'left' or 'right'
+				sensorType = this.getSensorTypeFromProximity(side)
+			}
+
+			// Allocate a register for the sensor value
+			if (nextRegister >= MAX_REGISTERS) {
+				throw new Error(`Program exceeds maximum register count (${MAX_REGISTERS})`)
+			}
+			const register = nextRegister++
+
+			// Add instruction to read sensor into register
+			instructions.push({
+				opcode: BytecodeOpCode.READ_SENSOR,
+				operand1: sensorType,
+				operand2: register,
+				operand3: 0,
+				operand4: 0
+			})
+
+			return { operand: 0x8000 | register, updatedNextRegister: nextRegister }
+		}
+
+		// Check if this is a standard sensor reading
 		const sensorMatch = expr.match(/Sensors::getInstance\(\)\.(\w+)\(\)/)
 		if (sensorMatch) {
 			// This is a sensor comparison
