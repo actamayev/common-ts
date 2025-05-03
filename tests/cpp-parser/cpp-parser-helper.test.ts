@@ -21,7 +21,7 @@ describe("CppParserHelper", () => {
 		})
 
 		test("should match all command types", () => {
-			// Test a sample of different command types
+		// Test a sample of different command types
 			const commandTests = [
 				{ statement: "rgbLed.set_led_blue()", type: CommandType.SET_LED_BLUE },
 				{ statement: "delay(100)", type: CommandType.DELAY },
@@ -188,7 +188,7 @@ describe("CppParserHelper", () => {
 		})
 
 		test("should generate bytecode with large number of instructions", () => {
-			// Create 100 delay instructions
+		// Create 100 delay instructions
 			const instructions: BytecodeInstruction[] = []
 			for (let i = 0; i < 100; i++) {
 				instructions.push({
@@ -229,9 +229,9 @@ describe("CppParserHelper", () => {
 
 		test("should correctly generate LED commands", () => {
 			const code = `
-        rgbLed.set_top_left_led(10, 20, 30);
-        rgbLed.set_top_right_led(40, 50, 60);
-      `
+	rgbLed.set_top_left_led(10, 20, 30);
+	rgbLed.set_top_right_led(40, 50, 60);
+	`
 
 			const bytecode = CppParser.cppToByte(code)
 
@@ -252,9 +252,9 @@ describe("CppParserHelper", () => {
 	})
 
 	describe("CppParserHelper.processOperand", () => {
-		// We'll directly test the processOperand method
+	// We'll directly test the processOperand method
 		test("should process sensor operand correctly", () => {
-			// Setup
+		// Setup
 			const expr = "Sensors::getInstance().getPitch()"
 			const variables = new Map()
 			const nextRegister = 0
@@ -371,28 +371,70 @@ describe("CppParserHelper", () => {
 
 	describe("CppParserHelper.parseComparisonOperator", () => {
 		test("should return correct comparison operators", () => {
-		  // Test all valid operators
-		  expect(CppParserHelper.parseComparisonOperator(">")).toBe(ComparisonOp.GREATER_THAN)
-		  expect(CppParserHelper.parseComparisonOperator("<")).toBe(ComparisonOp.LESS_THAN)
-		  expect(CppParserHelper.parseComparisonOperator(">=")).toBe(ComparisonOp.GREATER_EQUAL)
-		  expect(CppParserHelper.parseComparisonOperator("<=")).toBe(ComparisonOp.LESS_EQUAL)
-		  expect(CppParserHelper.parseComparisonOperator("==")).toBe(ComparisonOp.EQUAL)
-		  expect(CppParserHelper.parseComparisonOperator("!=")).toBe(ComparisonOp.NOT_EQUAL)
+		// Test all valid operators
+			expect(CppParserHelper.parseComparisonOperator(">")).toBe(ComparisonOp.GREATER_THAN)
+			expect(CppParserHelper.parseComparisonOperator("<")).toBe(ComparisonOp.LESS_THAN)
+			expect(CppParserHelper.parseComparisonOperator(">=")).toBe(ComparisonOp.GREATER_EQUAL)
+			expect(CppParserHelper.parseComparisonOperator("<=")).toBe(ComparisonOp.LESS_EQUAL)
+			expect(CppParserHelper.parseComparisonOperator("==")).toBe(ComparisonOp.EQUAL)
+			expect(CppParserHelper.parseComparisonOperator("!=")).toBe(ComparisonOp.NOT_EQUAL)
 		})
 
 		test("should throw error for unsupported operator", () => {
-		  // Test with invalid operators
-		  expect(() => {
+		// Test with invalid operators
+			expect(() => {
 				CppParserHelper.parseComparisonOperator("?")
-		  }).toThrow(/Unsupported operator: \?/)
+			}).toThrow(/Unsupported operator: \?/)
 
-		  expect(() => {
+			expect(() => {
 				CppParserHelper.parseComparisonOperator("<>")
-		  }).toThrow(/Unsupported operator: <>/)
+			}).toThrow(/Unsupported operator: <>/)
 
-		  expect(() => {
+			expect(() => {
 				CppParserHelper.parseComparisonOperator("=")
-		  }).toThrow(/Unsupported operator: =/)
+			}).toThrow(/Unsupported operator: =/)
 		})
-	  })
+	})
+
+	test("should throw for unsupported variable type", () => {
+	// Store the original method
+		const originalIdentifyCommand = CppParserHelper.identifyCommand
+
+		try {
+		// Mock the helper's identifyCommand method
+			CppParserHelper.identifyCommand = jest.fn().mockReturnValue({
+				type: CommandType.VARIABLE_ASSIGNMENT,
+				matches: ["full match", "double", "testVar", "3.14"]
+			})
+
+			// Test that it throws the correct error
+			expect(() => {
+				CppParser.cppToByte("double testVar = 3.14;")
+			}).toThrow(/Unsupported type: double/)
+		} finally {
+		// Restore the original method
+			CppParserHelper.identifyCommand = originalIdentifyCommand
+		}
+	})
+
+	test("should throw error for unsupported comparison operator", () => {
+	// Store the original method
+		const originalIdentifyCommand = CppParserHelper.identifyCommand
+
+		try {
+		// Mock the helper's identifyCommand method to return an IF_STATEMENT with unsupported operator
+			CppParserHelper.identifyCommand = jest.fn().mockReturnValue({
+				type: CommandType.IF_STATEMENT,
+				matches: ["if (10 <=> 5)", "10", "<=>", "5"] // <=> is not a supported operator
+			})
+
+			// This should throw an "Unsupported operator" error
+			expect(() => {
+				CppParser.cppToByte("if (10 <=> 5) { rgbLed.set_led_red(); }")
+			}).toThrow(/Unsupported operator: <=>/)
+		} finally {
+		// Restore the original method
+			CppParserHelper.identifyCommand = originalIdentifyCommand
+		}
+	})
 })

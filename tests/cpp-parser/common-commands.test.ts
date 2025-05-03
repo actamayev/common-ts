@@ -1,6 +1,6 @@
 import { CppParser } from "../../src"
 import { MAX_LED_BRIGHTNESS } from "../../src/types/private/constants"
-import { BytecodeOpCode, CommandType, ComparisonOp, LedID, SensorType, VarType } from "../../src/types/public/bytecode-types"
+import { BytecodeOpCode, ComparisonOp, LedID, SensorType, VarType } from "../../src/types/public/bytecode-types"
 
 describe("Variable assignments", () => {
 	test("should parse integer variable assignment", () => {
@@ -89,22 +89,6 @@ describe("Variable assignments", () => {
 			expect(bytecode[6]).toBe(0)
 			expect(bytecode[7]).toBe(0) // 0 for false
 			expect(bytecode[8]).toBe(0)
-		})
-
-		test("should throw for unsupported variable type", () => {
-			const originalIdentifyCommand = CppParser["identifyCommand"]
-			CppParser["identifyCommand"] = jest.fn().mockReturnValue({
-				type: CommandType.VARIABLE_ASSIGNMENT,
-				matches: ["full match", "double", "testVar", "3.14"]
-			})
-
-			try {
-				expect(() => {
-					CppParser.cppToByte("double testVar = 3.14;")
-				}).toThrow(/Unsupported type: double/)
-			} finally {
-				CppParser["identifyCommand"] = originalIdentifyCommand
-			}
 		})
 	})
 })

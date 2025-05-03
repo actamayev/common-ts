@@ -1,10 +1,9 @@
 /* eslint-disable max-len, complexity, max-lines-per-function, max-depth */
 import { INSTRUCTION_SIZE, MAX_JUMP_DISTANCE, MAX_LED_BRIGHTNESS, MAX_PROGRAM_SIZE, MAX_REGISTERS } from "../types/private/constants"
-import { BytecodeOpCode, CommandPatterns, CommandType, ComparisonOp, LedID, SensorType, VarType } from "../types/public/bytecode-types"
+import { BytecodeOpCode, CommandType, ComparisonOp, LedID, SensorType, VarType } from "../types/public/bytecode-types"
 import { CppParserHelper } from "./cpp-parser-helper"
 
 export class CppParser {
-
 	public static cppToByte(unsanitizedCpp: string): Float32Array {
 		const sanitizedCode = CppParserHelper.sanitizeUserCode(unsanitizedCpp)
 		const validationResult = CppParserHelper.validateBalancedSyntax(sanitizedCode)
@@ -17,21 +16,8 @@ export class CppParser {
 		  throw new Error(`Program exceeds maximum size (${instructions.length} instructions, maximum is ${MAX_PROGRAM_SIZE})`)
 		}
 
-		const bytecode = this.generateBytecode(instructions)
+		const bytecode = CppParserHelper.generateBytecode(instructions)
 		return bytecode
-	}
-
-	private static identifyCommand(statement: string): ValidCommand | null {
-		for (const [commandType, pattern] of Object.entries(CommandPatterns)) {
-			const matches = statement.match(pattern)
-			if (matches) {
-				return {
-					type: commandType as CommandType,
-					matches
-				}
-			}
-		}
-		return null
 	}
 
 	private static parseCppCode(cppCode: string): BytecodeInstruction[] {
@@ -48,7 +34,7 @@ export class CppParser {
 		const pendingJumps: PendingJumps[] = []
 
 		for (const statement of statements) {
-			const command = this.identifyCommand(statement)
+			const command = CppParserHelper.identifyCommand(statement)
 
 			if (!command) {
 				throw new Error(`Invalid command: "${statement}"`)
@@ -297,35 +283,35 @@ export class CppParser {
 				break
 
 			case CommandType.SET_TOP_LEFT_LED:
-				this.handleIndividualLed(command.matches, LedID.TOP_LEFT, instructions)
+				CppParserHelper.handleIndividualLed(command.matches, LedID.TOP_LEFT, instructions)
 				break
 
 			case CommandType.SET_TOP_RIGHT_LED:
-				this.handleIndividualLed(command.matches, LedID.TOP_RIGHT, instructions)
+				CppParserHelper.handleIndividualLed(command.matches, LedID.TOP_RIGHT, instructions)
 				break
 
 			case CommandType.SET_MIDDLE_LEFT_LED:
-				this.handleIndividualLed(command.matches, LedID.MIDDLE_LEFT, instructions)
+				CppParserHelper.handleIndividualLed(command.matches, LedID.MIDDLE_LEFT, instructions)
 				break
 
 			case CommandType.SET_MIDDLE_RIGHT_LED:
-				this.handleIndividualLed(command.matches, LedID.MIDDLE_RIGHT, instructions)
+				CppParserHelper.handleIndividualLed(command.matches, LedID.MIDDLE_RIGHT, instructions)
 				break
 
 			case CommandType.SET_BACK_LEFT_LED:
-				this.handleIndividualLed(command.matches, LedID.BACK_LEFT, instructions)
+				CppParserHelper.handleIndividualLed(command.matches, LedID.BACK_LEFT, instructions)
 				break
 
 			case CommandType.SET_BACK_RIGHT_LED:
-				this.handleIndividualLed(command.matches, LedID.BACK_RIGHT, instructions)
+				CppParserHelper.handleIndividualLed(command.matches, LedID.BACK_RIGHT, instructions)
 				break
 
 			case CommandType.SET_LEFT_HEADLIGHT:
-				this.handleIndividualLed(command.matches, LedID.LEFT_HEADLIGHT, instructions)
+				CppParserHelper.handleIndividualLed(command.matches, LedID.LEFT_HEADLIGHT, instructions)
 				break
 
 			case CommandType.SET_RIGHT_HEADLIGHT:
-				this.handleIndividualLed(command.matches, LedID.RIGHT_HEADLIGHT, instructions)
+				CppParserHelper.handleIndividualLed(command.matches, LedID.RIGHT_HEADLIGHT, instructions)
 				break
 
 			case CommandType.DELAY:
@@ -1123,33 +1109,5 @@ export class CppParser {
 		}
 
 		return instructions
-	}
-
-	private static handleIndividualLed(matches: RegExpMatchArray | null, ledId: LedID, instructions: BytecodeInstruction[]): void {
-		if (matches && matches.length === 4) {
-			instructions.push({
-				opcode: BytecodeOpCode.SET_LED,
-				operand1: ledId,
-				operand2: parseInt(matches[1], 10), // Red
-				operand3: parseInt(matches[2], 10), // Green
-				operand4: parseInt(matches[3], 10)  // Blue
-			})
-		}
-	}
-
-	private static generateBytecode(instructions: BytecodeInstruction[]): Float32Array {
-		// Each instruction now uses 5 Float32 values
-		const bytecode = new Float32Array(instructions.length * 5)
-
-		instructions.forEach((instruction, index) => {
-			const offset = index * 5
-			bytecode[offset] = instruction.opcode
-			bytecode[offset + 1] = instruction.operand1
-			bytecode[offset + 2] = instruction.operand2
-			bytecode[offset + 3] = instruction.operand3
-			bytecode[offset + 4] = instruction.operand4
-		})
-
-		return bytecode
 	}
 }

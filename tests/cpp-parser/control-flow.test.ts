@@ -1,5 +1,5 @@
 import { CppParser } from "../../src"
-import { BytecodeOpCode, CommandType, ComparisonOp, SensorType } from "../../src/types/public/bytecode-types"
+import { BytecodeOpCode, ComparisonOp, SensorType } from "../../src/types/public/bytecode-types"
 import { MAX_LED_BRIGHTNESS } from "../../src/types/private/constants"
 
 describe("Control flow", () => {
@@ -508,27 +508,6 @@ describe("Bidirectional Comparisons", () => {
 				// Verify correct operator enum is used
 				expect(bytecode[0]).toBe(BytecodeOpCode.COMPARE)
 				expect(bytecode[1]).toBe(test.op)
-			}
-		})
-
-		test("should throw error for unsupported comparison operator", () => {
-			// We need to mock identifyCommand to return a valid IF_STATEMENT with an invalid operator
-			const originalIdentifyCommand = CppParser["identifyCommand"]
-
-			try {
-			// Mock identifyCommand to return an IF_STATEMENT with unsupported operator
-				CppParser["identifyCommand"] = jest.fn().mockReturnValue({
-					type: CommandType.IF_STATEMENT,
-					matches: ["if (10 <=> 5)", "10", "<=>", "5"] // <=> is not a supported operator
-				})
-
-				// This should throw an "Unsupported operator" error
-				expect(() => {
-					CppParser.cppToByte("if (10 <=> 5) { rgbLed.set_led_red(); }")
-				}).toThrow(/Unsupported operator: <=>/)
-			} finally {
-			// Restore original function
-				CppParser["identifyCommand"] = originalIdentifyCommand
 			}
 		})
 
