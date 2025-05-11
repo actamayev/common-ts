@@ -453,8 +453,8 @@ export class CppParser {
 
 						instructions.push({
 							opcode: BytecodeOpCode.JUMP_BACKWARD,
-							operand1: offsetToStart,  // Direct assignment of the full offset
-							operand2: 0,
+							operand1: offsetToStart & 0xFF,
+							operand2: (offsetToStart >> 8) & 0xFF,
 							operand3: 0,
 							operand4: 0
 						})
