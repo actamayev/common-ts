@@ -467,4 +467,20 @@ describe("MessageBuilder", () => {
 			validateFrameStructure(buffer, MessageType.SERIAL_END, 0)
 		})
 	})
+
+	describe("createEndSensorPollingInOneMinuteMessage", () => {
+		it("should create a valid end sensor polling in one minute message", () => {
+			const buffer = MessageBuilder.createEndSensorPollingInOneMinuteMessage()
+
+			validateFrameStructure(buffer, MessageType.START_SENSOR_POLLING_IN_ONE_MINUTE, 0)
+		})
+	})
+
+	describe("createEndSensorPollingMessage", () => {
+		it("should create a valid end sensor polling message", () => {
+			const buffer = MessageBuilder.createEndSensorPollingMessage()
+
+			validateFrameStructure(buffer, MessageType.STOP_SENSOR_POLLING, 0)
+		})
+	})
 })

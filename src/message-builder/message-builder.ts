@@ -183,4 +183,12 @@ export class MessageBuilder {
 	static createSerialEndMessage(): ArrayBuffer {
 		return this.frameMessage(MessageType.SERIAL_END)
 	}
+
+	static createEndSensorPollingInOneMinuteMessage(): ArrayBuffer {
+		return this.frameMessage(MessageType.START_SENSOR_POLLING_IN_ONE_MINUTE)
+	}
+
+	static createEndSensorPollingMessage(): ArrayBuffer {
+		return this.frameMessage(MessageType.STOP_SENSOR_POLLING)
+	}
 }
