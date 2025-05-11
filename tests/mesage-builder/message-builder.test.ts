@@ -470,9 +470,9 @@ describe("MessageBuilder", () => {
 
 	describe("createEndSensorPollingInOneMinuteMessage", () => {
 		it("should create a valid end sensor polling in one minute message", () => {
-			const buffer = MessageBuilder.createEndSensorPollingInOneMinuteMessage()
+			const buffer = MessageBuilder.createStartSensorPollingMessage()
 
-			validateFrameStructure(buffer, MessageType.START_SENSOR_POLLING_IN_ONE_MINUTE, 0)
+			validateFrameStructure(buffer, MessageType.START_SENSOR_POLLING_FOR_ONE_MINUTE, 0)
 		})
 	})
 
