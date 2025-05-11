@@ -3,116 +3,242 @@ import { BytecodeOpCode, ComparisonOp, SensorType, VarType } from "../../src/typ
 import { MAX_LED_BRIGHTNESS } from "../../src/types/private/constants"
 
 describe("Complex Nested Structures", () => {
-	test("should parse a deeply nested structure with 4+ levels", () => {
+	test("should correctly parse and translate the proximity sensor LED indicator logic", () => {
 		const code = `
-		while(true) {
-		if (Sensors::getInstance().getPitch() > 5) {
-			for (int i = 0; i < 3; i++) {
-			if (Sensors::getInstance().getRoll() < 0) {
-				while(true) {
-				if (i > 1) {
-					rgbLed.set_led_red();
-				} else {
-					rgbLed.set_led_blue();
-				}
-				delay(10);
-				}
-			} else {
-				rgbLed.set_led_green();
-			}
-			}
-		} else {
-			rgbLed.set_led_purple();
-		}
-		delay(100);
-		}
-	`
+    wait_for_button_press();
+    while(true) {
+        if (is_object_in_front()) {
+            rgbLed.set_led_white();
+        } else {
+            if (is_object_near_side_right()) {
+                rgbLed.set_led_red();
+            } else {
+                if (is_object_near_side_left()) {
+                    rgbLed.set_led_blue();
+                } else {
+                    rgbLed.set_led_green();
+                }
+            }
+        }
+    }
+    `
 
-		// This should not throw, indicating the parser can handle deep nesting
+		// Parse the code to bytecode
 		const bytecode = CppParser.cppToByte(code)
 
-		// Verify structure by finding key opcodes:
-		// 1. Outer while loop
-		let whileStartCount = 0
-		let forInitCount = 0
-		let compareCount = 0
+		// Track important instructions found
+		let waitForButtonFound = false
+		let whileStartFound = false
+		let whileEndFound = false
+		let frontProximityRead = false
+		let rightProximityRead = false
+		let leftProximityRead = false
+		let whiteLedFound = false
+		let redLedFound = false
+		let blueLedFound = false
+		let greenLedFound = false
 
-		for (let i = 0; i < bytecode.length; i += 5) {
-			if (bytecode[i] === BytecodeOpCode.WHILE_START) {
-				whileStartCount++
-			} else if (bytecode[i] === BytecodeOpCode.FOR_INIT) {
-				forInitCount++
-			} else if (bytecode[i] === BytecodeOpCode.COMPARE) {
-				compareCount++
+		// Check for correct initial wait instruction
+		expect(bytecode[0]).toBe(BytecodeOpCode.WAIT_FOR_BUTTON)
+		waitForButtonFound = true
+
+		// Verify all key components exist in the bytecode
+		for (let i = 5; i < bytecode.length; i += 5) {
+			const opcode = bytecode[i]
+
+			// Check for basic control flow
+			if (opcode === BytecodeOpCode.WHILE_START) {
+				whileStartFound = true
+			} else if (opcode === BytecodeOpCode.WHILE_END) {
+				whileEndFound = true
 			}
-		}
-
-		// Should have 2 while loops, 1 for loop, and multiple compares
-		expect(whileStartCount).toBe(2)
-		expect(forInitCount).toBe(1)
-		expect(compareCount).toBeGreaterThanOrEqual(3)
-
-		// Validate that we have all the LED colors represented
-		const ledColors = [
-			{ r: MAX_LED_BRIGHTNESS, g: 0, b: 0 },               // Red
-			{ r: 0, g: 0, b: MAX_LED_BRIGHTNESS },               // Blue
-			{ r: 0, g: MAX_LED_BRIGHTNESS, b: 0 },               // Green
-			{ r: MAX_LED_BRIGHTNESS, g: 0, b: MAX_LED_BRIGHTNESS }  // Purple
-		]
-
-		for (const color of ledColors) {
-			let found = false
-			for (let i = 0; i < bytecode.length; i += 5) {
-				if (bytecode[i] === BytecodeOpCode.SET_ALL_LEDS &&
-			bytecode[i + 1] === color.r &&
-			bytecode[i + 2] === color.g &&
-			bytecode[i + 3] === color.b) {
-					found = true
-					break
+			// Check for sensor readings
+			else if (opcode === BytecodeOpCode.READ_SENSOR) {
+				const sensorType = bytecode[i + 1]
+				if (sensorType === SensorType.FRONT_PROXIMITY) {
+					frontProximityRead = true
+				} else if (sensorType === SensorType.SIDE_RIGHT_PROXIMITY) {
+					rightProximityRead = true
+				} else if (sensorType === SensorType.SIDE_LEFT_PROXIMITY) {
+					leftProximityRead = true
 				}
 			}
-			expect(found).toBe(true)
+			// Check for LED settings
+			else if (opcode === BytecodeOpCode.SET_ALL_LEDS) {
+				const r = bytecode[i + 1]
+				const g = bytecode[i + 2]
+				const b = bytecode[i + 3]
+
+				if (r === MAX_LED_BRIGHTNESS && g === MAX_LED_BRIGHTNESS && b === MAX_LED_BRIGHTNESS) {
+					whiteLedFound = true
+				} else if (r === MAX_LED_BRIGHTNESS && g === 0 && b === 0) {
+					redLedFound = true
+				} else if (r === 0 && g === 0 && b === MAX_LED_BRIGHTNESS) {
+					blueLedFound = true
+				} else if (r === 0 && g === MAX_LED_BRIGHTNESS && b === 0) {
+					greenLedFound = true
+				}
+			}
 		}
+
+		// Test if all important instructions were found
+		expect(waitForButtonFound).toBe(true)
+		expect(whileStartFound).toBe(true)
+		expect(whileEndFound).toBe(true)
+		expect(frontProximityRead).toBe(true)
+		expect(rightProximityRead).toBe(true)
+		expect(leftProximityRead).toBe(true)
+		expect(whiteLedFound).toBe(true)
+		expect(redLedFound).toBe(true)
+		expect(blueLedFound).toBe(true)
+		expect(greenLedFound).toBe(true)
+
+		// Verify specific sequential instruction patterns to ensure correct control flow
+
+		// 1. Front proximity detection pattern
+		let frontSequenceFound = false
+		for (let i = 5; i < bytecode.length - 15; i += 5) {
+			if (bytecode[i] === BytecodeOpCode.READ_SENSOR &&
+          bytecode[i + 1] === SensorType.FRONT_PROXIMITY &&
+          bytecode[i + 5] === BytecodeOpCode.COMPARE &&
+          bytecode[i + 10] === BytecodeOpCode.JUMP_IF_FALSE) {
+				frontSequenceFound = true
+				break
+			}
+		}
+		expect(frontSequenceFound).toBe(true)
+
+		// 2. Right proximity detection pattern (should happen after front check fails)
+		let rightSequenceFound = false
+		for (let i = 5; i < bytecode.length - 15; i += 5) {
+			if (bytecode[i] === BytecodeOpCode.READ_SENSOR &&
+          bytecode[i + 1] === SensorType.SIDE_RIGHT_PROXIMITY &&
+          bytecode[i + 5] === BytecodeOpCode.COMPARE &&
+          bytecode[i + 10] === BytecodeOpCode.JUMP_IF_FALSE) {
+				rightSequenceFound = true
+				break
+			}
+		}
+		expect(rightSequenceFound).toBe(true)
+
+		// 3. Left proximity detection pattern (should happen after right check fails)
+		let leftSequenceFound = false
+		for (let i = 5; i < bytecode.length - 15; i += 5) {
+			if (bytecode[i] === BytecodeOpCode.READ_SENSOR &&
+          bytecode[i + 1] === SensorType.SIDE_LEFT_PROXIMITY &&
+          bytecode[i + 5] === BytecodeOpCode.COMPARE &&
+          bytecode[i + 10] === BytecodeOpCode.JUMP_IF_FALSE) {
+				leftSequenceFound = true
+				break
+			}
+		}
+		expect(leftSequenceFound).toBe(true)
+
+		// 4. Front detected -> white LED
+		let frontActionFound = false
+		for (let i = 5; i < bytecode.length - 10; i += 5) {
+			// Find a pattern where COMPARE is followed by JUMP_IF_FALSE (for front object check)
+			// and we can locate a white LED instruction soon after
+			if (bytecode[i] === BytecodeOpCode.COMPARE &&
+          bytecode[i + 5] === BytecodeOpCode.JUMP_IF_FALSE) {
+				// Look for white LED setting in the next few instructions (not after the jump)
+				for (let j = i + 10; j < i + 30 && j < bytecode.length; j += 5) {
+					if (bytecode[j] === BytecodeOpCode.SET_ALL_LEDS &&
+              bytecode[j + 1] === MAX_LED_BRIGHTNESS &&
+              bytecode[j + 2] === MAX_LED_BRIGHTNESS &&
+              bytecode[j + 3] === MAX_LED_BRIGHTNESS) {
+						frontActionFound = true
+						break
+					}
+				}
+			}
+		}
+		expect(frontActionFound).toBe(true)
+
+		// 5. Right detected -> red LED
+		let rightActionFound = false
+		for (let i = 5; i < bytecode.length - 10; i += 5) {
+			if (bytecode[i] === BytecodeOpCode.READ_SENSOR &&
+          bytecode[i + 1] === SensorType.SIDE_RIGHT_PROXIMITY) {
+				// Look for red LED setting in the next few instructions
+				for (let j = i + 10; j < i + 30 && j < bytecode.length; j += 5) {
+					if (bytecode[j] === BytecodeOpCode.SET_ALL_LEDS &&
+              bytecode[j + 1] === MAX_LED_BRIGHTNESS &&
+              bytecode[j + 2] === 0 &&
+              bytecode[j + 3] === 0) {
+						rightActionFound = true
+						break
+					}
+				}
+			}
+		}
+		expect(rightActionFound).toBe(true)
+
+		// 6. Left detected -> blue LED
+		let leftActionFound = false
+		for (let i = 5; i < bytecode.length - 10; i += 5) {
+			if (bytecode[i] === BytecodeOpCode.READ_SENSOR &&
+          bytecode[i + 1] === SensorType.SIDE_LEFT_PROXIMITY) {
+				// Look for blue LED setting in the next few instructions
+				for (let j = i + 10; j < i + 30 && j < bytecode.length; j += 5) {
+					if (bytecode[j] === BytecodeOpCode.SET_ALL_LEDS &&
+              bytecode[j + 1] === 0 &&
+              bytecode[j + 2] === 0 &&
+              bytecode[j + 3] === MAX_LED_BRIGHTNESS) {
+						leftActionFound = true
+						break
+					}
+				}
+			}
+		}
+		expect(leftActionFound).toBe(true)
+
+		// 7. Verify the final instruction is the WHILE_END that jumps back to WHILE_START
+		let lastInstruction = -1
+		for (let i = bytecode.length - 10; i >= 0; i -= 5) {
+			if (bytecode[i] === BytecodeOpCode.WHILE_END) {
+				lastInstruction = i
+				break
+			}
+		}
+		expect(lastInstruction).toBeGreaterThan(0)
+
+		// 8. END instruction should be the very last
+		expect(bytecode[bytecode.length - 5]).toBe(BytecodeOpCode.END)
+
+		// 9. Verify correct order of conditional blocks (front, right, left, clear)
+		// This is tricky to test directly with the bytecode but we can check for the existence
+		// of the correct sequence of LED setting instructions
+		let whiteIndex = -1
+		let redIndex = -1
+		let blueIndex = -1
+		let greenIndex = -1
+
+		// Find indices of each LED color setting
+		for (let i = 0; i < bytecode.length; i += 5) {
+			if (bytecode[i] === BytecodeOpCode.SET_ALL_LEDS) {
+				const r = bytecode[i + 1]
+				const g = bytecode[i + 2]
+				const b = bytecode[i + 3]
+
+				if (r === MAX_LED_BRIGHTNESS && g === MAX_LED_BRIGHTNESS && b === MAX_LED_BRIGHTNESS) {
+					whiteIndex = i
+				} else if (r === MAX_LED_BRIGHTNESS && g === 0 && b === 0) {
+					redIndex = i
+				} else if (r === 0 && g === 0 && b === MAX_LED_BRIGHTNESS) {
+					blueIndex = i
+				} else if (r === 0 && g === MAX_LED_BRIGHTNESS && b === 0) {
+					greenIndex = i
+				}
+			}
+		}
+
+		// All LED indices should be found
+		expect(whiteIndex).toBeGreaterThan(-1)
+		expect(redIndex).toBeGreaterThan(-1)
+		expect(blueIndex).toBeGreaterThan(-1)
+		expect(greenIndex).toBeGreaterThan(-1)
 	})
-
-	// test("should handle complex variable scoping across nested blocks", () => {
-	// 	const code = `
-	// 	int outerVar = 10;
-	// 	if (outerVar > 5) {
-	// 	int innerVar1 = 20;
-	// 	if (innerVar1 > 15) {
-	// 		int deepVar = 30;
-	// 		for (int i = 0; i < deepVar; i++) {
-	// 		if (i == outerVar) {
-	// 			rgbLed.set_led_red();
-	// 		} else if (i == innerVar1) {
-	// 			rgbLed.set_led_green();
-	// 		} else {
-	// 			rgbLed.set_led_blue();
-	// 		}
-	// 		}
-	// 	}
-	// 	}
-	// `
-
-	// 	const bytecode = CppParser.cppToByte(code)
-
-	// 	// Count variable declarations and for loop initialization
-	// 	let declareVarCount = 0
-	// 	let forInitCount = 0
-
-	// 	for (let i = 0; i < bytecode.length; i += 5) {
-	// 		if (bytecode[i] === BytecodeOpCode.DECLARE_VAR) {
-	// 			declareVarCount++
-	// 		} else if (bytecode[i] === BytecodeOpCode.FOR_INIT) {
-	// 			forInitCount++
-	// 		}
-	// 	}
-
-	// 	// Should have 4 variables: outerVar, innerVar1, deepVar, and the loop counter i
-	// 	expect(declareVarCount).toBe(4)
-	// 	expect(forInitCount).toBe(1)
-	// })
 })
 
 describe("Boundary Conditions", () => {

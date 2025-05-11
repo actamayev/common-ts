@@ -197,7 +197,7 @@ rgbLed.set_led_purple();`
 
 			// 4. SET_ALL_LEDS (red)
 			expect(bytecode[15]).toBe(BytecodeOpCode.SET_ALL_LEDS)
-			expect(bytecode[16]).toBe(255) // R
+			expect(bytecode[16]).toBe(MAX_LED_BRIGHTNESS) // R
 			expect(bytecode[17]).toBe(0)   // G
 			expect(bytecode[18]).toBe(0)   // B
 
@@ -224,7 +224,7 @@ rgbLed.set_led_purple();`
 			expect(bytecode[40]).toBe(BytecodeOpCode.SET_ALL_LEDS)
 			expect(bytecode[41]).toBe(0)   // R
 			expect(bytecode[42]).toBe(0)   // G
-			expect(bytecode[43]).toBe(255) // B
+			expect(bytecode[43]).toBe(MAX_LED_BRIGHTNESS) // B
 
 			// 10. JUMP (skip inner else, 2 instructions ahead: 2 * 20 = 40 bytes)
 			expect(bytecode[45]).toBe(BytecodeOpCode.JUMP)
@@ -233,7 +233,7 @@ rgbLed.set_led_purple();`
 			// 11. SET_ALL_LEDS (green)
 			expect(bytecode[50]).toBe(BytecodeOpCode.SET_ALL_LEDS)
 			expect(bytecode[51]).toBe(0)   // R
-			expect(bytecode[52]).toBe(255) // G
+			expect(bytecode[52]).toBe(MAX_LED_BRIGHTNESS) // G
 			expect(bytecode[53]).toBe(0)   // B
 
 			// 12. END

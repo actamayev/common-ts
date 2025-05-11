@@ -106,7 +106,7 @@ describe("While Loop Functionality", () => {
 		// 4. SET_ALL_LEDS (green)
 		expect(bytecode[15]).toBe(BytecodeOpCode.SET_ALL_LEDS)
 		expect(bytecode[16]).toBe(0)   // R
-		expect(bytecode[17]).toBe(255) // G
+		expect(bytecode[17]).toBe(MAX_LED_BRIGHTNESS) // G
 		expect(bytecode[18]).toBe(0)   // B
 
 		// 5. JUMP to skip else branch (2 instructions ahead: 2 * 20 = 40 bytes)
@@ -115,7 +115,7 @@ describe("While Loop Functionality", () => {
 
 		// 6. SET_ALL_LEDS (red)
 		expect(bytecode[25]).toBe(BytecodeOpCode.SET_ALL_LEDS)
-		expect(bytecode[26]).toBe(255) // R
+		expect(bytecode[26]).toBe(MAX_LED_BRIGHTNESS) // R
 		expect(bytecode[27]).toBe(0)   // G
 		expect(bytecode[28]).toBe(0)   // B
 
@@ -199,7 +199,7 @@ describe("While Loop Functionality", () => {
 		// 1. SET_ALL_LEDS (green)
 		expect(bytecode[0]).toBe(BytecodeOpCode.SET_ALL_LEDS)
 		expect(bytecode[1]).toBe(0)   // R
-		expect(bytecode[2]).toBe(255) // G
+		expect(bytecode[2]).toBe(MAX_LED_BRIGHTNESS) // G
 		expect(bytecode[3]).toBe(0)   // B
 
 		// 2. DELAY
@@ -214,7 +214,7 @@ describe("While Loop Functionality", () => {
 		expect(bytecode[15]).toBe(BytecodeOpCode.SET_ALL_LEDS)
 		expect(bytecode[16]).toBe(0)   // R
 		expect(bytecode[17]).toBe(0)   // G
-		expect(bytecode[18]).toBe(255) // B
+		expect(bytecode[18]).toBe(MAX_LED_BRIGHTNESS) // B
 
 		// 5. WHILE_END (jump back 2 instructions: 2 * 20 = 40 bytes)
 		expect(bytecode[20]).toBe(BytecodeOpCode.WHILE_END)
@@ -400,7 +400,7 @@ describe("For Loop Functionality", () => {
 		// 6. SET_ALL_LEDS (green)
 		expect(bytecode[25]).toBe(BytecodeOpCode.SET_ALL_LEDS)
 		expect(bytecode[26]).toBe(0)   // R
-		expect(bytecode[27]).toBe(255) // G
+		expect(bytecode[27]).toBe(MAX_LED_BRIGHTNESS) // G
 		expect(bytecode[28]).toBe(0)   // B
 
 		// 7. JUMP (skip else branch, 2 instructions ahead: 2 * 20 = 40 bytes)
@@ -409,7 +409,7 @@ describe("For Loop Functionality", () => {
 
 		// 8. SET_ALL_LEDS (red)
 		expect(bytecode[35]).toBe(BytecodeOpCode.SET_ALL_LEDS)
-		expect(bytecode[36]).toBe(255) // R
+		expect(bytecode[36]).toBe(MAX_LED_BRIGHTNESS) // R
 		expect(bytecode[37]).toBe(0)   // G
 		expect(bytecode[38]).toBe(0)   // B
 
