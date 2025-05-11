@@ -185,10 +185,6 @@ export class MessageBuilder {
 	}
 
 	static createStartSensorPollingMessage(): ArrayBuffer {
-		return this.frameMessage(MessageType.START_SENSOR_POLLING_FOR_ONE_MINUTE)
-	}
-
-	static createEndSensorPollingMessage(): ArrayBuffer {
-		return this.frameMessage(MessageType.STOP_SENSOR_POLLING)
+		return this.frameMessage(MessageType.START_SENSOR_POLLING)
 	}
 }
