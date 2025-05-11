@@ -250,7 +250,7 @@ describe("LED operations", () => {
 		const bytecode = CppParser.cppToByte("set_all_leds_to_color(255, 127, 64);")
 
 		expect(bytecode[0]).toBe(BytecodeOpCode.SET_ALL_LEDS)
-		expect(bytecode[1]).toBe(MAX_LED_BRIGHTNESS) // R
+		expect(bytecode[1]).toBe(255) // R
 		expect(bytecode[2]).toBe(127) // G
 		expect(bytecode[3]).toBe(64)  // B
 		expect(bytecode[4]).toBe(0)   // Unused
