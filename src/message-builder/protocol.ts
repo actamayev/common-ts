@@ -54,9 +54,9 @@ export enum BalanceStatus {
 }
 
 export enum WiFiConnectionStatus {
-    FAILED = 0,
-    WIFI_ONLY = 1,
-    WIFI_AND_WEBSOCKET_SUCCESS = 2
+    FAILED = "failed",
+    WIFI_ONLY = "wifi_only",
+    WIFI_AND_WEBSOCKET_SUCCESS = "success"
 }
 
 // Mapping between string enum and numeric enum
