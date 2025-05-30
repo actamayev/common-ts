@@ -16,7 +16,9 @@ export enum MessageType {
     SERIAL_KEEPALIVE = 12,
     SERIAL_END = 13,
     UPDATE_HEADLIGHT = 14,
-    START_SENSOR_POLLING = 15
+    START_SENSOR_POLLING = 15,
+    WIFI_CREDENTIALS = 16,
+    WIFI_CONNECTION_RESULT = 17
 }
 
 export enum SoundType {
@@ -49,6 +51,12 @@ export enum HeadlightStatus {
 export enum BalanceStatus {
     UNBALANCED = 0,
     BALANCED = 1
+}
+
+export enum WiFiConnectionStatus {
+    FAILED = 0,
+    WIFI_ONLY = 1,
+    WIFI_AND_WEBSOCKET_SUCCESS = 2
 }
 
 // Mapping between string enum and numeric enum
