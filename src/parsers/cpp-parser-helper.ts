@@ -23,7 +23,8 @@ export class CppParserHelper {
 		// Add spaces around braces and make them separate tokens
 			.replace(/{/g, " ; { ; ")
 			.replace(/}/g, " ; } ; ")
-		// Make sure else is a separate token
+		// Make sure else if and else are separate tokens (order matters - else if first)
+			.replace(/}\s*else\s+if/g, "} ; else if")
 			.replace(/}\s*else/g, "} ; else")
 		// Normalize whitespace
 			.replace(/\s+/g, " ")
@@ -139,19 +140,30 @@ export class CppParserHelper {
 		}
 	}
 
+	// Update the processOperand function in cpp-parser-helper.ts
+	// Add this at the very beginning of the processOperand function, before any other checks:
+
 	static processOperand(
 		expr: string,
 		variables: Map<string, VariableType>,
 		nextRegister: number,
 		instructions: BytecodeInstruction[]
 	): {
-		operand: number,
-		updatedNextRegister: number
-	} {
+	operand: number,
+	updatedNextRegister: number
+} {
+	// Check if this is a boolean literal first (before checking variables)
+		const trimmedExpr = expr.trim()
+		if (trimmedExpr === "true") {
+			return { operand: 1.0, updatedNextRegister: nextRegister }
+		} else if (trimmedExpr === "false") {
+			return { operand: 0.0, updatedNextRegister: nextRegister }
+		}
+
 		// Check if this is a proximity detection function
 		const proximityMatch = expr.match(/is_object_near_side_(left|right)\(\)/) || expr.match(/is_object_in_front\(\)/)
 		if (proximityMatch) {
-			// Determine the sensor type based on the function name
+		// Determine the sensor type based on the function name
 			let sensorType: SensorType
 			if (proximityMatch[0] === "is_object_in_front()") {
 				sensorType = SensorType.FRONT_PROXIMITY
@@ -181,7 +193,7 @@ export class CppParserHelper {
 		// Check if this is a standard sensor reading
 		const sensorMatch = expr.match(/Sensors::getInstance\(\)\.(\w+)\(\)/)
 		if (sensorMatch) {
-			// This is a sensor comparison
+		// This is a sensor comparison
 			const sensorMethod = sensorMatch[1]
 			const sensorType = this.getSensorTypeFromMethod(sensorMethod)
 
@@ -202,11 +214,11 @@ export class CppParserHelper {
 
 			return { operand: 0x8000 | register, updatedNextRegister: nextRegister }
 		} else if (variables.has(expr)) {
-			// This is a variable reference
+		// This is a variable reference
 			const variable = variables.get(expr) as VariableType
 			return { operand: 0x8000 | variable.register, updatedNextRegister: nextRegister }
 		} else {
-			// This is a numeric constant
+		// This is a numeric constant
 			const value = parseFloat(expr)
 			if (isNaN(value)) {
 				throw new Error(`Undefined variable or invalid number: ${expr}`)
