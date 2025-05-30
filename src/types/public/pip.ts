@@ -1,4 +1,5 @@
-import { PipUUIDInterface } from "./utils"
+import { SensorPayload } from "./socket"
+import { PipUUID, PipUUIDInterface } from "./utils"
 
 export type PipConnectionStatus =
 	| ESPConnectionStatus
@@ -22,4 +23,28 @@ export interface PipData extends PipUUIDInterface {
 export interface FirmwareData {
 	firmwareVersion: number
 	firmwareBuffer: Buffer
+}
+
+export type RoutePayloadMap = {
+	"/register": PipUUIDPayload
+	"/sensor-data": SensorPayload
+	"/bytecode-status": BytecodeMessage
+}
+
+// Routes derived from the keys of the mapping
+export type ESPRoutes = keyof RoutePayloadMap
+
+// Type-safe message interface
+export interface ESPMessage<R extends ESPRoutes = ESPRoutes> {
+	route: R
+	payload: RoutePayloadMap[R]
+}
+
+export interface PipUUIDPayload {
+	pipUUID: PipUUID
+	firmwareVersion: number
+}
+
+export interface BytecodeMessage {
+	message: string
 }

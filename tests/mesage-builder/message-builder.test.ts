@@ -475,4 +475,186 @@ describe("MessageBuilder", () => {
 			validateFrameStructure(buffer, MessageType.START_SENSOR_POLLING, 0)
 		})
 	})
+
+	describe("createWiFiCredentialsMessage", () => {
+		it("should create a valid WiFi credentials message", () => {
+			const ssid = "MyWiFiNetwork"
+			const password = "MyPassword123"
+
+			const buffer = MessageBuilder.createWiFiCredentialsMessage(ssid, password)
+
+			// Calculate expected payload length: ssid_length(1) + ssid_bytes + password_length(1) + password_bytes
+			const expectedPayloadLength = 1 + ssid.length + 1 + password.length
+			validateFrameStructure(buffer, MessageType.WIFI_CREDENTIALS, expectedPayloadLength)
+
+			const view = new DataView(buffer)
+			const offset = getPayloadOffset(buffer)
+
+			// Check SSID length
+			expect(view.getUint8(offset)).toBe(ssid.length)
+
+			// Check SSID content
+			for (let i = 0; i < ssid.length; i++) {
+				expect(view.getUint8(offset + 1 + i)).toBe(ssid.charCodeAt(i))
+			}
+
+			// Check password length
+			const passwordOffset = offset + 1 + ssid.length
+			expect(view.getUint8(passwordOffset)).toBe(password.length)
+
+			// Check password content
+			for (let i = 0; i < password.length; i++) {
+				expect(view.getUint8(passwordOffset + 1 + i)).toBe(password.charCodeAt(i))
+			}
+		})
+
+		it("should handle empty SSID and password", () => {
+			const buffer = MessageBuilder.createWiFiCredentialsMessage("", "")
+
+			// Expected payload: ssid_length(1) + 0 bytes + password_length(1) + 0 bytes = 2 bytes
+			validateFrameStructure(buffer, MessageType.WIFI_CREDENTIALS, 2)
+
+			const view = new DataView(buffer)
+			const offset = getPayloadOffset(buffer)
+
+			// Both lengths should be 0
+			expect(view.getUint8(offset)).toBe(0)      // SSID length
+			expect(view.getUint8(offset + 1)).toBe(0)  // Password length
+		})
+
+		it("should handle empty SSID with non-empty password", () => {
+			const ssid = ""
+			const password = "password123"
+
+			const buffer = MessageBuilder.createWiFiCredentialsMessage(ssid, password)
+
+			const expectedPayloadLength = 1 + 0 + 1 + password.length
+			validateFrameStructure(buffer, MessageType.WIFI_CREDENTIALS, expectedPayloadLength)
+
+			const view = new DataView(buffer)
+			const offset = getPayloadOffset(buffer)
+
+			expect(view.getUint8(offset)).toBe(0)                    // SSID length
+			expect(view.getUint8(offset + 1)).toBe(password.length)  // Password length
+
+			// Check password content
+			for (let i = 0; i < password.length; i++) {
+				expect(view.getUint8(offset + 2 + i)).toBe(password.charCodeAt(i))
+			}
+		})
+
+		it("should handle non-empty SSID with empty password", () => {
+			const ssid = "PublicWiFi"
+			const password = ""
+
+			const buffer = MessageBuilder.createWiFiCredentialsMessage(ssid, password)
+
+			const expectedPayloadLength = 1 + ssid.length + 1 + 0
+			validateFrameStructure(buffer, MessageType.WIFI_CREDENTIALS, expectedPayloadLength)
+
+			const view = new DataView(buffer)
+			const offset = getPayloadOffset(buffer)
+
+			expect(view.getUint8(offset)).toBe(ssid.length)  // SSID length
+
+			// Check SSID content
+			for (let i = 0; i < ssid.length; i++) {
+				expect(view.getUint8(offset + 1 + i)).toBe(ssid.charCodeAt(i))
+			}
+
+			// Check password length
+			expect(view.getUint8(offset + 1 + ssid.length)).toBe(0)
+		})
+
+		it("should handle special characters in SSID and password", () => {
+			const ssid = "WiFi-Network_5G@Home!"
+			const password = "P@ssw0rd#2024$"
+
+			const buffer = MessageBuilder.createWiFiCredentialsMessage(ssid, password)
+
+			const expectedPayloadLength = 1 + ssid.length + 1 + password.length
+			validateFrameStructure(buffer, MessageType.WIFI_CREDENTIALS, expectedPayloadLength)
+
+			const view = new DataView(buffer)
+			const offset = getPayloadOffset(buffer)
+
+			// Verify SSID
+			expect(view.getUint8(offset)).toBe(ssid.length)
+			for (let i = 0; i < ssid.length; i++) {
+				expect(view.getUint8(offset + 1 + i)).toBe(ssid.charCodeAt(i))
+			}
+
+			// Verify password
+			const passwordOffset = offset + 1 + ssid.length
+			expect(view.getUint8(passwordOffset)).toBe(password.length)
+			for (let i = 0; i < password.length; i++) {
+				expect(view.getUint8(passwordOffset + 1 + i)).toBe(password.charCodeAt(i))
+			}
+		})
+
+		it("should handle maximum length strings", () => {
+			// Create strings at the maximum length for single-byte length field (255 characters)
+			const maxSsid = "a".repeat(255)
+			const maxPassword = "b".repeat(255)
+
+			const buffer = MessageBuilder.createWiFiCredentialsMessage(maxSsid, maxPassword)
+
+			// 255 + 255 + 2 length bytes = 512 bytes payload
+			validateFrameStructure(buffer, MessageType.WIFI_CREDENTIALS, 512)
+
+			const view = new DataView(buffer)
+			const offset = getPayloadOffset(buffer)
+
+			expect(view.getUint8(offset)).toBe(255)  // SSID length
+			expect(view.getUint8(offset + 1 + 255)).toBe(255)  // Password length
+		})
+
+		it("should handle Unicode characters", () => {
+			const ssid = "WiFi-网络-Réseau"
+			const password = "パスワード123"
+
+			const buffer = MessageBuilder.createWiFiCredentialsMessage(ssid, password)
+
+			// Unicode characters will be encoded as UTF-8, so byte length may differ from string length
+			const ssidBytes = new TextEncoder().encode(ssid)
+			const passwordBytes = new TextEncoder().encode(password)
+			const expectedPayloadLength = 1 + ssidBytes.length + 1 + passwordBytes.length
+
+			validateFrameStructure(buffer, MessageType.WIFI_CREDENTIALS, expectedPayloadLength)
+
+			const view = new DataView(buffer)
+			const offset = getPayloadOffset(buffer)
+
+			expect(view.getUint8(offset)).toBe(ssidBytes.length)
+
+			// Verify SSID bytes
+			for (let i = 0; i < ssidBytes.length; i++) {
+				expect(view.getUint8(offset + 1 + i)).toBe(ssidBytes[i])
+			}
+
+			// Verify password length and bytes
+			const passwordOffset = offset + 1 + ssidBytes.length
+			expect(view.getUint8(passwordOffset)).toBe(passwordBytes.length)
+			for (let i = 0; i < passwordBytes.length; i++) {
+				expect(view.getUint8(passwordOffset + 1 + i)).toBe(passwordBytes[i])
+			}
+		})
+
+		it("should handle single character SSID and password", () => {
+			const ssid = "A"
+			const password = "1"
+
+			const buffer = MessageBuilder.createWiFiCredentialsMessage(ssid, password)
+
+			validateFrameStructure(buffer, MessageType.WIFI_CREDENTIALS, 4) // 1+1+1+1
+
+			const view = new DataView(buffer)
+			const offset = getPayloadOffset(buffer)
+
+			expect(view.getUint8(offset)).toBe(1)      // SSID length
+			expect(view.getUint8(offset + 1)).toBe(65) // 'A'
+			expect(view.getUint8(offset + 2)).toBe(1)  // Password length
+			expect(view.getUint8(offset + 3)).toBe(49) // '1'
+		})
+	})
 })
