@@ -11,16 +11,16 @@ declare global {
 	}
 
 	interface BlockStack {
-		type: "while" | "if" | "else" | "for"
+		type: "for" | "while" | "if" | "else-if" | "else"
 		jumpIndex: number
-		varRegister?: number  // For tracking loop counter register
-		startIndex?: number   // For loop start position
-		additionalJumps?: number[]  // For tracking multiple jumps in compound conditions
+		varRegister?: number // For for loops
+		startIndex?: number // For for loops
+		additionalJumps?: number[] // For compound conditions
 	}
 
 	interface PendingJumps {
 		index: number
-		targetType: string
+		targetType: "end_of_else" | "end_of_chain"
 	}
 
 	interface ValidCommand {
