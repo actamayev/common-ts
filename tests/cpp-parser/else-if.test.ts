@@ -101,7 +101,7 @@ describe("Else-If Functionality", () => {
 	describe("Compound Conditions in Else-If", () => {
 		test("should handle AND conditions in else-if", () => {
 			const code = `
-				if (1 > 2) {
+				if (false) {
 					rgbLed.set_led_red();
 				} else if ((10 > 5) && (20 > 15)) {
 					rgbLed.set_led_green();
@@ -133,7 +133,7 @@ describe("Else-If Functionality", () => {
 
 		test("should handle OR conditions in else-if", () => {
 			const code = `
-				if (1 > 2) {
+				if (false) {
 					rgbLed.set_led_red();
 				} else if ((5 > 10) || (15 > 10)) {
 					rgbLed.set_led_green();
@@ -159,9 +159,9 @@ describe("Else-If Functionality", () => {
 	describe("Jump Pattern Analysis", () => {
 		test("should understand jump pattern in else-if chains", () => {
 			const code = `
-				if (1 > 2) {
+				if (false) {
 					rgbLed.set_led_red();
-				} else if (3 > 4) {
+				} else if (false) {
 					rgbLed.set_led_green();
 				} else {
 					rgbLed.set_led_blue();
@@ -222,7 +222,7 @@ describe("Else-If Functionality", () => {
 
 			for (const { code, op } of operators) {
 				const fullCode = `
-			if (1 > 2) {
+			if (false) {
 				rgbLed.set_led_red();
 			} ${code} {
 				rgbLed.set_led_green();
@@ -558,7 +558,7 @@ describe("Else-If Functionality", () => {
 		int b = 10;
 		bool flag = true;
 		
-		if (1 > 2) {
+		if (false) {
 			rgbLed.set_led_red();
 		} else if ((a > 3) && (b < 15)) {
 			rgbLed.set_led_green();
@@ -748,9 +748,9 @@ describe("Else-If Functionality", () => {
 
 		test("should handle multiple levels of else-if nesting", () => {
 			const code = `
-				if (1 > 2) {
+				if (false) {
 					rgbLed.set_led_red();
-				} else if (3 > 4) {
+				} else if (false) {
 					if (5 > 6) {
 						rgbLed.set_led_green();
 					} else if (7 > 8) {
@@ -926,9 +926,9 @@ describe("Else-If Functionality", () => {
 	describe("Error Handling and Edge Cases", () => {
 		test("should parse else-if chain without final else", () => {
 			const code = `
-		if (1 > 2) {
+		if (false) {
 			rgbLed.set_led_red();
-		} else if (3 > 4) {
+		} else if (false) {
 			rgbLed.set_led_green();
 		} else if (5 > 6) {
 			rgbLed.set_led_blue();
@@ -1041,7 +1041,7 @@ describe("Else-If Functionality", () => {
 
 		test("should handle empty else-if blocks", () => {
 			const code = `
-		if (1 > 2) {
+		if (false) {
 			// empty
 		} else if (3 > 2) {
 			// empty else-if
@@ -1072,7 +1072,7 @@ describe("Else-If Functionality", () => {
 
 	describe("Performance and Optimization", () => {
 		test("should handle long else-if chains efficiently", () => {
-			let code = "if (1 > 2) { rgbLed.set_led_red(); }"
+			let code = "if (false) { rgbLed.set_led_red(); }"
 
 			// Create a chain of 20 else-if statements
 			for (let i = 1; i <= 20; i++) {
@@ -1100,7 +1100,7 @@ describe("Else-If Functionality", () => {
 		})
 
 		test("should generate correct jump distances for large else-if chains", () => {
-			let code = "if (1 > 2) { rgbLed.set_led_red(); delay(100); }"
+			let code = "if (false) { rgbLed.set_led_red(); delay(100); }"
 
 			// Create else-if chain with substantial code in each block
 			for (let i = 1; i <= 10; i++) {
@@ -1214,9 +1214,9 @@ describe("Else-If Functionality", () => {
 		// 7. Simple debug test to understand the actual pattern
 		test("should debug jump instruction patterns", () => {
 			const code = `
-		if (1 > 2) {
+		if (false) {
 			rgbLed.set_led_red();
-		} else if (3 > 4) {
+		} else if (false) {
 			rgbLed.set_led_green();
 		}
 	`

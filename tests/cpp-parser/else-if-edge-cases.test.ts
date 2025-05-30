@@ -5,9 +5,9 @@ describe("Else-If Edge Cases and Specific Scenarios", () => {
 	describe("Jump Address Fixup Verification", () => {
 		test("should correctly fix jump addresses in simple else-if chain", () => {
 			const code = `
-				if (1 > 2) {
+				if (false) {
 					rgbLed.set_led_red();
-				} else if (3 > 4) {
+				} else if (false) {
 					rgbLed.set_led_green();
 				} else {
 					rgbLed.set_led_blue();
@@ -361,8 +361,8 @@ describe("Else-If Edge Cases and Specific Scenarios", () => {
 
 		test("should handle else-if with maximum supported nesting", () => {
 			const code = `
-				if (1 > 2) {
-					if (3 > 4) {
+				if (false) {
+					if (false) {
 						if (5 > 6) {
 							rgbLed.set_led_red();
 						} else if (7 > 8) {
