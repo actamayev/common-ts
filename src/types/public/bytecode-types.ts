@@ -106,6 +106,9 @@ export enum CommandType {
     IF_STATEMENT = "IF_STATEMENT",
     COMPOUND_AND_IF_STATEMENT = "COMPOUND_AND_IF_STATEMENT",
     COMPOUND_OR_IF_STATEMENT = "COMPOUND_OR_IF_STATEMENT",
+    ELSE_IF_STATEMENT = "ELSE_IF_STATEMENT",
+    COMPOUND_AND_ELSE_IF_STATEMENT = "COMPOUND_AND_ELSE_IF_STATEMENT",
+    COMPOUND_OR_ELSE_IF_STATEMENT = "COMPOUND_OR_ELSE_IF_STATEMENT",
     ELSE_STATEMENT = "ELSE_STATEMENT",
     BLOCK_START = "BLOCK_START",
     BLOCK_END = "BLOCK_END",
@@ -152,9 +155,11 @@ export const CommandPatterns: Record<CommandType, RegExp> = {
 	[CommandType.VARIABLE_ASSIGNMENT]: /^(float|int|bool)\s+(\w+)\s*=\s*(.+)$/,
 
 	// Updated regex for IF_STATEMENT
-	[CommandType.IF_STATEMENT]: /^if\s*\(\s*(?:is_object_near_side_(left|right)\(\)|is_object_in_front\(\)|(\w+)|(Sensors::getInstance\(\)\.\w+\(\)|[-\d.]+|\w+)\s*([<>=!][=]?)\s*(Sensors::getInstance\(\)\.\w+\(\)|[-\d.]+|\w+))\s*\)$/,
-	[CommandType.COMPOUND_AND_IF_STATEMENT]: /^if\s*\(\s*\(.+?\)\s*&&\s*\(.+?\)\s*\)$/,
+	[CommandType.IF_STATEMENT]: /^if\s*\(\s*(?:is_object_near_side_(left|right)\(\)|is_object_in_front\(\)|(true|false)|\b(\w+)\b|(Sensors::getInstance\(\)\.\w+\(\)|[-\d.]+|\w+)\s*([<>=!][=]?)\s*(Sensors::getInstance\(\)\.\w+\(\)|[-\d.]+|\w+))\s*\)$/,
 	[CommandType.COMPOUND_OR_IF_STATEMENT]: /^if\s*\(\s*\(.+?\)\s*\|\|\s*\(.+?\)\s*\)$/,
+	[CommandType.ELSE_IF_STATEMENT]: /^else\s+if\s*\(\s*(?:is_object_near_side_(left|right)\(\)|is_object_in_front\(\)|(true|false)|\b(\w+)\b|(Sensors::getInstance\(\)\.\w+\(\)|[-\d.]+|\w+)\s*([<>=!][=]?)\s*(Sensors::getInstance\(\)\.\w+\(\)|[-\d.]+|\w+))\s*\)$/,	[CommandType.COMPOUND_AND_IF_STATEMENT]: /^if\s*\(\s*\(.+?\)\s*&&\s*\(.+?\)\s*\)$/,
+	[CommandType.COMPOUND_AND_ELSE_IF_STATEMENT]: /^else\s+if\s*\(\s*\(.+?\)\s*&&\s*\(.+?\)\s*\)$/,
+	[CommandType.COMPOUND_OR_ELSE_IF_STATEMENT]: /^else\s+if\s*\(\s*\(.+?\)\s*\|\|\s*\(.+?\)\s*\)$/,
 	[CommandType.ELSE_STATEMENT]: /^else$/,
 	[CommandType.BLOCK_START]: /^{$/,
 	[CommandType.BLOCK_END]: /^}$/,
