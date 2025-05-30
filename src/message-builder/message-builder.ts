@@ -187,4 +187,28 @@ export class MessageBuilder {
 	static createStartSensorPollingMessage(): ArrayBuffer {
 		return this.frameMessage(MessageType.START_SENSOR_POLLING)
 	}
+
+	// 5/30/25 TODO: Generate unit tests for this
+	static createWiFiCredentialsMessage(ssid: string, password: string): ArrayBuffer {
+		const ssidBytes = new TextEncoder().encode(ssid)
+		const passwordBytes = new TextEncoder().encode(password)
+
+		// Payload: [ssid_length: 1 byte][ssid_bytes][password_length: 1 byte][password_bytes]
+		const payload = new ArrayBuffer(2 + ssidBytes.length + passwordBytes.length)
+		const view = new DataView(payload)
+		const uint8View = new Uint8Array(payload)
+
+		let offset = 0
+
+		// SSID length and data
+		view.setUint8(offset++, ssidBytes.length)
+		uint8View.set(ssidBytes, offset)
+		offset += ssidBytes.length
+
+		// Password length and data
+		view.setUint8(offset++, passwordBytes.length)
+		uint8View.set(passwordBytes, offset)
+
+		return this.frameMessage(MessageType.WIFI_CREDENTIALS, new Uint8Array(payload))
+	}
 }

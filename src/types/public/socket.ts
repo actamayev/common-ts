@@ -43,7 +43,7 @@ export interface SoundData extends PipUUIDInterface {
 }
 
 // Incoming socket events:
-export interface PipStatusUpdate extends PipUUIDInterface{
+export interface PipStatusUpdate extends PipUUIDInterface {
 	newConnectionStatus: PipConnectionStatus
 }
 
