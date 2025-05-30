@@ -188,7 +188,6 @@ export class MessageBuilder {
 		return this.frameMessage(MessageType.START_SENSOR_POLLING)
 	}
 
-	// 5/30/25 TODO: Generate unit tests for this
 	static createWiFiCredentialsMessage(ssid: string, password: string): ArrayBuffer {
 		const ssidBytes = new TextEncoder().encode(ssid)
 		const passwordBytes = new TextEncoder().encode(password)
