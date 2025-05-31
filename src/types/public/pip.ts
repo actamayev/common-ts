@@ -29,6 +29,7 @@ export type RoutePayloadMap = {
 	"/sensor-data": SensorPayload
 	"/bytecode-status": BytecodeMessage
 	"/wifi-connection-result": WiFiConnectionResultPayload
+	"/pip-id": PipIDPayload
 }
 
 // Routes derived from the keys of the mapping
@@ -51,6 +52,10 @@ export interface BytecodeMessage {
 
 export interface WiFiConnectionResultPayload {
     status: "success" | "wifi_only" | "failed"
+}
+
+export interface PipIDPayload {
+    pipId: PipUUID
 }
 
 export interface MotorControlInput {
