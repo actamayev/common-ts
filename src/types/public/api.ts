@@ -1,7 +1,7 @@
 import { SandboxProject } from "./sandbox"
+import { ESPConnectionStatus, PipData } from "./pip"
 import { PipUUIDInterface, SiteThemes } from "./utils"
 import { RetrievedQuestions, UserActivityProgress } from "./lab"
-import { ESPConnectionStatus, PipConnectionStatus, PipData } from "./pip"
 
 // Auth
 // Requests
@@ -63,7 +63,6 @@ export type ProfilePictureUrl = { profilePictureUrl: string }
 export type AddNewPipResponse = {
 	pipName: string
 	userPipUUIDId: number
-	pipConnectionStatus: PipConnectionStatus
 }
 export type PreviouslyAddedPipsResponse = {
 	userPipData: PipData[]
@@ -91,4 +90,3 @@ export type ErrorResponse = { error: string }
 export type ErrorResponses = ValidationErrorResponse | ErrorResponse
 export type NonSuccessResponse = MessageResponse | ErrorResponses
 export type AllCommonResponses = SuccessResponse | NonSuccessResponse
-
