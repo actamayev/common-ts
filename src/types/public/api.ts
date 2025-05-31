@@ -36,7 +36,6 @@ export type GoogleAuthSuccess = LoginSuccess & { isNewUser: boolean }
 
 //Pip
 export interface AddPipData extends PipUUIDInterface {
-	shouldAutoConnect: boolean
 	pipName?: string
 }
 
