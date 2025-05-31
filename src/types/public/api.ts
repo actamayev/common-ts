@@ -1,6 +1,6 @@
 import { SandboxProject } from "./sandbox"
+import { PipUUID, SiteThemes } from "./utils"
 import { ESPConnectionStatus, PipData } from "./pip"
-import { PipUUIDInterface, SiteThemes } from "./utils"
 import { RetrievedQuestions, UserActivityProgress } from "./lab"
 
 // Auth
@@ -35,7 +35,8 @@ export type LoginSuccess = RegisterSuccess & {
 export type GoogleAuthSuccess = LoginSuccess & { isNewUser: boolean }
 
 //Pip
-export interface AddPipData extends PipUUIDInterface {
+export interface AddPipData {
+	pipUUID: PipUUID | null
 	pipName?: string
 }
 
