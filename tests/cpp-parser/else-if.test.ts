@@ -170,25 +170,6 @@ describe("Else-If Functionality", () => {
 
 			const bytecode = CppParser.cppToByte(code)
 
-			// Log the instruction sequence for debugging
-			console.log("Instruction sequence:")
-			for (let i = 0; i < bytecode.length; i += 5) {
-				const opcode = bytecode[i]
-				const op1 = bytecode[i + 1]
-				const op2 = bytecode[i + 2]
-				const op3 = bytecode[i + 3]
-				const op4 = bytecode[i + 4]
-
-				let opcodeName = "UNKNOWN"
-				if (opcode === BytecodeOpCode.COMPARE) opcodeName = "COMPARE"
-				else if (opcode === BytecodeOpCode.JUMP_IF_FALSE) opcodeName = "JUMP_IF_FALSE"
-				else if (opcode === BytecodeOpCode.JUMP) opcodeName = "JUMP"
-				else if (opcode === BytecodeOpCode.SET_ALL_LEDS) opcodeName = "SET_ALL_LEDS"
-				else if (opcode === BytecodeOpCode.END) opcodeName = "END"
-
-				console.log(`${i / 5}: ${opcodeName} (${op1}, ${op2}, ${op3}, ${op4})`)
-			}
-
 			// Count instructions
 			let compareCount = 0
 			let jumpIfFalseCount = 0
@@ -199,8 +180,6 @@ describe("Else-If Functionality", () => {
 				else if (bytecode[i] === BytecodeOpCode.JUMP_IF_FALSE) jumpIfFalseCount++
 				else if (bytecode[i] === BytecodeOpCode.JUMP) jumpCount++
 			}
-
-			console.log(`Counts - COMPARE: ${compareCount}, JUMP_IF_FALSE: ${jumpIfFalseCount}, JUMP: ${jumpCount}`)
 
 			// Just verify the structure is reasonable
 			expect(compareCount).toBe(2) // if + else-if
