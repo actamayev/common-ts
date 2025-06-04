@@ -31,7 +31,8 @@ export type RoutePayloadMap = {
 	"/wifi-connection-result": WiFiConnectionResultPayload
 	"/pip-id": PipIDPayload
 	"/saved-networks": SavedWiFiNetwork[]
-	"/scan-results": ScannedWiFiNetwork[]
+    "/scan-result-item": ScannedWiFiNetworkItem
+    "/scan-complete": ScanCompletePayload
 }
 
 // Routes derived from the keys of the mapping
@@ -141,8 +142,12 @@ export interface SavedWiFiNetwork {
     index: number
 }
 
-export interface ScannedWiFiNetwork {
+export interface ScannedWiFiNetworkItem {
     ssid: string
     rssi: number
     encrypted: boolean
+}
+
+export interface ScanCompletePayload {
+    totalNetworks: number
 }
