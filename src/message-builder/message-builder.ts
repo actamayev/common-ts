@@ -189,8 +189,11 @@ export class MessageBuilder {
 	}
 
 	static createClearWiFiNetworksMessage(): ArrayBuffer {
-		// No payload needed - just the message type
 		return this.frameMessage(MessageType.CLEAR_WIFI_NETWORKS)
+	}
+
+	static createGetSavedWiFiNetworks(): ArrayBuffer {
+		return this.frameMessage(MessageType.GET_SAVED_WIFI_NETWORKS)
 	}
 
 	static createWiFiCredentialsMessage(ssid: string, password: string): ArrayBuffer {
