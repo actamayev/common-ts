@@ -484,6 +484,14 @@ describe("MessageBuilder", () => {
 		})
 	})
 
+	describe("createGetSavedWiFiNetworks", () => {
+		it("should create a get saved wifi networks message", () => {
+			const buffer = MessageBuilder.createGetSavedWiFiNetworks()
+
+			validateFrameStructure(buffer, MessageType.GET_SAVED_WIFI_NETWORKS, 0)
+		})
+	})
+
 	describe("createWiFiCredentialsMessage", () => {
 		it("should create a valid WiFi credentials message", () => {
 			const ssid = "MyWiFiNetwork"

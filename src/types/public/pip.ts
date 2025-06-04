@@ -133,3 +133,8 @@ export interface SensorPayload {
 export interface IncomingSensorData extends PipUUIDInterface {
 	sensorPayload: SensorPayload
 }
+
+export interface SavedWiFiNetwork {
+    ssid: string
+    index: number
+}
