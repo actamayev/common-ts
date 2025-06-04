@@ -188,6 +188,11 @@ export class MessageBuilder {
 		return this.frameMessage(MessageType.START_SENSOR_POLLING)
 	}
 
+	static createClearWiFiNetworksMessage(): ArrayBuffer {
+		// No payload needed - just the message type
+		return this.frameMessage(MessageType.CLEAR_WIFI_NETWORKS)
+	}
+
 	static createWiFiCredentialsMessage(ssid: string, password: string): ArrayBuffer {
 		const ssidBytes = new TextEncoder().encode(ssid)
 		const passwordBytes = new TextEncoder().encode(password)

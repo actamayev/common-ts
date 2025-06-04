@@ -476,6 +476,14 @@ describe("MessageBuilder", () => {
 		})
 	})
 
+	describe("createClearWiFiNetworksMessage", () => {
+		it("should create a valid clear wifi networks message", () => {
+			const buffer = MessageBuilder.createClearWiFiNetworksMessage()
+
+			validateFrameStructure(buffer, MessageType.CLEAR_WIFI_NETWORKS, 0)
+		})
+	})
+
 	describe("createWiFiCredentialsMessage", () => {
 		it("should create a valid WiFi credentials message", () => {
 			const ssid = "MyWiFiNetwork"
