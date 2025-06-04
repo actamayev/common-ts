@@ -492,6 +492,14 @@ describe("MessageBuilder", () => {
 		})
 	})
 
+	describe("createScanWiFiNetworksMessage", () => {
+		it("should create a valid scan wifi networks message", () => {
+			const buffer = MessageBuilder.createScanWiFiNetworksMessage()
+
+			validateFrameStructure(buffer, MessageType.SCAN_WIFI_NETWORKS, 0)
+		})
+	})
+
 	describe("createWiFiCredentialsMessage", () => {
 		it("should create a valid WiFi credentials message", () => {
 			const ssid = "MyWiFiNetwork"
