@@ -31,6 +31,7 @@ export type RoutePayloadMap = {
 	"/wifi-connection-result": WiFiConnectionResultPayload
 	"/pip-id": PipIDPayload
 	"/saved-networks": SavedWiFiNetwork[]
+	"/scan-results": ScannedWiFiNetwork[]
 }
 
 // Routes derived from the keys of the mapping
@@ -138,4 +139,10 @@ export interface IncomingSensorData extends PipUUIDInterface {
 export interface SavedWiFiNetwork {
     ssid: string
     index: number
+}
+
+export interface ScannedWiFiNetwork {
+    ssid: string
+    rssi: number
+    encrypted: boolean
 }

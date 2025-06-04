@@ -196,6 +196,10 @@ export class MessageBuilder {
 		return this.frameMessage(MessageType.GET_SAVED_WIFI_NETWORKS)
 	}
 
+	static createScanWiFiNetworksMessage(): ArrayBuffer {
+		return this.frameMessage(MessageType.SCAN_WIFI_NETWORKS)
+	}
+
 	static createWiFiCredentialsMessage(ssid: string, password: string): ArrayBuffer {
 		const ssidBytes = new TextEncoder().encode(ssid)
 		const passwordBytes = new TextEncoder().encode(password)
