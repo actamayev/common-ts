@@ -30,6 +30,7 @@ export type RoutePayloadMap = {
 	"/bytecode-status": BytecodeMessage
 	"/wifi-connection-result": WiFiConnectionResultPayload
 	"/pip-id": PipIDPayload
+	"/saved-networks": SavedWiFiNetwork[]
 }
 
 // Routes derived from the keys of the mapping
