@@ -188,10 +188,6 @@ export class MessageBuilder {
 		return this.frameMessage(MessageType.START_SENSOR_POLLING)
 	}
 
-	static createClearWiFiNetworksMessage(): ArrayBuffer {
-		return this.frameMessage(MessageType.CLEAR_WIFI_NETWORKS)
-	}
-
 	static createGetSavedWiFiNetworks(): ArrayBuffer {
 		return this.frameMessage(MessageType.GET_SAVED_WIFI_NETWORKS)
 	}

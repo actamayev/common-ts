@@ -476,14 +476,6 @@ describe("MessageBuilder", () => {
 		})
 	})
 
-	describe("createClearWiFiNetworksMessage", () => {
-		it("should create a valid clear wifi networks message", () => {
-			const buffer = MessageBuilder.createClearWiFiNetworksMessage()
-
-			validateFrameStructure(buffer, MessageType.CLEAR_WIFI_NETWORKS, 0)
-		})
-	})
-
 	describe("createGetSavedWiFiNetworks", () => {
 		it("should create a get saved wifi networks message", () => {
 			const buffer = MessageBuilder.createGetSavedWiFiNetworks()
