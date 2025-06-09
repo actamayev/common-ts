@@ -6,6 +6,7 @@ import { RetrievedQuestions, UserActivityProgress } from "./lab"
 // Auth
 // Requests
 export interface RegisterRequest {
+	age: number
 	email: string
 	password: string
 	username: string
