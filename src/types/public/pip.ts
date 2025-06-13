@@ -24,7 +24,7 @@ export interface FirmwareData {
 	firmwareBuffer: Buffer
 }
 
-export type RoutePayloadMap = {
+type RoutePayloadMap = {
 	"/register": PipUUIDPayload
 	"/sensor-data": SensorPayload
 	"/bytecode-status": BytecodeMessage
@@ -33,10 +33,11 @@ export type RoutePayloadMap = {
 	"/saved-networks": SavedWiFiNetwork[]
     "/scan-result-item": ScannedWiFiNetworkItem
     "/scan-complete": ScanCompletePayload
+	"/scan-started": ScanStartedPayload
 }
 
 // Routes derived from the keys of the mapping
-export type ESPRoutes = keyof RoutePayloadMap
+type ESPRoutes = keyof RoutePayloadMap
 
 // Type-safe message interface
 export interface ESPMessage<R extends ESPRoutes = ESPRoutes> {
@@ -150,4 +151,8 @@ export interface ScannedWiFiNetworkItem {
 
 export interface ScanCompletePayload {
     totalNetworks: number
+}
+
+export interface ScanStartedPayload {
+    scanning: boolean
 }
