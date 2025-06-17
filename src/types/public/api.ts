@@ -32,6 +32,7 @@ export type RegisterSuccess = {
 }
 export type LoginSuccess = RegisterSuccess & {
 	userPipData: PipData[]
+	personalInfo: PersonalInfoResponse
 }
 export type GoogleAuthSuccess = LoginSuccess & { isNewUser: boolean }
 
