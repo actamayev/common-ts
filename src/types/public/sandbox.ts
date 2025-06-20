@@ -1,7 +1,7 @@
 export type ProjectUUID = `${string}-${string}-${string}-${string}-${string}`
 
 export interface SandboxProject {
-	sandboxXml: string
+	sandboxJson: string
 	projectUUID: ProjectUUID
 	isStarred: boolean
 	projectName: string | null
