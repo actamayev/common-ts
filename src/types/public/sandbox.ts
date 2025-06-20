@@ -1,10 +1,12 @@
 export type ProjectUUID = `${string}-${string}-${string}-${string}-${string}`
 
+export interface BlocklyJson {
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	[key: string]: any
+}
+
 export interface SandboxProject {
-	sandboxJson: { // Directly from Blockly
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		[key: string]: any
-	}
+	sandboxJson: BlocklyJson
 	projectUUID: ProjectUUID
 	isStarred: boolean
 	projectName: string | null
