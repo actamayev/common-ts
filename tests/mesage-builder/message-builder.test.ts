@@ -104,30 +104,54 @@ describe("MessageBuilder", () => {
 	})
 
 	describe("createSoundMessage", () => {
-		it("should create a valid sound message for ALERT type", () => {
-			const buffer = MessageBuilder.createSoundMessage(SoundType.ALERT)
+		it("should create a valid sound message for BREEZE type", () => {
+			const buffer = MessageBuilder.createSoundMessage(SoundType.BREEZE)
 
 			validateFrameStructure(buffer, MessageType.SOUND_COMMAND, 1)
 
 			const view = new DataView(buffer)
 			const offset = getPayloadOffset(buffer)
-			expect(view.getUint8(offset)).toBe(SoundType.ALERT)
-		})
-
-		it("should create a valid sound message for BEEP type", () => {
-			const buffer = MessageBuilder.createSoundMessage(SoundType.BEEP)
-
-			const view = new DataView(buffer)
-			const offset = getPayloadOffset(buffer)
-			expect(view.getUint8(offset)).toBe(SoundType.BEEP)
+			expect(view.getUint8(offset)).toBe(SoundType.BREEZE)
 		})
 
 		it("should create a valid sound message for CHIME type", () => {
 			const buffer = MessageBuilder.createSoundMessage(SoundType.CHIME)
 
+			validateFrameStructure(buffer, MessageType.SOUND_COMMAND, 1)
+
 			const view = new DataView(buffer)
 			const offset = getPayloadOffset(buffer)
 			expect(view.getUint8(offset)).toBe(SoundType.CHIME)
+		})
+
+		it("should create a valid sound message for CHIRP type", () => {
+			const buffer = MessageBuilder.createSoundMessage(SoundType.CHIRP)
+
+			validateFrameStructure(buffer, MessageType.SOUND_COMMAND, 1)
+
+			const view = new DataView(buffer)
+			const offset = getPayloadOffset(buffer)
+			expect(view.getUint8(offset)).toBe(SoundType.CHIRP)
+		})
+
+		it("should create a valid sound message for POP type", () => {
+			const buffer = MessageBuilder.createSoundMessage(SoundType.POP)
+
+			validateFrameStructure(buffer, MessageType.SOUND_COMMAND, 1)
+
+			const view = new DataView(buffer)
+			const offset = getPayloadOffset(buffer)
+			expect(view.getUint8(offset)).toBe(SoundType.POP)
+		})
+
+		it("should create a valid sound message for SPLASH type", () => {
+			const buffer = MessageBuilder.createSoundMessage(SoundType.SPLASH)
+
+			validateFrameStructure(buffer, MessageType.SOUND_COMMAND, 1)
+
+			const view = new DataView(buffer)
+			const offset = getPayloadOffset(buffer)
+			expect(view.getUint8(offset)).toBe(SoundType.SPLASH)
 		})
 	})
 
