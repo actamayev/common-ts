@@ -24,9 +24,11 @@ export enum MessageType {
 }
 
 export enum SoundType {
-    ALERT = 0,
-    BEEP = 1,
-    CHIME = 2
+    BREEZE = 0,
+    CHIME = 1,
+    CHIRP = 2,
+    POP = 3,
+    SPLASH = 4,
 }
 
 export enum LightAnimationType {
@@ -63,9 +65,11 @@ export enum WiFiConnectionStatus {
 
 // Mapping between string enum and numeric enum
 export const tuneToSoundType: Record<TuneToPlay, SoundType> = {
-	"Alert": SoundType.ALERT,
-	"Beep": SoundType.BEEP,
-	"Chime": SoundType.CHIME
+	"Breeze": SoundType.BREEZE,
+	"Chime": SoundType.CHIME,
+	"Chirp": SoundType.CHIRP,
+	"Pop": SoundType.POP,
+	"Splash": SoundType.SPLASH,
 }
 
 export const lightToLEDType: Record<LightAnimation, LightAnimationType> = {
