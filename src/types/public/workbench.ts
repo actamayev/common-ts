@@ -1,1 +1,1 @@
-export type TuneToPlay = "Alert" | "Beep" | "Chime"
+export type TuneToPlay = "Breeze" | "Chime" | "Chirp" | "Pop" | "Splash"
