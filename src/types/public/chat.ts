@@ -1,0 +1,66 @@
+type BlockCategory = "sensor" | "logic" | "action" | "loop" | "variable"
+
+export interface AvailableBlock {
+	type: string
+	category: BlockCategory
+	description: string
+	codeTemplate?: string
+}
+
+type DifficultyLevel = "beginner" | "intermediate" | "advanced"
+
+export interface ChallengeData {
+	// Basic challenge info
+	id: string
+	title: string
+	description: string
+	difficulty: DifficultyLevel
+
+	// Programming context
+	availableBlocks: AvailableBlock[]
+	availableSensors: string[]
+
+	// Learning context
+	expectedBehavior: string
+	commonMistakes: string[]
+	learningObjectives: string[]
+
+	// Solution for code checking
+	solutionCode: string
+
+	// Optional hints (progressive difficulty)
+	hints?: {
+		level1: string // Gentle nudge
+		level2: string // More specific
+		level3: string // Almost give away
+	}
+}
+
+type ChatMessageRole = "user" | "assistant" | "system"
+// Message interface for conversation
+export interface ChatMessage {
+	role: ChatMessageRole
+	content: string
+	timestamp?: Date
+}
+
+type InteractionType = "checkCode" | "hint" | "generalQuestion"
+
+// Request payload from client
+export interface IncomingChatData {
+	challengeData: ChallengeData
+	userCode: string
+	interactionType: InteractionType
+	message?: string // Required for generalQuestion
+	conversationHistory?: ChatMessage[]
+}
+
+type ChatbotStreamEventType = "chatbotStart" | "chatbotChunk" | "chatbotComplete"
+// WebSocket event types for chatbot
+export interface ChatbotStreamEvent {
+	type: ChatbotStreamEventType
+	userId: number
+	interactionType: InteractionType
+	content?: string
+	fullResponse?: string
+}
