@@ -1,4 +1,4 @@
-type BlockCategory = "sensor" | "logic" | "action" | "loop" | "variable"
+export type BlockCategory = "sensor" | "logic" | "action" | "loop" | "variable"
 
 export interface AvailableBlock {
 	type: string
@@ -7,7 +7,7 @@ export interface AvailableBlock {
 	codeTemplate?: string
 }
 
-type DifficultyLevel = "beginner" | "intermediate" | "advanced"
+export type DifficultyLevel = "beginner" | "intermediate" | "advanced"
 
 export interface ChallengeData {
 	// Basic challenge info
@@ -36,7 +36,7 @@ export interface ChallengeData {
 	}
 }
 
-type ChatMessageRole = "user" | "assistant" | "system"
+export type ChatMessageRole = "user" | "assistant" | "system"
 // Message interface for conversation
 export interface ChatMessage {
 	role: ChatMessageRole
@@ -44,7 +44,7 @@ export interface ChatMessage {
 	timestamp?: Date
 }
 
-type InteractionType = "checkCode" | "hint" | "generalQuestion"
+export type InteractionType = "checkCode" | "hint" | "generalQuestion"
 
 // Request payload from client
 export interface IncomingChatData {
@@ -55,7 +55,7 @@ export interface IncomingChatData {
 	conversationHistory?: ChatMessage[]
 }
 
-type ChatbotStreamEventType = "chatbotStart" | "chatbotChunk" | "chatbotComplete"
+export type ChatbotStreamEventType = "chatbotStart" | "chatbotChunk" | "chatbotComplete"
 // WebSocket event types for chatbot
 export interface ChatbotStreamEvent {
 	type: ChatbotStreamEventType
