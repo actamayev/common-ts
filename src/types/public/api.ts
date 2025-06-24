@@ -36,6 +36,11 @@ export type LoginSuccess = RegisterSuccess & {
 }
 export type GoogleAuthSuccess = LoginSuccess & { isNewUser: boolean }
 
+// Career Quest:
+export type StartChatSuccess = {
+	streamId: string
+}
+
 //Pip
 export interface AddPipData {
 	pipUUID: PipUUID | null
