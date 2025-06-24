@@ -51,8 +51,8 @@ export interface IncomingChatData {
 	challengeData: ChallengeData
 	userCode: string
 	interactionType: InteractionType
+	conversationHistory: ChatMessage[]
 	message?: string // Required for generalQuestion
-	conversationHistory?: ChatMessage[]
 }
 
 export type ChatbotStreamEventType = "chatbotStart" | "chatbotChunk" | "chatbotComplete"
