@@ -60,6 +60,7 @@ export type ChatbotStreamEventType = "chatbotStart" | "chatbotChunk" | "chatbotC
 export interface ChatbotStreamEvent {
 	type: ChatbotStreamEventType
 	userId: number
+	challengeId: string
 	interactionType: InteractionType
 	content?: string
 	fullResponse?: string
