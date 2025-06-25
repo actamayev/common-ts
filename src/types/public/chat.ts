@@ -55,24 +55,14 @@ export interface IncomingChatData {
 	message?: string // Required for generalQuestion
 }
 
-export type ChatbotStreamEventType = "chatbotStart" | "chatbotChunk" | "chatbotComplete"
-// WebSocket event types for chatbot
-
-interface BaseChatbotEvent {
-	type: ChatbotStreamEventType
+export interface ChatbotStreamCompleteEvent {
 	challengeId: string
 }
 
-export interface ChatbotStartEvent extends BaseChatbotEvent {
-	type: "chatbotStart"
+export interface ChatbotStreamStartEvent extends ChatbotStreamCompleteEvent {
 	interactionType: InteractionType
 }
 
-export interface ChatbotChunkEvent extends BaseChatbotEvent {
-	type: "chatbotChunk"
+export interface ChatbotStreamChunkEvent extends ChatbotStreamCompleteEvent {
 	content: string
-}
-
-export interface ChatbotEndEvent extends BaseChatbotEvent {
-	type: "chatbotComplete"
 }
