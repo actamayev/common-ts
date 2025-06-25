@@ -27,6 +27,7 @@ export interface ChallengeData {
 
 	// Solution for code checking
 	solutionCode: string
+	beforeRunningText?: string
 
 	// Optional hints (progressive difficulty)
 	hints?: {
