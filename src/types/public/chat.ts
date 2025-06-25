@@ -1,10 +1,10 @@
-export type BlockCategory = "sensor" | "logic" | "action" | "loop" | "variable"
+import * as Blockly from "blockly"
+import { BlocklyJson } from "./sandbox"
 
 export interface AvailableBlock {
 	type: string
-	category: BlockCategory
 	description: string
-	codeTemplate?: string
+	codeTemplate: string
 }
 
 export type DifficultyLevel = "beginner" | "intermediate" | "advanced"
@@ -18,7 +18,6 @@ export interface ChallengeData {
 
 	// Programming context
 	availableBlocks: AvailableBlock[]
-	availableSensors: string[]
 
 	// Learning context
 	expectedBehavior: string
@@ -35,6 +34,8 @@ export interface ChallengeData {
 		level2: string // More specific
 		level3: string // Almost give away
 	}
+	initialBlocklyJson: BlocklyJson
+	toolboxConfig: Blockly.utils.toolbox.ToolboxDefinition
 }
 
 export type ChatMessageRole = "user" | "assistant" | "system"

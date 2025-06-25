@@ -39,7 +39,11 @@ export default [
 			}],
 			"eol-last": ["error", "always"],
 			"no-unused-vars": "off",
-			"@typescript-eslint/no-unused-vars": "warn",
+			"@typescript-eslint/no-unused-vars": [
+				"warn", {
+					"argsIgnorePattern": "^_"
+				}
+			],
 			eqeqeq: "error",
 			"space-infix-ops": "warn",
 			"space-before-blocks": "error",
@@ -73,35 +77,26 @@ export default [
 				skipBlankLines: true,
 				skipComments: true,
 			}],
-			"@typescript-eslint/naming-convention": ["error", {
-				selector: "variable",
-				format: ["camelCase"],
-			}, {
-				selector: "variable",
-				modifiers: ["destructured"],
-				filter: {
-					regex: "GOOGLE_CLIENT_ID|GOOGLE_CLIENT_SECRET",
-					match: true,
+			"@typescript-eslint/naming-convention": [
+				"error",
+				{
+					selector: "variable",
+					format: ["camelCase"],
 				},
-				format: null,
-			}, {
-				selector: "variable",
-				filter: {
-					regex: "PORT",
-					match: true,
+				{
+					selector: "function",
+					format: ["camelCase"],
 				},
-				format: null,
-			},{
-				selector: "function",
-				format: ["camelCase"],
-			}, {
-				selector: "parameter",
-				format: ["camelCase"],
-				leadingUnderscore: "allow"
-			}, {
-				selector: "typeLike",
-				format: ["PascalCase"],
-			}],
+				{
+					selector: "parameter",
+					format: ["camelCase"],
+					leadingUnderscore: "allow"
+				},
+				{
+					selector: "typeLike",
+					format: ["PascalCase"],
+				},
+			],
 			"security/detect-buffer-noassert": "warn",
 			"security/detect-child-process": "warn",
 			"security/detect-disable-mustache-escape": "warn",

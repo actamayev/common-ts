@@ -45,5 +45,8 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/bluedotrobots/common-ts.git"
+  },
+  "dependencies": {
+    "blockly": "^12.1.0"
   }
 }
