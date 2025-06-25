@@ -48,7 +48,7 @@ export type InteractionType = "checkCode" | "hint" | "generalQuestion"
 
 // Request payload from client
 export interface IncomingChatData {
-	challengeData: ChallengeData
+	challengeId: string
 	userCode: string
 	interactionType: InteractionType
 	conversationHistory: ChatMessage[]
