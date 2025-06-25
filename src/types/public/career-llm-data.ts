@@ -52,6 +52,7 @@ export const OBSTACLE_AVOIDANCE_CHALLENGE: ChallengeData = {
 		"Controlling LED output based on sensor input",
 		"Creating continuous monitoring loops"
 	],
+	beforeRunningText: "Make sure your robot is placed on a flat surface with some space in front of it. The ultrasonic sensor should be facing forward to detect obstacles.",
 	solutionCode: `void setup() {
   // Initialize sensors and LEDs
   ultrasonicSensor.init();
