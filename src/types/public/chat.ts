@@ -69,10 +69,10 @@ export interface ChatbotStartEvent extends BaseChatbotEvent {
 }
 
 export interface ChatbotChunkEvent extends BaseChatbotEvent {
-	type: "chatbotStart"
+	type: "chatbotChunk"
 	content: string
 }
 
 export interface ChatbotEndEvent extends BaseChatbotEvent {
-	type: "chatbotStart"
+	type: "chatbotComplete"
 }
