@@ -76,8 +76,8 @@ void loop() {
 	}
 }
 
-// Export additional challenges as needed
-export const CHALLENGES = {
-	OBSTACLE_AVOIDANCE: OBSTACLE_AVOIDANCE_CHALLENGE,
+// Array structure - easier to search and iterate
+export const CHALLENGES: ChallengeData[] = [
+	OBSTACLE_AVOIDANCE_CHALLENGE,
 	// Add more challenges here as you create them
-}
+]
