@@ -63,5 +63,4 @@ export interface ChatbotStreamEvent {
 	challengeId: string
 	interactionType: InteractionType
 	content?: string
-	fullResponse?: string
 }
