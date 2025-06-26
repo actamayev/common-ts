@@ -69,9 +69,9 @@ export enum MATH_FIELD_VALUES {
 
 export enum LOOP_BLOCK_TYPES {
     // WHILE_UNTIL = "controls_whileUntil",
-    REPEAT = "controls_repeat_ext",
+    REPEAT = "controls_repeat_ext", // for loop
     ESP32_DELAY = "esp32_delay",
-    ESP32_LOOP = "esp32_loop"
+    ESP32_LOOP = "esp32_loop" // forever loop
 }
 
 export enum LOOP_FIELD_VALUES {
