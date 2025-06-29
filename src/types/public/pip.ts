@@ -34,7 +34,8 @@ type RoutePayloadMap = {
 	"/scan-result-item": ScannedWiFiNetworkItem
 	"/scan-complete": ScanCompletePayload
 	"/scan-started": ScanStartedPayload
-	"/motors-disabled-usb": MotorDisabledUsb
+	"/motors-disabled-usb": StandardJsonStatusMessage
+	"/program-paused-usb": StandardJsonStatusMessage
 }
 
 // Routes derived from the keys of the mapping
@@ -46,6 +47,10 @@ export interface ESPMessage<R extends ESPRoutes = ESPRoutes> {
 	payload: RoutePayloadMap[R]
 }
 
+export interface StandardJsonStatusMessage {
+	status: string
+}
+
 export interface PipUUIDPayload {
 	pipUUID: PipUUID
 	firmwareVersion: number
@@ -55,7 +60,7 @@ export interface BytecodeMessage {
 	message: string
 }
 
-export interface WiFiConnectionResultPayload {
+export interface WiFiConnectionResultPayload extends StandardJsonStatusMessage {
     status: "success" | "wifi_only" | "failed"
 }
 
@@ -156,8 +161,4 @@ export interface ScanCompletePayload {
 
 export interface ScanStartedPayload {
     scanning: boolean
-}
-
-export interface MotorDisabledUsb {
-	status: string
 }
