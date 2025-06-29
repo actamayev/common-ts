@@ -31,9 +31,10 @@ type RoutePayloadMap = {
 	"/wifi-connection-result": WiFiConnectionResultPayload
 	"/pip-id": PipIDPayload
 	"/saved-networks": SavedWiFiNetwork[]
-    "/scan-result-item": ScannedWiFiNetworkItem
-    "/scan-complete": ScanCompletePayload
+	"/scan-result-item": ScannedWiFiNetworkItem
+	"/scan-complete": ScanCompletePayload
 	"/scan-started": ScanStartedPayload
+	"/motors-disabled-usb": MotorDisabledUsb
 }
 
 // Routes derived from the keys of the mapping
@@ -155,4 +156,8 @@ export interface ScanCompletePayload {
 
 export interface ScanStartedPayload {
     scanning: boolean
+}
+
+export interface MotorDisabledUsb {
+	status: string
 }
