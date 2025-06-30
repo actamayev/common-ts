@@ -44,7 +44,7 @@ export type StartChatSuccess = {
 //Pip
 export interface AddPipData {
 	pipUUID: PipUUID | null
-	pipName?: string
+	pipName: string
 }
 
 // Lab Activity Tracking Responses:
