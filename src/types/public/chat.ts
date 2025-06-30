@@ -51,7 +51,6 @@ export type InteractionType = "checkCode" | "hint" | "generalQuestion"
 interface IncomingChatData {
 	userCode: string
 	interactionType: InteractionType
-	conversationHistory: ChatMessage[] // TODO 6/30/25: Don't send this over each time. Retrieve messages from DB upon each request
 	message?: string // Required for generalQuestion
 }
 
@@ -67,10 +66,12 @@ export interface OutgoingSandboxChatData extends IncomingChatData {
 // Request after attaching ChatId
 export interface ProcessedCareerQuestChatData extends OutgoingCareerQuestChatData {
 	careerQuestChatId: number
+	conversationHistory: ChatMessage[]
 }
 
 export interface ProcessedSandboxChatData extends OutgoingSandboxChatData {
 	sandboxChatId: number
+	conversationHistory: ChatMessage[]
 }
 
 export interface ChatbotStreamCompleteEvent {
