@@ -1,3 +1,4 @@
+import { ChatMessage } from "./chat"
 import { SandboxProject } from "./sandbox"
 import { PipUUID, SiteThemes } from "./utils"
 import { ESPConnectionStatus, PipData } from "./pip"
@@ -36,9 +37,13 @@ export type LoginSuccess = RegisterSuccess & {
 }
 export type GoogleAuthSuccess = LoginSuccess & { isNewUser: boolean }
 
-// Career Quest:
+// Chat:
 export type StartChatSuccess = {
 	streamId: string
+}
+
+export type CareerQuestChatDataResponse = {
+	chatData: ChatMessage[]
 }
 
 //Pip
