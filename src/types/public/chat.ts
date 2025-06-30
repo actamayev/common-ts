@@ -1,5 +1,5 @@
 import * as Blockly from "blockly"
-import { BlocklyJson } from "./sandbox"
+import { BlocklyJson, ProjectUUID } from "./sandbox"
 
 export interface AvailableBlock {
 	type: string
@@ -48,13 +48,29 @@ export interface ChatMessage {
 
 export type InteractionType = "checkCode" | "hint" | "generalQuestion"
 
-// Request payload from client
-export interface IncomingChatData {
-	challengeId: string
+interface IncomingChatData {
 	userCode: string
 	interactionType: InteractionType
-	conversationHistory: ChatMessage[]
+	conversationHistory: ChatMessage[] // TODO 6/30/25: Don't send this over each time. Retrieve messages from DB upon each request
 	message?: string // Required for generalQuestion
+}
+
+// Request payload from client
+export interface OutgoingCareerQuestChatData extends IncomingChatData {
+	careerQuestChallengeId: string
+}
+
+export interface OutgoingSandboxChatData extends IncomingChatData {
+	sandboxProjectUUID: ProjectUUID
+}
+
+// Request after attaching ChatId
+export interface ProcessedCareerQuestChatData extends OutgoingCareerQuestChatData {
+	careerQuestChatId: number
+}
+
+export interface ProcessedSandboxChatData extends OutgoingSandboxChatData {
+	sandboxChatId: number
 }
 
 export interface ChatbotStreamCompleteEvent {
