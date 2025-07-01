@@ -1,5 +1,5 @@
 import * as Blockly from "blockly"
-import { BlocklyJson, ProjectUUID } from "./sandbox"
+import { BlocklyJson } from "./sandbox"
 
 export interface AvailableBlock {
 	type: string
@@ -59,17 +59,13 @@ export interface OutgoingCareerQuestChatData extends IncomingChatData {
 	careerQuestChallengeId: string
 }
 
-export interface OutgoingSandboxChatData extends IncomingChatData {
-	sandboxProjectUUID: ProjectUUID
-}
-
 // Request after attaching ChatId
 export interface ProcessedCareerQuestChatData extends OutgoingCareerQuestChatData {
 	careerQuestChatId: number
 	conversationHistory: ChatMessage[]
 }
 
-export interface ProcessedSandboxChatData extends OutgoingSandboxChatData {
+export interface ProcessedSandboxChatData extends IncomingChatData {
 	sandboxChatId: number
 	conversationHistory: ChatMessage[]
 }
