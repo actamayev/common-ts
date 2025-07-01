@@ -1,5 +1,5 @@
 import * as Blockly from "blockly"
-import { BlocklyJson } from "./sandbox"
+import { BlocklyJson, ProjectUUID } from "./sandbox"
 
 export interface AvailableBlock {
 	type: string
@@ -74,14 +74,24 @@ export interface ProcessedSandboxChatData extends OutgoingSandboxChatData {
 	conversationHistory: ChatMessage[]
 }
 
-export interface ChatbotStreamCompleteEvent {
+// CQ Chatbot stuff:
+export interface CqChatbotStreamCompleteEvent {
 	challengeId: string
 }
 
-export interface ChatbotStreamStartEvent extends ChatbotStreamCompleteEvent {
+export interface CqChatbotStreamStartEvent extends CqChatbotStreamCompleteEvent {
 	interactionType: InteractionType
 }
 
-export interface ChatbotStreamChunkEvent extends ChatbotStreamCompleteEvent {
+export interface CqChatbotStreamChunkEvent extends CqChatbotStreamCompleteEvent {
+	content: string
+}
+
+// Sandbox Chatbot stuff:
+export interface SandboxChatbotStreamStartOrCompleteEvent {
+	sandboxProjectUUID: ProjectUUID
+}
+
+export interface SandboxChatbotStreamChunkEvent extends SandboxChatbotStreamStartOrCompleteEvent {
 	content: string
 }
