@@ -42,7 +42,7 @@ export type StartChatSuccess = {
 	streamId: string
 }
 
-export type ChatDataResponse = {
+export type CareerQuestChatDataResponse = {
 	chatData: ChatMessage[]
 }
 
