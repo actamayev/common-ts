@@ -50,12 +50,12 @@ export type InteractionType = "checkCode" | "hint" | "generalQuestion"
 
 interface IncomingChatData {
 	userCode: string
-	interactionType: InteractionType
 	message?: string // Required for generalQuestion
 }
 
 // Request payload from client
 export interface OutgoingCareerQuestChatData extends IncomingChatData {
+	interactionType: InteractionType
 	careerQuestChallengeId: string
 }
 
