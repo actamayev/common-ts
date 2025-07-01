@@ -59,13 +59,17 @@ export interface OutgoingCareerQuestChatData extends IncomingChatData {
 	careerQuestChallengeId: string
 }
 
+export interface OutgoingSandboxChatData extends IncomingChatData {
+	message: string
+}
+
 // Request after attaching ChatId
 export interface ProcessedCareerQuestChatData extends OutgoingCareerQuestChatData {
 	careerQuestChatId: number
 	conversationHistory: ChatMessage[]
 }
 
-export interface ProcessedSandboxChatData extends IncomingChatData {
+export interface ProcessedSandboxChatData extends OutgoingSandboxChatData {
 	sandboxChatId: number
 	conversationHistory: ChatMessage[]
 }
