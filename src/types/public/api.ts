@@ -19,7 +19,8 @@ export interface LoginRequest {
 	password: string
 }
 
-export interface NewUsernameRequest {
+export interface NewGoogleInfoRequest {
+	age: number
 	username: string
 }
 
