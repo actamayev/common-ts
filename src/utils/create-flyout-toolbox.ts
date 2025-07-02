@@ -1,10 +1,6 @@
 import * as Blockly from "blockly"
+import { ToolboxItem } from "../types/public"
 import { BlockNames } from "../types/public/blockly/blockly"
-
-export interface ToolboxItem {
-	kind: "block"
-	type: BlockNames
-}
 
 /**
  * Creates a flyout toolbox with specific blocks (no categories)
