@@ -1,7 +1,7 @@
 import * as Blockly from "blockly"
 import { BlockNames } from "../types/public/blockly/blockly"
 
-interface ToolboxItem {
+export interface ToolboxItem {
 	kind: "block"
 	type: BlockNames
 }
