@@ -1,5 +1,5 @@
 import { ChatMessage } from "./chat"
-import { SandboxProject } from "./sandbox"
+import { BlocklyJson, SandboxProject } from "./sandbox"
 import { PipUUID, SiteThemes } from "./utils"
 import { ESPConnectionStatus, PipData } from "./pip"
 import { RetrievedQuestions, UserActivityProgress } from "./lab"
@@ -38,13 +38,15 @@ export type LoginSuccess = RegisterSuccess & {
 }
 export type GoogleAuthSuccess = LoginSuccess & { isNewUser: boolean }
 
+// Career Quest
+export type CareerQuestChallengeData = {
+	messages: ChatMessage[]
+	sandboxJson: BlocklyJson
+}
+
 // Chat:
 export type StartChatSuccess = {
 	streamId: string
-}
-
-export type CareerQuestChatDataResponse = {
-	chatData: ChatMessage[]
 }
 
 //Pip
