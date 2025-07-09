@@ -2,15 +2,14 @@
 /* eslint-disable max-len */
 
 import { ChallengeData } from "./chat"
-import { createFlyoutToolbox } from "../../utils/create-flyout-toolbox"
 import { CONDITIONAL_BLOCK_TYPES, LED_BLOCK_TYPES, LOOP_BLOCK_TYPES, MOTOR_BLOCK_TYPES, SENSORS_BLOCK_TYPES, START_BLOCK_TYPES } from "./blockly"
+import { createChallengeToolbox } from "./utils/blockly-helpers"
 
 export const OBSTACLE_AVOIDANCE_CHALLENGE_1: ChallengeData = {
 	id: "obstacle_avoidance_001",
 	title: "LED Obstacle Detection",
 	description: "Write a program that continuously checks if there's an object in front of Pip. Turn the LED red when an object is detected, and green when there's no object.",
 	difficulty: "beginner",
-	availableBlocks: [ ],
 	expectedBehavior: "Pip continuously monitors for obstacles in front. LED turns red when an object is detected within range, and green when the path is clear.",
 	commonMistakes: [
 		"Forgetting to use a forever loop to continuously check the sensor",
@@ -24,21 +23,21 @@ export const OBSTACLE_AVOIDANCE_CHALLENGE_1: ChallengeData = {
 	],
 	beforeRunningText: "Place Pip on a flat surface with clear space in front. You can test the sensor by placing your hand or an object in front of Pip to see the LED change colors.",
 	initialBlocklyJson: {},
-	toolboxConfig: createFlyoutToolbox([
+	...createChallengeToolbox([
 		LOOP_BLOCK_TYPES.ESP32_LOOP,
 		CONDITIONAL_BLOCK_TYPES.IF_ELSE,
 		SENSORS_BLOCK_TYPES.CENTER_TOF_READ,
 		LED_BLOCK_TYPES.ESP32_LED_CONTROL
 	]),
 	solutionCode: `
-		while(true) {
-			if (is_object_in_front()) {
-				rgbLed.set_led_red();
-			} else {
-				rgbLed.set_led_green();
-			}
-		}
-	`
+        while(true) {
+            if (is_object_in_front()) {
+                rgbLed.set_led_red();
+            } else {
+                rgbLed.set_led_green();
+            }
+        }
+    `
 }
 
 export const OBSTACLE_AVOIDANCE_CHALLENGE_2: ChallengeData = {
@@ -46,7 +45,6 @@ export const OBSTACLE_AVOIDANCE_CHALLENGE_2: ChallengeData = {
 	title: "Basic Obstacle Avoidance with Movement",
 	description: "Build upon your LED detection program by adding motor control. Pip should move forward at 50% speed when the path is clear, and stop when an obstacle is detected. Include a start button so Pip waits for your command before beginning.",
 	difficulty: "beginner",
-	availableBlocks: [ ],
 	expectedBehavior: "Pip waits for button press to start. Once started, it moves forward at 50% speed while the path is clear (green LED). When an obstacle is detected, it stops moving and shows a red LED. Pip continuously monitors and adjusts its behavior.",
 	commonMistakes: [
 		"Forgetting to add the start button at the beginning",
@@ -108,7 +106,7 @@ export const OBSTACLE_AVOIDANCE_CHALLENGE_2: ChallengeData = {
 			]
 		}
 	},
-	toolboxConfig: createFlyoutToolbox([
+	...createChallengeToolbox([
 		START_BLOCK_TYPES.BUTTON_PRESS_START,
 		LOOP_BLOCK_TYPES.ESP32_LOOP,
 		CONDITIONAL_BLOCK_TYPES.IF_ELSE,
@@ -118,17 +116,17 @@ export const OBSTACLE_AVOIDANCE_CHALLENGE_2: ChallengeData = {
 		LED_BLOCK_TYPES.ESP32_LED_CONTROL
 	]),
 	solutionCode: `
-		wait_for_button_press();
-		while(true) {
-			if (is_object_in_front()) {
-				rgbLed.set_led_red();
-				stopMotors();
-			} else {
-				rgbLed.set_led_green();
-				goForward(50);
-			}
-		}
-	`
+        wait_for_button_press();
+        while(true) {
+            if (is_object_in_front()) {
+                rgbLed.set_led_red();
+                stopMotors();
+            } else {
+                rgbLed.set_led_green();
+                goForward(50);
+            }
+        }
+    `
 }
 
 export const OBSTACLE_AVOIDANCE_CHALLENGE_3: ChallengeData = {
@@ -136,7 +134,6 @@ export const OBSTACLE_AVOIDANCE_CHALLENGE_3: ChallengeData = {
 	title: "Smart Obstacle Avoidance with Turning",
 	description: "Improve your obstacle avoidance program so Pip doesn't get stuck! When an obstacle is detected, Pip should turn 90 degrees clockwise and continue exploring instead of just stopping and waiting.",
 	difficulty: "beginner",
-	availableBlocks: [ ],
 	expectedBehavior: "Pip waits for button press to start. When moving forward and an obstacle is detected, it turns 90 degrees clockwise (red LED), then continues forward (green LED). Pip continuously explores by turning around obstacles rather than getting stuck.",
 	commonMistakes: [
 		"Forgetting to add the turn command when an obstacle is detected",
@@ -207,7 +204,7 @@ export const OBSTACLE_AVOIDANCE_CHALLENGE_3: ChallengeData = {
 			]
 		}
 	},
-	toolboxConfig: createFlyoutToolbox([
+	...createChallengeToolbox([
 		START_BLOCK_TYPES.BUTTON_PRESS_START,
 		LOOP_BLOCK_TYPES.ESP32_LOOP,
 		CONDITIONAL_BLOCK_TYPES.IF_ELSE,
@@ -218,17 +215,17 @@ export const OBSTACLE_AVOIDANCE_CHALLENGE_3: ChallengeData = {
 		LED_BLOCK_TYPES.ESP32_LED_CONTROL
 	]),
 	solutionCode: `
-		wait_for_button_press();
-		while(true) {
-			if (is_object_in_front()) {
-				rgbLed.set_led_red();
-				turn(CLOCKWISE, 90);
-			} else {
-				rgbLed.set_led_green();
-				goForward(50);
-			}
-		}
-	`
+        wait_for_button_press();
+        while(true) {
+            if (is_object_in_front()) {
+                rgbLed.set_led_red();
+                turn(CLOCKWISE, 90);
+            } else {
+                rgbLed.set_led_green();
+                goForward(50);
+            }
+        }
+    `
 }
 
 export const OBSTACLE_AVOIDANCE_CHALLENGE_4: ChallengeData = {
@@ -236,7 +233,6 @@ export const OBSTACLE_AVOIDANCE_CHALLENGE_4: ChallengeData = {
 	title: "Right Side Distance Sensor Detection",
 	description: "Write a program that checks if the right-side distance sensor detects something. If an object is detected, turn the LEDs blue. If no object is detected, turn the LEDs off.",
 	difficulty: "beginner",
-	availableBlocks: [ ],
 	expectedBehavior: "Pip continuously monitors for obstacles on the right side. LED turns blue when an object is detected by the right sensor, and turns off when no object is detected.",
 	commonMistakes: [
 		"Using the wrong sensor (left instead of right)",
@@ -252,21 +248,21 @@ export const OBSTACLE_AVOIDANCE_CHALLENGE_4: ChallengeData = {
 	],
 	beforeRunningText: "Place Pip on a flat surface with clear space around it. You can test the right-side sensor by placing your hand or an object to the right side of Pip to see the LED change colors.",
 	initialBlocklyJson: {},
-	toolboxConfig: createFlyoutToolbox([
+	...createChallengeToolbox([
 		LOOP_BLOCK_TYPES.ESP32_LOOP,
 		CONDITIONAL_BLOCK_TYPES.IF_ELSE,
 		SENSORS_BLOCK_TYPES.SIDE_TOF_READ,
 		LED_BLOCK_TYPES.ESP32_LED_CONTROL
 	]),
 	solutionCode: `
-		while(true) {
-			if (is_object_near_side_right()) {
-				rgbLed.set_led_blue();
-			} else {
-				rgbLed.turn_led_off();
-			}
-		}
-	`
+        while(true) {
+            if (is_object_near_side_right()) {
+                rgbLed.set_led_blue();
+            } else {
+                rgbLed.turn_led_off();
+            }
+        }
+    `
 }
 
 export const OBSTACLE_AVOIDANCE_CHALLENGE_5: ChallengeData = {
@@ -274,7 +270,6 @@ export const OBSTACLE_AVOIDANCE_CHALLENGE_5: ChallengeData = {
 	title: "Multi-Sensor Obstacle Avoidance with Else-If Chain",
 	description: "Create an advanced obstacle avoidance program that checks multiple sensors and responds differently to each. Use an else-if chain to check the front sensor first, then left sensor, then right sensor, with different LED colors and turning behaviors for each detection.",
 	difficulty: "intermediate",
-	availableBlocks: [ ],
 	expectedBehavior: "Pip waits for button press to start. When moving, it checks sensors in order: if front sensor detects object (white LED, turn clockwise), else if left sensor detects object (red LED, turn clockwise), else if right sensor detects object (blue LED, turn counterclockwise), else no objects detected (green LED, move forward at 50% speed).",
 	commonMistakes: [
 		"Using simple if-else instead of the else-if chain block",
@@ -293,7 +288,7 @@ export const OBSTACLE_AVOIDANCE_CHALLENGE_5: ChallengeData = {
 	],
 	beforeRunningText: "IMPORTANT: Pip will move and turn in multiple directions based on what sensors detect obstacles. Make sure you have a large, clear area with plenty of space around Pip. You can test by placing objects in front, to the left, and to the right of Pip.",
 	initialBlocklyJson: {},
-	toolboxConfig: createFlyoutToolbox([
+	...createChallengeToolbox([
 		START_BLOCK_TYPES.BUTTON_PRESS_START,
 		LOOP_BLOCK_TYPES.ESP32_LOOP,
 		CONDITIONAL_BLOCK_TYPES.IF_2ELSEIF_ELSE,
@@ -304,23 +299,23 @@ export const OBSTACLE_AVOIDANCE_CHALLENGE_5: ChallengeData = {
 		LED_BLOCK_TYPES.ESP32_LED_CONTROL
 	]),
 	solutionCode: `
-		wait_for_button_press();
-		while(true) {
-			if (is_object_in_front()) {
-				rgbLed.set_led_white();
-				turn(CLOCKWISE, 90);
-			} else if (is_object_near_side_left()) {
-				rgbLed.set_led_red();
-				turn(CLOCKWISE, 90);
-			} else if (is_object_near_side_right()) {
-				rgbLed.set_led_blue();
-				turn(COUNTERCLOCKWISE, 90);
-			} else {
-				rgbLed.set_led_green();
-				goForward(50);
-			}
-		}
-	`
+        wait_for_button_press();
+        while(true) {
+            if (is_object_in_front()) {
+                rgbLed.set_led_white();
+                turn(CLOCKWISE, 90);
+            } else if (is_object_near_side_left()) {
+                rgbLed.set_led_red();
+                turn(CLOCKWISE, 90);
+            } else if (is_object_near_side_right()) {
+                rgbLed.set_led_blue();
+                turn(COUNTERCLOCKWISE, 90);
+            } else {
+                rgbLed.set_led_green();
+                goForward(50);
+            }
+        }
+    `
 }
 
 // Array structure - easier to search and iterate
@@ -331,3 +326,4 @@ export const CHALLENGES: ChallengeData[] = [
 	OBSTACLE_AVOIDANCE_CHALLENGE_4,
 	OBSTACLE_AVOIDANCE_CHALLENGE_5,
 ]
+
