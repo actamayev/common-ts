@@ -1,8 +1,9 @@
 import * as Blockly from "blockly"
 import { BlocklyJson, ProjectUUID } from "./sandbox"
+import { BlockNames } from "./blockly"
 
 export interface AvailableBlock {
-	type: string
+	type: BlockNames
 	description: string
 	codeTemplate: string
 }
