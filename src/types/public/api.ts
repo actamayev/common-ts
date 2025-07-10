@@ -1,6 +1,6 @@
 import { ChatMessage } from "./chat"
 import { StudentData } from "./classroom"
-import { PipUUID, SiteThemes } from "./utils"
+import { ClassCode, PipUUID, SiteThemes } from "./utils"
 import { ESPConnectionStatus, PipData } from "./pip"
 import { BlocklyJson, SandboxProject } from "./sandbox"
 import { RetrievedQuestions, UserActivityProgress } from "./lab"
@@ -116,6 +116,10 @@ export interface DetailedClassroomData {
 	classroomDescription: string | null
 	classCode: string
 	students: StudentData[]
+}
+
+export interface ClassCodeResponse {
+	classCode: ClassCode
 }
 
 // Common Responses:
