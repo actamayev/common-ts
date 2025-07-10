@@ -99,6 +99,11 @@ export type RetrieveSandboxProjectsResponse = {
 	sandboxProjects: SandboxProject[]
 }
 
+// Student Routes
+export interface InviteResponse {
+	inviteResponse: "accept" | "decline"
+}
+
 //Teacher Routes
 export interface IncomingClassroomData {
 	classroomName: string
