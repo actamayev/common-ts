@@ -1,7 +1,8 @@
 import { ChatMessage } from "./chat"
-import { BlocklyJson, SandboxProject } from "./sandbox"
+import { StudentData } from "./classroom"
 import { PipUUID, SiteThemes } from "./utils"
 import { ESPConnectionStatus, PipData } from "./pip"
+import { BlocklyJson, SandboxProject } from "./sandbox"
 import { RetrievedQuestions, UserActivityProgress } from "./lab"
 
 // Auth
@@ -102,6 +103,19 @@ export type RetrieveSandboxProjectsResponse = {
 export interface IncomingClassroomData {
 	classroomName: string
 	classroomDescription?: string
+}
+
+export interface BasicTeacherClassroomData {
+	classroomName: string
+	classroomDescription: string | null
+	classCode: string
+}
+
+export interface DetailedClassroomData {
+	classroomName: string
+	classroomDescription: string | null
+	classCode: string
+	students: StudentData[]
 }
 
 // Common Responses:

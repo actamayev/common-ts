@@ -1,4 +1,5 @@
 export * from "./api"
+export * from "./classroom"
 export * from "./chat"
 export * from "./bytecode-types"
 export * from "./garage"
