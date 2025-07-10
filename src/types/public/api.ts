@@ -98,6 +98,12 @@ export type RetrieveSandboxProjectsResponse = {
 	sandboxProjects: SandboxProject[]
 }
 
+//Teacher Routes
+export interface IncomingClassroomData {
+	classroomName: string
+	classroomDescription?: string
+}
+
 // Common Responses:
 export type SuccessResponse = { success: string }
 export type MessageResponse = { message: string }
