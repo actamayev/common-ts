@@ -104,6 +104,14 @@ export interface InviteResponse {
 	inviteResponse: "accept" | "decline"
 }
 
+export interface StudentClassroomData {
+	invitationStatus: "PENDING" | "ACCEPTED" | "DECLINED"
+	joinedClassroomAt: Date | null
+	classroomName: string
+	classroomDescription: string | null
+	classCode: ClassCode
+}
+
 //Teacher Routes
 export interface IncomingClassroomData {
 	classroomName: string
