@@ -135,6 +135,12 @@ export interface ClassCodeResponse {
 	classCode: ClassCode
 }
 
+export interface IncomingTeacherRequestData {
+	teacherFirstName: string
+	teacherLastName: string
+	schoolName: string
+}
+
 // Common Responses:
 export type SuccessResponse = { success: string }
 export type MessageResponse = { message: string }
