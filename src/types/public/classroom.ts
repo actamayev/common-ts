@@ -1,9 +1,11 @@
+import { TeacherName } from "./teacher"
+
 export interface StudentData {
 	username: string
 	didAccept: boolean
 }
 
 export interface StudentInviteJoinClass {
-	teacherName: string
+	teacherNameInfo: TeacherName
 	classroomName: string
 }
