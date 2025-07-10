@@ -1,4 +1,4 @@
 export interface StudentData {
-	username: string | null
+	username: string
 	didAccept: boolean
 }
