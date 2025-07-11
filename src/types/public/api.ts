@@ -138,13 +138,10 @@ export interface IncomingClassroomData {
 export interface BasicTeacherClassroomData {
 	classroomName: string
 	classroomDescription: string | null
-	classCode: string
+	classCode: ClassCode
 }
 
-export interface DetailedClassroomData {
-	classroomName: string
-	classroomDescription: string | null
-	classCode: string
+export interface DetailedClassroomData extends BasicTeacherClassroomData {
 	students: StudentData[]
 }
 
