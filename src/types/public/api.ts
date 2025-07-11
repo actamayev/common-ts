@@ -104,8 +104,12 @@ export type RetrieveIsPipUUIDValidResponse = {
 }
 
 // Sandbox Routes
-export type RetrieveSandboxProjectResponse = {
+export type CreateSandboxProjectResponse = {
 	sandboxProject: SandboxProject
+}
+
+export type RetrieveSandboxProjectResponse = {
+	sandboxProject: SandboxProject | null
 }
 
 export type RetrieveSandboxProjectsResponse = {
