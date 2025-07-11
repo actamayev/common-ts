@@ -73,7 +73,17 @@ export type PersonalInfoResponse = {
 	profilePictureUrl: string | null
 	sandboxNotesOpen: boolean
 	name: string | null
+	teacherData: TeacherData | null
 }
+
+export type TeacherData = {
+	teacherId: number
+	teacherFirstName: string
+	teacherLastName: string
+	isApproved: boolean | null
+	schoolName: string
+}
+
 export type ProfilePictureUrl = { profilePictureUrl: string }
 
 // Pip Responses
