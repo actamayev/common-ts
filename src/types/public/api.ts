@@ -129,10 +129,6 @@ export interface StudentClassroomData {
 }
 
 //Teacher Routes
-export interface IncomingClassroomData {
-	classroomName: string
-}
-
 export interface BasicTeacherClassroomData {
 	classroomName: string
 	classCode: ClassCode
