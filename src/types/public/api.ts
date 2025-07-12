@@ -36,6 +36,7 @@ export type RegisterSuccess = {
 export type LoginSuccess = RegisterSuccess & {
 	userPipData: PipData[]
 	personalInfo: PersonalInfoResponse
+	studentClasses: StudentClassroomData[]
 }
 export type GoogleAuthSuccess = Omit<LoginSuccess, "personalInfo"> & {
 	isNewUser: boolean
