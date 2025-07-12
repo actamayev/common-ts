@@ -125,19 +125,16 @@ export interface StudentClassroomData {
 	invitationStatus: "PENDING" | "ACCEPTED" | "DECLINED"
 	joinedClassroomAt: Date | null
 	classroomName: string
-	classroomDescription: string | null
 	classCode: ClassCode
 }
 
 //Teacher Routes
 export interface IncomingClassroomData {
 	classroomName: string
-	classroomDescription?: string
 }
 
 export interface BasicTeacherClassroomData {
 	classroomName: string
-	classroomDescription: string | null
 	classCode: ClassCode
 }
 
