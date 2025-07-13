@@ -35,12 +35,14 @@ export type RegisterSuccess = {
 }
 export type LoginSuccess = RegisterSuccess & {
 	userPipData: PipData[]
-	personalInfo: PersonalInfoResponse
+	personalInfo: BasicPersonalInfoResponse
 	studentClasses: StudentClassroomData[]
+	teacherData: TeacherData | null
 }
 export type GoogleAuthSuccess = Omit<LoginSuccess, "personalInfo"> & {
 	isNewUser: boolean
-	personalInfo?: PersonalInfoResponse
+	personalInfo?: BasicPersonalInfoResponse
+	teacherData: TeacherData | null
 }
 
 // Career Quest
@@ -70,13 +72,16 @@ export type RetrievedQuestionsResponse = {
 }
 
 // Personal Info Responses:
-export type PersonalInfoResponse = {
+export type BasicPersonalInfoResponse = {
 	username: string
 	email: string | null
 	defaultSiteTheme: SiteThemes
 	profilePictureUrl: string | null
 	sandboxNotesOpen: boolean
 	name: string | null
+}
+
+export type PersonalInfoResponse = BasicPersonalInfoResponse & {
 	teacherData: TeacherData | null
 }
 
