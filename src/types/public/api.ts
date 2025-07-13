@@ -86,7 +86,6 @@ export type PersonalInfoResponse = BasicPersonalInfoResponse & {
 }
 
 export type TeacherData = {
-	teacherId: number
 	teacherFirstName: string
 	teacherLastName: string
 	isApproved: boolean | null
