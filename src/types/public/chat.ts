@@ -43,19 +43,15 @@ export interface ChatMessage {
 
 export type InteractionType = "checkCode" | "hint" | "generalQuestion"
 
-interface IncomingChatData {
+export interface OutgoingChatData {
 	userCode: string
-	message?: string // Required for generalQuestion
+	message: string
 }
 
 // Request payload from client
-export interface OutgoingCareerQuestChatData extends IncomingChatData {
+export interface OutgoingCareerQuestChatData extends OutgoingChatData {
 	interactionType: InteractionType
 	careerQuestChallengeId: string
-}
-
-export interface OutgoingSandboxChatData extends IncomingChatData {
-	message: string
 }
 
 // Request after attaching ChatId
@@ -64,7 +60,7 @@ export interface ProcessedCareerQuestChatData extends OutgoingCareerQuestChatDat
 	conversationHistory: ChatMessage[]
 }
 
-export interface ProcessedSandboxChatData extends OutgoingSandboxChatData {
+export interface ProcessedSandboxChatData extends OutgoingChatData {
 	sandboxChatId: number
 	conversationHistory: ChatMessage[]
 }
