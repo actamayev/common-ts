@@ -29,12 +29,6 @@ export interface ChallengeData {
 	solutionCode: string
 	beforeRunningText?: string
 
-	// Optional hints (progressive difficulty)
-	hints?: {
-		level1: string // Gentle nudge
-		level2: string // More specific
-		level3: string // Almost give away
-	}
 	initialBlocklyJson: BlocklyJson
 	toolboxConfig: Blockly.utils.toolbox.ToolboxDefinition
 }
