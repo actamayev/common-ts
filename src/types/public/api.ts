@@ -56,8 +56,9 @@ export type StartChatSuccess = {
 	streamId: string
 }
 
-export type CheckCodeResponse = {
-	success: boolean
+export type CheckCodeResponse = StartChatSuccess & {
+	isCorrect: boolean
+	feedback: string
 }
 
 //Pip
