@@ -43,26 +43,34 @@ export interface ChatMessage {
 
 export type InteractionType = "checkCode" | "hint" | "generalQuestion"
 
-export interface OutgoingChatData {
+// Request payload from client
+export interface OutgoingCareerQuestGeneralMessage {
+	interactionType: "generalQuestion" | "hint"
+	careerQuestChallengeId: string
 	userCode: string
 	message: string
 }
 
-// Request payload from client
-export interface OutgoingCareerQuestChatData extends OutgoingChatData {
-	interactionType: InteractionType
-	careerQuestChallengeId: string
-}
-
 // Request after attaching ChatId
-export interface ProcessedCareerQuestChatData extends OutgoingCareerQuestChatData {
+export interface ProcessedCareerQuestChatData extends OutgoingCareerQuestGeneralMessage {
 	careerQuestChatId: number
 	conversationHistory: ChatMessage[]
 }
 
-export interface ProcessedSandboxChatData extends OutgoingChatData {
+export interface OutgoingCareerQuestCheckCodeMessage {
+	careerQuestChallengeId: string
+	userCode: string
+}
+
+export interface ProcessedCareerQuestCheckCodeMessage extends OutgoingCareerQuestCheckCodeMessage {
+	careerQuestChatId: number
+}
+
+export interface ProcessedSandboxChatData {
 	sandboxChatId: number
 	conversationHistory: ChatMessage[]
+	userCode: string
+	message: string
 }
 
 // CQ Chatbot stuff:
