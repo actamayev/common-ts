@@ -39,6 +39,11 @@ export interface ChatMessage {
 	role: ChatMessageRole
 	content: string
 	timestamp: Date
+	codeSubmissionData?: {
+		userCode: string
+		isCorrect: boolean
+		evaluationResult: string
+	}
 }
 
 export type InteractionType = "checkCode" | "hint" | "generalQuestion"
