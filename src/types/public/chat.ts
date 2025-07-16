@@ -50,7 +50,6 @@ export type InteractionType = "checkCode" | "hint" | "generalQuestion"
 
 // Request payload from client
 export interface OutgoingCareerQuestGeneralMessage {
-	interactionType: "generalQuestion" | "hint"
 	careerQuestChallengeId: string
 	userCode: string
 	message: string
@@ -62,12 +61,23 @@ export interface ProcessedCareerQuestChatData extends OutgoingCareerQuestGeneral
 	conversationHistory: ChatMessage[]
 }
 
+// Check code
 export interface OutgoingCareerQuestCheckCodeMessage {
 	careerQuestChallengeId: string
 	userCode: string
 }
 
 export interface ProcessedCareerQuestCheckCodeMessage extends OutgoingCareerQuestCheckCodeMessage {
+	careerQuestChatId: number
+}
+
+// Hint
+export interface OutgoingCareerQuestHintMessage {
+	careerQuestChallengeId: string
+	userCode: string
+}
+
+export interface ProcessedCareerQuestHintMessage extends OutgoingCareerQuestHintMessage {
 	careerQuestChatId: number
 }
 
