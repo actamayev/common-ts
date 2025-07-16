@@ -55,20 +55,10 @@ export interface OutgoingCareerQuestGeneralMessage {
 	message: string
 }
 
-// Request after attaching ChatId
-export interface ProcessedCareerQuestChatData extends OutgoingCareerQuestGeneralMessage {
-	careerQuestChatId: number
-	conversationHistory: ChatMessage[]
-}
-
 // Check code
 export interface OutgoingCareerQuestCheckCodeMessage {
 	careerQuestChallengeId: string
 	userCode: string
-}
-
-export interface ProcessedCareerQuestCheckCodeMessage extends OutgoingCareerQuestCheckCodeMessage {
-	careerQuestChatId: number
 }
 
 // Hint
@@ -77,19 +67,9 @@ export interface OutgoingCareerQuestHintMessage {
 	userCode: string
 }
 
-export interface ProcessedCareerQuestHintMessage extends OutgoingCareerQuestHintMessage {
-	careerQuestChatId: number
-	conversationHistory: ChatMessage[]
-}
-
 export interface OutgoingSandboxChatData {
 	userCode: string
 	message: string
-}
-
-export interface ProcessedSandboxChatData extends OutgoingSandboxChatData {
-	sandboxChatId: number
-	conversationHistory: ChatMessage[]
 }
 
 // CQ Chatbot stuff:
