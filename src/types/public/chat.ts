@@ -43,6 +43,7 @@ export interface ChatMessage {
 
 export type InteractionType = "checkCode" | "hint" | "generalQuestion"
 
+
 // Request payload from client
 export interface OutgoingCareerQuestGeneralMessage {
 	interactionType: "generalQuestion" | "hint"
@@ -66,11 +67,14 @@ export interface ProcessedCareerQuestCheckCodeMessage extends OutgoingCareerQues
 	careerQuestChatId: number
 }
 
-export interface ProcessedSandboxChatData {
-	sandboxChatId: number
-	conversationHistory: ChatMessage[]
+export interface OutgoingSandboxChatData {
 	userCode: string
 	message: string
+}
+
+export interface ProcessedSandboxChatData extends OutgoingSandboxChatData {
+	sandboxChatId: number
+	conversationHistory: ChatMessage[]
 }
 
 // CQ Chatbot stuff:
