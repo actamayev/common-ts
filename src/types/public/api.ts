@@ -56,6 +56,10 @@ export type StartChatSuccess = {
 	streamId: string
 }
 
+export type CheckCodeResponse = {
+	success: boolean
+}
+
 //Pip
 export interface AddPipData {
 	pipUUID: PipUUID | null
