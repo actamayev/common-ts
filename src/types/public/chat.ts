@@ -43,7 +43,6 @@ export interface ChatMessage {
 
 export type InteractionType = "checkCode" | "hint" | "generalQuestion"
 
-
 // Request payload from client
 export interface OutgoingCareerQuestGeneralMessage {
 	interactionType: "generalQuestion" | "hint"
