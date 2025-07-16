@@ -44,6 +44,7 @@ export interface ChatMessage {
 		isCorrect: boolean
 		evaluationResult: string
 	}
+	isHint?: boolean
 }
 
 export type InteractionType = "checkCode" | "hint" | "generalQuestion"
