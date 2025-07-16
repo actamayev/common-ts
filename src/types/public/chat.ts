@@ -79,6 +79,7 @@ export interface OutgoingCareerQuestHintMessage {
 
 export interface ProcessedCareerQuestHintMessage extends OutgoingCareerQuestHintMessage {
 	careerQuestChatId: number
+	conversationHistory: ChatMessage[]
 }
 
 export interface OutgoingSandboxChatData {
