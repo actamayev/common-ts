@@ -1,5 +1,5 @@
-import { ChatMessage } from "./chat"
 import { BlockNames } from "./blockly"
+import { SandboxChatMessage } from "./chat"
 
 export type ProjectUUID = `${string}-${string}-${string}-${string}-${string}`
 
@@ -16,7 +16,7 @@ export interface SandboxProject {
 	createdAt: Date
 	updatedAt: Date
 	projectNotes: string | null
-	sandboxChatMessages: ChatMessage[]
+	sandboxChatMessages: SandboxChatMessage[]
 }
 
 export interface ToolboxItem {

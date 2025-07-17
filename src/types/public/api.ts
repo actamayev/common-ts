@@ -1,4 +1,4 @@
-import { ChatMessage } from "./chat"
+import { CareerQuestChatMessage } from "./chat"
 import { StudentData } from "./classroom"
 import { ClassCode, PipUUID, SiteThemes } from "./utils"
 import { ESPConnectionStatus, PipData } from "./pip"
@@ -47,7 +47,7 @@ export type GoogleAuthSuccess = Omit<LoginSuccess, "personalInfo"> & {
 
 // Career Quest
 export type CareerQuestChallengeData = {
-	messages: ChatMessage[]
+	messages: CareerQuestChatMessage[]
 	sandboxJson: BlocklyJson
 }
 
