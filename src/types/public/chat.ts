@@ -34,17 +34,19 @@ export interface ChallengeData {
 }
 
 export type ChatMessageRole = "user" | "assistant" | "system"
-// Message interface for conversation
+
+export interface SandboxChatMessage {
+	role: ChatMessageRole
+	content: string
+	timestamp: Date
+}
 
 export interface BinaryEvaluationResult {
 	isCorrect: boolean
 	feedback: string
 }
 
-export interface ChatMessage {
-	role: ChatMessageRole
-	content: string
-	timestamp: Date
+export interface CareerQuestChatMessage extends SandboxChatMessage {
 	codeSubmissionData?: {
 		userCode: string
 		evaluationResult: BinaryEvaluationResult
