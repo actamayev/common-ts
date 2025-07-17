@@ -35,14 +35,19 @@ export interface ChallengeData {
 
 export type ChatMessageRole = "user" | "assistant" | "system"
 // Message interface for conversation
+
+export interface BinaryEvaluationResult {
+	isCorrect: boolean
+	feedback: string
+}
+
 export interface ChatMessage {
 	role: ChatMessageRole
 	content: string
 	timestamp: Date
 	codeSubmissionData?: {
 		userCode: string
-		isCorrect: boolean
-		evaluationResult: string
+		evaluationResult: BinaryEvaluationResult
 	}
 	isHint?: boolean
 }
