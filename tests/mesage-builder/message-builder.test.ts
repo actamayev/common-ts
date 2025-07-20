@@ -106,7 +106,7 @@ describe("MessageBuilder", () => {
 	describe("createSoundMessage", () => {
 		it("should create a valid sound message for each fun sound type", () => {
 			// eslint-disable-next-line max-len
-			const funSoundTypes = [SoundType.FART, SoundType.MONKEY, SoundType.ELEPHANT, SoundType.PARTY, SoundType.UFO, SoundType.COUNTDOWN, SoundType.ENGINE, SoundType.ROBOT, SoundType.CHIME, SoundType.CHIRP, SoundType.POP, SoundType.SPLASH]
+			const funSoundTypes = [SoundType.FART, SoundType.MONKEY, SoundType.ELEPHANT, SoundType.PARTY, SoundType.UFO, SoundType.COUNTDOWN, SoundType.ENGINE, SoundType.ROBOT, SoundType.CHIME, SoundType.CHIRP, SoundType.POP, SoundType.DROP]
 
 			funSoundTypes.forEach(type => {
 				const buffer = MessageBuilder.createSoundMessage(type)
