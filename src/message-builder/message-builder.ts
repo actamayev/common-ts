@@ -1,6 +1,6 @@
 import { END_MARKER, START_MARKER } from "../types/private/constants"
 import { BalancePidsProps, LedControlData } from "../types/public"
-import { BalanceStatus, HeadlightStatus, LightAnimationType, MessageType, SoundType, SpeakerStatus } from "./protocol"
+import { BalanceStatus, HeadlightStatus, HornSoundStatus, LightAnimationType, MessageType, SoundType, SpeakerStatus } from "./protocol"
 
 export class MessageBuilder {
 	// Add this helper method for framing messages
@@ -68,6 +68,11 @@ export class MessageBuilder {
 	static createSoundMessage(soundType: SoundType): ArrayBuffer {
 		const payload = new Uint8Array([soundType])
 		return this.frameMessage(MessageType.SOUND_COMMAND, payload)
+	}
+
+	static createHornSoundMessage(holdSoundType: boolean): ArrayBuffer {
+		const payload = new Uint8Array([holdSoundType ? HornSoundStatus.ON : HornSoundStatus.OFF])
+		return this.frameMessage(MessageType.UPDATE_HORN_SOUND, payload)
 	}
 
 	static createLightAnimationMessage(lightMessageType: LightAnimationType): ArrayBuffer {

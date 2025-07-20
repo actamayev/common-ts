@@ -1,4 +1,4 @@
-import { LightAnimation, TuneToPlay } from "../types/public"
+import { FunSounds, LightAnimation, TuneToPlay } from "../types/public"
 
 export enum MessageType {
     UPDATE_AVAILABLE = 0,
@@ -20,15 +20,23 @@ export enum MessageType {
     WIFI_CREDENTIALS = 16,
     WIFI_CONNECTION_RESULT = 17,
     GET_SAVED_WIFI_NETWORKS = 19,
-    SCAN_WIFI_NETWORKS = 20
+    SCAN_WIFI_NETWORKS = 20,
+    UPDATE_HORN_SOUND = 21
 }
 
 export enum SoundType {
-    BREEZE = 0,
     CHIME = 1,
     CHIRP = 2,
     POP = 3,
     SPLASH = 4,
+    FART = 5,
+    MONKEY = 6,
+    ELEPHANT = 7,
+    PARTY = 8,
+    UFO = 9,
+    COUNTDOWN = 10,
+    ENGINE = 11,
+    ROBOT = 12
 }
 
 export enum LightAnimationType {
@@ -52,6 +60,11 @@ export enum HeadlightStatus {
     ON = 1
 }
 
+export enum HornSoundStatus {
+    OFF = 0,
+    ON = 1
+}
+
 export enum BalanceStatus {
     UNBALANCED = 0,
     BALANCED = 1
@@ -64,12 +77,19 @@ export enum WiFiConnectionStatus {
 }
 
 // Mapping between string enum and numeric enum
-export const tuneToSoundType: Record<TuneToPlay, SoundType> = {
-	"Breeze": SoundType.BREEZE,
+export const tuneToSoundType: Record<TuneToPlay | FunSounds, SoundType> = {
 	"Chime": SoundType.CHIME,
 	"Chirp": SoundType.CHIRP,
 	"Pop": SoundType.POP,
 	"Splash": SoundType.SPLASH,
+	"Fart": SoundType.FART,
+	"Monkey": SoundType.MONKEY,
+	"Elephant": SoundType.ELEPHANT,
+	"Party": SoundType.PARTY,
+	"UFO": SoundType.UFO,
+	"Countdown": SoundType.COUNTDOWN,
+	"Engine": SoundType.ENGINE,
+	"Robot": SoundType.ROBOT
 }
 
 export const lightToLEDType: Record<LightAnimation, LightAnimationType> = {
