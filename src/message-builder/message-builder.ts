@@ -134,6 +134,15 @@ export class MessageBuilder {
 		return this.frameMessage(MessageType.SPEAKER_MUTE, payload)
 	}
 
+	static createSpeakerVolumeMessage(volume: number): ArrayBuffer {
+		// Volume will come in between 0 and 100, we need to convert from 0-3.9
+		const volumeFloat = volume / 100 * 3.9
+		const payload = new ArrayBuffer(4) // 4 bytes for a float32
+		const view = new DataView(payload)
+		view.setFloat32(0, volumeFloat, true) // little-endian
+		return this.frameMessage(MessageType.SPEAKER_VOLUME, new Uint8Array(payload))
+	}
+
 	static createHeadlightMessage(headlightStatus: boolean): ArrayBuffer {
 		const payload = new Uint8Array([headlightStatus ? HeadlightStatus.ON : HeadlightStatus.OFF])
 		return this.frameMessage(MessageType.UPDATE_HEADLIGHT, payload)
