@@ -254,6 +254,38 @@ describe("MessageBuilder", () => {
 		})
 	})
 
+	describe("createSpeakerVolumeMessage", () => {
+		it("should create a valid speaker volume message for 50% volume", () => {
+			const buffer = MessageBuilder.createSpeakerVolumeMessage(50)
+			validateFrameStructure(buffer, MessageType.SPEAKER_VOLUME, 4)
+
+			// the final value should be (50 / 100) * 3.9 = 1.95
+			const view = new DataView(buffer)
+			const offset = getPayloadOffset(buffer)
+			expect(view.getFloat32(offset, true)).toBeCloseTo(1.95)
+		})
+
+		it("should create a valid speaker volume message", () => {
+			const buffer = MessageBuilder.createSpeakerVolumeMessage(100)
+			validateFrameStructure(buffer, MessageType.SPEAKER_VOLUME, 4)
+
+			// the final value should be (100 / 100) * 3.9 = 3.9
+			const view = new DataView(buffer)
+			const offset = getPayloadOffset(buffer)
+			expect(view.getFloat32(offset, true)).toBeCloseTo(3.9)
+		})
+
+		it("should create a valid speaker volume message for zero volume", () => {
+			const buffer = MessageBuilder.createSpeakerVolumeMessage(0)
+			validateFrameStructure(buffer, MessageType.SPEAKER_VOLUME, 4)
+
+			// the final value should be (0 / 100) * 3.9 = 0.0
+			const view = new DataView(buffer)
+			const offset = getPayloadOffset(buffer)
+			expect(view.getFloat32(offset, true)).toBeCloseTo(0.0)
+		})
+	})
+
 	describe("createHeadlightMessage", () => {
 		it("should create a headlight on message when true is passed", () => {
 			const buffer = MessageBuilder.createHeadlightMessage(true)
