@@ -38,7 +38,8 @@ type RoutePayloadMap = {
 	"/motors-disabled-usb": StandardJsonStatusMessage
 	"/program-paused-usb": StandardJsonStatusMessage
 	"/play-fun-sound": StandardJsonStatusMessage
-	"/battery-monitor-data": BatteryMonitorData
+	"/battery-monitor-data-item": BatteryMonitorDataItem
+	"/battery-monitor-data-complete": BatteryMonitorDataComplete
 }
 
 // Routes derived from the keys of the mapping
@@ -88,6 +89,30 @@ export interface BatteryMonitorData {
 	isCriticalBattery: boolean
 	estimatedTimeToEmpty: number
 	estimatedTimeToFull: number
+}
+
+export type BatteryMonitorKey =
+	| "stateOfCharge"
+	| "voltage"
+	| "current"
+	| "power"
+	| "remainingCapacity"
+	| "fullCapacity"
+	| "health"
+	| "isCharging"
+	| "isDischarging"
+	| "isLowBattery"
+	| "isCriticalBattery"
+	| "estimatedTimeToEmpty"
+	| "estimatedTimeToFull"
+
+export interface BatteryMonitorDataItem {
+	key: BatteryMonitorKey
+	value: number | boolean
+}
+
+export interface BatteryMonitorDataComplete {
+	totalItems: number
 }
 
 // Incoming socket events:
