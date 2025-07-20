@@ -1,3 +1,4 @@
+import { FunSounds } from "./garage"
 import { PipUUID, PipUUIDInterface } from "./utils"
 
 export type PipConnectionStatus =
@@ -36,6 +37,7 @@ type RoutePayloadMap = {
 	"/scan-started": ScanStartedPayload
 	"/motors-disabled-usb": StandardJsonStatusMessage
 	"/program-paused-usb": StandardJsonStatusMessage
+	"/play-fun-sound": StandardJsonStatusMessage
 }
 
 // Routes derived from the keys of the mapping
@@ -51,9 +53,12 @@ export interface StandardJsonStatusMessage {
 	status: string
 }
 
-export interface PipUUIDPayload {
-	pipUUID: PipUUID
+export interface PipUUIDPayload extends PipUUIDInterface {
 	firmwareVersion: number
+}
+
+export interface PlayFunSoundPayload extends PipUUIDInterface {
+	sound: FunSounds
 }
 
 export interface BytecodeMessage {
