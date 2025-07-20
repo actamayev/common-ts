@@ -58,7 +58,7 @@ export interface PipUUIDPayload extends PipUUIDInterface {
 }
 
 export interface PlayFunSoundPayload extends PipUUIDInterface {
-	sound: FunSounds
+	sound: FunSounds | null
 }
 
 export interface BytecodeMessage {
