@@ -70,6 +70,10 @@ export class MessageBuilder {
 		return this.frameMessage(MessageType.SOUND_COMMAND, payload)
 	}
 
+	static createStopSoundMessage(): ArrayBuffer {
+		return this.frameMessage(MessageType.STOP_SOUND)
+	}
+
 	static createHornSoundMessage(holdSoundType: boolean): ArrayBuffer {
 		const payload = new Uint8Array([holdSoundType ? HornSoundStatus.ON : HornSoundStatus.OFF])
 		return this.frameMessage(MessageType.UPDATE_HORN_SOUND, payload)

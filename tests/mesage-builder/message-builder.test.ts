@@ -119,6 +119,13 @@ describe("MessageBuilder", () => {
 		})
 	})
 
+	describe("createStopSoundMessage", () => {
+		it("should create a valid stop sound message", () => {
+			const buffer = MessageBuilder.createStopSoundMessage()
+			validateFrameStructure(buffer, MessageType.STOP_SOUND, 0)
+		})
+	})
+
 	describe("createLightAnimationMessage", () => {
 		it("should create a valid light animation message for NO_ANIMATION", () => {
 			const buffer = MessageBuilder.createLightAnimationMessage(LightAnimationType.NO_ANIMATION)
