@@ -91,24 +91,33 @@ export interface BatteryMonitorData {
 	estimatedTimeToFull: number
 }
 
-export type BatteryMonitorKey =
-	| "stateOfCharge"
-	| "voltage"
-	| "current"
-	| "power"
-	| "remainingCapacity"
-	| "fullCapacity"
-	| "health"
-	| "isCharging"
-	| "isDischarging"
-	| "isLowBattery"
-	| "isCriticalBattery"
-	| "estimatedTimeToEmpty"
-	| "estimatedTimeToFull"
+export type BatteryMonitorNumericKey =
+    | "stateOfCharge"
+    | "voltage"
+    | "current"
+    | "power"
+    | "remainingCapacity"
+    | "fullCapacity"
+    | "health"
+    | "estimatedTimeToEmpty"
+    | "estimatedTimeToFull";
 
-export interface BatteryMonitorDataItem {
-	key: BatteryMonitorKey
-	value: number | boolean
+export type BatteryMonitorBooleanKey =
+    | "isCharging"
+    | "isDischarging"
+    | "isLowBattery"
+    | "isCriticalBattery";
+
+export type BatteryMonitorKey = BatteryMonitorNumericKey | BatteryMonitorBooleanKey;
+
+// Type-safe way to get the correct value type for each key
+export type BatteryMonitorValueType<K extends BatteryMonitorKey> =
+    K extends BatteryMonitorNumericKey ? number : boolean;
+
+// Type-safe BatteryMonitorDataItem
+export interface BatteryMonitorDataItem<K extends BatteryMonitorKey = BatteryMonitorKey> {
+    key: K;
+    value: BatteryMonitorValueType<K>;
 }
 
 export interface BatteryMonitorDataComplete {
