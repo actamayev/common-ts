@@ -1,7 +1,7 @@
 import { BalancePidsProps, LedControlData } from "../../src"
 import { MessageBuilder } from "../../src/message-builder/message-builder"
 import {
-	BalanceStatus, HeadlightStatus, LightAnimationType,
+	BalanceStatus, HeadlightStatus, HornSoundStatus, LightAnimationType,
 	MessageType, SoundType, SpeakerStatus,
 } from "../../src/message-builder/protocol"
 import { END_MARKER, START_MARKER } from "../../src/types/private/constants"
@@ -104,54 +104,18 @@ describe("MessageBuilder", () => {
 	})
 
 	describe("createSoundMessage", () => {
-		it("should create a valid sound message for BREEZE type", () => {
-			const buffer = MessageBuilder.createSoundMessage(SoundType.BREEZE)
+		it("should create a valid sound message for each fun sound type", () => {
+			// eslint-disable-next-line max-len
+			const funSoundTypes = [SoundType.FART, SoundType.MONKEY, SoundType.ELEPHANT, SoundType.PARTY, SoundType.UFO, SoundType.COUNTDOWN, SoundType.ENGINE, SoundType.ROBOT, SoundType.CHIME, SoundType.CHIRP, SoundType.POP, SoundType.SPLASH]
 
-			validateFrameStructure(buffer, MessageType.SOUND_COMMAND, 1)
+			funSoundTypes.forEach(type => {
+				const buffer = MessageBuilder.createSoundMessage(type)
+				validateFrameStructure(buffer, MessageType.SOUND_COMMAND, 1)
 
-			const view = new DataView(buffer)
-			const offset = getPayloadOffset(buffer)
-			expect(view.getUint8(offset)).toBe(SoundType.BREEZE)
-		})
-
-		it("should create a valid sound message for CHIME type", () => {
-			const buffer = MessageBuilder.createSoundMessage(SoundType.CHIME)
-
-			validateFrameStructure(buffer, MessageType.SOUND_COMMAND, 1)
-
-			const view = new DataView(buffer)
-			const offset = getPayloadOffset(buffer)
-			expect(view.getUint8(offset)).toBe(SoundType.CHIME)
-		})
-
-		it("should create a valid sound message for CHIRP type", () => {
-			const buffer = MessageBuilder.createSoundMessage(SoundType.CHIRP)
-
-			validateFrameStructure(buffer, MessageType.SOUND_COMMAND, 1)
-
-			const view = new DataView(buffer)
-			const offset = getPayloadOffset(buffer)
-			expect(view.getUint8(offset)).toBe(SoundType.CHIRP)
-		})
-
-		it("should create a valid sound message for POP type", () => {
-			const buffer = MessageBuilder.createSoundMessage(SoundType.POP)
-
-			validateFrameStructure(buffer, MessageType.SOUND_COMMAND, 1)
-
-			const view = new DataView(buffer)
-			const offset = getPayloadOffset(buffer)
-			expect(view.getUint8(offset)).toBe(SoundType.POP)
-		})
-
-		it("should create a valid sound message for SPLASH type", () => {
-			const buffer = MessageBuilder.createSoundMessage(SoundType.SPLASH)
-
-			validateFrameStructure(buffer, MessageType.SOUND_COMMAND, 1)
-
-			const view = new DataView(buffer)
-			const offset = getPayloadOffset(buffer)
-			expect(view.getUint8(offset)).toBe(SoundType.SPLASH)
+				const view = new DataView(buffer)
+				const offset = getPayloadOffset(buffer)
+				expect(view.getUint8(offset)).toBe(type)
+			})
 		})
 	})
 
@@ -307,6 +271,26 @@ describe("MessageBuilder", () => {
 			const view = new DataView(buffer)
 			const offset = getPayloadOffset(buffer)
 			expect(view.getUint8(offset)).toBe(HeadlightStatus.OFF)
+		})
+	})
+
+	describe("createHornSoundMessage", () => {
+		it("should create a horn sound on message when true is passed", () => {
+			const buffer = MessageBuilder.createHornSoundMessage(true)
+
+			validateFrameStructure(buffer, MessageType.UPDATE_HORN_SOUND, 1)
+
+			const view = new DataView(buffer)
+			const offset = getPayloadOffset(buffer)
+			expect(view.getUint8(offset)).toBe(HornSoundStatus.ON)
+		})
+
+		it("should create a horn sound off message when false is passed", () => {
+			const buffer = MessageBuilder.createHornSoundMessage(false)
+
+			const view = new DataView(buffer)
+			const offset = getPayloadOffset(buffer)
+			expect(view.getUint8(offset)).toBe(HornSoundStatus.OFF)
 		})
 	})
 
