@@ -38,6 +38,7 @@ type RoutePayloadMap = {
 	"/motors-disabled-usb": StandardJsonStatusMessage
 	"/program-paused-usb": StandardJsonStatusMessage
 	"/play-fun-sound": StandardJsonStatusMessage
+	"/battery-monitor-data": BatteryMonitorData
 }
 
 // Routes derived from the keys of the mapping
@@ -71,6 +72,22 @@ export interface WiFiConnectionResultPayload extends StandardJsonStatusMessage {
 
 export interface PipIDPayload {
     pipId: PipUUID
+}
+
+export interface BatteryMonitorData {
+	stateOfCharge: number
+	voltage: number
+	current: number
+	power: number
+	remainingCapacity: number
+	fullCapacity: number
+	health: number
+	isCharging: boolean
+	isDischarging: boolean
+	isLowBattery: boolean
+	isCriticalBattery: boolean
+	estimatedTimeToEmpty: number
+	estimatedTimeToFull: number
 }
 
 // Incoming socket events:
