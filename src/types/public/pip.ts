@@ -40,6 +40,7 @@ type RoutePayloadMap = {
 	"/play-fun-sound": StandardJsonStatusMessage
 	"/battery-monitor-data-item": BatteryMonitorDataItem
 	"/battery-monitor-data-complete": BatteryMonitorDataComplete
+	"/battery-monitor-data-full": BatteryMonitorDataFull
 }
 
 // Routes derived from the keys of the mapping
@@ -122,6 +123,10 @@ export interface BatteryMonitorDataItem<K extends BatteryMonitorKey = BatteryMon
 
 export interface BatteryMonitorDataComplete {
 	totalItems: number
+}
+
+export interface BatteryMonitorDataFull {
+	batteryData: BatteryMonitorData
 }
 
 // Incoming socket events:
