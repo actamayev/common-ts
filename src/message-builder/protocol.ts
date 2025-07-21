@@ -23,7 +23,8 @@ export enum MessageType {
     SCAN_WIFI_NETWORKS = 20,
     UPDATE_HORN_SOUND = 21,
     SPEAKER_VOLUME = 22,
-    STOP_SOUND = 23
+    STOP_SOUND = 23,
+    REQUEST_BATTERY_MONITOR_DATA = 24
 }
 
 export enum SoundType {
