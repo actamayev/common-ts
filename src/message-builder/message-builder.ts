@@ -236,4 +236,8 @@ export class MessageBuilder {
 
 		return this.frameMessage(MessageType.WIFI_CREDENTIALS, new Uint8Array(payload))
 	}
+
+	static createRequestBatteryMonitorDataMessage(): ArrayBuffer {
+		return this.frameMessage(MessageType.REQUEST_BATTERY_MONITOR_DATA)
+	}
 }

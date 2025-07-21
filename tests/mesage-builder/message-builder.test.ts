@@ -720,4 +720,12 @@ describe("MessageBuilder", () => {
 			expect(view.getUint8(offset + 3)).toBe(49) // '1'
 		})
 	})
+
+	describe("createRequestBatteryMonitorDataMessage", () => {
+		it("should create a valid request battery monitor data message", () => {
+			const buffer = MessageBuilder.createRequestBatteryMonitorDataMessage()
+
+			validateFrameStructure(buffer, MessageType.REQUEST_BATTERY_MONITOR_DATA, 0)
+		})
+	})
 })
