@@ -8,6 +8,7 @@ export type PipConnectionStatus =
 	// "updating firmware" // ESP changed to this state when client approves firmware update
 	| "connected to other user" // Connected to someone else
 	// | "connected" // Connected to me
+	| "connected to serial"
 
 export type ESPConnectionStatus =
 	| "offline" // Not connected to internet/is turned off.
