@@ -163,9 +163,7 @@ describe("MessageBuilder", () => {
 				middleLeftColor: { r: 0, g: 0, b: 255 },
 				middleRightColor: { r: 255, g: 255, b: 0 },
 				backLeftColor: { r: 255, g: 0, b: 255 },
-				backRightColor: { r: 0, g: 255, b: 255 },
-				leftHeadlightColor: { r: 255, g: 255, b: 255 },
-				rightHeadlightColor: { r: 0, g: 0, b: 0 }
+				backRightColor: { r: 0, g: 255, b: 255 }
 			}
 
 			const buffer = MessageBuilder.createLedMessage(ledData)
@@ -204,16 +202,6 @@ describe("MessageBuilder", () => {
 			expect(view.getUint8(offset + 15)).toBe(0)   // r
 			expect(view.getUint8(offset + 16)).toBe(255) // g
 			expect(view.getUint8(offset + 17)).toBe(255) // b
-
-			// Left Headlight Color
-			expect(view.getUint8(offset + 18)).toBe(255) // r
-			expect(view.getUint8(offset + 19)).toBe(255) // g
-			expect(view.getUint8(offset + 20)).toBe(255) // b
-
-			// Right Headlight Color
-			expect(view.getUint8(offset + 21)).toBe(0)   // r
-			expect(view.getUint8(offset + 22)).toBe(0)   // g
-			expect(view.getUint8(offset + 23)).toBe(0)   // b
 		})
 
 		it("should handle zero values for all colors", () => {
@@ -223,9 +211,7 @@ describe("MessageBuilder", () => {
 				middleLeftColor: { r: 0, g: 0, b: 0 },
 				middleRightColor: { r: 0, g: 0, b: 0 },
 				backLeftColor: { r: 0, g: 0, b: 0 },
-				backRightColor: { r: 0, g: 0, b: 0 },
-				leftHeadlightColor: { r: 0, g: 0, b: 0 },
-				rightHeadlightColor: { r: 0, g: 0, b: 0 }
+				backRightColor: { r: 0, g: 0, b: 0 }
 			}
 
 			const buffer = MessageBuilder.createLedMessage(ledData)

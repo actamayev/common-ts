@@ -120,16 +120,6 @@ export class MessageBuilder {
 		view.setUint8(offset++, data.backRightColor.g)
 		view.setUint8(offset++, data.backRightColor.b)
 
-		// Left Headlight Color
-		view.setUint8(offset++, data.leftHeadlightColor.r)
-		view.setUint8(offset++, data.leftHeadlightColor.g)
-		view.setUint8(offset++, data.leftHeadlightColor.b)
-
-		// Right Headlight Color
-		view.setUint8(offset++, data.rightHeadlightColor.r)
-		view.setUint8(offset++, data.rightHeadlightColor.g)
-		view.setUint8(offset++, data.rightHeadlightColor.b)
-
 		return this.frameMessage(MessageType.UPDATE_LED_COLORS, new Uint8Array(payload))
 	}
 
