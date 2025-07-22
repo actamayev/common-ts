@@ -85,8 +85,8 @@ export class MessageBuilder {
 	}
 
 	static createLedMessage(data: Omit<LedControlData, "pipUUID">): ArrayBuffer {
-		// Create payload for 8 RGB colors × 3 components
-		const payload = new ArrayBuffer(8 * 3)
+		// Create payload for 6 RGB colors × 3 components
+		const payload = new ArrayBuffer(6 * 3)
 		const view = new DataView(payload)
 		let offset = 0
 
