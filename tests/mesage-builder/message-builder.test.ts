@@ -168,7 +168,7 @@ describe("MessageBuilder", () => {
 
 			const buffer = MessageBuilder.createLedMessage(ledData)
 
-			validateFrameStructure(buffer, MessageType.UPDATE_LED_COLORS, 24)
+			validateFrameStructure(buffer, MessageType.UPDATE_LED_COLORS, 18)
 
 			const view = new DataView(buffer)
 			const offset = getPayloadOffset(buffer)
@@ -221,9 +221,9 @@ describe("MessageBuilder", () => {
 			// Sample a few values to ensure they're all 0
 			expect(view.getUint8(offset)).toBe(0)
 			expect(view.getUint8(offset + 4)).toBe(0)
-			expect(view.getUint8(offset + 17)).toBe(0)
-			expect(view.getUint8(offset + 19)).toBe(0)
-			expect(view.getUint8(offset + 23)).toBe(0)
+			expect(view.getUint8(offset + 8)).toBe(0)
+			expect(view.getUint8(offset + 12)).toBe(0)
+			expect(view.getUint8(offset + 16)).toBe(0)
 		})
 	})
 
