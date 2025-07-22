@@ -42,6 +42,7 @@ type RoutePayloadMap = {
 	"/battery-monitor-data-item": BatteryMonitorDataItem
 	"/battery-monitor-data-complete": BatteryMonitorDataComplete
 	"/battery-monitor-data-full": BatteryMonitorDataFull // This is only for WS (not sent over Serial (Serial doesn't have enough space))
+	"/pip-turning-off": StandardJsonStatusMessage
 }
 
 // Routes derived from the keys of the mapping
