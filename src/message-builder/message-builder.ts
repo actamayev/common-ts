@@ -200,8 +200,12 @@ export class MessageBuilder {
 		return this.frameMessage(MessageType.GET_SAVED_WIFI_NETWORKS)
 	}
 
-	static createScanWiFiNetworksMessage(): ArrayBuffer {
-		return this.frameMessage(MessageType.SCAN_WIFI_NETWORKS)
+	static createSoftScanWiFiNetworksMessage(): ArrayBuffer {
+		return this.frameMessage(MessageType.SOFT_SCAN_WIFI_NETWORKS)
+	}
+
+	static createHardScanWiFiNetworksMessage(): ArrayBuffer {
+		return this.frameMessage(MessageType.HARD_SCAN_WIFI_NETWORKS)
 	}
 
 	static createWiFiCredentialsMessage(ssid: string, password: string): ArrayBuffer {
