@@ -519,9 +519,17 @@ describe("MessageBuilder", () => {
 
 	describe("createScanWiFiNetworksMessage", () => {
 		it("should create a valid scan wifi networks message", () => {
-			const buffer = MessageBuilder.createScanWiFiNetworksMessage()
+			const buffer = MessageBuilder.createSoftScanWiFiNetworksMessage()
 
-			validateFrameStructure(buffer, MessageType.SCAN_WIFI_NETWORKS, 0)
+			validateFrameStructure(buffer, MessageType.SOFT_SCAN_WIFI_NETWORKS, 0)
+		})
+	})
+
+	describe("createHardScanWiFiNetworksMessage", () => {
+		it("should create a valid hard scan wifi networks message", () => {
+			const buffer = MessageBuilder.createHardScanWiFiNetworksMessage()
+
+			validateFrameStructure(buffer, MessageType.HARD_SCAN_WIFI_NETWORKS, 0)
 		})
 	})
 
