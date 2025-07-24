@@ -227,6 +227,22 @@ describe("MessageBuilder", () => {
 		})
 	})
 
+	describe("createDisplayBufferMessage", () => {
+		it("should create a valid display buffer message", () => {
+			const buffer = MessageBuilder.createDisplayBufferMessage(new Uint8Array(1024))
+			if (buffer) {
+				validateFrameStructure(buffer, MessageType.UPDATE_DISPLAY, 1024)
+			} else {
+				throw new Error("Failed to create display buffer message")
+			}
+		})
+
+		it("should return null if the display buffer is not 1024 bytes", () => {
+			const buffer = MessageBuilder.createDisplayBufferMessage(new Uint8Array(1023))
+			expect(buffer).toBeNull()
+		})
+	})
+
 	describe("createSpeakerMuteMessage", () => {
 		it("should create a mute message when true is passed", () => {
 			const buffer = MessageBuilder.createSpeakerMuteMessage(true)
