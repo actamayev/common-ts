@@ -82,6 +82,7 @@ export interface OutgoingSandboxChatData {
 
 // CQ Chatbot stuff:
 export interface CqChatbotStreamCompleteEvent {
+	careerId: string
 	challengeId: string
 }
 
