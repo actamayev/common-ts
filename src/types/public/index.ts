@@ -1,6 +1,7 @@
 export * from "./api"
 export * from "./classroom"
 export * from "./chat"
+export * from "./career-quest"
 export * from "./bytecode-types"
 export * from "./garage"
 export * from "./lab"
