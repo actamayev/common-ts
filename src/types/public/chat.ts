@@ -1,6 +1,8 @@
 import * as Blockly from "blockly"
-import { BlocklyJson, ProjectUUID } from "./sandbox"
+import { ChallengeId } from "./utils"
 import { BlockNames } from "./blockly"
+import { CareerId } from "./career-quest"
+import { BlocklyJson, ProjectUUID } from "./sandbox"
 
 export interface AvailableBlock {
 	type: BlockNames
@@ -10,9 +12,10 @@ export interface AvailableBlock {
 
 export type DifficultyLevel = "beginner" | "intermediate" | "advanced"
 
-export interface ChallengeData {
+export interface CqChallengeData {
 	// Basic challenge info
-	id: string
+	careerId: CareerId
+	challengeId: ChallengeId
 	title: string
 	description: string
 	difficulty: DifficultyLevel
@@ -46,7 +49,7 @@ export interface BinaryEvaluationResult {
 	feedback: string
 }
 
-export interface CareerQuestChatMessage extends SandboxChatMessage {
+export interface CqChallengeChatMessage extends SandboxChatMessage {
 	codeSubmissionData?: {
 		userCode: string
 		evaluationResult: BinaryEvaluationResult
@@ -57,21 +60,24 @@ export interface CareerQuestChatMessage extends SandboxChatMessage {
 export type InteractionType = "checkCode" | "hint" | "generalQuestion"
 
 // Request payload from client
-export interface OutgoingCareerQuestGeneralMessage {
-	careerQuestChallengeId: string
+export interface OutgoingCqChallengeGeneralMessage {
+	careerId: CareerId
+	challengeId: ChallengeId
 	userCode: string
 	message: string
 }
 
 // Check code
-export interface OutgoingCareerQuestCheckCodeMessage {
-	careerQuestChallengeId: string
+export interface OutgoingCqChallengeCheckCodeMessage {
+	careerId: CareerId
+	challengeId: ChallengeId
 	userCode: string
 }
 
 // Hint
-export interface OutgoingCareerQuestHintMessage {
-	careerQuestChallengeId: string
+export interface OutgoingCqChallengeHintMessage {
+	careerId: CareerId
+	challengeId: ChallengeId
 	userCode: string
 }
 
@@ -82,8 +88,8 @@ export interface OutgoingSandboxChatData {
 
 // CQ Chatbot stuff:
 export interface CqChatbotStreamCompleteEvent {
-	careerId: string
-	challengeId: string
+	careerId: CareerId
+	challengeId: ChallengeId
 }
 
 export interface CqChatbotStreamStartEvent extends CqChatbotStreamCompleteEvent {
