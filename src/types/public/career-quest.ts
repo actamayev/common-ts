@@ -1,2 +1,2 @@
 export type CareerId =
-	| "obstacle_avoidance"
+	| "obstacle-avoidance"
