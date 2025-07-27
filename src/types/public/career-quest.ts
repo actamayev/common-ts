@@ -4,6 +4,7 @@ import { BlockNames } from "./blockly"
 import { BlocklyJson } from "./sandbox"
 
 export type CareerId =
+	| "introduction"
 	| "obstacle-avoidance"
 
 export interface AvailableBlock {
