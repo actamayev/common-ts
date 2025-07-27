@@ -1,7 +1,7 @@
 import * as Blockly from "blockly"
 import { BlockNames } from "../blockly"
-import { AvailableBlock } from "../chat"
 import { ToolboxItem } from "../sandbox"
+import { AvailableBlock } from "../career-quest"
 import { BLOCK_REGISTRY } from "./blockly-registry"
 
 export function getBlocksFromRegistry(blockTypes: BlockNames[]): AvailableBlock[] {
