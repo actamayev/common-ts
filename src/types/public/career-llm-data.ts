@@ -2,7 +2,7 @@
 /* eslint-disable max-len */
 
 import { ChallengeId } from "./utils"
-import { CqChallengeData } from "./chat"
+import { CqChallengeData } from "./career-quest"
 import { createChallengeToolbox } from "./utils/blockly-helpers"
 import { CONDITIONAL_BLOCK_TYPES, LED_BLOCK_TYPES, LOOP_BLOCK_TYPES, MOTOR_BLOCK_TYPES, SENSORS_BLOCK_TYPES, START_BLOCK_TYPES } from "./blockly"
 
