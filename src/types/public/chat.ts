@@ -26,23 +26,17 @@ export type InteractionType = "checkCode" | "hint" | "generalQuestion"
 
 // Request payload from client
 export interface OutgoingCqChallengeGeneralMessage {
-	careerUUID: CareerUUID
-	challengeUUID: ChallengeUUID
 	userCode: string
 	message: string
 }
 
 // Check code
 export interface OutgoingCqChallengeCheckCodeMessage {
-	careerUUID: CareerUUID
-	challengeUUID: ChallengeUUID
 	userCode: string
 }
 
 // Hint
 export interface OutgoingCqChallengeHintMessage {
-	careerUUID: CareerUUID
-	challengeUUID: ChallengeUUID
 	userCode: string
 }
 
