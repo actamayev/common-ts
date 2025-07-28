@@ -1,6 +1,6 @@
 {
   "name": "@bluedotrobots/common-ts",
-  "version": "1.0.146",
+  "version": "1.0.147",
   "description": "Shared TypeScript code between frontend and backend",
   "files": [
     "dist/src/**/*"
