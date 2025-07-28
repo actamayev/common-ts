@@ -1,14 +1,14 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable max-len */
 
-import { ChallengeId } from "./utils"
+import { ChallengeUUID, CareerUUID } from "./utils"
 import { CqChallengeData } from "./career-quest"
 import { createChallengeToolbox } from "./utils/blockly-helpers"
 import { CONDITIONAL_BLOCK_TYPES, LED_BLOCK_TYPES, LOOP_BLOCK_TYPES, MOTOR_BLOCK_TYPES, SENSORS_BLOCK_TYPES, START_BLOCK_TYPES } from "./blockly"
 
 export const OBSTACLE_AVOIDANCE_CHALLENGE_1: CqChallengeData = {
-	challengeId: "obstacle-avoidance-001" as ChallengeId,
-	careerId: "obstacle-avoidance",
+	challengeUUID: "0e4568c6-7f85-4930-8db6-56d91fc8aee6" as ChallengeUUID,
+	careerUUID: "2c9600cb-087d-477f-ae96-eb7cbf445bcd" as CareerUUID,
 	title: "LED Obstacle Detection",
 	description: "Write a program that continuously checks if there's an object in front of Pip. Turn the LED red when an object is detected, and green when there's no object.",
 	difficulty: "beginner",
@@ -43,8 +43,8 @@ export const OBSTACLE_AVOIDANCE_CHALLENGE_1: CqChallengeData = {
 }
 
 export const OBSTACLE_AVOIDANCE_CHALLENGE_2: CqChallengeData = {
-	challengeId: "obstacle-avoidance-002" as ChallengeId,
-	careerId: "obstacle-avoidance",
+	challengeUUID: "090dc197-2e13-4dc6-b7f3-6002edd817ca" as ChallengeUUID,
+	careerUUID: "2c9600cb-087d-477f-ae96-eb7cbf445bcd" as CareerUUID,
 	title: "Basic Obstacle Avoidance with Movement",
 	description: "Build upon your LED detection program by adding motor control. Pip should move forward at 50% speed when the path is clear, and stop when an obstacle is detected. Include a start button so Pip waits for your command before beginning.",
 	difficulty: "beginner",
@@ -133,8 +133,8 @@ export const OBSTACLE_AVOIDANCE_CHALLENGE_2: CqChallengeData = {
 }
 
 export const OBSTACLE_AVOIDANCE_CHALLENGE_3: CqChallengeData = {
-	challengeId: "obstacle-avoidance-003" as ChallengeId,
-	careerId: "obstacle-avoidance",
+	challengeUUID: "cd16d9bb-1cd0-42ff-9f2b-570e54ea3a31" as ChallengeUUID,
+	careerUUID: "2c9600cb-087d-477f-ae96-eb7cbf445bcd" as CareerUUID,
 	title: "Smart Obstacle Avoidance with Turning",
 	description: "Improve your obstacle avoidance program so Pip doesn't get stuck! When an obstacle is detected, Pip should turn 90 degrees clockwise and continue exploring instead of just stopping and waiting.",
 	difficulty: "beginner",
@@ -233,8 +233,8 @@ export const OBSTACLE_AVOIDANCE_CHALLENGE_3: CqChallengeData = {
 }
 
 export const OBSTACLE_AVOIDANCE_CHALLENGE_4: CqChallengeData = {
-	challengeId: "obstacle-avoidance-004" as ChallengeId,
-	careerId: "obstacle-avoidance",
+	challengeUUID: "ea0e21fd-aa3c-440f-89b3-3642cf372fb0" as ChallengeUUID,
+	careerUUID: "2c9600cb-087d-477f-ae96-eb7cbf445bcd" as CareerUUID,
 	title: "Right Side Distance Sensor Detection",
 	description: "Write a program that checks if the right-side distance sensor detects something. If an object is detected, turn the LEDs blue. If no object is detected, turn the LEDs off.",
 	difficulty: "beginner",
@@ -271,8 +271,8 @@ export const OBSTACLE_AVOIDANCE_CHALLENGE_4: CqChallengeData = {
 }
 
 export const OBSTACLE_AVOIDANCE_CHALLENGE_5: CqChallengeData = {
-	challengeId: "obstacle-avoidance-005" as ChallengeId,
-	careerId: "obstacle-avoidance",
+	challengeUUID: "8932c392-ed0b-4d7a-9c64-3f2154f6274f" as ChallengeUUID,
+	careerUUID: "2c9600cb-087d-477f-ae96-eb7cbf445bcd" as CareerUUID,
 	title: "Multi-Sensor Obstacle Avoidance with Else-If Chain",
 	description: "Create an advanced obstacle avoidance program that checks multiple sensors and responds differently to each. Use an else-if chain to check the front sensor first, then left sensor, then right sensor, with different LED colors and turning behaviors for each detection.",
 	difficulty: "intermediate",

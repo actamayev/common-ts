@@ -1,11 +1,7 @@
 import * as Blockly from "blockly"
-import { ChallengeId } from "./utils"
+import { CareerUUID, ChallengeUUID } from "./utils"
 import { BlockNames } from "./blockly"
 import { BlocklyJson } from "./sandbox"
-
-export type CareerId =
-	| "introduction"
-	| "obstacle-avoidance"
 
 export interface AvailableBlock {
 	type: BlockNames
@@ -17,8 +13,8 @@ export type DifficultyLevel = "beginner" | "intermediate" | "advanced"
 
 export interface CqChallengeData {
 	// Basic challenge info
-	careerId: CareerId
-	challengeId: ChallengeId
+	careerUUID: CareerUUID
+	challengeUUID: ChallengeUUID
 	title: string
 	description: string
 	difficulty: DifficultyLevel
