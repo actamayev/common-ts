@@ -19,6 +19,7 @@ export interface CqChallengeData {
 	description: string
 	difficulty: DifficultyLevel
 
+	challengeIndex: number
 	// Programming context
 	availableBlocks: AvailableBlock[]
 

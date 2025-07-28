@@ -12,6 +12,7 @@ export const OBSTACLE_AVOIDANCE_CHALLENGE_1: CqChallengeData = {
 	title: "LED Obstacle Detection",
 	description: "Write a program that continuously checks if there's an object in front of Pip. Turn the LED red when an object is detected, and green when there's no object.",
 	difficulty: "beginner",
+	challengeIndex: 1,
 	expectedBehavior: "Pip continuously monitors for obstacles in front. LED turns red when an object is detected within range, and green when the path is clear.",
 	commonMistakes: [
 		"Forgetting to use a forever loop to continuously check the sensor",
@@ -48,6 +49,7 @@ export const OBSTACLE_AVOIDANCE_CHALLENGE_2: CqChallengeData = {
 	title: "Basic Obstacle Avoidance with Movement",
 	description: "Build upon your LED detection program by adding motor control. Pip should move forward at 50% speed when the path is clear, and stop when an obstacle is detected. Include a start button so Pip waits for your command before beginning.",
 	difficulty: "beginner",
+	challengeIndex: 2,
 	expectedBehavior: "Pip waits for button press to start. Once started, it moves forward at 50% speed while the path is clear (green LED). When an obstacle is detected, it stops moving and shows a red LED. Pip continuously monitors and adjusts its behavior.",
 	commonMistakes: [
 		"Forgetting to add the start button at the beginning",
@@ -138,6 +140,7 @@ export const OBSTACLE_AVOIDANCE_CHALLENGE_3: CqChallengeData = {
 	title: "Smart Obstacle Avoidance with Turning",
 	description: "Improve your obstacle avoidance program so Pip doesn't get stuck! When an obstacle is detected, Pip should turn 90 degrees clockwise and continue exploring instead of just stopping and waiting.",
 	difficulty: "beginner",
+	challengeIndex: 3,
 	expectedBehavior: "Pip waits for button press to start. When moving forward and an obstacle is detected, it turns 90 degrees clockwise (red LED), then continues forward (green LED). Pip continuously explores by turning around obstacles rather than getting stuck.",
 	commonMistakes: [
 		"Forgetting to add the turn command when an obstacle is detected",
@@ -238,6 +241,7 @@ export const OBSTACLE_AVOIDANCE_CHALLENGE_4: CqChallengeData = {
 	title: "Right Side Distance Sensor Detection",
 	description: "Write a program that checks if the right-side distance sensor detects something. If an object is detected, turn the LEDs blue. If no object is detected, turn the LEDs off.",
 	difficulty: "beginner",
+	challengeIndex: 4,
 	expectedBehavior: "Pip continuously monitors for obstacles on the right side. LED turns blue when an object is detected by the right sensor, and turns off when no object is detected.",
 	commonMistakes: [
 		"Using the wrong sensor (left instead of right)",
@@ -276,6 +280,7 @@ export const OBSTACLE_AVOIDANCE_CHALLENGE_5: CqChallengeData = {
 	title: "Multi-Sensor Obstacle Avoidance with Else-If Chain",
 	description: "Create an advanced obstacle avoidance program that checks multiple sensors and responds differently to each. Use an else-if chain to check the front sensor first, then left sensor, then right sensor, with different LED colors and turning behaviors for each detection.",
 	difficulty: "intermediate",
+	challengeIndex: 5,
 	expectedBehavior: "Pip waits for button press to start. When moving, it checks sensors in order: if front sensor detects object (white LED, turn clockwise), else if left sensor detects object (red LED, turn clockwise), else if right sensor detects object (blue LED, turn counterclockwise), else no objects detected (green LED, move forward at 50% speed).",
 	commonMistakes: [
 		"Using simple if-else instead of the else-if chain block",
