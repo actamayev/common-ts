@@ -1,5 +1,4 @@
-import { ChallengeId } from "./utils"
-import { CareerId } from "./career-quest"
+import { ChallengeUUID, CareerUUID } from "./utils"
 import { ProjectUUID } from "./sandbox"
 
 export type ChatMessageRole = "user" | "assistant" | "system"
@@ -27,23 +26,23 @@ export type InteractionType = "checkCode" | "hint" | "generalQuestion"
 
 // Request payload from client
 export interface OutgoingCqChallengeGeneralMessage {
-	careerId: CareerId
-	challengeId: ChallengeId
+	careerUUID: CareerUUID
+	challengeUUID: ChallengeUUID
 	userCode: string
 	message: string
 }
 
 // Check code
 export interface OutgoingCqChallengeCheckCodeMessage {
-	careerId: CareerId
-	challengeId: ChallengeId
+	careerUUID: CareerUUID
+	challengeUUID: ChallengeUUID
 	userCode: string
 }
 
 // Hint
 export interface OutgoingCqChallengeHintMessage {
-	careerId: CareerId
-	challengeId: ChallengeId
+	careerUUID: CareerUUID
+	challengeUUID: ChallengeUUID
 	userCode: string
 }
 
@@ -54,8 +53,8 @@ export interface OutgoingSandboxChatData {
 
 // CQ Chatbot stuff:
 export interface CqChatbotStreamCompleteEvent {
-	careerId: CareerId
-	challengeId: ChallengeId
+	careerUUID: CareerUUID
+	challengeUUID: ChallengeUUID
 }
 
 export interface CqChatbotStreamStartEvent extends CqChatbotStreamCompleteEvent {

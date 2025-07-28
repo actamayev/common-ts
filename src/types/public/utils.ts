@@ -4,4 +4,5 @@ export interface PipUUIDInterface {
 	pipUUID: PipUUID
 }
 export type ClassCode = string & { readonly __brand: unique symbol }
-export type ChallengeId = string & { readonly __brand: unique symbol }
+export type ChallengeUUID = string & { readonly __brand: unique symbol }
+export type CareerUUID = string & { readonly __brand: unique symbol }
