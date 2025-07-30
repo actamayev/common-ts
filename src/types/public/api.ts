@@ -46,9 +46,27 @@ export type GoogleAuthSuccess = Omit<LoginSuccess, "personalInfo"> & {
 }
 
 // Career Quest
+export type CareerQuestHint = {
+	hintText: string
+	createdAt: Date
+	hintNumber: number
+	modelUsed: string
+}
+
+export type CareerQuestCodeSubmission = {
+	userCode: string
+	isCorrect: boolean
+	score: number
+	feedback: string
+	createdAt: Date
+}
+
 export type CareerQuestChallengeData = {
 	messages: CqChallengeChatMessage[]
+	allHints: CareerQuestHint[]
+	allSubmissions: CareerQuestCodeSubmission[]
 	sandboxJson: BlocklyJson
+	hasEverBeenCorrect: boolean
 }
 
 // Chat:
