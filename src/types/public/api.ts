@@ -31,9 +31,9 @@ export interface EmailUpdatesRequest {
 
 // Responses
 export type RegisterSuccess = {
-	accessToken: string
+	success: boolean
 }
-export type LoginSuccess = RegisterSuccess & {
+export type LoginSuccess = {
 	userPipData: PipData[]
 	personalInfo: BasicPersonalInfoResponse
 	studentClasses: StudentClassroomData[]
