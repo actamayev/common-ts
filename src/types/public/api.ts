@@ -30,30 +30,30 @@ export interface EmailUpdatesRequest {
 }
 
 // Responses
-export type RegisterSuccess = {
+export interface RegisterSuccess {
 	success: boolean
 }
-export type LoginSuccess = {
+export interface LoginSuccess {
 	userPipData: PipData[]
 	personalInfo: BasicPersonalInfoResponse
 	studentClasses: StudentClassroomData[]
 	teacherData: TeacherData | null
 }
-export type GoogleAuthSuccess = Omit<LoginSuccess, "personalInfo"> & {
+export interface GoogleAuthSuccess extends Omit<LoginSuccess, "personalInfo"> {
 	isNewUser: boolean
 	personalInfo?: BasicPersonalInfoResponse
 	teacherData: TeacherData | null
 }
 
 // Career Quest
-export type CareerQuestHint = {
+export interface CareerQuestHint {
 	hintText: string
 	createdAt: Date
 	hintNumber: number
 	modelUsed: string
 }
 
-export type CareerQuestCodeSubmission = {
+export interface CareerQuestCodeSubmission {
 	userCode: string
 	isCorrect: boolean
 	score: number
@@ -61,7 +61,7 @@ export type CareerQuestCodeSubmission = {
 	createdAt: Date
 }
 
-export type CareerQuestChallengeData = {
+export interface CareerQuestChallengeData {
 	messages: CqChallengeChatMessage[]
 	allHints: CareerQuestHint[]
 	allSubmissions: CareerQuestCodeSubmission[]
@@ -69,12 +69,17 @@ export type CareerQuestChallengeData = {
 	hasEverBeenCorrect: boolean
 }
 
+export interface CareerProgressData {
+	currentChallengeUuidOrTextUuid: string
+	careerQuestChallengeData: CareerQuestChallengeData[]
+}
+
 // Chat:
-export type StartChatSuccess = {
+export interface StartChatSuccess {
 	streamId: string
 }
 
-export type CheckCodeResponse = {
+export interface CheckCodeResponse {
 	isCorrect: boolean
 	feedback: string
 }
@@ -86,16 +91,16 @@ export interface AddPipData {
 }
 
 // Lab Activity Tracking Responses:
-export type RetrievedUserActivityProgressResponse = {
+export interface RetrievedUserActivityProgressResponse {
 	userActivityProgress: UserActivityProgress[]
 }
 
-export type RetrievedQuestionsResponse = {
+export interface RetrievedQuestionsResponse {
 	quizAttempts: RetrievedQuestions[]
 }
 
 // Personal Info Responses:
-export type BasicPersonalInfoResponse = {
+export interface BasicPersonalInfoResponse {
 	username: string
 	email: string | null
 	defaultSiteTheme: SiteThemes
@@ -104,43 +109,45 @@ export type BasicPersonalInfoResponse = {
 	name: string | null
 }
 
-export type PersonalInfoResponse = BasicPersonalInfoResponse & {
+export interface PersonalInfoResponse extends BasicPersonalInfoResponse {
 	teacherData: TeacherData | null
 }
 
-export type TeacherData = {
+export interface TeacherData {
 	teacherFirstName: string
 	teacherLastName: string
 	isApproved: boolean | null
 	schoolName: string
 }
 
-export type ProfilePictureUrl = { profilePictureUrl: string }
+export interface ProfilePictureUrl {
+	profilePictureUrl: string
+}
 
 // Pip Responses
-export type AddNewPipResponse = {
+export interface AddNewPipResponse {
 	pipName: string
 	userPipUUIDId: number
 }
-export type PreviouslyAddedPipsResponse = {
+export interface PreviouslyAddedPipsResponse {
 	userPipData: PipData[]
 }
 
-export type RetrieveIsPipUUIDValidResponse = {
+export interface RetrieveIsPipUUIDValidResponse {
 	pipName: string | null
 	pipConnectionStatus: ESPConnectionStatus
 }
 
 // Sandbox Routes
-export type CreateSandboxProjectResponse = {
+export interface CreateSandboxProjectResponse {
 	sandboxProject: SandboxProject
 }
 
-export type RetrieveSandboxProjectResponse = {
+export interface RetrieveSandboxProjectResponse {
 	sandboxProject: SandboxProject | null
 }
 
-export type RetrieveSandboxProjectsResponse = {
+export interface RetrieveSandboxProjectsResponse {
 	sandboxProjects: SandboxProject[]
 }
 
