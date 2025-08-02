@@ -2,7 +2,7 @@ import { StudentData } from "./classroom"
 import { CqChallengeChatMessage } from "./chat"
 import { ESPConnectionStatus, PipData } from "./pip"
 import { BlocklyJson, SandboxProject } from "./sandbox"
-import { ClassCode, PipUUID, SiteThemes } from "./utils"
+import { ChallengeUUID, ClassCode, PipUUID, SiteThemes } from "./utils"
 import { RetrievedQuestions, UserActivityProgress } from "./lab"
 
 // Auth
@@ -67,6 +67,7 @@ export interface CareerQuestChallengeData {
 	allSubmissions: CareerQuestCodeSubmission[]
 	sandboxJson: BlocklyJson
 	hasEverBeenCorrect: boolean
+	challengeUUID: ChallengeUUID
 }
 
 export interface CareerProgressData {
