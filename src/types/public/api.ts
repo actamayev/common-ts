@@ -73,7 +73,7 @@ export interface CareerQuestChallengeData {
 export interface CareerProgressData {
 	currentChallengeUuidOrTextUuid: string
 	careerQuestChallengeData: CareerQuestChallengeData[]
-	isChallengeLocked: boolean
+	seenChallengeUUIDs: ChallengeUUID[]
 }
 
 // Chat:
