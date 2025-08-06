@@ -53,17 +53,26 @@ export interface OutgoingSandboxChatData {
 	message: string
 }
 
-// CQ Chatbot stuff:
-export interface CqChatbotStreamCompleteEvent {
+// Challenge Chatbot stuff:
+export interface ChallengeChatbotStreamCompleteEvent {
 	careerUUID: CareerUUID
 	challengeUUID: ChallengeUUID
 }
 
-export interface CqChatbotStreamStartEvent extends CqChatbotStreamCompleteEvent {
+export interface ChallengeChatbotStreamStartEvent extends ChallengeChatbotStreamCompleteEvent {
 	interactionType: InteractionType
 }
 
-export interface CqChatbotStreamChunkEvent extends CqChatbotStreamCompleteEvent {
+export interface ChallengeChatbotStreamChunkEvent extends ChallengeChatbotStreamCompleteEvent {
+	content: string
+}
+
+// Career Chatbot stuff:
+export interface CareerChatbotStreamStartOrCompleteEvent {
+	careerUUID: CareerUUID
+}
+
+export interface CareerChatbotChunkEvent extends CareerChatbotStreamStartOrCompleteEvent {
 	content: string
 }
 
