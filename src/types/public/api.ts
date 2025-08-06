@@ -1,5 +1,5 @@
 import { StudentData } from "./classroom"
-import { CqChallengeChatMessage } from "./chat"
+import { ChallengeChatMessage } from "./chat"
 import { ESPConnectionStatus, PipData } from "./pip"
 import { BlocklyJson, SandboxProject } from "./sandbox"
 import { ChallengeUUID, ClassCode, PipUUID, SiteThemes } from "./utils"
@@ -62,7 +62,7 @@ export interface CareerQuestCodeSubmission {
 }
 
 export interface CareerQuestChallengeData {
-	messages: CqChallengeChatMessage[]
+	messages: ChallengeChatMessage[]
 	allHints: CareerQuestHint[]
 	allSubmissions: CareerQuestCodeSubmission[]
 	sandboxJson: BlocklyJson

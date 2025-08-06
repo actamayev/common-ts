@@ -14,7 +14,7 @@ export interface BinaryEvaluationResult {
 	feedback: string
 }
 
-export interface CqChallengeChatMessage extends SandboxChatMessage {
+export interface ChallengeChatMessage extends SandboxChatMessage {
 	codeSubmissionData?: {
 		userCode: string
 		evaluationResult: BinaryEvaluationResult
