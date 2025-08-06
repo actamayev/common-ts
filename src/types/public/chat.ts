@@ -46,6 +46,8 @@ export interface OutgoingCareerMessage {
 	careerUUID: CareerUUID
 	message: string
 	whatUserSees: string
+	careerName: string
+	careerDescription: string
 }
 
 export interface OutgoingSandboxChatData {
