@@ -25,21 +25,27 @@ export interface CqChallengeChatMessage extends SandboxChatMessage {
 export type InteractionType = "checkCode" | "hint" | "generalQuestion"
 
 // Request payload from client
-export interface OutgoingCqChallengeGeneralMessage {
+export interface OutgoingChallengeGeneralMessage {
 	careerUUID: CareerUUID
 	userCode: string
 	message: string
 }
 
 // Check code
-export interface OutgoingCqChallengeCheckCodeMessage {
+export interface OutgoingChallengeCheckCodeMessage {
 	userCode: string
 }
 
 // Hint
-export interface OutgoingCqChallengeHintMessage {
+export interface OutgoingChallengeHintMessage {
 	careerUUID: CareerUUID
 	userCode: string
+}
+
+export interface OutgoingCareerMessage {
+	careerUUID: CareerUUID
+	message: string
+	whatUserSees: string
 }
 
 export interface OutgoingSandboxChatData {
