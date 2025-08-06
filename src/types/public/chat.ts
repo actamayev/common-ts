@@ -43,7 +43,6 @@ export interface OutgoingChallengeHintMessage {
 }
 
 export interface OutgoingCareerMessage {
-	careerUUID: CareerUUID
 	message: string
 	whatUserSees: string
 	careerName: string
