@@ -1,5 +1,5 @@
 import { StudentData } from "./classroom"
-import { ChallengeChatMessage } from "./chat"
+import { ChallengeChatMessage, SandboxChatMessage } from "./chat"
 import { ESPConnectionStatus, PipData } from "./pip"
 import { BlocklyJson, SandboxProject } from "./sandbox"
 import { ChallengeUUID, ClassCode, PipUUID, SiteThemes } from "./utils"
@@ -74,6 +74,7 @@ export interface CareerProgressData {
 	currentChallengeUuidOrTextUuid: string
 	careerQuestChallengeData: CareerQuestChallengeData[]
 	seenChallengeUUIDs: ChallengeUUID[]
+	careerChatMessages: SandboxChatMessage[]
 }
 
 // Chat:
