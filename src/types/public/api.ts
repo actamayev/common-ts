@@ -65,7 +65,7 @@ export interface CareerQuestChallengeData {
 	messages: ChallengeChatMessage[]
 	allHints: CareerQuestHint[]
 	allSubmissions: CareerQuestCodeSubmission[]
-	sandboxJson: BlocklyJson
+	sandboxJson: BlocklyJson | null
 	hasEverBeenCorrect: boolean
 	challengeUUID: ChallengeUUID
 }
