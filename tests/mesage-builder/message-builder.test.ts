@@ -517,6 +517,14 @@ describe("MessageBuilder", () => {
 		})
 	})
 
+	describe("createStopSensorPollingMessage", () => {
+		it("should create a valid stop sensor polling message", () => {
+			const buffer = MessageBuilder.createStopSensorPollingMessage()
+
+			validateFrameStructure(buffer, MessageType.STOP_SENSOR_POLLING, 0)
+		})
+	})
+
 	describe("createEndSensorPollingInOneMinuteMessage", () => {
 		it("should create a valid end sensor polling in one minute message", () => {
 			const buffer = MessageBuilder.createStartSensorPollingMessage()

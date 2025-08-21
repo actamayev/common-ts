@@ -202,8 +202,15 @@ export class MessageBuilder {
 		return this.frameMessage(MessageType.SERIAL_END)
 	}
 
+	// We are not longer use createStartSensorPollingMessage (this was previously used to start all sensors polling)
+	// Now we poll sensors selectively (bytecode filters what needs to be polled).
+	// Needs to be repurposed.
 	static createStartSensorPollingMessage(): ArrayBuffer {
 		return this.frameMessage(MessageType.START_SENSOR_POLLING)
+	}
+
+	static createStopSensorPollingMessage(): ArrayBuffer {
+		return this.frameMessage(MessageType.STOP_SENSOR_POLLING)
 	}
 
 	static createGetSavedWiFiNetworks(): ArrayBuffer {
