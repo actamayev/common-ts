@@ -1,7 +1,8 @@
+import { UUID } from "crypto"
 import { BlockNames } from "./blockly"
 import { SandboxChatMessage } from "./chat"
 
-export type ProjectUUID = `${string}-${string}-${string}-${string}-${string}`
+export type ProjectUUID = UUID
 
 export interface BlocklyJson {
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
