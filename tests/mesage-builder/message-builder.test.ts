@@ -557,6 +557,14 @@ describe("MessageBuilder", () => {
 		})
 	})
 
+	describe("createIntroS1P7Message", () => {
+		it("should create a valid intro S1 P7 message", () => {
+			const buffer = MessageBuilder.createIntroS1P7Message()
+
+			validateFrameStructure(buffer, MessageType.INTRO_S1_P7, 0)
+		})
+	})
+
 	describe("createWiFiCredentialsMessage", () => {
 		it("should create a valid WiFi credentials message", () => {
 			const ssid = "MyWiFiNetwork"

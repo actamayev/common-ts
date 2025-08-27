@@ -27,7 +27,8 @@ export enum MessageType {
     STOP_SOUND = 23,
     REQUEST_BATTERY_MONITOR_DATA = 24,
     UPDATE_DISPLAY = 25,
-    STOP_SENSOR_POLLING = 26
+    STOP_SENSOR_POLLING = 26,
+    INTRO_S1_P7 = 27,
 }
 
 export enum SoundType {

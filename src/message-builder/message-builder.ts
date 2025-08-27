@@ -225,6 +225,10 @@ export class MessageBuilder {
 		return this.frameMessage(MessageType.HARD_SCAN_WIFI_NETWORKS)
 	}
 
+	static createIntroS1P7Message(): ArrayBuffer {
+		return this.frameMessage(MessageType.INTRO_S1_P7)
+	}
+
 	static createWiFiCredentialsMessage(ssid: string, password: string): ArrayBuffer {
 		const ssidBytes = new TextEncoder().encode(ssid)
 		const passwordBytes = new TextEncoder().encode(password)
