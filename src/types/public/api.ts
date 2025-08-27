@@ -72,6 +72,7 @@ export interface CareerQuestChallengeData {
 
 export interface CareerProgressData {
 	currentChallengeUuidOrTextUuid: string
+	furthestSeenChallengeUuidOrTextUuid: string
 	careerQuestChallengeData: CareerQuestChallengeData[]
 	seenChallengeUUIDs: ChallengeUUID[]
 	careerChatMessages: SandboxChatMessage[]
