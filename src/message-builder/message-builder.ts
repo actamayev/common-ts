@@ -1,6 +1,7 @@
 import { END_MARKER, START_MARKER } from "../types/private/constants"
 import { BalancePidsProps, LedControlData } from "../types/public"
-import { BalanceStatus, HeadlightStatus, HornSoundStatus, LightAnimationType, MessageType, SoundType, SpeakerStatus } from "./protocol"
+import { BalanceStatus, CareerType, HeadlightStatus, HornSoundStatus,
+	LightAnimationType, MessageType, SoundType, SpeakerStatus, ValidTriggerMessageType } from "./protocol"
 
 export class MessageBuilder {
 	// Add this helper method for framing messages
@@ -225,10 +226,6 @@ export class MessageBuilder {
 		return this.frameMessage(MessageType.HARD_SCAN_WIFI_NETWORKS)
 	}
 
-	static createIntroS1P7Message(): ArrayBuffer {
-		return this.frameMessage(MessageType.INTRO_S1_P7)
-	}
-
 	static createWiFiCredentialsMessage(ssid: string, password: string): ArrayBuffer {
 		const ssidBytes = new TextEncoder().encode(ssid)
 		const passwordBytes = new TextEncoder().encode(password)
@@ -254,5 +251,10 @@ export class MessageBuilder {
 
 	static createRequestBatteryMonitorDataMessage(): ArrayBuffer {
 		return this.frameMessage(MessageType.REQUEST_BATTERY_MONITOR_DATA)
+	}
+
+	static createTriggerMessage<T extends CareerType>(careerType: T, triggerMessageType: ValidTriggerMessageType<T>): ArrayBuffer {
+		const payload = new Uint8Array([careerType, triggerMessageType])
+		return this.frameMessage(MessageType.TRIGGER_MESSAGE, payload)
 	}
 }
