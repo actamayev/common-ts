@@ -1,7 +1,7 @@
 import { BalancePidsProps, LedControlData } from "../../src"
 import { MessageBuilder } from "../../src/message-builder/message-builder"
 import {
-	BalanceStatus, HeadlightStatus, HornSoundStatus, LightAnimationType,
+	BalanceStatus, CareerType, HeadlightStatus, HornSoundStatus, IntroductionTriggerType, LightAnimationType,
 	MessageType, SoundType, SpeakerStatus,
 } from "../../src/message-builder/protocol"
 import { END_MARKER, START_MARKER } from "../../src/types/private/constants"
@@ -557,11 +557,83 @@ describe("MessageBuilder", () => {
 		})
 	})
 
-	describe("createIntroS1P7Message", () => {
+	describe("createTriggerMessage", () => {
 		it("should create a valid intro S1 P7 message", () => {
-			const buffer = MessageBuilder.createIntroS1P7Message()
+			const buffer = MessageBuilder.createTriggerMessage(CareerType.INTRODUCTION, IntroductionTriggerType.S2_P1_ENTER)
 
-			validateFrameStructure(buffer, MessageType.INTRO_S1_P7, 0)
+			validateFrameStructure(buffer, MessageType.TRIGGER_MESSAGE, 2)
+
+			const view = new DataView(buffer)
+			const offset = getPayloadOffset(buffer)
+			expect(view.getUint8(offset)).toBe(CareerType.INTRODUCTION)
+			expect(view.getUint8(offset + 1)).toBe(IntroductionTriggerType.S2_P1_ENTER)
+		})
+
+		it("should create valid trigger messages for all IntroductionTriggerType combinations", () => {
+			// Get all IntroductionTriggerType values
+			const triggerTypes = Object.values(IntroductionTriggerType)
+				.filter(value => typeof value === "number") as IntroductionTriggerType[]
+
+			// Test each trigger type
+			triggerTypes.forEach(triggerType => {
+				const buffer = MessageBuilder.createTriggerMessage(CareerType.INTRODUCTION, triggerType)
+
+				validateFrameStructure(buffer, MessageType.TRIGGER_MESSAGE, 2)
+
+				const view = new DataView(buffer)
+				const offset = getPayloadOffset(buffer)
+				expect(view.getUint8(offset)).toBe(CareerType.INTRODUCTION)
+				expect(view.getUint8(offset + 1)).toBe(triggerType)
+			})
+		})
+
+		it("should create valid trigger messages for all CareerType combinations", () => {
+			// Get all CareerType values
+			const careerTypes = Object.values(CareerType)
+				.filter(value => typeof value === "number") as CareerType[]
+
+			// For each career type, test with its corresponding trigger types
+			careerTypes.forEach(careerType => {
+				if (careerType === CareerType.INTRODUCTION) {
+					// Test all IntroductionTriggerType values
+					const triggerTypes = Object.values(IntroductionTriggerType)
+						.filter(value => typeof value === "number") as IntroductionTriggerType[]
+
+					triggerTypes.forEach(triggerType => {
+						const buffer = MessageBuilder.createTriggerMessage(careerType, triggerType)
+
+						validateFrameStructure(buffer, MessageType.TRIGGER_MESSAGE, 2)
+
+						const view = new DataView(buffer)
+						const offset = getPayloadOffset(buffer)
+						expect(view.getUint8(offset)).toBe(careerType)
+						expect(view.getUint8(offset + 1)).toBe(triggerType)
+					})
+				}
+				// Add more career types here as they are added to the protocol
+			})
+		})
+
+		it("should handle edge cases for trigger messages", () => {
+			// Test with the first and last trigger types
+			const firstTriggerType = IntroductionTriggerType.S2_P1_ENTER
+			const lastTriggerType = IntroductionTriggerType.S9_P6_EXIT
+
+			// Test first trigger type
+			const buffer1 = MessageBuilder.createTriggerMessage(CareerType.INTRODUCTION, firstTriggerType)
+			validateFrameStructure(buffer1, MessageType.TRIGGER_MESSAGE, 2)
+			const view1 = new DataView(buffer1)
+			const offset1 = getPayloadOffset(buffer1)
+			expect(view1.getUint8(offset1)).toBe(CareerType.INTRODUCTION)
+			expect(view1.getUint8(offset1 + 1)).toBe(firstTriggerType)
+
+			// Test last trigger type
+			const buffer2 = MessageBuilder.createTriggerMessage(CareerType.INTRODUCTION, lastTriggerType)
+			validateFrameStructure(buffer2, MessageType.TRIGGER_MESSAGE, 2)
+			const view2 = new DataView(buffer2)
+			const offset2 = getPayloadOffset(buffer2)
+			expect(view2.getUint8(offset2)).toBe(CareerType.INTRODUCTION)
+			expect(view2.getUint8(offset2 + 1)).toBe(lastTriggerType)
 		})
 	})
 
