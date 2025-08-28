@@ -28,8 +28,45 @@ export enum MessageType {
     REQUEST_BATTERY_MONITOR_DATA = 24,
     UPDATE_DISPLAY = 25,
     STOP_SENSOR_POLLING = 26,
-    INTRO_S1_P7 = 27,
+    TRIGGER_MESSAGE = 27,
 }
+
+export enum CareerType {
+    INTRODUCTION = 1
+}
+
+export enum IntroductionTriggerType {
+    S2_P1_ENTER = 1,
+    S2_P1_EXIT = 2,
+    S2_P4_ENTER = 3,
+    S2_P4_EXIT = 4,
+    S3_P3_ENTER = 5,
+    S3_P3_EXIT = 6,
+    S4_P5_ENTER = 7,
+    S5_P4_ENTER = 8,
+    S5_P4_EXIT = 9, // Needs an exit (if go from S5P4 to S5P3)
+    S5_P5_ENTER = 10, // Needs an exit (if go from S5P6 to S5P5)
+    S5_P5_EXIT = 11,
+    S6_P4_ENTER = 12,
+    S6_P4_EXIT = 13,
+    S6_P6_ENTER = 14,
+    S6_P6_EXIT = 15,
+    S7_P4_ENTER = 16,
+    S7_P4_EXIT = 17,
+    S7_P6_ENTER = 18,
+    S7_P6_EXIT = 19,
+    S8_P3_ENTER = 20,
+    S8_P3_EXIT = 21,
+    S9_P3_ENTER = 22,
+    S9_P6_ENTER = 23,
+    S9_P6_EXIT = 24,
+}
+
+type TriggerMessageTypeMap = {
+    [CareerType.INTRODUCTION]: IntroductionTriggerType
+}
+
+export type ValidTriggerMessageType<T extends CareerType> = TriggerMessageTypeMap[T]
 
 export enum SoundType {
     CHIME = 1,
