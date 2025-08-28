@@ -127,7 +127,7 @@ export class MessageBuilder {
 	static createDisplayBufferMessage(displayBuffer: Uint8Array): ArrayBuffer | null {
 		// The display buffer should be exactly 1024 bytes for SSD1306 (128 columns × 8 pages)
 		if (displayBuffer.length !== 1024) {
-			console.error(`Invalid display buffer size: expected 1024 bytes, got ${displayBuffer.length}`)
+			console.info(`Invalid display buffer size: expected 1024 bytes, got ${displayBuffer.length}`)
 			return null
 		}
 
