@@ -11,7 +11,7 @@ import {
 } from "./chat"
 import { StudentInviteJoinClass } from "./classroom"
 
-type SocketEventPayloadMap = {
+export type SocketEventPayloadMap = {
     "pip-connection-status-update": { pipUUID: PipUUID; newConnectionStatus: PipConnectionStatus }
     "battery-monitor-data": { pipUUID: PipUUID; batteryData: BatteryMonitorDataFull["batteryData"] }
     "sensor-data": { pipUUID: PipUUID; sensorPayload: SensorPayload }
