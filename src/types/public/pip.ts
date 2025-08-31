@@ -136,30 +136,31 @@ export interface PipStatusUpdate extends PipUUIDInterface {
 	newConnectionStatus: PipConnectionStatus
 }
 
+// This is both the data that Pip sends to the server, and the data the server sends to client
 export interface SensorPayload {
-	leftWheelRPM: number
-	rightWheelRPM: number
-	irSensorData: number[] & { length: 5 }
+	leftWheelRPM?: number
+	rightWheelRPM?: number
+	irSensorData?: number[] & { length: 5 }
 
-	redValue: number
-	greenValue: number
-	blueValue: number
+	redValue?: number
+	greenValue?: number
+	blueValue?: number
 
-	pitch: number
-	yaw: number
-	roll: number
+	pitch?: number
+	yaw?: number
+	roll?: number
 
-	aX: number
-	aY: number
-	aZ: number
+	aX?: number
+	aY?: number
+	aZ?: number
 
-	gX: number
-	gY: number
-	gZ: number
+	gX?: number
+	gY?: number
+	gZ?: number
 
-	mX: number
-	mY: number
-	mZ: number
+	mX?: number
+	mY?: number
+	mZ?: number
 }
 
 export interface IncomingSensorData extends PipUUIDInterface {
