@@ -1,4 +1,4 @@
-import { PipConnectionStatus, SensorPayload, BatteryMonitorDataFull } from "./pip"
+import { PipConnectionStatus, SensorPayload, BatteryMonitorDataFull, PlayFunSoundPayload } from "./pip"
 import { PipUUID } from "./utils"
 import {
 	ChallengeChatbotStreamStartEvent,
@@ -10,6 +10,7 @@ import {
 	SandboxChatbotStreamChunkEvent
 } from "./chat"
 import { StudentInviteJoinClass } from "./classroom"
+import { MotorControlData, LedControlData, HeadlightData, HornData } from "./garage"
 
 export type SocketEventPayloadMap = {
     "pip-connection-status-update": { pipUUID: PipUUID; newConnectionStatus: PipConnectionStatus }
@@ -33,4 +34,19 @@ export type SocketEvents = keyof SocketEventPayloadMap
 export interface SocketEventMessage<E extends SocketEvents = SocketEvents> {
     event: E
     payload: SocketEventPayloadMap[E]
+}
+
+export type ClientSocketEventPayloadMap = {
+	"motor-control": MotorControlData
+	"new-led-colors": LedControlData
+	"headlight-update": HeadlightData
+	"horn-sound-update": HornData
+	"play-fun-sound": PlayFunSoundPayload
+}
+
+export type ClientSocketEvents = keyof ClientSocketEventPayloadMap
+
+export interface ClientSocketEventMessage<E extends ClientSocketEvents = ClientSocketEvents> {
+	event: E
+	payload: ClientSocketEventPayloadMap[E]
 }
