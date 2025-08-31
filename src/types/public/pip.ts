@@ -26,7 +26,7 @@ export interface FirmwareData {
 	firmwareBuffer: Buffer
 }
 
-type RoutePayloadMap = {
+export type RoutePayloadMap = {
 	"/register": PipUUIDPayload
 	"/sensor-data": SensorPayload
 	"/bytecode-status": BytecodeMessage
@@ -46,7 +46,7 @@ type RoutePayloadMap = {
 }
 
 // Routes derived from the keys of the mapping
-type ESPRoutes = keyof RoutePayloadMap
+export type ESPRoutes = keyof RoutePayloadMap
 
 // Type-safe message interface
 export interface ESPMessage<R extends ESPRoutes = ESPRoutes> {
