@@ -1,2 +1,7 @@
 tests/
 **/*.test.ts
+src/types/private/*
+CLAUDE.md
+**/*.md
+src/parsers/CLAUDE.md
+notes/*
