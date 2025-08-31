@@ -168,10 +168,6 @@ export interface SensorPayload {
 	distanceGrid?: number[] & { length: 64 }
 }
 
-export interface IncomingSensorData extends PipUUIDInterface {
-	sensorPayload: SensorPayload
-}
-
 export interface SavedWiFiNetwork {
     ssid: string
     index: number

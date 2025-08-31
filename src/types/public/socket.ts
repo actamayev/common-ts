@@ -15,7 +15,7 @@ import { MotorControlData, LedControlData, HeadlightData, HornData } from "./gar
 export type SocketEventPayloadMap = {
     "pip-connection-status-update": { pipUUID: PipUUID; newConnectionStatus: PipConnectionStatus }
     "battery-monitor-data": { pipUUID: PipUUID; batteryData: BatteryMonitorDataFull["batteryData"] }
-    "general-sensor-data": { sensorPayload: SensorPayload }
+    "general-sensor-data": SensorPayload
     "challenge-chatbot-stream-start": ChallengeChatbotStreamStartEvent
     "challenge-chatbot-stream-chunk": ChallengeChatbotStreamChunkEvent
     "challenge-chatbot-stream-complete": ChallengeChatbotStreamCompleteEvent
