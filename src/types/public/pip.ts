@@ -161,6 +161,11 @@ export interface SensorPayload {
 	mX?: number
 	mY?: number
 	mZ?: number
+
+	leftSideTofCounts?: number
+	rightSideTofCounts?: number
+
+	distanceGrid?: number[] & { length: 64 }
 }
 
 export interface IncomingSensorData extends PipUUIDInterface {
