@@ -32,10 +32,10 @@ export enum MessageType {
 }
 
 export enum CareerType {
-    INTRODUCTION = 1
+    MEET_PIP = 1
 }
 
-export enum IntroductionTriggerType {
+export enum MeetPipTriggerType {
     S2_P1_ENTER = 1,
     S2_P1_EXIT = 2,
     S2_P4_ENTER = 3,
@@ -63,7 +63,7 @@ export enum IntroductionTriggerType {
 }
 
 type TriggerMessageTypeMap = {
-    [CareerType.INTRODUCTION]: IntroductionTriggerType
+    [CareerType.MEET_PIP]: MeetPipTriggerType
 }
 
 export type ValidTriggerMessageType<T extends CareerType> = TriggerMessageTypeMap[T]
