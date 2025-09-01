@@ -59,8 +59,7 @@ export enum IntroductionTriggerType {
     S8_P3_EXIT = 21,
     S9_P3_ENTER = 22,
     S9_P6_ENTER = 23,
-    S9_P6_EXIT = 24,
-    S3_P4_ENTER = 25,
+    S9_P6_EXIT = 24
 }
 
 type TriggerMessageTypeMap = {
