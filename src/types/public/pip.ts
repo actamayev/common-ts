@@ -26,34 +26,24 @@ export interface FirmwareData {
 	firmwareBuffer: Buffer
 }
 
-export type RoutePayloadMap = {
-	"/register": PipUUIDPayload
-	"/sensor-data": SensorPayload
-	"/sensor-data-mz": SensorPayloadMZ
-	"/bytecode-status": BytecodeMessage
-	"/wifi-connection-result": WiFiConnectionResultPayload
-	"/pip-id": PipIDPayload
-	"/saved-networks": SavedWiFiNetwork[]
-	"/scan-result-item": ScannedWiFiNetworkItem
-	"/scan-complete": ScanCompletePayload
-	"/scan-started": ScanStartedPayload
-	"/motors-disabled-usb": StandardJsonStatusMessage
-	"/program-paused-usb": StandardJsonStatusMessage
-	"/play-fun-sound": StandardJsonStatusMessage
-	"/battery-monitor-data-item": BatteryMonitorDataItem
-	"/battery-monitor-data-complete": BatteryMonitorDataComplete
-	"/battery-monitor-data-full": BatteryMonitorDataFull // This is only for WS (not sent over Serial (Serial doesn't have enough space))
-	"/pip-turning-off": StandardJsonStatusMessage
-}
-
-// Routes derived from the keys of the mapping
-export type ESPRoutes = keyof RoutePayloadMap
-
-// Type-safe message interface
-export interface ESPMessage<R extends ESPRoutes = ESPRoutes> {
-	route: R
-	payload: RoutePayloadMap[R]
-}
+export type ESPMessage =
+    | { route: "/register"; payload: PipUUIDPayload }
+    | { route: "/sensor-data"; payload: SensorPayload }
+    | { route: "/sensor-data-mz"; payload: SensorPayloadMZ }
+    | { route: "/bytecode-status"; payload: BytecodeMessage }
+    | { route: "/wifi-connection-result"; payload: WiFiConnectionResultPayload }
+    | { route: "/pip-id"; payload: PipIDPayload }
+    | { route: "/saved-networks"; payload: SavedWiFiNetwork[] }
+    | { route: "/scan-result-item"; payload: ScannedWiFiNetworkItem }
+    | { route: "/scan-complete"; payload: ScanCompletePayload }
+    | { route: "/scan-started"; payload: ScanStartedPayload }
+    | { route: "/motors-disabled-usb"; payload: StandardJsonStatusMessage }
+    | { route: "/program-paused-usb"; payload: StandardJsonStatusMessage }
+    | { route: "/play-fun-sound"; payload: StandardJsonStatusMessage }
+    | { route: "/battery-monitor-data-item"; payload: BatteryMonitorDataItem }
+    | { route: "/battery-monitor-data-complete"; payload: BatteryMonitorDataComplete }
+    | { route: "/battery-monitor-data-full"; payload: BatteryMonitorDataFull }
+    | { route: "/pip-turning-off"; payload: StandardJsonStatusMessage }
 
 export interface StandardJsonStatusMessage {
 	status: string
