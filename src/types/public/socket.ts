@@ -1,4 +1,4 @@
-import { PipConnectionStatus, SensorPayload, BatteryMonitorDataFull, PlayFunSoundPayload } from "./pip"
+import { PipConnectionStatus, SensorPayload, BatteryMonitorDataFull, PlayFunSoundPayload, SensorPayloadMZ } from "./pip"
 import { PipUUID } from "./utils"
 import {
 	ChallengeChatbotStreamStartEvent,
@@ -16,6 +16,7 @@ export type SocketEventPayloadMap = {
     "pip-connection-status-update": { pipUUID: PipUUID; newConnectionStatus: PipConnectionStatus }
     "battery-monitor-data": { pipUUID: PipUUID; batteryData: BatteryMonitorDataFull["batteryData"] }
     "general-sensor-data": SensorPayload
+    "general-sensor-data-mz": SensorPayloadMZ
     "challenge-chatbot-stream-start": ChallengeChatbotStreamStartEvent
     "challenge-chatbot-stream-chunk": ChallengeChatbotStreamChunkEvent
     "challenge-chatbot-stream-complete": ChallengeChatbotStreamCompleteEvent

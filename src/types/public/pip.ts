@@ -29,6 +29,7 @@ export interface FirmwareData {
 export type RoutePayloadMap = {
 	"/register": PipUUIDPayload
 	"/sensor-data": SensorPayload
+	"/sensor-data-mz": SensorPayloadMZ
 	"/bytecode-status": BytecodeMessage
 	"/wifi-connection-result": WiFiConnectionResultPayload
 	"/pip-id": PipIDPayload
@@ -164,8 +165,11 @@ export interface SensorPayload {
 
 	leftSideTofCounts?: number
 	rightSideTofCounts?: number
+}
 
-	distanceGrid?: number[] & { length: 64 }
+export interface SensorPayloadMZ {
+	row: number
+	distances?: number[] & { length: 8 }
 }
 
 export interface SavedWiFiNetwork {
