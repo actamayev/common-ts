@@ -1,7 +1,7 @@
 import { BalancePidsProps, LedControlData } from "../../src"
 import { MessageBuilder } from "../../src/message-builder/message-builder"
 import {
-	BalanceStatus, CareerType, HeadlightStatus, HornSoundStatus, IntroductionTriggerType, LightAnimationType,
+	BalanceStatus, CareerType, HeadlightStatus, HornSoundStatus, MeetPipTriggerType, LightAnimationType,
 	MessageType, SoundType, SpeakerStatus,
 } from "../../src/message-builder/protocol"
 import { END_MARKER, START_MARKER } from "../../src/types/private/constants"
@@ -558,46 +558,47 @@ describe("MessageBuilder", () => {
 	})
 
 	describe("createTriggerMessage", () => {
-		it("should create a valid intro S1 P7 message", () => {
-			const buffer = MessageBuilder.createTriggerMessage(CareerType.INTRODUCTION, IntroductionTriggerType.S2_P1_ENTER)
+		it("should create a valid meet pip S2 P1 enter message", () => {
+			const buffer = MessageBuilder.createTriggerMessage(CareerType.MEET_PIP, MeetPipTriggerType.S2_P1_ENTER)
 
 			validateFrameStructure(buffer, MessageType.TRIGGER_MESSAGE, 2)
 
 			const view = new DataView(buffer)
 			const offset = getPayloadOffset(buffer)
-			expect(view.getUint8(offset)).toBe(CareerType.INTRODUCTION)
-			expect(view.getUint8(offset + 1)).toBe(IntroductionTriggerType.S2_P1_ENTER)
+			expect(view.getUint8(offset)).toBe(CareerType.MEET_PIP)
+			expect(view.getUint8(offset + 1)).toBe(MeetPipTriggerType.S2_P1_ENTER)
 		})
 
-		it("should create valid trigger messages for all IntroductionTriggerType combinations", () => {
-			// Get all IntroductionTriggerType values
-			const triggerTypes = Object.values(IntroductionTriggerType)
-				.filter(value => typeof value === "number") as IntroductionTriggerType[]
+		it("should create valid trigger messages for all MeetPipTriggerType combinations", () => {
+			// Get all MeetPipTriggerType values
+			const triggerTypes = Object.values(MeetPipTriggerType)
+				.filter(value => typeof value === "number") as MeetPipTriggerType[]
 
 			// Test each trigger type
 			triggerTypes.forEach(triggerType => {
-				const buffer = MessageBuilder.createTriggerMessage(CareerType.INTRODUCTION, triggerType)
+				const buffer = MessageBuilder.createTriggerMessage(CareerType.MEET_PIP, triggerType)
 
 				validateFrameStructure(buffer, MessageType.TRIGGER_MESSAGE, 2)
 
 				const view = new DataView(buffer)
 				const offset = getPayloadOffset(buffer)
-				expect(view.getUint8(offset)).toBe(CareerType.INTRODUCTION)
+				expect(view.getUint8(offset)).toBe(CareerType.MEET_PIP)
 				expect(view.getUint8(offset + 1)).toBe(triggerType)
 			})
 		})
 
-		it("should create valid trigger messages for all CareerType combinations", () => {
+		it("should create valid trigger messages for all MeetPipTriggerType combinations", () => {
 			// Get all CareerType values
 			const careerTypes = Object.values(CareerType)
 				.filter(value => typeof value === "number") as CareerType[]
 
 			// For each career type, test with its corresponding trigger types
 			careerTypes.forEach(careerType => {
-				if (careerType === CareerType.INTRODUCTION) {
-					// Test all IntroductionTriggerType values
-					const triggerTypes = Object.values(IntroductionTriggerType)
-						.filter(value => typeof value === "number") as IntroductionTriggerType[]
+				// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+				if (careerType === CareerType.MEET_PIP) {
+					// Test all MeetPipTriggerType values
+					const triggerTypes = Object.values(MeetPipTriggerType)
+						.filter(value => typeof value === "number") as MeetPipTriggerType[]
 
 					triggerTypes.forEach(triggerType => {
 						const buffer = MessageBuilder.createTriggerMessage(careerType, triggerType)
@@ -610,29 +611,29 @@ describe("MessageBuilder", () => {
 						expect(view.getUint8(offset + 1)).toBe(triggerType)
 					})
 				}
-				// Add more career types here as they are added to the protocol
+				// Add more career types here as they are added to the protocol - as long as they are valid TriggerMessageTypeMap values
 			})
 		})
 
 		it("should handle edge cases for trigger messages", () => {
 			// Test with the first and last trigger types
-			const firstTriggerType = IntroductionTriggerType.S2_P1_ENTER
-			const lastTriggerType = IntroductionTriggerType.S9_P6_EXIT
+			const firstTriggerType = MeetPipTriggerType.S2_P1_ENTER
+			const lastTriggerType = MeetPipTriggerType.S9_P6_EXIT
 
 			// Test first trigger type
-			const buffer1 = MessageBuilder.createTriggerMessage(CareerType.INTRODUCTION, firstTriggerType)
+			const buffer1 = MessageBuilder.createTriggerMessage(CareerType.MEET_PIP, firstTriggerType)
 			validateFrameStructure(buffer1, MessageType.TRIGGER_MESSAGE, 2)
 			const view1 = new DataView(buffer1)
 			const offset1 = getPayloadOffset(buffer1)
-			expect(view1.getUint8(offset1)).toBe(CareerType.INTRODUCTION)
+			expect(view1.getUint8(offset1)).toBe(CareerType.MEET_PIP)
 			expect(view1.getUint8(offset1 + 1)).toBe(firstTriggerType)
 
 			// Test last trigger type
-			const buffer2 = MessageBuilder.createTriggerMessage(CareerType.INTRODUCTION, lastTriggerType)
+			const buffer2 = MessageBuilder.createTriggerMessage(CareerType.MEET_PIP, lastTriggerType)
 			validateFrameStructure(buffer2, MessageType.TRIGGER_MESSAGE, 2)
 			const view2 = new DataView(buffer2)
 			const offset2 = getPayloadOffset(buffer2)
-			expect(view2.getUint8(offset2)).toBe(CareerType.INTRODUCTION)
+			expect(view2.getUint8(offset2)).toBe(CareerType.MEET_PIP)
 			expect(view2.getUint8(offset2 + 1)).toBe(lastTriggerType)
 		})
 	})
