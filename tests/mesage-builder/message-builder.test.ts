@@ -638,6 +638,14 @@ describe("MessageBuilder", () => {
 		})
 	})
 
+	describe("createStopCareerQuestTriggerMessage", () => {
+		it("should create a valid stop career quest trigger message", () => {
+			const buffer = MessageBuilder.createStopCareerQuestTriggerMessage()
+
+			validateFrameStructure(buffer, MessageType.STOP_CAREER_QUEST_TRIGGER, 0)
+		})
+	})
+
 	describe("createWiFiCredentialsMessage", () => {
 		it("should create a valid WiFi credentials message", () => {
 			const ssid = "MyWiFiNetwork"

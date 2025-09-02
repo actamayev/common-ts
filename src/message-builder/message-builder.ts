@@ -257,4 +257,8 @@ export class MessageBuilder {
 		const payload = new Uint8Array([careerType, triggerMessageType])
 		return this.frameMessage(MessageType.TRIGGER_MESSAGE, payload)
 	}
+
+	static createStopCareerQuestTriggerMessage(): ArrayBuffer {
+		return this.frameMessage(MessageType.STOP_CAREER_QUEST_TRIGGER)
+	}
 }
