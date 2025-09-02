@@ -29,6 +29,7 @@ export enum MessageType {
     UPDATE_DISPLAY = 25,
     STOP_SENSOR_POLLING = 26,
     TRIGGER_MESSAGE = 27,
+    STOP_CAREER_QUEST_TRIGGER = 28,
 }
 
 export enum CareerType {
