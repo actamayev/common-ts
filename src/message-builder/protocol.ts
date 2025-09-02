@@ -37,6 +37,7 @@ export enum CareerType {
 }
 
 export enum MeetPipTriggerType {
+    ENTER_CAREER = 0,
     S2_P1_ENTER = 1,
     S2_P1_EXIT = 2,
     S2_P4_ENTER = 3,
