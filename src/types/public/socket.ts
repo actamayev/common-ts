@@ -1,5 +1,5 @@
 import { PipConnectionStatus, SensorPayload, BatteryMonitorDataFull, PlayFunSoundPayload, SensorPayloadMZ } from "./pip"
-import { PipUUID } from "./utils"
+import { PipUUIDInterface } from "./utils"
 import {
 	ChallengeChatbotStreamStartEvent,
 	ChallengeChatbotStreamChunkEvent,
@@ -13,8 +13,8 @@ import { StudentInviteJoinClass } from "./classroom"
 import { MotorControlData, LedControlData, HeadlightData, HornData } from "./garage"
 
 export type SocketEventPayloadMap = {
-    "pip-connection-status-update": { pipUUID: PipUUID; newConnectionStatus: PipConnectionStatus }
-    "battery-monitor-data": { pipUUID: PipUUID; batteryData: BatteryMonitorDataFull["batteryData"] }
+    "pip-connection-status-update": PipConnectionUpdate
+    "battery-monitor-data": BatteryMonitorDataUpdate
     "general-sensor-data": SensorPayload
     "general-sensor-data-mz": SensorPayloadMZ
     "challenge-chatbot-stream-start": ChallengeChatbotStreamStartEvent
@@ -27,6 +27,7 @@ export type SocketEventPayloadMap = {
     "sandbox-chatbot-stream-chunk": SandboxChatbotStreamChunkEvent
     "sandbox-chatbot-stream-complete": SandboxChatbotStreamStartOrCompleteEvent
     "student-invite-join-class": StudentInviteJoinClass
+    "dino-score-update": DinoScoreUpdate
 }
 
 export type SocketEvents = keyof SocketEventPayloadMap
@@ -49,4 +50,16 @@ export type ClientSocketEvents = keyof ClientSocketEventPayloadMap
 export interface ClientSocketEventMessage<E extends ClientSocketEvents = ClientSocketEvents> {
 	event: E
 	payload: ClientSocketEventPayloadMap[E]
+}
+
+export interface PipConnectionUpdate extends PipUUIDInterface {
+    newConnectionStatus: PipConnectionStatus
+}
+
+export interface BatteryMonitorDataUpdate extends PipUUIDInterface {
+    batteryData: BatteryMonitorDataFull["batteryData"]
+}
+
+export interface DinoScoreUpdate extends PipUUIDInterface {
+    score: number
 }
