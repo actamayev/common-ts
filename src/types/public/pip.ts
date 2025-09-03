@@ -44,6 +44,7 @@ export type ESPMessage =
     | { route: "/battery-monitor-data-complete"; payload: BatteryMonitorDataComplete }
     | { route: "/battery-monitor-data-full"; payload: BatteryMonitorDataFull }
     | { route: "/pip-turning-off"; payload: StandardJsonStatusMessage }
+    | { route: "/dino-score"; payload: DinoScorePayload }
 
 export interface StandardJsonStatusMessage {
 	status: string
@@ -179,4 +180,8 @@ export interface ScanCompletePayload {
 
 export interface ScanStartedPayload {
     scanning: boolean
+}
+
+export interface DinoScorePayload {
+    score: number
 }
