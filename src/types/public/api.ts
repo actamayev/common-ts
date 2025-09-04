@@ -5,6 +5,7 @@ import { StudentViewHubData, TeacherViewHubData } from "./hub"
 import { RetrievedQuestions, UserActivityProgress } from "./lab"
 import { ChallengeChatMessage, SandboxChatMessage } from "./chat"
 import { ChallengeUUID, ClassCode, PipUUID, SiteThemes } from "./utils"
+import { UUID } from "crypto"
 
 // Auth
 // Requests
@@ -188,6 +189,10 @@ export interface IncomingTeacherRequestData {
 	teacherFirstName: string
 	teacherLastName: string
 	schoolName: string
+}
+
+export interface CreateHubRequest {
+	hubId: UUID
 }
 
 // Common Responses:
