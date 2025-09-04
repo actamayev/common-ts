@@ -2,7 +2,7 @@ import { TeacherName } from "./teacher"
 
 export interface StudentData {
 	username: string
-	didAccept: boolean
+	inviteStatus: "PENDING" | "ACCEPTED" | "DECLINED"
 }
 
 export interface StudentInviteJoinClass {
