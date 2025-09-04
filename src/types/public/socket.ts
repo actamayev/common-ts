@@ -34,6 +34,8 @@ export type SocketEventPayloadMap = {
     "new-hub": StudentViewHubData
     "deleted-hub": DeletedHub
     "updated-hub-slide-id": UpdatedHubSlideId
+    "student-joined-hub": StudentJoinedOrLeftHub
+    "student-left-hub": StudentJoinedOrLeftHub
 }
 
 export type SocketEvents = keyof SocketEventPayloadMap
@@ -84,4 +86,10 @@ export interface UpdatedHubSlideId {
     classCode: ClassCode
     hubId: UUID
     newSlideId: string
+}
+
+export interface StudentJoinedOrLeftHub {
+    classCode: ClassCode
+    hubId: UUID
+    studentUsername: string
 }
