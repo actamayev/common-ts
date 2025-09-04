@@ -1,8 +1,10 @@
 import { TeacherName } from "./teacher"
 
+export type StudentInviteStatus = "PENDING" | "ACCEPTED" | "DECLINED"
+
 export interface StudentData {
 	username: string
-	inviteStatus: "PENDING" | "ACCEPTED" | "DECLINED"
+	inviteStatus: StudentInviteStatus
 }
 
 export interface StudentInviteJoinClass {

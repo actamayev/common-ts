@@ -1,4 +1,4 @@
-import { StudentData } from "./classroom"
+import { StudentData, StudentInviteStatus } from "./classroom"
 import { ChallengeChatMessage, SandboxChatMessage } from "./chat"
 import { ESPConnectionStatus, PipData } from "./pip"
 import { BlocklyJson, SandboxProject } from "./sandbox"
@@ -161,7 +161,7 @@ export interface InviteResponse {
 }
 
 export interface StudentClassroomData {
-	invitationStatus: "PENDING" | "ACCEPTED" | "DECLINED"
+	invitationStatus: StudentInviteStatus
 	joinedClassroomAt: Date | null
 	classroomName: string
 	classCode: ClassCode
