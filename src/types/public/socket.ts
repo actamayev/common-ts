@@ -1,5 +1,5 @@
 import { PipConnectionStatus, SensorPayload, BatteryMonitorDataFull, PlayFunSoundPayload, SensorPayloadMZ } from "./pip"
-import { PipUUIDInterface } from "./utils"
+import { ClassCode, PipUUIDInterface } from "./utils"
 import {
 	ChallengeChatbotStreamStartEvent,
 	ChallengeChatbotStreamChunkEvent,
@@ -17,6 +17,7 @@ export type SocketEventPayloadMap = {
     "battery-monitor-data": BatteryMonitorDataUpdate
     "general-sensor-data": SensorPayload
     "general-sensor-data-mz": SensorPayloadMZ
+    "student-joined-classroom": StudentJoinedClassroom
     "challenge-chatbot-stream-start": ChallengeChatbotStreamStartEvent
     "challenge-chatbot-stream-chunk": ChallengeChatbotStreamChunkEvent
     "challenge-chatbot-stream-complete": ChallengeChatbotStreamCompleteEvent
@@ -62,4 +63,9 @@ export interface BatteryMonitorDataUpdate extends PipUUIDInterface {
 
 export interface DinoScoreUpdate extends PipUUIDInterface {
     score: number
+}
+
+export interface StudentJoinedClassroom {
+    classCode: ClassCode
+    studentUsername: string
 }
