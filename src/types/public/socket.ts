@@ -1,5 +1,5 @@
 import { PipConnectionStatus, SensorPayload, BatteryMonitorDataFull, PlayFunSoundPayload, SensorPayloadMZ } from "./pip"
-import { CareerUUID, ClassCode, PipUUIDInterface } from "./utils"
+import { ClassCode, PipUUIDInterface } from "./utils"
 import {
 	ChallengeChatbotStreamStartEvent,
 	ChallengeChatbotStreamChunkEvent,
@@ -11,7 +11,7 @@ import {
 } from "./chat"
 import { StudentInviteJoinClass } from "./classroom"
 import { MotorControlData, LedControlData, HeadlightData, HornData } from "./garage"
-import { UUID } from "crypto"
+import { StudentViewHubData } from "./hub"
 
 export type SocketEventPayloadMap = {
     "pip-connection-status-update": PipConnectionUpdate
@@ -30,7 +30,7 @@ export type SocketEventPayloadMap = {
     "sandbox-chatbot-stream-complete": SandboxChatbotStreamStartOrCompleteEvent
     "student-invite-join-class": StudentInviteJoinClass
     "dino-score-update": DinoScoreUpdate
-    "new-hub": NewHubInformation
+    "new-hub": StudentViewHubData
 }
 
 export type SocketEvents = keyof SocketEventPayloadMap
@@ -70,12 +70,4 @@ export interface DinoScoreUpdate extends PipUUIDInterface {
 export interface StudentJoinedClassroom {
     classCode: ClassCode
     studentUsername: string
-}
-
-export interface NewHubInformation {
-    hubId: UUID,
-    classCode: ClassCode,
-    careerUUID: CareerUUID,
-    slideId: string,
-    hubName: string
 }
