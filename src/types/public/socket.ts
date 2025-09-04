@@ -91,5 +91,6 @@ export interface UpdatedHubSlideId {
 export interface StudentJoinedOrLeftHub {
     classCode: ClassCode
     hubId: UUID
+    studentUserId: number
     studentUsername: string
 }
