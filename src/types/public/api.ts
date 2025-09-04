@@ -1,9 +1,10 @@
-import { StudentData, StudentInviteStatus } from "./classroom"
-import { ChallengeChatMessage, SandboxChatMessage } from "./chat"
 import { ESPConnectionStatus, PipData } from "./pip"
 import { BlocklyJson, SandboxProject } from "./sandbox"
-import { ChallengeUUID, ClassCode, PipUUID, SiteThemes } from "./utils"
+import { StudentData, StudentInviteStatus } from "./classroom"
+import { StudentViewHubData, TeacherViewHubData } from "./hub"
 import { RetrievedQuestions, UserActivityProgress } from "./lab"
+import { ChallengeChatMessage, SandboxChatMessage } from "./chat"
+import { ChallengeUUID, ClassCode, PipUUID, SiteThemes } from "./utils"
 
 // Auth
 // Requests
@@ -165,6 +166,7 @@ export interface StudentClassroomData {
 	joinedClassroomAt: Date | null
 	classroomName: string
 	classCode: ClassCode
+	activeHubs: StudentViewHubData[]
 }
 
 //Teacher Routes
@@ -175,6 +177,7 @@ export interface BasicTeacherClassroomData {
 
 export interface DetailedClassroomData extends BasicTeacherClassroomData {
 	students: StudentData[]
+	activeHubs: TeacherViewHubData[]
 }
 
 export interface ClassCodeResponse {
