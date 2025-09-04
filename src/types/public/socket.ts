@@ -1,4 +1,6 @@
+import { UUID } from "crypto"
 import { PipConnectionStatus, SensorPayload, BatteryMonitorDataFull, PlayFunSoundPayload, SensorPayloadMZ } from "./pip"
+import { StudentViewHubData } from "./hub"
 import { ClassCode, PipUUIDInterface } from "./utils"
 import {
 	ChallengeChatbotStreamStartEvent,
@@ -11,7 +13,6 @@ import {
 } from "./chat"
 import { StudentInviteJoinClass } from "./classroom"
 import { MotorControlData, LedControlData, HeadlightData, HornData } from "./garage"
-import { StudentViewHubData } from "./hub"
 
 export type SocketEventPayloadMap = {
     "pip-connection-status-update": PipConnectionUpdate
@@ -31,6 +32,7 @@ export type SocketEventPayloadMap = {
     "student-invite-join-class": StudentInviteJoinClass
     "dino-score-update": DinoScoreUpdate
     "new-hub": StudentViewHubData
+    "deleted-hub": DeletedHub
 }
 
 export type SocketEvents = keyof SocketEventPayloadMap
@@ -70,4 +72,9 @@ export interface DinoScoreUpdate extends PipUUIDInterface {
 export interface StudentJoinedClassroom {
     classCode: ClassCode
     studentUsername: string
+}
+
+export interface DeletedHub {
+    classCode: ClassCode
+    hubId: UUID
 }
