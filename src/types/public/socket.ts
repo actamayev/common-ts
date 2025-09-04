@@ -11,6 +11,7 @@ import {
 } from "./chat"
 import { StudentInviteJoinClass } from "./classroom"
 import { MotorControlData, LedControlData, HeadlightData, HornData } from "./garage"
+import { UUID } from "crypto"
 
 export type SocketEventPayloadMap = {
     "pip-connection-status-update": PipConnectionUpdate
@@ -72,9 +73,9 @@ export interface StudentJoinedClassroom {
 }
 
 export interface NewHubInformation {
-    hubId: number,
+    hubId: UUID,
     classCode: ClassCode,
     careerUUID: CareerUUID,
-    slideId: number,
+    slideId: string,
     hubName: string
 }
