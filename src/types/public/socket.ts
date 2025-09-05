@@ -36,6 +36,7 @@ export type SocketEventPayloadMap = {
     "updated-hub-slide-id": UpdatedHubSlideId
     "student-joined-hub": StudentJoinedHub
     "student-left-hub": StudentLeftHub
+    "dino-score-update-all-peers": DinoScoreUpdateAllPeers
 }
 
 export type SocketEvents = keyof SocketEventPayloadMap
@@ -96,4 +97,11 @@ export interface StudentLeftHub {
 
 export interface StudentJoinedHub extends StudentLeftHub {
     studentUsername: string
+}
+
+export interface DinoScoreUpdateAllPeers {
+    classCode: ClassCode
+    score: number
+    username: string
+    hubId: UUID
 }
