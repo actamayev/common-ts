@@ -100,8 +100,6 @@ export interface StudentJoinedHub extends StudentLeftHub {
 }
 
 export interface DinoScoreUpdateAllPeers {
-    classCode: ClassCode
     score: number
     username: string
-    hubId: UUID
 }
