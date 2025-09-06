@@ -6,3 +6,6 @@ To publish
 	1. Create a new branch
 	2. Make sure all tests/workflows pass
 	3. Merge into main --> workflow will auto-publish the package and increment the version
+
+To ensure no unused dependencies:
+	depcheck
