@@ -1,17 +1,18 @@
-import { CareerUUID, ClassCode } from "./utils"
-import { UUID } from "crypto"
+import { CareerUUID, ClassCode, HubUUID } from "./utils"
 
 export interface StudentViewHubData {
-    hubId: UUID
+    hubId: HubUUID
     classCode: ClassCode
     careerUUID: CareerUUID
     slideId: string
     hubName: string
 }
 
+export interface StudentJoinedHubData {
+	username: string
+	userId: number
+}
+
 export interface TeacherViewHubData extends StudentViewHubData {
-	studentsJoined: {
-		username: string
-		userId: number
-	}[]
+	studentsJoined: StudentJoinedHubData[]
 }

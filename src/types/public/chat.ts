@@ -1,5 +1,4 @@
-import { ChallengeUUID, CareerUUID } from "./utils"
-import { ProjectUUID } from "./sandbox"
+import { ChallengeUUID, CareerUUID, SandboxProjectUUID } from "./utils"
 
 export type ChatMessageRole = "user" | "assistant" | "system"
 
@@ -79,7 +78,7 @@ export interface CareerChatbotChunkEvent extends CareerChatbotStreamStartOrCompl
 
 // Sandbox Chatbot stuff:
 export interface SandboxChatbotStreamStartOrCompleteEvent {
-	sandboxProjectUUID: ProjectUUID
+	sandboxProjectUUID: SandboxProjectUUID
 }
 
 export interface SandboxChatbotStreamChunkEvent extends SandboxChatbotStreamStartOrCompleteEvent {
