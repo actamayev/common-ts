@@ -1,7 +1,6 @@
-import { UUID } from "crypto"
 import { PipConnectionStatus, SensorPayload, BatteryMonitorDataFull, PlayFunSoundPayload, SensorPayloadMZ } from "./pip"
 import { StudentViewHubData } from "./hub"
-import { ClassCode, PipUUIDInterface } from "./utils"
+import { ClassCode, HubUUID, PipUUIDInterface } from "./utils"
 import {
 	ChallengeChatbotStreamStartEvent,
 	ChallengeChatbotStreamChunkEvent,
@@ -11,7 +10,6 @@ import {
 	SandboxChatbotStreamStartOrCompleteEvent,
 	SandboxChatbotStreamChunkEvent
 } from "./chat"
-import { StudentInviteJoinClass } from "./classroom"
 import { MotorControlData, LedControlData, HeadlightData, HornData } from "./garage"
 
 export type SocketEventPayloadMap = {
@@ -29,7 +27,6 @@ export type SocketEventPayloadMap = {
     "sandbox-chatbot-stream-start": SandboxChatbotStreamStartOrCompleteEvent
     "sandbox-chatbot-stream-chunk": SandboxChatbotStreamChunkEvent
     "sandbox-chatbot-stream-complete": SandboxChatbotStreamStartOrCompleteEvent
-    "student-invite-join-class": StudentInviteJoinClass
     "dino-score-update": DinoScoreUpdate
     "new-hub": StudentViewHubData
     "deleted-hub": DeletedHub
@@ -80,18 +77,18 @@ export interface StudentJoinedClassroom {
 
 export interface DeletedHub {
     classCode: ClassCode
-    hubId: UUID
+    hubId: HubUUID
 }
 
 export interface UpdatedHubSlideId {
     classCode: ClassCode
-    hubId: UUID
+    hubId: HubUUID
     newSlideId: string
 }
 
 export interface StudentLeftHub {
     classCode: ClassCode
-    hubId: UUID
+    hubId: HubUUID
     studentUserId: number
 }
 

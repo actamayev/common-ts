@@ -1,11 +1,9 @@
 import { ESPConnectionStatus, PipData } from "./pip"
 import { BlocklyJson, SandboxProject } from "./sandbox"
-import { StudentData, StudentInviteStatus } from "./classroom"
 import { StudentViewHubData, TeacherViewHubData } from "./hub"
 import { RetrievedQuestions, UserActivityProgress } from "./lab"
 import { ChallengeChatMessage, SandboxChatMessage } from "./chat"
-import { ChallengeUUID, ClassCode, PipUUID, SiteThemes } from "./utils"
-import { UUID } from "crypto"
+import { ChallengeUUID, ClassCode, HubUUID, PipUUID, SiteThemes } from "./utils"
 
 // Auth
 // Requests
@@ -157,13 +155,7 @@ export interface RetrieveSandboxProjectsResponse {
 	sandboxProjects: SandboxProject[]
 }
 
-// Student Routes
-export interface InviteResponse {
-	inviteResponse: "accept" | "decline"
-}
-
 export interface StudentClassroomData {
-	invitationStatus: StudentInviteStatus
 	joinedClassroomAt: Date | null
 	classroomName: string
 	classCode: ClassCode
@@ -177,7 +169,9 @@ export interface BasicTeacherClassroomData {
 }
 
 export interface DetailedClassroomData extends BasicTeacherClassroomData {
-	students: StudentData[]
+	students: {
+		username: string
+	}[]
 	activeHubs: TeacherViewHubData[]
 }
 
@@ -192,7 +186,7 @@ export interface IncomingTeacherRequestData {
 }
 
 export interface CreateHubRequest {
-	hubId: UUID
+	hubId: HubUUID
 }
 
 // Common Responses:
