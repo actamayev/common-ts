@@ -3,6 +3,7 @@ import { BlockNames, CONDITIONAL_BLOCK_TYPES, LED_BLOCK_TYPES,
 	LOOP_BLOCK_TYPES, MATH_BLOCK_TYPES, MOTOR_BLOCK_TYPES, SENSORS_BLOCK_TYPES,
 	START_BLOCK_TYPES, VARIABLE_BLOCK_TYPES } from "../blockly"
 import { BlocklyCategoryName, ParentCategoryName } from "../blockly/block-categories"
+import { SPEAKER_BLOCK_TYPES } from "../blockly/speaker-block-types"
 
 export interface BlockDefinition {
 	description: string
@@ -56,10 +57,17 @@ export const BLOCK_REGISTRY: Record<BlockNames, BlockDefinition> = {
 	},
 
 	// LED blocks
-	[LED_BLOCK_TYPES.ESP32_LED_CONTROL]: {
+	[LED_BLOCK_TYPES.CONTROL_ALL_LEDS]: {
 		description: "Controls the RGB LED color (red, green, blue, white, off)",
 		codeTemplate: "rgbLed.set_led_{color}();",
 		category: "LED"
+	},
+
+	// Speaker blocks
+	[SPEAKER_BLOCK_TYPES.PLAY_SOUND]: {
+		description: "Plays a sound",
+		codeTemplate: "play_sound({sound_name});",
+		category: "Speaker"
 	},
 
 	// Distance sensor blocks
