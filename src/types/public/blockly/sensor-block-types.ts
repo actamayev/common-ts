@@ -49,6 +49,20 @@ export const SENSOR_TYPES = {
 		GREEN: "GREEN",
 		BLUE: "BLUE",
 		OFF: "OFF"
+	},
+	SOUND_NAMES: {
+		CHIME: "CHIME",
+		CHIRP: "CHIRP",
+		POP: "POP",
+		DROP: "DROP",
+		FART: "FART",
+		MONKEY: "MONKEY",
+		ELEPHANT: "ELEPHANT",
+		PARTY: "PARTY",
+		UFO: "UFO",
+		COUNTDOWN: "COUNTDOWN",
+		ENGINE: "ENGINE",
+		ROBOT: "ROBOT"
 	}
 } as const
 
@@ -56,3 +70,4 @@ export type IMUSensorType = typeof SENSOR_TYPES.IMU[keyof typeof SENSOR_TYPES.IM
 export type LeftRightSensorType = typeof SENSOR_TYPES.LEFTRIGHT[keyof typeof SENSOR_TYPES.LEFTRIGHT]
 export type IRSensorType = typeof SENSOR_TYPES.IR[keyof typeof SENSOR_TYPES.IR]
 export type LEDSensorType = typeof SENSOR_TYPES.LED_COLORS[keyof typeof SENSOR_TYPES.LED_COLORS]
+export type SoundNameSensorType = typeof SENSOR_TYPES.SOUND_NAMES[keyof typeof SENSOR_TYPES.SOUND_NAMES]

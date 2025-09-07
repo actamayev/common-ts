@@ -1,5 +1,6 @@
 /* eslint-disable max-len, complexity, max-lines-per-function, max-depth */
 import { INSTRUCTION_SIZE, MAX_JUMP_DISTANCE, MAX_LED_BRIGHTNESS, MAX_PROGRAM_SIZE, MAX_REGISTERS } from "../types/private/constants"
+import { SoundType } from "../message-builder/protocol"
 import { BytecodeOpCode, CommandType, ComparisonOp, LedID, SensorType, VarType } from "../types/public/bytecode-types"
 import { CppParserHelper } from "./cpp-parser-helper"
 
@@ -1414,6 +1415,30 @@ export class CppParser {
 					operand3: 0,
 					operand4: 0
 				})
+				break
+			}
+
+			case CommandType.PLAY_SOUND: {
+				if (command.matches && command.matches.length === 2) {
+					const soundName = command.matches[1].replace(/"/g, "").trim()
+
+					// Validate sound name against SoundType enum
+					const soundTypeKey = soundName.toUpperCase() as keyof typeof SoundType
+					if (!(soundTypeKey in SoundType)) {
+						const validSounds = Object.keys(SoundType).filter(key => isNaN(Number(key)))
+						throw new Error(`Invalid sound name: "${soundName}". Valid sounds are: ${validSounds.join(", ")}`)
+					}
+
+					const soundId = SoundType[soundTypeKey]
+
+					instructions.push({
+						opcode: BytecodeOpCode.PLAY_SOUND,
+						operand1: soundId,
+						operand2: 0,
+						operand3: 0,
+						operand4: 0
+					})
+				}
 				break
 			}
 			}
