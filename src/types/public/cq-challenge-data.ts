@@ -27,7 +27,7 @@ export const OBSTACLE_AVOIDANCE_CHALLENGE_1: CqChallengeData = {
 	beforeRunningText: "Place Pip on a flat surface with clear space in front. You can test the sensor by placing your hand or an object in front of Pip to see the LED change colors.",
 	initialBlocklyJson: {},
 	...createChallengeToolbox([
-		LOOP_BLOCK_TYPES.ESP32_LOOP,
+		LOOP_BLOCK_TYPES.FOREVER_LOOP,
 		CONDITIONAL_BLOCK_TYPES.IF_ELSE,
 		SENSORS_BLOCK_TYPES.CENTER_TOF_READ,
 		LED_BLOCK_TYPES.CONTROL_ALL_LEDS
@@ -69,7 +69,7 @@ export const OBSTACLE_AVOIDANCE_CHALLENGE_2: CqChallengeData = {
 			"languageVersion": 0,
 			"blocks": [
 				{
-					"type": "esp32_loop",
+					"type": "forever_loop",
 					"id": "-Vk!.3uhZz;^JL3m6jWX",
 					"x": -270,
 					"y": -170,
@@ -87,19 +87,19 @@ export const OBSTACLE_AVOIDANCE_CHALLENGE_2: CqChallengeData = {
 									},
 									"DO1": {
 										"block": {
-											"type": "esp32_led_control",
+											"type": "control_all_leds",
 											"id": "P)bh$Rk*Ian[~5p#G}wK",
 											"fields": {
-												"esp32_led_control": "RED"
+												"led_color": "RED"
 											}
 										}
 									},
 									"ELSE": {
 										"block": {
-											"type": "esp32_led_control",
+											"type": "control_all_leds",
 											"id": "Y[;LU:B~*pff}w4]83Ne",
 											"fields": {
-												"esp32_led_control": "GREEN"
+												"led_color": "GREEN"
 											}
 										}
 									}
@@ -113,7 +113,7 @@ export const OBSTACLE_AVOIDANCE_CHALLENGE_2: CqChallengeData = {
 	},
 	...createChallengeToolbox([
 		START_BLOCK_TYPES.BUTTON_PRESS_START,
-		LOOP_BLOCK_TYPES.ESP32_LOOP,
+		LOOP_BLOCK_TYPES.FOREVER_LOOP,
 		CONDITIONAL_BLOCK_TYPES.IF_ELSE,
 		SENSORS_BLOCK_TYPES.CENTER_TOF_READ,
 		MOTOR_BLOCK_TYPES.GO_FORWARD,
@@ -160,7 +160,7 @@ export const OBSTACLE_AVOIDANCE_CHALLENGE_3: CqChallengeData = {
 			"languageVersion": 0,
 			"blocks": [
 				{
-					"type": "esp32_loop",
+					"type": "forever_loop",
 					"id": "-Vk!.3uhZz;^JL3m6jWX",
 					"x": -270,
 					"y": -170,
@@ -178,10 +178,10 @@ export const OBSTACLE_AVOIDANCE_CHALLENGE_3: CqChallengeData = {
 									},
 									"DO1": {
 										"block": {
-											"type": "esp32_led_control",
+											"type": "control_all_leds",
 											"id": "P)bh$Rk*Ian[~5p#G}wK",
 											"fields": {
-												"esp32_led_control": "RED"
+												"led_color": "RED"
 											},
 											"next": {
 												"block": {
@@ -196,10 +196,10 @@ export const OBSTACLE_AVOIDANCE_CHALLENGE_3: CqChallengeData = {
 									},
 									"ELSE": {
 										"block": {
-											"type": "esp32_led_control",
+											"type": "control_all_leds",
 											"id": "Y[;LU:B~*pff}w4]83Ne",
 											"fields": {
-												"esp32_led_control": "GREEN"
+												"led_color": "GREEN"
 											}
 										}
 									}
@@ -213,7 +213,7 @@ export const OBSTACLE_AVOIDANCE_CHALLENGE_3: CqChallengeData = {
 	},
 	...createChallengeToolbox([
 		START_BLOCK_TYPES.BUTTON_PRESS_START,
-		LOOP_BLOCK_TYPES.ESP32_LOOP,
+		LOOP_BLOCK_TYPES.FOREVER_LOOP,
 		CONDITIONAL_BLOCK_TYPES.IF_ELSE,
 		SENSORS_BLOCK_TYPES.CENTER_TOF_READ,
 		MOTOR_BLOCK_TYPES.GO_FORWARD,
@@ -258,7 +258,7 @@ export const OBSTACLE_AVOIDANCE_CHALLENGE_4: CqChallengeData = {
 	beforeRunningText: "Place Pip on a flat surface with clear space around it. You can test the right-side sensor by placing your hand or an object to the right side of Pip to see the LED change colors.",
 	initialBlocklyJson: {},
 	...createChallengeToolbox([
-		LOOP_BLOCK_TYPES.ESP32_LOOP,
+		LOOP_BLOCK_TYPES.FOREVER_LOOP,
 		CONDITIONAL_BLOCK_TYPES.IF_ELSE,
 		SENSORS_BLOCK_TYPES.SIDE_TOF_READ,
 		LED_BLOCK_TYPES.CONTROL_ALL_LEDS
@@ -301,7 +301,7 @@ export const OBSTACLE_AVOIDANCE_CHALLENGE_5: CqChallengeData = {
 	initialBlocklyJson: {},
 	...createChallengeToolbox([
 		START_BLOCK_TYPES.BUTTON_PRESS_START,
-		LOOP_BLOCK_TYPES.ESP32_LOOP,
+		LOOP_BLOCK_TYPES.FOREVER_LOOP,
 		CONDITIONAL_BLOCK_TYPES.IF_2ELSEIF_ELSE,
 		SENSORS_BLOCK_TYPES.CENTER_TOF_READ,
 		SENSORS_BLOCK_TYPES.SIDE_TOF_READ,

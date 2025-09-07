@@ -69,9 +69,9 @@ export enum MATH_FIELD_VALUES {
 
 export enum LOOP_BLOCK_TYPES {
     // WHILE_UNTIL = "controls_whileUntil",
-    REPEAT = "controls_repeat_ext", // for loop
-    ESP32_DELAY = "esp32_delay",
-    ESP32_LOOP = "esp32_loop" // forever loop
+    REPEAT = "for_loop", // for loop
+    DELAY = "delay",
+    FOREVER_LOOP = "forever_loop" // forever loop
 }
 
 export enum LOOP_FIELD_VALUES {
@@ -80,7 +80,7 @@ export enum LOOP_FIELD_VALUES {
     WHILE_DO = "WHILE_DO",       // Renamed
     REPEAT_TIMES = "TIMES",
     REPEAT_DO = "REPEAT_DO",     // Renamed
-    ESP32_DELAY = "delay"
+    DELAY = "delay"
 }
 
 // For ease of use, we'll create a namespace object that combines all block types
