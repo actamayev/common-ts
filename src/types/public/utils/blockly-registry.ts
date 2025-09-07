@@ -79,7 +79,7 @@ export const BLOCK_REGISTRY: Record<BlockNames, BlockDefinition> = {
 	},
 	[SENSORS_BLOCK_TYPES.SIDE_TOF_READ]: {
 		description: "Reads the side distance sensors to detect objects on left or right",
-		codeTemplate: "is_object_near_side_{left|right}()",
+		codeTemplate: "is_object_near_{left|right}_side()",
 		category: "Distance Sensors",
 		parentCategory: "Sensors"
 	},
@@ -209,7 +209,7 @@ export const BLOCK_REGISTRY: Record<BlockNames, BlockDefinition> = {
 	},
 
 	// Loop blocks
-	[LOOP_BLOCK_TYPES.ESP32_LOOP]: {
+	[LOOP_BLOCK_TYPES.FOREVER_LOOP]: {
 		description: "Runs code continuously in a forever loop",
 		codeTemplate: "while(true) {\n  // your code here\n}",
 		category: "Loops",
@@ -221,7 +221,7 @@ export const BLOCK_REGISTRY: Record<BlockNames, BlockDefinition> = {
 		category: "Loops",
 		parentCategory: "Logic"
 	},
-	[LOOP_BLOCK_TYPES.ESP32_DELAY]: {
+	[LOOP_BLOCK_TYPES.DELAY]: {
 		description: "Pauses execution for a specified time in milliseconds",
 		codeTemplate: "delay({milliseconds});",
 		category: "Loops",
