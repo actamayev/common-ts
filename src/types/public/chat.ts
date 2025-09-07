@@ -21,7 +21,7 @@ export interface ChallengeChatMessage extends SandboxChatMessage {
 	isHint?: boolean
 }
 
-export type InteractionType = "checkCode" | "hint" | "generalQuestion"
+export type InteractionType = "hint" | "generalQuestion"
 
 // Request payload from client
 export interface OutgoingChallengeGeneralMessage {
