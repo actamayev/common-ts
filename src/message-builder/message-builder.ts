@@ -1,5 +1,5 @@
-import { END_MARKER, START_MARKER } from "../types/public/utils/constants"
-import { BalancePidsProps, LedControlData } from "../types/public/garage"
+import { END_MARKER, START_MARKER } from "../types/utils/constants"
+import { BalancePidsProps, LedControlData } from "../types/garage"
 import { BalanceStatus, CareerType, HeadlightStatus, HornSoundStatus,
 	LightAnimationType, MessageType, SoundType, SpeakerStatus, ValidTriggerMessageType } from "./protocol"
 

@@ -1,6 +1,6 @@
 import { CppParser } from "../../src/parsers/cpp-parser"
-import { MAX_LED_BRIGHTNESS } from "../../src/types/public/utils/constants"
-import { BytecodeOpCode, ComparisonOp, LedID, SensorType, VarType } from "../../src/types/public/bytecode-types"
+import { MAX_LED_BRIGHTNESS } from "../../src/types/utils/constants"
+import { BytecodeOpCode, ComparisonOp, LedID, SensorType, VarType } from "../../src/types/bytecode-types"
 
 describe("Variable assignments", () => {
 	test("should parse integer variable assignment", () => {

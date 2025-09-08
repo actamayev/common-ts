@@ -1,7 +1,7 @@
 
 import { CppParser } from "../../src/parsers/cpp-parser"
 import { CppParserHelper } from "../../src/parsers/cpp-parser-helper"
-import { BytecodeOpCode } from "../../src/types/public/bytecode-types"
+import { BytecodeOpCode } from "../../src/types/bytecode-types"
 
 describe("Invalid inputs", () => {
 	test("should reject garbage input", () => {

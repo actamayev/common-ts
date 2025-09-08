@@ -1,5 +1,5 @@
 import { CppParser } from "../../src/parsers/cpp-parser"
-import { BytecodeOpCode, ComparisonOp, SensorType } from "../../src/types/public/bytecode-types"
+import { BytecodeOpCode, ComparisonOp, SensorType } from "../../src/types/bytecode-types"
 
 describe("Else-If Edge Cases and Specific Scenarios", () => {
 	describe("Jump Address Fixup Verification", () => {

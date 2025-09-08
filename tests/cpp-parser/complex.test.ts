@@ -1,6 +1,6 @@
 import { CppParser } from "../../src/parsers/cpp-parser"
-import { BytecodeOpCode, ComparisonOp, SensorType, VarType } from "../../src/types/public/bytecode-types"
-import { MAX_LED_BRIGHTNESS } from "../../src/types/public/utils/constants"
+import { BytecodeOpCode, ComparisonOp, SensorType, VarType } from "../../src/types/bytecode-types"
+import { MAX_LED_BRIGHTNESS } from "../../src/types/utils/constants"
 
 describe("Complex Nested Structures", () => {
 	test("should correctly parse and translate the proximity sensor LED indicator logic", () => {

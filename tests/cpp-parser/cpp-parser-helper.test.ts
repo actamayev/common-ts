@@ -1,8 +1,8 @@
-import { BytecodeInstruction } from "../../src/types/public/utils/bytecode"
+import { BytecodeInstruction } from "../../src/types/utils/bytecode"
 import { CppParser } from "../../src/parsers/cpp-parser"
 import { CppParserHelper } from "../../src/parsers/cpp-parser-helper"
-import { MAX_REGISTERS } from "../../src/types/public/utils/constants"
-import { BytecodeOpCode, CommandType, ComparisonOp, LedID, SensorType } from "../../src/types/public/bytecode-types"
+import { MAX_REGISTERS } from "../../src/types/utils/constants"
+import { BytecodeOpCode, CommandType, ComparisonOp, LedID, SensorType } from "../../src/types/bytecode-types"
 
 describe("CppParserHelper", () => {
 	describe("identifyCommand", () => {
