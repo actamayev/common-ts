@@ -1,6 +1,6 @@
-import { CppParser } from "../../src"
+import { CppParser } from "../../src/parsers/cpp-parser"
 import { BytecodeOpCode, ComparisonOp, SensorType, VarType } from "../../src/types/public/bytecode-types"
-import { MAX_LED_BRIGHTNESS } from "../../src/types/private/constants"
+import { MAX_LED_BRIGHTNESS } from "../../src/types/public/utils/constants"
 
 describe("Complex Nested Structures", () => {
 	test("should correctly parse and translate the proximity sensor LED indicator logic", () => {
@@ -244,7 +244,7 @@ describe("Complex Nested Structures", () => {
 describe("Boundary Conditions", () => {
 	test("should handle large programs approaching VM instruction limits", () => {
 	// Generate a program with a large number of simple statements
-		const statements = []
+		const statements: string[] = []
 		for (let i = 0; i < 100; i++) {
 			statements.push("rgbLed.set_led_red();")
 			statements.push("delay(10);")
@@ -271,7 +271,7 @@ describe("Boundary Conditions", () => {
 
 	test("should handle loops with edge-case iteration values", () => {
 	// Test cases with extreme loop bounds
-		const testCases = [
+		const testCases: { code: string, iterations: number }[] = [
 			{ code: "for (int i = 0; i < 0; i++) { rgbLed.set_led_red(); }", iterations: 0 },
 			{ code: "for (int i = 0; i < 1; i++) { rgbLed.set_led_red(); }", iterations: 1 },
 			{ code: "for (int i = 32766; i < 32767; i++) { rgbLed.set_led_red(); }", iterations: 1 }, // Near uint16 max
@@ -317,7 +317,7 @@ describe("Boundary Conditions", () => {
 
 	test("should handle maximum register usage", () => {
 	// Create a program with many variables to use a lot of registers
-		let code = ""
+		let code = "" as string
 		const numVars = 50 // A significant number but not exceeding MAX_REGISTERS
 
 		// Declare many variables
@@ -354,7 +354,7 @@ describe("Boundary Conditions", () => {
 		const nestingDepth = 8 // Reduced from 15 to a more reasonable depth
 
 		// Start with variable declaration
-		let code = "int x = 10;\n"
+		let code = "int x = 10;\n" as string
 
 		// Create deeply nested if-else structure
 		let currentIndent = ""
@@ -480,7 +480,7 @@ describe("Error Handling Edge Cases", () => {
 
 		// Create a deeply nested structure with a missing closing brace
 		let code = "int x = 5;\n"
-		let currentIndent = ""
+		let currentIndent = "" as string
 
 		for (let i = 0; i < nestingDepth; i++) {
 			code += `${currentIndent}if (x > ${i}) {\n`

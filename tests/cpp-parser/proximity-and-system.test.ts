@@ -1,6 +1,6 @@
-import { CppParser } from "../../src"
+import { CppParser } from "../../src/parsers/cpp-parser"
 import { BytecodeOpCode, SensorType } from "../../src/types/public/bytecode-types"
-import { MAX_LED_BRIGHTNESS } from "../../src/types/private/constants"
+import { MAX_LED_BRIGHTNESS } from "../../src/types/public/utils/constants"
 
 describe("Proximity Sensor Functions", () => {
 	describe("Side Proximity Detection", () => {

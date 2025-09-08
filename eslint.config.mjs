@@ -111,7 +111,7 @@ export default [
 		},
 	},
 	{
-		files: ["**/*.ts"],
+		files: ["src/**/*.ts"],
 		languageOptions: {
 			parser: tsParser,
 			parserOptions: {
@@ -124,17 +124,25 @@ export default [
 		},
 	},
 	{
-		files: ["eslint.config.mjs"],
-		rules: {
-			"@typescript-eslint/naming-convention": "off",
+		files: ["tests/**/*.ts"],
+		languageOptions: {
+			parser: tsParser,
+			parserOptions: {
+				project: ["./tsconfig.test.json"]
+			},
 		},
-	},
-	{
-		files: ["tests/**/*.test.ts"],
 		rules: {
+			"@typescript-eslint/no-unnecessary-condition": "warn",
+			"@typescript-eslint/no-floating-promises": "warn",
 			"max-lines-per-function": "off",
 			"complexity": "off",
 			"max-depth": "off",
+		},
+	},
+	{
+		files: ["eslint.config.mjs"],
+		rules: {
+			"@typescript-eslint/naming-convention": "off",
 		},
 	},
 	{

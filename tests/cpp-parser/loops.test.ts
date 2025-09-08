@@ -1,6 +1,6 @@
-import { MAX_LED_BRIGHTNESS } from "../../src/types/private/constants"
+import { MAX_LED_BRIGHTNESS } from "../../src/types/public/utils/constants"
 import { BytecodeOpCode, ComparisonOp } from "../../src/types/public/bytecode-types"
-import { CppParser } from "../../src"
+import { CppParser } from "../../src/parsers/cpp-parser"
 
 describe("While Loop Functionality", () => {
 	test("should parse basic while(true) loop", () => {
@@ -48,7 +48,7 @@ describe("While Loop Functionality", () => {
 		const bytecode = CppParser.cppToByte(code)
 
 		// Find WHILE_START indices
-		const whileStartIndices = []
+		const whileStartIndices: number[] = []
 		for (let i = 0; i < bytecode.length; i += 5) {
 			if (bytecode[i] === BytecodeOpCode.WHILE_START) {
 				whileStartIndices.push(i)
@@ -57,7 +57,7 @@ describe("While Loop Functionality", () => {
 		expect(whileStartIndices.length).toBe(2)
 
 		// Find WHILE_END indices
-		const whileEndIndices = []
+		const whileEndIndices: number[] = []
 		for (let i = 0; i < bytecode.length; i += 5) {
 			if (bytecode[i] === BytecodeOpCode.WHILE_END) {
 				whileEndIndices.push(i)
@@ -144,8 +144,8 @@ describe("While Loop Functionality", () => {
 
 		const bytecode = CppParser.cppToByte(code)
 
-		const whileStartIndices = []
-		const whileEndIndices = []
+		const whileStartIndices: number[] = []
+		const whileEndIndices: number[] = []
 		for (let i = 0; i < bytecode.length; i += 5) {
 			if (bytecode[i] === BytecodeOpCode.WHILE_START) {
 				whileStartIndices.push(i)
@@ -312,7 +312,7 @@ describe("For Loop Functionality", () => {
 
 		const bytecode = CppParser.cppToByte(code)
 
-		const forInitIndices = []
+		const forInitIndices: number[] = []
 		for (let i = 0; i < bytecode.length; i += 5) {
 			if (bytecode[i] === BytecodeOpCode.FOR_INIT) {
 				forInitIndices.push(i)
@@ -322,7 +322,7 @@ describe("For Loop Functionality", () => {
 		expect(bytecode[forInitIndices[0] + 1]).toBe(0) // Register 0
 		expect(bytecode[forInitIndices[1] + 1]).toBe(1) // Register 1
 
-		const jumpBackwardIndices = []
+		const jumpBackwardIndices: number[] = []
 		for (let i = 0; i < bytecode.length; i += 5) {
 			if (bytecode[i] === BytecodeOpCode.JUMP_BACKWARD) {
 				jumpBackwardIndices.push(i)
@@ -341,7 +341,7 @@ describe("For Loop Functionality", () => {
 
 		const bytecode = CppParser.cppToByte(code)
 
-		const forInitIndices = []
+		const forInitIndices: number[] = []
 		for (let i = 0; i < bytecode.length; i += 5) {
 			if (bytecode[i] === BytecodeOpCode.FOR_INIT) {
 				forInitIndices.push(i)
@@ -351,7 +351,7 @@ describe("For Loop Functionality", () => {
 		expect(bytecode[forInitIndices[0] + 1]).toBe(0)
 		expect(bytecode[forInitIndices[1] + 1]).toBe(1)
 
-		const forIncrementIndices = []
+		const forIncrementIndices: number[] = []
 		for (let i = 0; i < bytecode.length; i += 5) {
 			if (bytecode[i] === BytecodeOpCode.FOR_INCREMENT) {
 				forIncrementIndices.push(i)
@@ -477,7 +477,7 @@ describe("For Loop Functionality", () => {
 
 		const bytecode = CppParser.cppToByte(code)
 
-		const forInitIndices = []
+		const forInitIndices: number[] = []
 		for (let i = 0; i < bytecode.length; i += 5) {
 			if (bytecode[i] === BytecodeOpCode.FOR_INIT) {
 				forInitIndices.push(i)

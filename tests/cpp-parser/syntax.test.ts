@@ -1,5 +1,5 @@
 
-import { CppParser } from "../../src"
+import { CppParser } from "../../src/parsers/cpp-parser"
 import { CppParserHelper } from "../../src/parsers/cpp-parser-helper"
 import { BytecodeOpCode } from "../../src/types/public/bytecode-types"
 
