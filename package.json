@@ -7,116 +7,284 @@
   ],
   "exports": {
     "./types/api": {
-      "types": "./dist/src/types/api.d.ts",
-      "default": "./dist/src/types/api.js"
+      "import": {
+        "types": "./dist/src/types/api.d.ts",
+        "default": "./dist/src/types/api.js"
+      },
+      "require": {
+        "types": "./dist/src/types/api.d.ts",
+        "default": "./dist/src/types/api.js"
+      }
     },
     "./types/auth": {
-      "types": "./dist/src/types/auth.d.ts",
-      "default": "./dist/src/types/auth.js"
+      "import": {
+        "types": "./dist/src/types/auth.d.ts",
+        "default": "./dist/src/types/auth.js"
+      },
+      "require": {
+        "types": "./dist/src/types/auth.d.ts",
+        "default": "./dist/src/types/auth.js"
+      }
     },
     "./types/chat": {
-      "types": "./dist/src/types/chat.d.ts",
-      "default": "./dist/src/types/chat.js"
+      "import": {
+        "types": "./dist/src/types/chat.d.ts",
+        "default": "./dist/src/types/chat.js"
+      },
+      "require": {
+        "types": "./dist/src/types/chat.d.ts",
+        "default": "./dist/src/types/chat.js"
+      }
     },
     "./types/career-quest": {
-      "types": "./dist/src/types/career-quest.d.ts",
-      "default": "./dist/src/types/career-quest.js"
+      "import": {
+        "types": "./dist/src/types/career-quest.d.ts",
+        "default": "./dist/src/types/career-quest.js"
+      },
+      "require": {
+        "types": "./dist/src/types/career-quest.d.ts",
+        "default": "./dist/src/types/career-quest.js"
+      }
     },
     "./types/bytecode-types": {
-      "types": "./dist/src/types/bytecode-types.d.ts",
-      "default": "./dist/src/types/bytecode-types.js"
+      "import": {
+        "types": "./dist/src/types/bytecode-types.d.ts",
+        "default": "./dist/src/types/bytecode-types.js"
+      },
+      "require": {
+        "types": "./dist/src/types/bytecode-types.d.ts",
+        "default": "./dist/src/types/bytecode-types.js"
+      }
     },
     "./types/garage": {
-      "types": "./dist/src/types/garage.d.ts",
-      "default": "./dist/src/types/garage.js"
+      "import": {
+        "types": "./dist/src/types/garage.d.ts",
+        "default": "./dist/src/types/garage.js"
+      },
+      "require": {
+        "types": "./dist/src/types/garage.d.ts",
+        "default": "./dist/src/types/garage.js"
+      }
     },
     "./types/lab": {
-      "types": "./dist/src/types/lab.d.ts",
-      "default": "./dist/src/types/lab.js"
+      "import": {
+        "types": "./dist/src/types/lab.d.ts",
+        "default": "./dist/src/types/lab.js"
+      },
+      "require": {
+        "types": "./dist/src/types/lab.d.ts",
+        "default": "./dist/src/types/lab.js"
+      }
     },
     "./types/pip": {
-      "types": "./dist/src/types/pip.d.ts",
-      "default": "./dist/src/types/pip.js"
+      "import": {
+        "types": "./dist/src/types/pip.d.ts",
+        "default": "./dist/src/types/pip.js"
+      },
+      "require": {
+        "types": "./dist/src/types/pip.d.ts",
+        "default": "./dist/src/types/pip.js"
+      }
     },
     "./types/sandbox": {
-      "types": "./dist/src/types/sandbox.d.ts",
-      "default": "./dist/src/types/sandbox.js"
+      "import": {
+        "types": "./dist/src/types/sandbox.d.ts",
+        "default": "./dist/src/types/sandbox.js"
+      },
+      "require": {
+        "types": "./dist/src/types/sandbox.d.ts",
+        "default": "./dist/src/types/sandbox.js"
+      }
     },
     "./types/teacher": {
-      "types": "./dist/src/types/teacher.d.ts",
-      "default": "./dist/src/types/teacher.js"
+      "import": {
+        "types": "./dist/src/types/teacher.d.ts",
+        "default": "./dist/src/types/teacher.js"
+      },
+      "require": {
+        "types": "./dist/src/types/teacher.d.ts",
+        "default": "./dist/src/types/teacher.js"
+      }
     },
     "./types/workbench": {
-      "types": "./dist/src/types/workbench.d.ts",
-      "default": "./dist/src/types/workbench.js"
+      "import": {
+        "types": "./dist/src/types/workbench.d.ts",
+        "default": "./dist/src/types/workbench.js"
+      },
+      "require": {
+        "types": "./dist/src/types/workbench.d.ts",
+        "default": "./dist/src/types/workbench.js"
+      }
     },
     "./types/cq-challenge-data": {
-      "types": "./dist/src/types/cq-challenge-data.d.ts",
-      "default": "./dist/src/types/cq-challenge-data.js"
+      "import": {
+        "types": "./dist/src/types/cq-challenge-data.d.ts",
+        "default": "./dist/src/types/cq-challenge-data.js"
+      },
+      "require": {
+        "types": "./dist/src/types/cq-challenge-data.d.ts",
+        "default": "./dist/src/types/cq-challenge-data.js"
+      }
     },
     "./types/socket": {
-      "types": "./dist/src/types/socket.d.ts",
-      "default": "./dist/src/types/socket.js"
+      "import": {
+        "types": "./dist/src/types/socket.d.ts",
+        "default": "./dist/src/types/socket.js"
+      },
+      "require": {
+        "types": "./dist/src/types/socket.d.ts",
+        "default": "./dist/src/types/socket.js"
+      }
     },
     "./types/hub": {
-      "types": "./dist/src/types/hub.d.ts",
-      "default": "./dist/src/types/hub.js"
+      "import": {
+        "types": "./dist/src/types/hub.d.ts",
+        "default": "./dist/src/types/hub.js"
+      },
+      "require": {
+        "types": "./dist/src/types/hub.d.ts",
+        "default": "./dist/src/types/hub.js"
+      }
     },
     "./types/utils": {
-      "types": "./dist/src/types/utils.d.ts",
-      "default": "./dist/src/types/utils.js"
+      "import": {
+        "types": "./dist/src/types/utils.d.ts",
+        "default": "./dist/src/types/utils.js"
+      },
+      "require": {
+        "types": "./dist/src/types/utils.d.ts",
+        "default": "./dist/src/types/utils.js"
+      }
     },
     "./types/utils/blockly-helpers": {
-      "types": "./dist/src/types/utils/blockly-helpers.d.ts",
-      "default": "./dist/src/types/utils/blockly-helpers.js"
+      "import": {
+        "types": "./dist/src/types/utils/blockly-helpers.d.ts",
+        "default": "./dist/src/types/utils/blockly-helpers.js"
+      },
+      "require": {
+        "types": "./dist/src/types/utils/blockly-helpers.d.ts",
+        "default": "./dist/src/types/utils/blockly-helpers.js"
+      }
     },
     "./types/utils/blockly-registry": {
-      "types": "./dist/src/types/utils/blockly-registry.d.ts",
-      "default": "./dist/src/types/utils/blockly-registry.js"
+      "import": {
+        "types": "./dist/src/types/utils/blockly-registry.d.ts",
+        "default": "./dist/src/types/utils/blockly-registry.js"
+      },
+      "require": {
+        "types": "./dist/src/types/utils/blockly-registry.d.ts",
+        "default": "./dist/src/types/utils/blockly-registry.js"
+      }
     },
     "./types/blockly": {
-      "types": "./dist/src/types/blockly/index.d.ts",
-      "default": "./dist/src/types/blockly/index.js"
+      "import": {
+        "types": "./dist/src/types/blockly/index.d.ts",
+        "default": "./dist/src/types/blockly/index.js"
+      },
+      "require": {
+        "types": "./dist/src/types/blockly/index.d.ts",
+        "default": "./dist/src/types/blockly/index.js"
+      }
     },
     "./types/blockly/blockly": {
-      "types": "./dist/src/types/blockly/blockly.d.ts",
-      "default": "./dist/src/types/blockly/blockly.js"
+      "import": {
+        "types": "./dist/src/types/blockly/blockly.d.ts",
+        "default": "./dist/src/types/blockly/blockly.js"
+      },
+      "require": {
+        "types": "./dist/src/types/blockly/blockly.d.ts",
+        "default": "./dist/src/types/blockly/blockly.js"
+      }
     },
     "./types/blockly/block-categories": {
-      "types": "./dist/src/types/blockly/block-categories.d.ts",
-      "default": "./dist/src/types/blockly/block-categories.js"
+      "import": {
+        "types": "./dist/src/types/blockly/block-categories.d.ts",
+        "default": "./dist/src/types/blockly/block-categories.js"
+      },
+      "require": {
+        "types": "./dist/src/types/blockly/block-categories.d.ts",
+        "default": "./dist/src/types/blockly/block-categories.js"
+      }
     },
     "./types/blockly/motor": {
-      "types": "./dist/src/types/blockly/motor-block-types.d.ts",
-      "default": "./dist/src/types/blockly/motor-block-types.js"
+      "import": {
+        "types": "./dist/src/types/blockly/motor-block-types.d.ts",
+        "default": "./dist/src/types/blockly/motor-block-types.js"
+      },
+      "require": {
+        "types": "./dist/src/types/blockly/motor-block-types.d.ts",
+        "default": "./dist/src/types/blockly/motor-block-types.js"
+      }
     },
     "./types/blockly/led": {
-      "types": "./dist/src/types/blockly/led-block-types.d.ts",
-      "default": "./dist/src/types/blockly/led-block-types.js"
+      "import": {
+        "types": "./dist/src/types/blockly/led-block-types.d.ts",
+        "default": "./dist/src/types/blockly/led-block-types.js"
+      },
+      "require": {
+        "types": "./dist/src/types/blockly/led-block-types.d.ts",
+        "default": "./dist/src/types/blockly/led-block-types.js"
+      }
     },
     "./types/blockly/speaker": {
-      "types": "./dist/src/types/blockly/speaker-block-types.d.ts",
-      "default": "./dist/src/types/blockly/speaker-block-types.js"
+      "import": {
+        "types": "./dist/src/types/blockly/speaker-block-types.d.ts",
+        "default": "./dist/src/types/blockly/speaker-block-types.js"
+      },
+      "require": {
+        "types": "./dist/src/types/blockly/speaker-block-types.d.ts",
+        "default": "./dist/src/types/blockly/speaker-block-types.js"
+      }
     },
     "./types/blockly/sensor": {
-      "types": "./dist/src/types/blockly/sensor-block-types.d.ts",
-      "default": "./dist/src/types/blockly/sensor-block-types.js"
+      "import": {
+        "types": "./dist/src/types/blockly/sensor-block-types.d.ts",
+        "default": "./dist/src/types/blockly/sensor-block-types.js"
+      },
+      "require": {
+        "types": "./dist/src/types/blockly/sensor-block-types.d.ts",
+        "default": "./dist/src/types/blockly/sensor-block-types.js"
+      }
     },
     "./types/blockly/logic": {
-      "types": "./dist/src/types/blockly/logic-block-types.d.ts",
-      "default": "./dist/src/types/blockly/logic-block-types.js"
+      "import": {
+        "types": "./dist/src/types/blockly/logic-block-types.d.ts",
+        "default": "./dist/src/types/blockly/logic-block-types.js"
+      },
+      "require": {
+        "types": "./dist/src/types/blockly/logic-block-types.d.ts",
+        "default": "./dist/src/types/blockly/logic-block-types.js"
+      }
     },
     "./parsers": {
-      "types": "./dist/src/parsers/cpp-parser.d.ts",
-      "default": "./dist/src/parsers/cpp-parser.js"
+      "import": {
+        "types": "./dist/src/parsers/cpp-parser.d.ts",
+        "default": "./dist/src/parsers/cpp-parser.js"
+      },
+      "require": {
+        "types": "./dist/src/parsers/cpp-parser.d.ts",
+        "default": "./dist/src/parsers/cpp-parser.js"
+      }
     },
     "./message-builder": {
-      "types": "./dist/src/message-builder/message-builder.d.ts",
-      "default": "./dist/src/message-builder/message-builder.js"
+      "import": {
+        "types": "./dist/src/message-builder/message-builder.d.ts",
+        "default": "./dist/src/message-builder/message-builder.js"
+      },
+      "require": {
+        "types": "./dist/src/message-builder/message-builder.d.ts",
+        "default": "./dist/src/message-builder/message-builder.js"
+      }
     },
     "./protocol": {
-      "types": "./dist/src/message-builder/protocol.d.ts",
-      "default": "./dist/src/message-builder/protocol.js"
+      "import": {
+        "types": "./dist/src/message-builder/protocol.d.ts",
+        "default": "./dist/src/message-builder/protocol.js"
+      },
+      "require": {
+        "types": "./dist/src/message-builder/protocol.d.ts",
+        "default": "./dist/src/message-builder/protocol.js"
+      }
     }
   },
   "typesVersions": {
