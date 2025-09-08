@@ -3,8 +3,8 @@ import {
 	BalanceStatus, CareerType, HeadlightStatus, HornSoundStatus, MeetPipTriggerType, LightAnimationType,
 	MessageType, SoundType, SpeakerStatus,
 } from "../../src/message-builder/protocol"
-import { END_MARKER, START_MARKER } from "../../src/types/public/utils/constants"
-import { BalancePidsProps, LedControlData } from "../../src/types/public/garage"
+import { END_MARKER, START_MARKER } from "../../src/types/utils/constants"
+import { BalancePidsProps, LedControlData } from "../../src/types/garage"
 
 describe("MessageBuilder", () => {
 	// Helper function to validate frame structure

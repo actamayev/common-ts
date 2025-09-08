@@ -1,9 +1,9 @@
 /* eslint-disable max-depth */
 /* eslint-disable complexity */
 /* eslint-disable max-lines-per-function */
-import { BytecodeOpCode, CommandPatterns, CommandType, ComparisonOp, LedID, SensorType } from "../types/public/bytecode-types"
-import { BytecodeInstruction, VariableType, ValidCommand, CharacterStack } from "../types/public/utils/bytecode"
-import { MAX_REGISTERS } from "../types/public/utils/constants"
+import { BytecodeOpCode, CommandPatterns, CommandType, ComparisonOp, LedID, SensorType } from "../types/bytecode-types"
+import { BytecodeInstruction, VariableType, ValidCommand, CharacterStack } from "../types/utils/bytecode"
+import { MAX_REGISTERS } from "../types/utils/constants"
 
 export class CppParserHelper {
 	static sanitizeUserCode(userCode: string): string {

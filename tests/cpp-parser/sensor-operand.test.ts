@@ -1,5 +1,5 @@
 import { CppParser } from "../../src/parsers/cpp-parser"
-import { BytecodeOpCode, ComparisonOp, SensorType } from "../../src/types/public/bytecode-types"
+import { BytecodeOpCode, ComparisonOp, SensorType } from "../../src/types/bytecode-types"
 
 describe("Sensor Operand Processing", () => {
 	test("should handle sensors as left operands in comparisons", () => {

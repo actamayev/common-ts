@@ -1,7 +1,7 @@
 import { CppParser } from "../../src/parsers/cpp-parser"
-import { MAX_LED_BRIGHTNESS } from "../../src/types/public/utils/constants"
-import { BytecodeOpCode, ComparisonOp, SensorType } from "../../src/types/public/bytecode-types"
-import { BytecodeInstruction } from "../../src/types/public/utils/bytecode"
+import { MAX_LED_BRIGHTNESS } from "../../src/types/utils/constants"
+import { BytecodeOpCode, ComparisonOp, SensorType } from "../../src/types/bytecode-types"
+import { BytecodeInstruction } from "../../src/types/utils/bytecode"
 
 describe("Sensor Functionality", () => {
 	function testSensorReading(sensorMethod: string, expectedSensorType: SensorType): void {
