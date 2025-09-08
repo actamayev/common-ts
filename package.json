@@ -1,6 +1,6 @@
 {
   "name": "@bluedotrobots/common-ts",
-  "version": "1.0.206",
+  "version": "1.0.207",
   "description": "Shared TypeScript code between frontend and backend",
   "files": [
     "dist/src/**/*"
@@ -121,34 +121,90 @@
   },
   "typesVersions": {
     "*": {
-      "types/api": ["./dist/src/types/api.d.ts"],
-      "types/auth": ["./dist/src/types/auth.d.ts"],
-      "types/chat": ["./dist/src/types/chat.d.ts"],
-      "types/career-quest": ["./dist/src/types/career-quest.d.ts"],
-      "types/bytecode-types": ["./dist/src/types/bytecode-types.d.ts"],
-      "types/garage": ["./dist/src/types/garage.d.ts"],
-      "types/lab": ["./dist/src/types/lab.d.ts"],
-      "types/pip": ["./dist/src/types/pip.d.ts"],
-      "types/sandbox": ["./dist/src/types/sandbox.d.ts"],
-      "types/teacher": ["./dist/src/types/teacher.d.ts"],
-      "types/workbench": ["./dist/src/types/workbench.d.ts"],
-      "types/cq-challenge-data": ["./dist/src/types/cq-challenge-data.d.ts"],
-      "types/socket": ["./dist/src/types/socket.d.ts"],
-      "types/hub": ["./dist/src/types/hub.d.ts"],
-      "types/utils": ["./dist/src/types/utils.d.ts"],
-      "types/utils/blockly-helpers": ["./dist/src/types/utils/blockly-helpers.d.ts"],
-      "types/utils/blockly-registry": ["./dist/src/types/utils/blockly-registry.d.ts"],
-      "types/blockly": ["./dist/src/types/blockly/index.d.ts"],
-      "types/blockly/blockly": ["./dist/src/types/blockly/blockly.d.ts"],
-      "types/blockly/block-categories": ["./dist/src/types/blockly/block-categories.d.ts"],
-      "types/blockly/motor": ["./dist/src/types/blockly/motor-block-types.d.ts"],
-      "types/blockly/led": ["./dist/src/types/blockly/led-block-types.d.ts"],
-      "types/blockly/speaker": ["./dist/src/types/blockly/speaker-block-types.d.ts"],
-      "types/blockly/sensor": ["./dist/src/types/blockly/sensor-block-types.d.ts"],
-      "types/blockly/logic": ["./dist/src/types/blockly/logic-block-types.d.ts"],
-      "parsers": ["./dist/src/parsers/cpp-parser.d.ts"],
-      "message-builder": ["./dist/src/message-builder/message-builder.d.ts"],
-      "protocol": ["./dist/src/message-builder/protocol.d.ts"]
+      "types/api": [
+        "./dist/src/types/api.d.ts"
+      ],
+      "types/auth": [
+        "./dist/src/types/auth.d.ts"
+      ],
+      "types/chat": [
+        "./dist/src/types/chat.d.ts"
+      ],
+      "types/career-quest": [
+        "./dist/src/types/career-quest.d.ts"
+      ],
+      "types/bytecode-types": [
+        "./dist/src/types/bytecode-types.d.ts"
+      ],
+      "types/garage": [
+        "./dist/src/types/garage.d.ts"
+      ],
+      "types/lab": [
+        "./dist/src/types/lab.d.ts"
+      ],
+      "types/pip": [
+        "./dist/src/types/pip.d.ts"
+      ],
+      "types/sandbox": [
+        "./dist/src/types/sandbox.d.ts"
+      ],
+      "types/teacher": [
+        "./dist/src/types/teacher.d.ts"
+      ],
+      "types/workbench": [
+        "./dist/src/types/workbench.d.ts"
+      ],
+      "types/cq-challenge-data": [
+        "./dist/src/types/cq-challenge-data.d.ts"
+      ],
+      "types/socket": [
+        "./dist/src/types/socket.d.ts"
+      ],
+      "types/hub": [
+        "./dist/src/types/hub.d.ts"
+      ],
+      "types/utils": [
+        "./dist/src/types/utils.d.ts"
+      ],
+      "types/utils/blockly-helpers": [
+        "./dist/src/types/utils/blockly-helpers.d.ts"
+      ],
+      "types/utils/blockly-registry": [
+        "./dist/src/types/utils/blockly-registry.d.ts"
+      ],
+      "types/blockly": [
+        "./dist/src/types/blockly/index.d.ts"
+      ],
+      "types/blockly/blockly": [
+        "./dist/src/types/blockly/blockly.d.ts"
+      ],
+      "types/blockly/block-categories": [
+        "./dist/src/types/blockly/block-categories.d.ts"
+      ],
+      "types/blockly/motor": [
+        "./dist/src/types/blockly/motor-block-types.d.ts"
+      ],
+      "types/blockly/led": [
+        "./dist/src/types/blockly/led-block-types.d.ts"
+      ],
+      "types/blockly/speaker": [
+        "./dist/src/types/blockly/speaker-block-types.d.ts"
+      ],
+      "types/blockly/sensor": [
+        "./dist/src/types/blockly/sensor-block-types.d.ts"
+      ],
+      "types/blockly/logic": [
+        "./dist/src/types/blockly/logic-block-types.d.ts"
+      ],
+      "parsers": [
+        "./dist/src/parsers/cpp-parser.d.ts"
+      ],
+      "message-builder": [
+        "./dist/src/message-builder/message-builder.d.ts"
+      ],
+      "protocol": [
+        "./dist/src/message-builder/protocol.d.ts"
+      ]
     }
   },
   "scripts": {
