@@ -1,6 +1,6 @@
-import { CppParser } from "../../src"
+import { CppParser } from "../../src/parsers/cpp-parser"
 import { BytecodeOpCode, ComparisonOp, SensorType } from "../../src/types/public/bytecode-types"
-import { MAX_LED_BRIGHTNESS } from "../../src/types/private/constants"
+import { MAX_LED_BRIGHTNESS } from "../../src/types/public/utils/constants"
 
 describe("Control flow", () => {
 	test("should parse basic if-else statement", () => {
@@ -639,7 +639,7 @@ describe("Bidirectional Comparisons", () => {
 				const bytecode = CppParser.cppToByte(code)
 
 				// Find all READ_SENSOR instructions
-				const sensorIndices = []
+				const sensorIndices: number[] = []
 				for (let i = 0; i < bytecode.length; i += 5) {
 					if (bytecode[i] === BytecodeOpCode.READ_SENSOR) {
 						sensorIndices.push(i)
@@ -789,7 +789,7 @@ describe("Bidirectional Comparisons", () => {
 				const bytecode = CppParser.cppToByte(code)
 
 				// Find all READ_SENSOR instructions
-				const sensorIndices = []
+				const sensorIndices: number[] = []
 				for (let i = 0; i < bytecode.length; i += 5) {
 					if (bytecode[i] === BytecodeOpCode.READ_SENSOR) {
 						sensorIndices.push(i)

@@ -1,4 +1,4 @@
-import { CppParser } from "../../src"
+import { CppParser } from "../../src/parsers/cpp-parser"
 import { BytecodeOpCode, ComparisonOp, SensorType } from "../../src/types/public/bytecode-types"
 
 describe("Else-If Edge Cases and Specific Scenarios", () => {
@@ -17,7 +17,7 @@ describe("Else-If Edge Cases and Specific Scenarios", () => {
 			const bytecode = CppParser.cppToByte(code)
 
 			// Find all JUMP_IF_FALSE instructions and verify they have non-zero jump distances
-			const jumpIfFalseInstructions = []
+			const jumpIfFalseInstructions: { index: number; jumpDistance: number }[] = []
 			for (let i = 0; i < bytecode.length; i += 5) {
 				if (bytecode[i] === BytecodeOpCode.JUMP_IF_FALSE) {
 					jumpIfFalseInstructions.push({
@@ -33,7 +33,7 @@ describe("Else-If Edge Cases and Specific Scenarios", () => {
 			}
 
 			// Find all JUMP instructions and verify they have non-zero jump distances
-			const jumpInstructions = []
+			const jumpInstructions: { index: number; jumpDistance: number }[] = []
 			for (let i = 0; i < bytecode.length; i += 5) {
 				if (bytecode[i] === BytecodeOpCode.JUMP) {
 					jumpInstructions.push({
@@ -153,7 +153,7 @@ describe("Else-If Edge Cases and Specific Scenarios", () => {
 			const bytecode = CppParser.cppToByte(code)
 
 			// Should have 3 variable declarations with sequential registers
-			const declareVarInstructions = []
+			const declareVarInstructions: { index: number; register: number }[] = []
 			for (let i = 0; i < bytecode.length; i += 5) {
 				if (bytecode[i] === BytecodeOpCode.DECLARE_VAR) {
 					declareVarInstructions.push({
@@ -169,7 +169,7 @@ describe("Else-If Edge Cases and Specific Scenarios", () => {
 			expect(declareVarInstructions[2].register).toBe(2)
 
 			// Should have comparisons using these registers
-			const compareInstructions = []
+			const compareInstructions: { index: number; leftOperand: number; rightOperand: number }[] = []
 			for (let i = 0; i < bytecode.length; i += 5) {
 				if (bytecode[i] === BytecodeOpCode.COMPARE) {
 					compareInstructions.push({
@@ -278,7 +278,7 @@ describe("Else-If Edge Cases and Specific Scenarios", () => {
 			expect(yawSensorFound).toBe(true)
 
 			// Should have different delay values
-			const delayValues = []
+			const delayValues: number[] = []
 			for (let i = 0; i < bytecode.length; i += 5) {
 				if (bytecode[i] === BytecodeOpCode.DELAY) {
 					delayValues.push(bytecode[i + 1])

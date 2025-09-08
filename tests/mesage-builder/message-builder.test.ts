@@ -1,10 +1,10 @@
-import { BalancePidsProps, LedControlData } from "../../src"
 import { MessageBuilder } from "../../src/message-builder/message-builder"
 import {
 	BalanceStatus, CareerType, HeadlightStatus, HornSoundStatus, MeetPipTriggerType, LightAnimationType,
 	MessageType, SoundType, SpeakerStatus,
 } from "../../src/message-builder/protocol"
-import { END_MARKER, START_MARKER } from "../../src/types/private/constants"
+import { END_MARKER, START_MARKER } from "../../src/types/public/utils/constants"
+import { BalancePidsProps, LedControlData } from "../../src/types/public/garage"
 
 describe("MessageBuilder", () => {
 	// Helper function to validate frame structure

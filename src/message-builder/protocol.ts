@@ -1,4 +1,5 @@
-import { FunSounds, LightAnimation, TuneToPlay } from "../types/public"
+import { FunSounds, LightAnimation } from "../types/public/garage"
+import { TuneToPlay } from "../types/public/workbench"
 
 export enum MessageType {
     UPDATE_AVAILABLE = 0,

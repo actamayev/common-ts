@@ -1,6 +1,6 @@
 import { SandboxProjectUUID } from "./utils"
-import { BlockNames } from "./blockly"
 import { SandboxChatMessage } from "./chat"
+import { BlockNames } from "./blockly/blockly"
 
 export interface BlocklyJson {
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any

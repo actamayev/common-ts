@@ -1,7 +1,7 @@
 import * as Blockly from "blockly"
 import { CareerUUID, ChallengeUUID } from "./utils"
-import { BlockNames } from "./blockly"
 import { BlocklyJson } from "./sandbox"
+import { BlockNames } from "./blockly/blockly"
 
 export interface AvailableBlock {
 	type: BlockNames

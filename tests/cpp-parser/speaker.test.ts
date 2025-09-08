@@ -1,5 +1,5 @@
-import { CppParser } from "../../src"
 import { SoundType } from "../../src/message-builder/protocol"
+import { CppParser } from "../../src/parsers/cpp-parser"
 import { BytecodeOpCode } from "../../src/types/public/bytecode-types"
 
 describe("Speaker commands", () => {

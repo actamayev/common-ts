@@ -5,17 +5,129 @@
   "files": [
     "dist/src/**/*"
   ],
-  "main": "dist/src/index.js",
-  "types": "dist/src/index.d.ts",
+  "exports": {
+    "./types/api": {
+      "types": "./dist/src/types/public/api.d.ts",
+      "default": "./dist/src/types/public/api.js"
+    },
+    "./types/auth": {
+      "types": "./dist/src/types/public/auth.d.ts",
+      "default": "./dist/src/types/public/auth.js"
+    },
+    "./types/chat": {
+      "types": "./dist/src/types/public/chat.d.ts",
+      "default": "./dist/src/types/public/chat.js"
+    },
+    "./types/career-quest": {
+      "types": "./dist/src/types/public/career-quest.d.ts",
+      "default": "./dist/src/types/public/career-quest.js"
+    },
+    "./types/bytecode-types": {
+      "types": "./dist/src/types/public/bytecode-types.d.ts",
+      "default": "./dist/src/types/public/bytecode-types.js"
+    },
+    "./types/garage": {
+      "types": "./dist/src/types/public/garage.d.ts",
+      "default": "./dist/src/types/public/garage.js"
+    },
+    "./types/lab": {
+      "types": "./dist/src/types/public/lab.d.ts",
+      "default": "./dist/src/types/public/lab.js"
+    },
+    "./types/pip": {
+      "types": "./dist/src/types/public/pip.d.ts",
+      "default": "./dist/src/types/public/pip.js"
+    },
+    "./types/sandbox": {
+      "types": "./dist/src/types/public/sandbox.d.ts",
+      "default": "./dist/src/types/public/sandbox.js"
+    },
+    "./types/teacher": {
+      "types": "./dist/src/types/public/teacher.d.ts",
+      "default": "./dist/src/types/public/teacher.js"
+    },
+    "./types/workbench": {
+      "types": "./dist/src/types/public/workbench.d.ts",
+      "default": "./dist/src/types/public/workbench.js"
+    },
+    "./types/cq-challenge-data": {
+      "types": "./dist/src/types/public/cq-challenge-data.d.ts",
+      "default": "./dist/src/types/public/cq-challenge-data.js"
+    },
+    "./types/socket": {
+      "types": "./dist/src/types/public/socket.d.ts",
+      "default": "./dist/src/types/public/socket.js"
+    },
+    "./types/hub": {
+      "types": "./dist/src/types/public/hub.d.ts",
+      "default": "./dist/src/types/public/hub.js"
+    },
+    "./types/utils": {
+      "types": "./dist/src/types/public/utils.d.ts",
+      "default": "./dist/src/types/public/utils.js"
+    },
+    "./types/utils/blockly-helpers": {
+      "types": "./dist/src/types/public/utils/blockly-helpers.d.ts",
+      "default": "./dist/src/types/public/utils/blockly-helpers.js"
+    },
+    "./types/utils/blockly-registry": {
+      "types": "./dist/src/types/public/utils/blockly-registry.d.ts",
+      "default": "./dist/src/types/public/utils/blockly-registry.js"
+    },
+    "./types/blockly": {
+      "types": "./dist/src/types/public/blockly/index.d.ts",
+      "default": "./dist/src/types/public/blockly/index.js"
+    },
+    "./types/blockly/blockly": {
+      "types": "./dist/src/types/public/blockly/blockly.d.ts",
+      "default": "./dist/src/types/public/blockly/blockly.js"
+    },
+    "./types/blockly/block-categories": {
+      "types": "./dist/src/types/public/blockly/block-categories.d.ts",
+      "default": "./dist/src/types/public/blockly/block-categories.js"
+    },
+    "./types/blockly/motor": {
+      "types": "./dist/src/types/public/blockly/motor-block-types.d.ts",
+      "default": "./dist/src/types/public/blockly/motor-block-types.js"
+    },
+    "./types/blockly/led": {
+      "types": "./dist/src/types/public/blockly/led-block-types.d.ts",
+      "default": "./dist/src/types/public/blockly/led-block-types.js"
+    },
+    "./types/blockly/speaker": {
+      "types": "./dist/src/types/public/blockly/speaker-block-types.d.ts",
+      "default": "./dist/src/types/public/blockly/speaker-block-types.js"
+    },
+    "./types/blockly/sensor": {
+      "types": "./dist/src/types/public/blockly/sensor-block-types.d.ts",
+      "default": "./dist/src/types/public/blockly/sensor-block-types.js"
+    },
+    "./types/blockly/logic": {
+      "types": "./dist/src/types/public/blockly/logic-block-types.d.ts",
+      "default": "./dist/src/types/public/blockly/logic-block-types.js"
+    },
+    "./parsers": {
+      "types": "./dist/src/parsers/cpp-parser.d.ts",
+      "default": "./dist/src/parsers/cpp-parser.js"
+    },
+    "./message-builder": {
+      "types": "./dist/src/message-builder/message-builder.d.ts",
+      "default": "./dist/src/message-builder/message-builder.js"
+    },
+    "./protocol": {
+      "types": "./dist/src/message-builder/protocol.d.ts",
+      "default": "./dist/src/message-builder/protocol.js"
+    }
+  },
   "scripts": {
-    "test": "jest",
+    "test": "jest --config jest.config.js",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "type-check": "tsc --noEmit",
+    "type-check": "tsc --noEmit --project tsconfig.test.json",
+    "build": "rimraf dist && tsc --project tsconfig.json",
     "validate": "npm run lint && npm run type-check && npm run test",
-    "build": "rimraf dist && tsc",
     "prepublishOnly": "npm run build"
   },
   "keywords": [],

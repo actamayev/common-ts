@@ -1,5 +1,5 @@
-import { CppParser } from "../../src"
-import { MAX_LED_BRIGHTNESS } from "../../src/types/private/constants"
+import { CppParser } from "../../src/parsers/cpp-parser"
+import { MAX_LED_BRIGHTNESS } from "../../src/types/public/utils/constants"
 import { BytecodeOpCode, ComparisonOp, LedID, SensorType, VarType } from "../../src/types/public/bytecode-types"
 
 describe("Variable assignments", () => {
@@ -914,7 +914,7 @@ describe("Compound Conditional Statements", () => {
 			}
 
 			// Find the COMPARE instructions for the compound AND condition
-			const compareIndices = []
+			const compareIndices: number[] = []
 			for (let i = 0; i < bytecode.length; i += 5) {
 				if (bytecode[i] === BytecodeOpCode.COMPARE) {
 					compareIndices.push(i)
@@ -985,7 +985,7 @@ describe("Compound Conditional Statements", () => {
 			expect(pitchSensorFound).toBe(true)
 
 			// Look for the two COMPARE instructions (one for roll, one for pitch)
-			const compareIndices = []
+			const compareIndices: number[] = []
 			for (let i = 0; i < bytecode.length; i += 5) {
 				if (bytecode[i] === BytecodeOpCode.COMPARE && bytecode[i + 1] === ComparisonOp.GREATER_THAN) {
 					compareIndices.push(i)

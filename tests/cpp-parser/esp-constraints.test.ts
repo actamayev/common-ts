@@ -1,9 +1,9 @@
-import { CppParser } from "../../src"
+import { CppParser } from "../../src/parsers/cpp-parser"
 
 describe("ESP32 Hardware Constraints", () => {
 	test("should reject programs exceeding MAX_PROGRAM_SIZE (8192 instructions)", () => {
 		// Generate a very large program
-		const statements = []
+		const statements: string[] = []
 		for (let i = 0; i < 8193; i++) {
 			statements.push("delay(1);")
 		}
@@ -17,7 +17,7 @@ describe("ESP32 Hardware Constraints", () => {
 
 	test("should accept programs just under MAX_PROGRAM_SIZE", () => {
 		// Generate a program exactly at the limit
-		const statements = []
+		const statements: string[] = []
 		for (let i = 0; i < 8191; i++) {
 			statements.push("delay(1);")
 		}
@@ -31,7 +31,7 @@ describe("ESP32 Hardware Constraints", () => {
 
 	test("should reject programs exceeding MAX_REGISTERS (512)", () => {
 		// Generate a program with too many variables (updated to be just over 512)
-		const statements = []
+		const statements: string[] = []
 		for (let i = 0; i < 513; i++) {
 			statements.push(`float var${i} = ${i}.0;`)
 		}
@@ -45,7 +45,7 @@ describe("ESP32 Hardware Constraints", () => {
 
 	test("should accept programs just under MAX_REGISTERS", () => {
 		// Generate a program with exactly the max number of variables
-		const statements = []
+		const statements: string[] = []
 		for (let i = 0; i < 511; i++) {
 			statements.push(`float var${i} = ${i}.0;`)
 		}
@@ -102,7 +102,7 @@ describe("ESP32 Hardware Constraints", () => {
 
 	test("should correctly compute instruction size for large programs", () => {
 		// Create a moderately large program
-		const statements = []
+		const statements: string[] = []
 		for (let i = 0; i < 1000; i++) {
 			statements.push("delay(1);")
 		}

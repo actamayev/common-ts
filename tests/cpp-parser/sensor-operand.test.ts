@@ -1,4 +1,4 @@
-import { CppParser } from "../../src"
+import { CppParser } from "../../src/parsers/cpp-parser"
 import { BytecodeOpCode, ComparisonOp, SensorType } from "../../src/types/public/bytecode-types"
 
 describe("Sensor Operand Processing", () => {

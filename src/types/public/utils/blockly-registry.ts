@@ -1,8 +1,10 @@
 /* eslint-disable max-len */
-import { BlockNames, CONDITIONAL_BLOCK_TYPES, LED_BLOCK_TYPES,
-	LOOP_BLOCK_TYPES, MATH_BLOCK_TYPES, MOTOR_BLOCK_TYPES, SENSORS_BLOCK_TYPES,
-	START_BLOCK_TYPES, VARIABLE_BLOCK_TYPES } from "../blockly"
 import { BlocklyCategoryName, ParentCategoryName } from "../blockly/block-categories"
+import { BlockNames } from "../blockly/blockly"
+import { LED_BLOCK_TYPES } from "../blockly/led-block-types"
+import { CONDITIONAL_BLOCK_TYPES, LOOP_BLOCK_TYPES, MATH_BLOCK_TYPES, START_BLOCK_TYPES, VARIABLE_BLOCK_TYPES } from "../blockly/logic-block-types"
+import { MOTOR_BLOCK_TYPES } from "../blockly/motor-block-types"
+import { SENSORS_BLOCK_TYPES } from "../blockly/sensor-block-types"
 import { SPEAKER_BLOCK_TYPES } from "../blockly/speaker-block-types"
 
 export interface BlockDefinition {
