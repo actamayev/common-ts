@@ -312,7 +312,7 @@ describe("Else-If Functionality", () => {
 			// Add else-if chain
 			code += "if (var0 > var1) { rgbLed.set_led_red(); }"
 			for (let i = 2; i < 20; i++) {
-				code += ` else if (var${i} > var${i - 1}) { delay(${i * 10}); }`
+				code += ` else if (var${i} > var${i - 1}) { wait(${i * 10}); }`
 			}
 			code += " else { rgbLed.set_led_blue(); }"
 
@@ -740,7 +740,7 @@ describe("Else-If Functionality", () => {
 				} else if (9 > 10) {
 					rgbLed.set_led_purple();
 				} else {
-					delay(1000);
+					wait(1000);
 				}
 			`
 
@@ -765,7 +765,7 @@ describe("Else-If Functionality", () => {
 					else if (r === 0 && g === 0 && b === MAX_LED_BRIGHTNESS) blueLedFound = true
 					else if (r === MAX_LED_BRIGHTNESS && g === MAX_LED_BRIGHTNESS && b === MAX_LED_BRIGHTNESS) whiteLedFound = true
 					else if (r === MAX_LED_BRIGHTNESS && g === 0 && b === MAX_LED_BRIGHTNESS) purpleLedFound = true
-				} else if (bytecode[i] === BytecodeOpCode.DELAY) {
+				} else if (bytecode[i] === BytecodeOpCode.WAIT) {
 					delayFound = true
 				}
 			}
@@ -791,7 +791,7 @@ describe("Else-If Functionality", () => {
 							turn(COUNTERCLOCKWISE, 90);
 						} else {
 							goBackward(50);
-							delay(500);
+							wait(500);
 						}
 					} else if (Sensors::getInstance().getPitch() > 30) {
 						goBackwardTime(1.0, 30);
@@ -867,7 +867,7 @@ describe("Else-If Functionality", () => {
 				rgbLed.set_led_white();
 			}
 			
-			delay(200);
+			wait(200);
 		}
 	`
 
@@ -1055,7 +1055,7 @@ describe("Else-If Functionality", () => {
 
 			// Create a chain of 20 else-if statements
 			for (let i = 1; i <= 20; i++) {
-				code += ` else if (${i} == ${i}) { delay(${i * 10}); }`
+				code += ` else if (${i} == ${i}) { wait(${i * 10}); }`
 			}
 
 			code += " else { rgbLed.set_led_white(); }"
@@ -1069,7 +1069,7 @@ describe("Else-If Functionality", () => {
 			for (let i = 0; i < bytecode.length; i += 5) {
 				if (bytecode[i] === BytecodeOpCode.COMPARE) {
 					compareCount++
-				} else if (bytecode[i] === BytecodeOpCode.DELAY) {
+				} else if (bytecode[i] === BytecodeOpCode.WAIT) {
 					delayCount++
 				}
 			}
@@ -1079,15 +1079,15 @@ describe("Else-If Functionality", () => {
 		})
 
 		test("should generate correct jump distances for large else-if chains", () => {
-			let code = "if (false) { rgbLed.set_led_red(); delay(100); }"
+			let code = "if (false) { rgbLed.set_led_red(); wait(100); }"
 
 			// Create else-if chain with substantial code in each block
 			for (let i = 1; i <= 10; i++) {
 				code += ` else if (${i} == ${i}) {
 			rgbLed.set_led_green();
-			delay(${i * 100});
+			wait(${i * 100});
 			rgbLed.set_led_blue();
-			delay(${i * 50});
+			wait(${i * 50});
 		}`
 			}
 

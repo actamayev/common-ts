@@ -5,7 +5,7 @@ describe("ESP32 Hardware Constraints", () => {
 		// Generate a very large program
 		const statements: string[] = []
 		for (let i = 0; i < 8193; i++) {
-			statements.push("delay(1);")
+			statements.push("wait(1);")
 		}
 		const largeProgram = statements.join("\n")
 
@@ -19,7 +19,7 @@ describe("ESP32 Hardware Constraints", () => {
 		// Generate a program exactly at the limit
 		const statements: string[] = []
 		for (let i = 0; i < 8191; i++) {
-			statements.push("delay(1);")
+			statements.push("wait(1);")
 		}
 		const largeButValidProgram = statements.join("\n")
 
@@ -63,11 +63,11 @@ describe("ESP32 Hardware Constraints", () => {
 
 		// Add enough instructions inside the if block to make the jump offset exceed uint16_t
 		for (let i = 0; i < 3300; i++) {
-			hugeIfProgram += "  delay(1);\n"
+			hugeIfProgram += "  wait(1);\n"
 		}
 
 		hugeIfProgram += "}\n"
-		hugeIfProgram += "delay(2);" // After the if block
+		hugeIfProgram += "wait(2);" // After the if block
 
 		// Should throw an error about jump distance
 		expect(() => {
@@ -90,7 +90,7 @@ describe("ESP32 Hardware Constraints", () => {
 		// Add some sensor reads to push it over the limit
 		for (let i = 0; i < 20; i++) {
 			complexProgram += "if (Sensors::getInstance().getPitch() > 0) {\n"
-			complexProgram += "  delay(1);\n"
+			complexProgram += "  wait(1);\n"
 			complexProgram += "}\n"
 		}
 
@@ -104,7 +104,7 @@ describe("ESP32 Hardware Constraints", () => {
 		// Create a moderately large program
 		const statements: string[] = []
 		for (let i = 0; i < 1000; i++) {
-			statements.push("delay(1);")
+			statements.push("wait(1);")
 		}
 		const program = statements.join("\n")
 

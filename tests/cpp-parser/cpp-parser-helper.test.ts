@@ -25,7 +25,7 @@ describe("CppParserHelper", () => {
 		// Test a sample of different command types
 			const commandTests = [
 				{ statement: "rgbLed.set_led_blue()", type: CommandType.SET_LED_BLUE },
-				{ statement: "delay(100)", type: CommandType.DELAY },
+				{ statement: "wait(100)", type: CommandType.WAIT },
 				{ statement: "if (10 > 5)", type: CommandType.IF_STATEMENT },
 				{ statement: "while(true)", type: CommandType.WHILE_STATEMENT },
 				{ statement: "for (int i = 0; i < 10; i++)", type: CommandType.FOR_STATEMENT },
@@ -134,7 +134,7 @@ describe("CppParserHelper", () => {
 					operand4: 0
 				},
 				{
-					opcode: BytecodeOpCode.DELAY,
+					opcode: BytecodeOpCode.WAIT,
 					operand1: 100,
 					operand2: 0,
 					operand3: 0,
@@ -165,7 +165,7 @@ describe("CppParserHelper", () => {
 			expect(bytecode[4]).toBe(0)
 
 			// Check the second instruction (DELAY)
-			expect(bytecode[5]).toBe(BytecodeOpCode.DELAY)
+			expect(bytecode[5]).toBe(BytecodeOpCode.WAIT)
 			expect(bytecode[6]).toBe(100)
 			expect(bytecode[7]).toBe(0)
 			expect(bytecode[8]).toBe(0)
@@ -193,7 +193,7 @@ describe("CppParserHelper", () => {
 			const instructions: BytecodeInstruction[] = []
 			for (let i = 0; i < 100; i++) {
 				instructions.push({
-					opcode: BytecodeOpCode.DELAY,
+					opcode: BytecodeOpCode.WAIT,
 					operand1: i,
 					operand2: 0,
 					operand3: 0,
@@ -206,13 +206,13 @@ describe("CppParserHelper", () => {
 			expect(bytecode.length).toBe(5 * 100)
 
 			// Check a few instructions at different positions
-			expect(bytecode[0]).toBe(BytecodeOpCode.DELAY)
+			expect(bytecode[0]).toBe(BytecodeOpCode.WAIT)
 			expect(bytecode[1]).toBe(0)
 
-			expect(bytecode[5 * 50]).toBe(BytecodeOpCode.DELAY)
+			expect(bytecode[5 * 50]).toBe(BytecodeOpCode.WAIT)
 			expect(bytecode[5 * 50 + 1]).toBe(50)
 
-			expect(bytecode[5 * 99]).toBe(BytecodeOpCode.DELAY)
+			expect(bytecode[5 * 99]).toBe(BytecodeOpCode.WAIT)
 			expect(bytecode[5 * 99 + 1]).toBe(99)
 		})
 	})

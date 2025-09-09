@@ -349,11 +349,11 @@ export class CppParser {
 				CppParserHelper.handleIndividualLed(command.matches, LedID.RIGHT_HEADLIGHT, instructions)
 				break
 
-			case CommandType.DELAY:
+			case CommandType.WAIT:
 				if (command.matches && command.matches.length === 2) {
 					const delayMs = parseInt(command.matches[1], 10)
 					instructions.push({
-						opcode: BytecodeOpCode.DELAY,
+						opcode: BytecodeOpCode.WAIT,
 						operand1: delayMs,  // Direct assignment - no more bit masking!
 						operand2: 0,
 						operand3: 0,

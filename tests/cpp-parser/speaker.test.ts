@@ -185,7 +185,7 @@ describe("Speaker commands", () => {
 			const program = `
 				rgbLed.set_led_red();
 				play_sound("Chime");
-				delay(1000);
+				wait(1000);
 				rgbLed.turn_led_off();
 				play_sound("Drop");
 			`
@@ -196,7 +196,7 @@ describe("Speaker commands", () => {
 			expect(bytecode[0]).toBe(BytecodeOpCode.SET_ALL_LEDS) // Red LED
 			expect(bytecode[5]).toBe(BytecodeOpCode.PLAY_SOUND)   // Chime
 			expect(bytecode[6]).toBe(SoundType.CHIME)
-			expect(bytecode[10]).toBe(BytecodeOpCode.DELAY)       // Delay
+			expect(bytecode[10]).toBe(BytecodeOpCode.WAIT)       // Delay
 			expect(bytecode[15]).toBe(BytecodeOpCode.SET_ALL_LEDS) // LED off
 			expect(bytecode[20]).toBe(BytecodeOpCode.PLAY_SOUND)   // Drop
 			expect(bytecode[21]).toBe(SoundType.DROP)

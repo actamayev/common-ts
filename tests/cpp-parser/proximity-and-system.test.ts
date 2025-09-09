@@ -54,7 +54,7 @@ describe("Proximity Sensor Functions", () => {
 		test("should handle multiple side proximity sensors", () => {
 			const code = `
         is_object_near_side_left();
-        delay(100);
+        wait(100);
         is_object_near_side_right();
       `
 
@@ -117,7 +117,7 @@ describe("Proximity Sensor Functions", () => {
         while(true) {
           if (is_object_in_front()) {
             rgbLed.set_led_red();
-            delay(500);
+            wait(500);
           } else {
             goForward(50);
           }
@@ -174,7 +174,7 @@ describe("Proximity Sensor Functions", () => {
         rgbLed.set_led_blue();
         wait_for_button_press();
         rgbLed.set_led_green();
-        delay(1000);
+        wait(1000);
         wait_for_button_press();
         rgbLed.set_led_red();
       `
@@ -205,7 +205,7 @@ describe("Proximity Sensor Functions", () => {
 			expect(bytecode[12]).toBe(MAX_LED_BRIGHTNESS)
 			expect(bytecode[13]).toBe(0)
 
-			expect(bytecode[15]).toBe(BytecodeOpCode.DELAY)
+			expect(bytecode[15]).toBe(BytecodeOpCode.WAIT)
 			expect(bytecode[16]).toBe(1000)
 
 			expect(bytecode[20]).toBe(BytecodeOpCode.WAIT_FOR_BUTTON)
@@ -228,7 +228,7 @@ describe("Proximity Sensor Functions", () => {
         for (int i = 0; i < 3; i++) {
           wait_for_button_press();
           rgbLed.set_led_blue();
-          delay(500);
+          wait(500);
         }
       `
 
@@ -257,9 +257,9 @@ describe("Proximity Sensor Functions", () => {
         for (int i = 0; i < 3; i++) {
           // Flash light to indicate start
           rgbLed.set_led_blue();
-          delay(200);
+          wait(200);
           rgbLed.turn_led_off();
-          delay(200);
+          wait(200);
         }
         
         while(true) {
@@ -267,7 +267,7 @@ describe("Proximity Sensor Functions", () => {
           if (is_object_in_front()) {
             // Front blocked, check sides
             rgbLed.set_led_red();
-            delay(300);
+            wait(300);
             
             if (is_object_near_side_left()) {
               // Left blocked too, try right
@@ -287,7 +287,7 @@ describe("Proximity Sensor Functions", () => {
             // Path is clear, move forward
             rgbLed.set_led_green();
             goForward(50);
-            delay(200);
+            wait(200);
           }
         }
       `

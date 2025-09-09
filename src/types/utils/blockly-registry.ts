@@ -223,9 +223,9 @@ export const BLOCK_REGISTRY: Record<BlockNames, BlockDefinition> = {
 		category: "Loops",
 		parentCategory: "Logic"
 	},
-	[LOOP_BLOCK_TYPES.DELAY]: {
+	[LOOP_BLOCK_TYPES.WAIT]: {
 		description: "Pauses execution for a specified time in seconds",
-		codeTemplate: "delay({seconds});",
+		codeTemplate: "wait({seconds});",
 		category: "Loops",
 		parentCategory: "Logic"
 	}

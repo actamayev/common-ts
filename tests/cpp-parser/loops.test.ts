@@ -6,7 +6,7 @@ describe("While Loop Functionality", () => {
 	test("should parse basic while(true) loop", () => {
 		const code = `while(true) {
 		rgbLed.set_led_red();
-		delay(500);
+		wait(500);
 	}`
 
 		const bytecode = CppParser.cppToByte(code)
@@ -22,7 +22,7 @@ describe("While Loop Functionality", () => {
 		expect(bytecode[8]).toBe(0)   // B
 
 		// 3. DELAY
-		expect(bytecode[10]).toBe(BytecodeOpCode.DELAY)
+		expect(bytecode[10]).toBe(BytecodeOpCode.WAIT)
 		expect(bytecode[11]).toBe(500)
 
 		// 4. WHILE_END (jump back 3 instructions: 3 * 20 = 60 bytes)
@@ -40,9 +40,9 @@ describe("While Loop Functionality", () => {
 		rgbLed.set_led_red();
 		while(true) {
 			rgbLed.set_led_blue();
-			delay(100);
+			wait(100);
 		}
-		delay(500);
+		wait(500);
 	}`
 
 		const bytecode = CppParser.cppToByte(code)
@@ -84,7 +84,7 @@ describe("While Loop Functionality", () => {
 			} else {
 				rgbLed.set_led_red();
 			}
-			delay(1000);
+			wait(1000);
 		}`
 
 		const bytecode = CppParser.cppToByte(code)
@@ -120,7 +120,7 @@ describe("While Loop Functionality", () => {
 		expect(bytecode[28]).toBe(0)   // B
 
 		// 7. DELAY
-		expect(bytecode[30]).toBe(BytecodeOpCode.DELAY)
+		expect(bytecode[30]).toBe(BytecodeOpCode.WAIT)
 		expect(bytecode[31]).toBe(1000)
 
 		// 8. WHILE_END (jump back 7 instructions: 7 * 20 = 140 bytes)
@@ -135,11 +135,11 @@ describe("While Loop Functionality", () => {
 		const code = `
 		while(true) {
 			rgbLed.set_led_red();
-			delay(100);
+			wait(100);
 		}
 		while(true) {
 			rgbLed.set_led_blue();
-			delay(200);
+			wait(200);
 		}`
 
 		const bytecode = CppParser.cppToByte(code)
@@ -188,7 +188,7 @@ describe("While Loop Functionality", () => {
 	test("should handle while loop at the end of program", () => {
 		const code = `
 			rgbLed.set_led_green();
-			delay(2000);
+			wait(2000);
 			while(true) {
 				rgbLed.set_led_blue();
 			}
@@ -203,7 +203,7 @@ describe("While Loop Functionality", () => {
 		expect(bytecode[3]).toBe(0)   // B
 
 		// 2. DELAY
-		expect(bytecode[5]).toBe(BytecodeOpCode.DELAY)
+		expect(bytecode[5]).toBe(BytecodeOpCode.WAIT)
 		expect(bytecode[6]).toBe(2000)
 
 		// 3. WHILE_START
@@ -230,7 +230,7 @@ describe("For Loop Functionality", () => {
 	test("should parse basic for loop", () => {
 		const code = `for (int i = 0; i < 5; i++) {
 		rgbLed.set_led_red();
-		delay(100);
+		wait(100);
 	}`
 
 		const bytecode = CppParser.cppToByte(code)
@@ -258,7 +258,7 @@ describe("For Loop Functionality", () => {
 		expect(bytecode[18]).toBe(0)   // B
 
 		// 5. DELAY
-		expect(bytecode[20]).toBe(BytecodeOpCode.DELAY)
+		expect(bytecode[20]).toBe(BytecodeOpCode.WAIT)
 		expect(bytecode[21]).toBe(100)
 
 		// 6. FOR_INCREMENT
@@ -429,11 +429,11 @@ describe("For Loop Functionality", () => {
 	test("should handle complex for loop pattern with multiple operations", () => {
 		const code = `for (int i = 1; i < 4; i++) {
 		rgbLed.set_led_white();
-		delay(100);
+		wait(100);
 		rgbLed.set_led_blue();
-		delay(100);
+		wait(100);
 		rgbLed.set_led_red();
-		delay(100);
+		wait(100);
 	}`
 
 		const bytecode = CppParser.cppToByte(code)
@@ -441,7 +441,7 @@ describe("For Loop Functionality", () => {
 		let delayCount = 0
 		let setLedCount = 0
 		for (let i = 15; i < bytecode.length; i += 5) {
-			if (bytecode[i] === BytecodeOpCode.DELAY) {
+			if (bytecode[i] === BytecodeOpCode.WAIT) {
 				delayCount++
 			} else if (bytecode[i] === BytecodeOpCode.SET_ALL_LEDS) {
 				setLedCount++
