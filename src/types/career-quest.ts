@@ -1,4 +1,4 @@
-import * as Blockly from "blockly"
+import type * as Blockly from "blockly/core"
 import { CareerUUID, ChallengeUUID } from "./utils"
 import { BlocklyJson } from "./sandbox"
 import { BlockNames } from "./blockly/blockly"
