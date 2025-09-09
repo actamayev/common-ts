@@ -29,12 +29,12 @@ export const BLOCK_REGISTRY: Record<BlockNames, BlockDefinition> = {
 	},
 	[MOTOR_BLOCK_TYPES.GO_FORWARD_TIME]: {
 		description: "Makes the robot move forward for a specific amount of time",
-		codeTemplate: "goForward({time_ms});",
+		codeTemplate: "goForward({seconds});",
 		category: "Motors"
 	},
 	[MOTOR_BLOCK_TYPES.GO_BACKWARD_TIME]: {
 		description: "Makes the robot move backward for a specific amount of time",
-		codeTemplate: "goBackward({time_ms});",
+		codeTemplate: "goBackward({seconds});",
 		category: "Motors"
 	},
 	[MOTOR_BLOCK_TYPES.GO_FORWARD_DISTANCE]: {
@@ -224,12 +224,9 @@ export const BLOCK_REGISTRY: Record<BlockNames, BlockDefinition> = {
 		parentCategory: "Logic"
 	},
 	[LOOP_BLOCK_TYPES.DELAY]: {
-		description: "Pauses execution for a specified time in milliseconds",
-		codeTemplate: "delay({milliseconds});",
+		description: "Pauses execution for a specified time in seconds",
+		codeTemplate: "delay({seconds});",
 		category: "Loops",
 		parentCategory: "Logic"
 	}
-
-	// Note: You'll need to add blocks for Screen, Speaker, Buttons, IR Sensors, Color Sensor
-	// as you implement those features
 }
