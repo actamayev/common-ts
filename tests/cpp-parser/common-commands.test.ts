@@ -450,9 +450,9 @@ describe("LED operations", () => {
 // 2.3 Test delay commands
 describe("Delay commands", () => {
 	test("should parse delay command", () => {
-		const bytecode = CppParser.cppToByte("delay(500);")
+		const bytecode = CppParser.cppToByte("wait(500);")
 
-		expect(bytecode[0]).toBe(BytecodeOpCode.DELAY)
+		expect(bytecode[0]).toBe(BytecodeOpCode.WAIT)
 		expect(bytecode[1]).toBe(500) // Delay value
 		expect(bytecode[2]).toBe(0)   // Unused
 		expect(bytecode[3]).toBe(0)   // Unused
@@ -465,9 +465,9 @@ describe("Combining multiple commands", () => {
 	test("should parse a simple LED blink program", () => {
 		const program = `
 			rgbLed.set_led_red();
-			delay(500);
+			wait(500);
 			rgbLed.turn_led_off();
-			delay(500);
+			wait(500);
 		`
 
 		const bytecode = CppParser.cppToByte(program)
@@ -479,7 +479,7 @@ describe("Combining multiple commands", () => {
 		expect(bytecode[3]).toBe(0)   // B
 
 		// 2nd instruction: DELAY
-		expect(bytecode[5]).toBe(BytecodeOpCode.DELAY)
+		expect(bytecode[5]).toBe(BytecodeOpCode.WAIT)
 		expect(bytecode[6]).toBe(500)
 
 		// 3rd instruction: SET_ALL_LEDS (off)
@@ -489,7 +489,7 @@ describe("Combining multiple commands", () => {
 		expect(bytecode[13]).toBe(0) // B
 
 		// 4th instruction: DELAY
-		expect(bytecode[15]).toBe(BytecodeOpCode.DELAY)
+		expect(bytecode[15]).toBe(BytecodeOpCode.WAIT)
 		expect(bytecode[16]).toBe(500)
 
 		// Last instruction: END

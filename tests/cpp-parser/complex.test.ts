@@ -247,9 +247,9 @@ describe("Boundary Conditions", () => {
 		const statements: string[] = []
 		for (let i = 0; i < 100; i++) {
 			statements.push("rgbLed.set_led_red();")
-			statements.push("delay(10);")
+			statements.push("wait(10);")
 			statements.push("rgbLed.set_led_blue();")
-			statements.push("delay(10);")
+			statements.push("wait(10);")
 		}
 
 		const code = statements.join("\n")
@@ -263,7 +263,7 @@ describe("Boundary Conditions", () => {
 
 		// Check first few instructions
 		expect(bytecode[0]).toBe(BytecodeOpCode.SET_ALL_LEDS)
-		expect(bytecode[5]).toBe(BytecodeOpCode.DELAY)
+		expect(bytecode[5]).toBe(BytecodeOpCode.WAIT)
 
 		// Check last instruction is END
 		expect(bytecode[bytecode.length - 5]).toBe(BytecodeOpCode.END)
@@ -433,7 +433,7 @@ describe("Boundary Conditions", () => {
 		rgbLed.set_led_white();
 		}
 		
-		delay(100);
+		wait(100);
 		}
 	`
 
@@ -574,10 +574,10 @@ describe("Proximity Sensor Functionality", () => {
 			const code = `while(true) {
         if (is_object_in_front()) {
           rgbLed.set_led_red();
-          delay(100);
+          wait(100);
         } else {
           rgbLed.set_led_green();
-          delay(500);
+          wait(500);
         }
       }`
 
@@ -593,7 +593,7 @@ describe("Proximity Sensor Functionality", () => {
 			let delay500Found = false
 
 			for (let i = 0; i < bytecode.length; i += 5) {
-				if (bytecode[i] === BytecodeOpCode.DELAY) {
+				if (bytecode[i] === BytecodeOpCode.WAIT) {
 					if (bytecode[i + 1] === 100) {
 						delay100Found = true
 					} else if (bytecode[i + 1] === 500) {

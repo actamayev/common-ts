@@ -3,7 +3,7 @@
 export enum BytecodeOpCode {
     NOP = 0x00,
     END = 0x01,
-    DELAY = 0x02,
+    WAIT = 0x02,
     WAIT_FOR_BUTTON = 0x03,  // Choose an appropriate unused value
     SET_LED = 0x10,
     SET_ALL_LEDS = 0x11,
@@ -102,7 +102,7 @@ export enum CommandType {
     SET_LEFT_HEADLIGHT = "SET_LEFT_HEADLIGHT",
     SET_RIGHT_HEADLIGHT = "SET_RIGHT_HEADLIGHT",
     PLAY_SOUND = "PLAY_SOUND",
-    DELAY = "DELAY",
+    WAIT = "WAIT",
 
     VARIABLE_ASSIGNMENT = "VARIABLE_ASSIGNMENT",
 
@@ -154,7 +154,7 @@ export const CommandPatterns: Record<CommandType, RegExp> = {
 	[CommandType.SET_LEFT_HEADLIGHT]: /^rgbLed\.set_left_headlight\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*\)$/,
 	[CommandType.SET_RIGHT_HEADLIGHT]: /^rgbLed\.set_right_headlight\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*\)$/,
 	[CommandType.PLAY_SOUND]: /^play_sound\(\s*"([^"]*)"\s*\)$/,
-	[CommandType.DELAY]: /^delay\(\s*(\d+)\s*\)$/,
+	[CommandType.WAIT]: /^wait\(\s*(\d+)\s*\)$/,
 
 	[CommandType.VARIABLE_ASSIGNMENT]: /^(float|int|bool)\s+(\w+)\s*=\s*(.+)$/,
 

@@ -10,7 +10,7 @@ describe("Control flow", () => {
 		} else {
 			rgbLed.set_led_red();
 		}
-		delay(1000);
+		wait(1000);
 		rgbLed.set_led_green();
 	`
 
@@ -44,7 +44,7 @@ describe("Control flow", () => {
 		expect(bytecode[23]).toBe(0)   // B
 
 		// 6. Delay instruction
-		expect(bytecode[25]).toBe(BytecodeOpCode.DELAY)
+		expect(bytecode[25]).toBe(BytecodeOpCode.WAIT)
 		expect(bytecode[26]).toBe(1000) // 1000ms
 
 		// 7. Set LEDs green
@@ -246,7 +246,7 @@ rgbLed.set_led_purple();`
 		if (Sensors::getInstance().getAccelMagnitude() > 5) {
 			rgbLed.set_led_white();
 		}
-		delay(100);
+		wait(100);
 	}`
 
 			const bytecode = CppParser.cppToByte(code)

@@ -32,7 +32,7 @@ The parser uses a massive switch statement (52 cases) handling:
 - **LED control**: Individual LED manipulation, color presets, brightness control
 - **Motor commands**: Forward/backward with throttle, turning, distance/time-based movement
 - **Sensor operations**: Gyroscope, accelerometer, magnetometer, proximity sensors
-- **Timing operations**: `delay()`, `waitForButton()`
+- **Timing operations**: `wait()`, `waitForButton()`
 
 #### Advanced Features
 - **Compound conditions**: `if ((x > 5) && (y < 10))` and `if ((a == 1) || (b != 2))` support

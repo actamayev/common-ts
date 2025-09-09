@@ -57,10 +57,10 @@ describe("Else-If Edge Cases and Specific Scenarios", () => {
 						rgbLed.set_led_red();
 					} else if (i == 1) {
 						rgbLed.set_led_green();
-						delay(100);
+						wait(100);
 					} else if (i == 2) {
 						rgbLed.set_led_blue();
-						delay(200);
+						wait(200);
 					}
 				}
 			`
@@ -248,19 +248,19 @@ describe("Else-If Edge Cases and Specific Scenarios", () => {
 				
 				if (time < 0) {
 					rgbLed.set_led_red();
-					delay(100);
+					wait(100);
 				} else if ((time >= 0) && (time < 90)) {
 					rgbLed.set_led_green();
-					delay(200);
+					wait(200);
 				} else if ((time >= 90) && (time < 180)) {
 					rgbLed.set_led_blue();
-					delay(300);
+					wait(300);
 				} else if ((time >= 180) && (time < 270)) {
 					rgbLed.set_led_white();
-					delay(400);
+					wait(400);
 				} else {
 					rgbLed.set_led_purple();
-					delay(500);
+					wait(500);
 				}
 			`
 
@@ -280,7 +280,7 @@ describe("Else-If Edge Cases and Specific Scenarios", () => {
 			// Should have different delay values
 			const delayValues: number[] = []
 			for (let i = 0; i < bytecode.length; i += 5) {
-				if (bytecode[i] === BytecodeOpCode.DELAY) {
+				if (bytecode[i] === BytecodeOpCode.WAIT) {
 					delayValues.push(bytecode[i + 1])
 				}
 			}
@@ -302,13 +302,13 @@ describe("Else-If Edge Cases and Specific Scenarios", () => {
 						wait_for_button_press();
 					} else if (is_object_near_side_left()) {
 						rgbLed.set_led_green();
-						delay(1000);
+						wait(1000);
 					} else if (is_object_near_side_right()) {
 						rgbLed.set_led_blue();
-						delay(1000);
+						wait(1000);
 					} else {
 						rgbLed.turn_led_off();
-						delay(100);
+						wait(100);
 					}
 				}
 			`
@@ -349,7 +349,7 @@ describe("Else-If Edge Cases and Specific Scenarios", () => {
 			// Add else-if chain
 			code += "if (var0 > var1) { rgbLed.set_led_red(); }"
 			for (let i = 2; i < 20; i++) {
-				code += ` else if (var${i} > var${i - 1}) { delay(${i * 10}); }`
+				code += ` else if (var${i} > var${i - 1}) { wait(${i * 10}); }`
 			}
 			code += " else { rgbLed.set_led_blue(); }"
 
