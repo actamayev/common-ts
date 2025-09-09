@@ -1,4 +1,4 @@
-import * as Blockly from "blockly"
+import type * as Blockly from "blockly/core"
 import { ToolboxItem } from "../sandbox"
 import { AvailableBlock } from "../career-quest"
 import { BLOCK_REGISTRY } from "./blockly-registry"
