@@ -3,7 +3,7 @@ import { BlocklyJson, SandboxProject } from "./sandbox"
 import { StudentViewHubData, TeacherViewHubData } from "./hub"
 import { RetrievedQuestions, UserActivityProgress } from "./lab"
 import { ChallengeChatMessage, SandboxChatMessage } from "./chat"
-import { ChallengeUUID, ClassCode, HubUUID, PipUUID, SiteThemes } from "./utils"
+import { ChallengeUUID, ClassCode, HubUUID, SiteThemes } from "./utils"
 
 // Auth
 // Requests
@@ -124,6 +124,7 @@ export interface ProfilePictureUrl {
 export interface RetrieveIsPipUUIDValidResponse {
 	pipName: string | null
 	pipConnectionStatus: ESPConnectionStatus
+	userIdConnectedToPip: number | null
 }
 
 // Sandbox Routes
