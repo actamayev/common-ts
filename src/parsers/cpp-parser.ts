@@ -355,9 +355,14 @@ export class CppParser {
 
 					// Round to nearest thousandth (3 decimal places)
 					delayMs = Math.round(delayMs * 1000) / 1000
+
+					// Convert to exact Float32 representation to ensure robot compatibility
+					const float32Array = new Float32Array([delayMs])
+					delayMs = float32Array[0]
+
 					instructions.push({
 						opcode: BytecodeOpCode.WAIT,
-						operand1: delayMs,  // Now stores float values directly
+						operand1: delayMs,  // Now stores exact Float32 values
 						operand2: 0,
 						operand3: 0,
 						operand4: 0
