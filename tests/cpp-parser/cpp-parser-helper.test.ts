@@ -25,7 +25,7 @@ describe("CppParserHelper", () => {
 		// Test a sample of different command types
 			const commandTests = [
 				{ statement: "rgbLed.set_led_blue()", type: CommandType.SET_LED_BLUE },
-				{ statement: "wait(100)", type: CommandType.WAIT },
+				{ statement: "wait(0.1)", type: CommandType.WAIT },
 				{ statement: "if (10 > 5)", type: CommandType.IF_STATEMENT },
 				{ statement: "while(true)", type: CommandType.WHILE_STATEMENT },
 				{ statement: "for (int i = 0; i < 10; i++)", type: CommandType.FOR_STATEMENT },
@@ -164,7 +164,7 @@ describe("CppParserHelper", () => {
 			expect(bytecode[3]).toBe(0)
 			expect(bytecode[4]).toBe(0)
 
-			// Check the second instruction (DELAY)
+			// Check the second instruction (WAIT)
 			expect(bytecode[5]).toBe(BytecodeOpCode.WAIT)
 			expect(bytecode[6]).toBe(100)
 			expect(bytecode[7]).toBe(0)
@@ -189,7 +189,7 @@ describe("CppParserHelper", () => {
 		})
 
 		test("should generate bytecode with large number of instructions", () => {
-		// Create 100 delay instructions
+		// Create 100 wait instructions
 			const instructions: BytecodeInstruction[] = []
 			for (let i = 0; i < 100; i++) {
 				instructions.push({

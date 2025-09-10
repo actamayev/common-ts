@@ -57,10 +57,10 @@ describe("Else-If Edge Cases and Specific Scenarios", () => {
 						rgbLed.set_led_red();
 					} else if (i == 1) {
 						rgbLed.set_led_green();
-						wait(100);
+						wait(0.1);
 					} else if (i == 2) {
 						rgbLed.set_led_blue();
-						wait(200);
+						wait(0.2);
 					}
 				}
 			`
@@ -248,19 +248,19 @@ describe("Else-If Edge Cases and Specific Scenarios", () => {
 				
 				if (time < 0) {
 					rgbLed.set_led_red();
-					wait(100);
+					wait(0.1);
 				} else if ((time >= 0) && (time < 90)) {
 					rgbLed.set_led_green();
-					wait(200);
+					wait(0.2);
 				} else if ((time >= 90) && (time < 180)) {
 					rgbLed.set_led_blue();
-					wait(300);
+					wait(0.3);
 				} else if ((time >= 180) && (time < 270)) {
 					rgbLed.set_led_white();
-					wait(400);
+					wait(0.4);
 				} else {
 					rgbLed.set_led_purple();
-					wait(500);
+					wait(0.5);
 				}
 			`
 
@@ -277,19 +277,19 @@ describe("Else-If Edge Cases and Specific Scenarios", () => {
 			}
 			expect(yawSensorFound).toBe(true)
 
-			// Should have different delay values
-			const delayValues: number[] = []
+			// Should have different wait values
+			const waitValues: number[] = []
 			for (let i = 0; i < bytecode.length; i += 5) {
 				if (bytecode[i] === BytecodeOpCode.WAIT) {
-					delayValues.push(bytecode[i + 1])
+					waitValues.push(bytecode[i + 1])
 				}
 			}
 
-			expect(delayValues).toContain(100)
-			expect(delayValues).toContain(200)
-			expect(delayValues).toContain(300)
-			expect(delayValues).toContain(400)
-			expect(delayValues).toContain(500)
+			expect(waitValues[0]).toBeCloseTo(0.1)
+			expect(waitValues[1]).toBeCloseTo(0.2)
+			expect(waitValues[2]).toBeCloseTo(0.3)
+			expect(waitValues[3]).toBeCloseTo(0.4)
+			expect(waitValues[4]).toBeCloseTo(0.5)
 		})
 
 		test("should handle wait_for_button with else-if logic", () => {
@@ -302,13 +302,13 @@ describe("Else-If Edge Cases and Specific Scenarios", () => {
 						wait_for_button_press();
 					} else if (is_object_near_side_left()) {
 						rgbLed.set_led_green();
-						wait(1000);
+						wait(1);
 					} else if (is_object_near_side_right()) {
 						rgbLed.set_led_blue();
-						wait(1000);
+						wait(1);
 					} else {
 						rgbLed.turn_led_off();
-						wait(100);
+						wait(0.1);
 					}
 				}
 			`

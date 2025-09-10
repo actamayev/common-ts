@@ -740,19 +740,19 @@ describe("Else-If Functionality", () => {
 				} else if (9 > 10) {
 					rgbLed.set_led_purple();
 				} else {
-					wait(1000);
+					wait(1);
 				}
 			`
 
 			const bytecode = CppParser.cppToByte(code)
 
-			// Should have all LED colors plus delay
+			// Should have all LED colors plus wait
 			let redLedFound = false
 			let greenLedFound = false
 			let blueLedFound = false
 			let whiteLedFound = false
 			let purpleLedFound = false
-			let delayFound = false
+			let waitFound = false
 
 			for (let i = 0; i < bytecode.length; i += 5) {
 				if (bytecode[i] === BytecodeOpCode.SET_ALL_LEDS) {
@@ -766,7 +766,7 @@ describe("Else-If Functionality", () => {
 					else if (r === MAX_LED_BRIGHTNESS && g === MAX_LED_BRIGHTNESS && b === MAX_LED_BRIGHTNESS) whiteLedFound = true
 					else if (r === MAX_LED_BRIGHTNESS && g === 0 && b === MAX_LED_BRIGHTNESS) purpleLedFound = true
 				} else if (bytecode[i] === BytecodeOpCode.WAIT) {
-					delayFound = true
+					waitFound = true
 				}
 			}
 
@@ -775,7 +775,7 @@ describe("Else-If Functionality", () => {
 			expect(blueLedFound).toBe(true)
 			expect(whiteLedFound).toBe(true)
 			expect(purpleLedFound).toBe(true)
-			expect(delayFound).toBe(true)
+			expect(waitFound).toBe(true)
 		})
 	})
 
@@ -791,7 +791,7 @@ describe("Else-If Functionality", () => {
 							turn(COUNTERCLOCKWISE, 90);
 						} else {
 							goBackward(50);
-							wait(500);
+							wait(0.5);
 						}
 					} else if (Sensors::getInstance().getPitch() > 30) {
 						goBackwardTime(1.0, 30);
@@ -867,7 +867,7 @@ describe("Else-If Functionality", () => {
 				rgbLed.set_led_white();
 			}
 			
-			wait(200);
+			wait(0.2);
 		}
 	`
 
@@ -1064,30 +1064,30 @@ describe("Else-If Functionality", () => {
 
 			// Should have correct number of comparisons
 			let compareCount = 0
-			let delayCount = 0
+			let waitCount = 0
 
 			for (let i = 0; i < bytecode.length; i += 5) {
 				if (bytecode[i] === BytecodeOpCode.COMPARE) {
 					compareCount++
 				} else if (bytecode[i] === BytecodeOpCode.WAIT) {
-					delayCount++
+					waitCount++
 				}
 			}
 
 			expect(compareCount).toBe(21) // 1 initial + 20 else-if
-			expect(delayCount).toBe(20) // One delay per else-if
+			expect(waitCount).toBe(20) // One wait per else-if
 		})
 
 		test("should generate correct jump distances for large else-if chains", () => {
-			let code = "if (false) { rgbLed.set_led_red(); wait(100); }"
+			let code = "if (false) { rgbLed.set_led_red(); wait(0.1); }"
 
 			// Create else-if chain with substantial code in each block
 			for (let i = 1; i <= 10; i++) {
 				code += ` else if (${i} == ${i}) {
 			rgbLed.set_led_green();
-			wait(${i * 100});
+			wait(${i / 10});}
 			rgbLed.set_led_blue();
-			wait(${i * 50});
+			wait(${i / 20});
 		}`
 			}
 

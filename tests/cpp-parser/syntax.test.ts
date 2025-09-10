@@ -44,7 +44,7 @@ describe("Syntax validation", () => {
 	if (10 > 5) {
 	rgbLed.set_led_red();
 	/* This block comment also has escaped chars: \\", \\', \\\\ */
-	wait(100);
+	wait(0.1);
 	}
 `
 
@@ -59,7 +59,7 @@ describe("Syntax validation", () => {
 	if (10 > 5) {
 	rgbLed.set_led_red();
 	/* This block comment has {unbalanced brackets */
-	wait(100);
+	wait(0.1);
 	}
 `
 
@@ -75,7 +75,7 @@ describe("Code sanitization", () => {
 	for (int i = 0; i < 10; i++) {
 	for (int j = 0; j < 5; j++) {
 		rgbLed.set_led_red();
-		wait(100);
+		wait(0.1);
 	}
 	}
 `
@@ -134,7 +134,7 @@ describe("Code sanitization", () => {
 	rgbLed.set_led_red();
 	/* Block comment
 		spanning multiple lines */
-	wait(100);
+	wait(0.1);
 `
 
 		const sanitized = CppParserHelper.sanitizeUserCode(code)
@@ -145,7 +145,7 @@ describe("Code sanitization", () => {
 
 		const bytecode = CppParser.cppToByte(code)
 
-		// Verify the bytecode has instructions for set_led_red and delay, but not for the comments
+		// Verify the bytecode has instructions for set_led_red and wait, but not for the comments
 		expect(bytecode[0]).toBe(BytecodeOpCode.SET_ALL_LEDS)
 		expect(bytecode[5]).toBe(BytecodeOpCode.WAIT)
 		expect(bytecode[10]).toBe(BytecodeOpCode.END)

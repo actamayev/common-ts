@@ -258,7 +258,7 @@ describe("Boundary Conditions", () => {
 		const bytecode = CppParser.cppToByte(code)
 
 		// Verify bytecode length - should be (400 instructions + END) * 5 bytes per instruction
-		// 400 instructions: 100 * 4 (2 LED sets + 2 delays)
+		// 400 instructions: 100 * 4 (2 LED sets + 2 waits)
 		expect(bytecode.length).toBe((400 + 1) * 5)
 
 		// Check first few instructions
@@ -433,7 +433,7 @@ describe("Boundary Conditions", () => {
 		rgbLed.set_led_white();
 		}
 		
-		wait(100);
+		wait(0.1);
 		}
 	`
 
@@ -574,10 +574,10 @@ describe("Proximity Sensor Functionality", () => {
 			const code = `while(true) {
         if (is_object_in_front()) {
           rgbLed.set_led_red();
-          wait(100);
+          wait(0.1);
         } else {
           rgbLed.set_led_green();
-          wait(500);
+          wait(0.5);
         }
       }`
 
@@ -588,22 +588,21 @@ describe("Proximity Sensor Functionality", () => {
 			expect(bytecode[5]).toBe(BytecodeOpCode.READ_SENSOR)
 			expect(bytecode[6]).toBe(SensorType.FRONT_PROXIMITY)
 
-			// Verify we have the correct delay values in each branch
-			let delay100Found = false
-			let delay500Found = false
+			// Verify we have the correct wait values in each branch
+			let wait100Found = false, wait500Found = false
 
 			for (let i = 0; i < bytecode.length; i += 5) {
 				if (bytecode[i] === BytecodeOpCode.WAIT) {
-					if (bytecode[i + 1] === 100) {
-						delay100Found = true
-					} else if (bytecode[i + 1] === 500) {
-						delay500Found = true
+					if (Math.abs(bytecode[i + 1] - 0.1) < 1e-6) {
+						wait100Found = true
+					} else if (Math.abs(bytecode[i + 1] - 0.5) < 1e-6) {
+						wait500Found = true
 					}
 				}
 			}
 
-			expect(delay100Found).toBe(true)
-			expect(delay500Found).toBe(true)
+			expect(wait100Found).toBe(true)
+			expect(wait500Found).toBe(true)
 
 			// Verify WHILE_END is present
 			let whileEndFound = false
