@@ -87,12 +87,6 @@ export interface CheckCodeResponse {
 	feedback: string
 }
 
-//Pip
-export interface AddPipData {
-	pipUUID: PipUUID | null
-	pipName: string
-}
-
 // Lab Activity Tracking Responses:
 export interface RetrievedUserActivityProgressResponse {
 	userActivityProgress: UserActivityProgress[]
