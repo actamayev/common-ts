@@ -124,7 +124,7 @@ export interface ProfilePictureUrl {
 export interface RetrieveIsPipUUIDValidResponse {
 	pipName: string | null
 	pipConnectionStatus: ESPConnectionStatus
-	userIdConnectedToPip: number | null
+	isSomeoneConnectedToPip: boolean
 }
 
 // Sandbox Routes
