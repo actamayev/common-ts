@@ -536,6 +536,51 @@ describe("Wait commands", () => {
 		expect(bytecode[4]).toBe(0)               // Unused
 		expect(bytecode[5]).toBe(BytecodeOpCode.END)
 	})
+
+	test("should round up decimal wait command (Complex delay test)", () => {
+		const program = `
+			wait_for_button_press();
+			while(true) {
+				rgbLed.set_led_white();
+				wait(0.9);
+				rgbLed.set_led_red();
+				wait(0.9);
+				rgbLed.set_led_green();
+				wait(0.9);
+			}
+
+		`
+		const bytecode = CppParser.cppToByte(program)
+
+		// First instruction: WAIT_FOR_BUTTON
+		expect(bytecode[0]).toBe(BytecodeOpCode.WAIT_FOR_BUTTON)
+
+		// Second instruction: WHILE_START
+		expect(bytecode[5]).toBe(BytecodeOpCode.WHILE_START)
+
+		// Third instruction: SET_ALL_LEDS (white)
+		expect(bytecode[10]).toBe(BytecodeOpCode.SET_ALL_LEDS)
+		expect(bytecode[11]).toBe(MAX_LED_BRIGHTNESS) // R
+		expect(bytecode[12]).toBe(MAX_LED_BRIGHTNESS) // G
+		expect(bytecode[13]).toBe(MAX_LED_BRIGHTNESS) // B
+
+		// Fourth instruction: WAIT with decimal 0.9
+		expect(bytecode[15]).toBe(BytecodeOpCode.WAIT)
+
+		// Get what 0.9 actually becomes in Float32Array
+		const expectedFloat32Value = new Float32Array([0.9])[0]
+		expect(bytecode[16]).toBe(expectedFloat32Value) // Should be Float32 representation of 0.9
+
+		// Look for additional wait instructions with the same value
+		let waitCount = 0
+		for (let i = 0; i < bytecode.length; i += 5) {
+			if (bytecode[i] === BytecodeOpCode.WAIT) {
+				expect(bytecode[i + 1]).toBe(expectedFloat32Value)
+				waitCount++
+			}
+		}
+		expect(waitCount).toBe(3) // Should have 3 wait(0.9) instructions
+	})
 })
 
 describe("Combining multiple commands", () => {
