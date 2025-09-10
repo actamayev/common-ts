@@ -112,7 +112,7 @@ describe("ESP32 Hardware Constraints", () => {
 		const bytecode = CppParser.cppToByte(program)
 
 		// Each instruction is 5 float32 values (opcode + 4 operands)
-		// 1000 delay statements + 1 END instruction = 1001 instructions
+		// 1000 wait statements + 1 END instruction = 1001 instructions
 		// 1001 * 5 = 5005 float32 values
 		expect(bytecode.length).toBe(5005)
 	})

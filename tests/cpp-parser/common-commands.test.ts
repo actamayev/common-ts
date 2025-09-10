@@ -447,16 +447,71 @@ describe("LED operations", () => {
 	})
 })
 
-// 2.3 Test delay commands
-describe("Delay commands", () => {
-	test("should parse delay command", () => {
-		const bytecode = CppParser.cppToByte("wait(500);")
+// 2.3 Test wait commands
+describe("Wait commands", () => {
+	test("should parse wait command", () => {
+		const bytecode = CppParser.cppToByte("wait(0.5);")
 
 		expect(bytecode[0]).toBe(BytecodeOpCode.WAIT)
-		expect(bytecode[1]).toBe(500) // Delay value
+		expect(bytecode[1]).toBe(0.5) // Wait value
 		expect(bytecode[2]).toBe(0)   // Unused
 		expect(bytecode[3]).toBe(0)   // Unused
 		expect(bytecode[4]).toBe(0)   // Unused
+		expect(bytecode[5]).toBe(BytecodeOpCode.END)
+	})
+
+	test("should parse decimal wait command with one decimal place", () => {
+		const bytecode = CppParser.cppToByte("wait(0.5);")
+
+		expect(bytecode[0]).toBe(BytecodeOpCode.WAIT)
+		expect(bytecode[1]).toBe(0.5) // Decimal wait value
+		expect(bytecode[2]).toBe(0)   // Unused
+		expect(bytecode[3]).toBe(0)   // Unused
+		expect(bytecode[4]).toBe(0)   // Unused
+		expect(bytecode[5]).toBe(BytecodeOpCode.END)
+	})
+
+	test("should parse decimal wait command with multiple decimal places", () => {
+		const bytecode = CppParser.cppToByte("wait(1.234);")
+
+		expect(bytecode[0]).toBe(BytecodeOpCode.WAIT)
+		expect(bytecode[1]).toBeCloseTo(1.234, 3) // Decimal wait value
+		expect(bytecode[2]).toBe(0)               // Unused
+		expect(bytecode[3]).toBe(0)               // Unused
+		expect(bytecode[4]).toBe(0)               // Unused
+		expect(bytecode[5]).toBe(BytecodeOpCode.END)
+	})
+
+	test("should truncate decimal wait command to 3 decimal places", () => {
+		const bytecode = CppParser.cppToByte("wait(0.5123);")
+
+		expect(bytecode[0]).toBe(BytecodeOpCode.WAIT)
+		expect(bytecode[1]).toBeCloseTo(0.512, 3) // Truncated to 3 decimal places
+		expect(bytecode[2]).toBe(0)               // Unused
+		expect(bytecode[3]).toBe(0)               // Unused
+		expect(bytecode[4]).toBe(0)               // Unused
+		expect(bytecode[5]).toBe(BytecodeOpCode.END)
+	})
+
+	test("should handle decimal wait with trailing zeros", () => {
+		const bytecode = CppParser.cppToByte("wait(2.500);")
+
+		expect(bytecode[0]).toBe(BytecodeOpCode.WAIT)
+		expect(bytecode[1]).toBe(2.5)   // Should be 2.5, not 2.500
+		expect(bytecode[2]).toBe(0)     // Unused
+		expect(bytecode[3]).toBe(0)     // Unused
+		expect(bytecode[4]).toBe(0)     // Unused
+		expect(bytecode[5]).toBe(BytecodeOpCode.END)
+	})
+
+	test("should handle decimal wait starting with zero", () => {
+		const bytecode = CppParser.cppToByte("wait(0.001);")
+
+		expect(bytecode[0]).toBe(BytecodeOpCode.WAIT)
+		expect(bytecode[1]).toBeCloseTo(0.001, 3) // Small decimal value
+		expect(bytecode[2]).toBe(0)               // Unused
+		expect(bytecode[3]).toBe(0)               // Unused
+		expect(bytecode[4]).toBe(0)               // Unused
 		expect(bytecode[5]).toBe(BytecodeOpCode.END)
 	})
 })
@@ -465,9 +520,9 @@ describe("Combining multiple commands", () => {
 	test("should parse a simple LED blink program", () => {
 		const program = `
 			rgbLed.set_led_red();
-			wait(500);
+			wait(0.5);
 			rgbLed.turn_led_off();
-			wait(500);
+			wait(0.5);
 		`
 
 		const bytecode = CppParser.cppToByte(program)
@@ -478,9 +533,9 @@ describe("Combining multiple commands", () => {
 		expect(bytecode[2]).toBe(0)   // G
 		expect(bytecode[3]).toBe(0)   // B
 
-		// 2nd instruction: DELAY
+		// 2nd instruction: WAIT
 		expect(bytecode[5]).toBe(BytecodeOpCode.WAIT)
-		expect(bytecode[6]).toBe(500)
+		expect(bytecode[6]).toBe(0.5)
 
 		// 3rd instruction: SET_ALL_LEDS (off)
 		expect(bytecode[10]).toBe(BytecodeOpCode.SET_ALL_LEDS)
@@ -488,9 +543,9 @@ describe("Combining multiple commands", () => {
 		expect(bytecode[12]).toBe(0) // G
 		expect(bytecode[13]).toBe(0) // B
 
-		// 4th instruction: DELAY
+		// 4th instruction: WAIT
 		expect(bytecode[15]).toBe(BytecodeOpCode.WAIT)
-		expect(bytecode[16]).toBe(500)
+		expect(bytecode[16]).toBe(0.5)
 
 		// Last instruction: END
 		const lastIndex = bytecode.length - 5

@@ -351,10 +351,13 @@ export class CppParser {
 
 			case CommandType.WAIT:
 				if (command.matches && command.matches.length === 2) {
-					const delayMs = parseInt(command.matches[1], 10)
+					let delayMs = parseFloat(command.matches[1])
+
+					// Truncate to 3 decimal places
+					delayMs = Math.floor(delayMs * 1000) / 1000
 					instructions.push({
 						opcode: BytecodeOpCode.WAIT,
-						operand1: delayMs,  // Direct assignment - no more bit masking!
+						operand1: delayMs,  // Now stores float values directly
 						operand2: 0,
 						operand3: 0,
 						operand4: 0

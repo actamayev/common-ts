@@ -8,7 +8,8 @@ Client/server: `npm run updateCommon`
 The DB migration, and pushing client up should happen at the same time, or we risk
 	-the DB saving old data (if backend updated after client),
 	-or the client retrieving old data (if the DB is updated before client)
-4. Create a migration in the DB, for both the sandbox_project, and the challenge_sandbox
+4. Create a migration in the DB, for both the sandbox_project, and the challenge_sandbox:
+	- `npx prisma migrate dev --create-only --name [migration_name]`
 	ie: UPDATE sandbox_project 
 		SET sandbox_json = replace(replace(replace(replace(
 		sandbox_json::text, 
@@ -19,4 +20,7 @@ The DB migration, and pushing client up should happen at the same time, or we ri
 		WHERE sandbox_json::text ~ '(esp32_led_control|controls_repeat_ext|esp32_delay|esp32_loop)';
 
 	- This migration should be done on the prisma level, to keep a historical record
-
+	If permissions error when saving: `sudo chown -R $(whoami):staff prisma/`
+	To run:
+		local: `npx prisma migrate dev`
+		production: `npx prisma migrate deploy`

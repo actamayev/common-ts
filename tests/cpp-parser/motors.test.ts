@@ -199,15 +199,15 @@ describe("Motor Command Functionality", () => {
 		test("should parse a complex motor control sequence", () => {
 			const code = `
         goForward(50);
-        wait(1000);
+        wait(1);
         turn(CLOCKWISE, 90);
-        wait(500);
+        wait(0.5);
         goForward(75);
-        wait(2000);
+        wait(2);
         turn(COUNTERCLOCKWISE, 45);
-        wait(500);
+        wait(0.5);
         goBackward(40);
-        wait(1500);
+        wait(1.5);
         stopMotors();
       `
 
@@ -230,11 +230,11 @@ describe("Motor Command Functionality", () => {
 		test("should parse a sequence with timed and distance commands", () => {
 			const code = `
         goForwardTime(3.0, 60);
-        wait(500);
+        wait(0.5);
         turn(CLOCKWISE, 180);
-        wait(500);
+        wait(0.5);
         goBackwardDistance(20.0, 80);
-        wait(500);
+        wait(0.5);
         stopMotors();
       `
 
@@ -284,9 +284,9 @@ describe("Motor Command Functionality", () => {
 			const code = `
         for (int i = 0; i < 3; i++) {
           goForward(50);
-          wait(500);
+          wait(0.5);
           turn(CLOCKWISE, 120);
-          wait(500);
+          wait(0.5);
         }
       `
 
@@ -313,13 +313,13 @@ describe("Motor Command Functionality", () => {
 			const code = `
         while(true) {
           goForwardDistance(10.0, 60);
-          wait(1000);
+          wait(1);
           turn(COUNTERCLOCKWISE, 180);
-          wait(1000);
+          wait(1);
           goBackwardDistance(10.0, 60);
-          wait(1000);
+          wait(1);
           turn(CLOCKWISE, 180);
-          wait(1000);
+          wait(1);
         }
       `
 
