@@ -353,8 +353,8 @@ export class CppParser {
 				if (command.matches && command.matches.length === 2) {
 					let delayMs = parseFloat(command.matches[1])
 
-					// Truncate to 3 decimal places
-					delayMs = Math.floor(delayMs * 1000) / 1000
+					// Round to nearest thousandth (3 decimal places)
+					delayMs = Math.round(delayMs * 1000) / 1000
 					instructions.push({
 						opcode: BytecodeOpCode.WAIT,
 						operand1: delayMs,  // Now stores float values directly
