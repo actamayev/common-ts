@@ -1,4 +1,4 @@
-import { ESPConnectionStatus, PipData } from "./pip"
+import { ESPConnectionStatus } from "./pip"
 import { BlocklyJson, SandboxProject } from "./sandbox"
 import { StudentViewHubData, TeacherViewHubData } from "./hub"
 import { RetrievedQuestions, UserActivityProgress } from "./lab"
@@ -34,7 +34,6 @@ export interface RegisterSuccess {
 	success: boolean
 }
 export interface LoginSuccess {
-	userPipData: PipData[]
 	personalInfo: BasicPersonalInfoResponse
 	studentClasses: StudentClassroomData[]
 	teacherData: TeacherData | null
@@ -126,15 +125,6 @@ export interface TeacherData {
 
 export interface ProfilePictureUrl {
 	profilePictureUrl: string
-}
-
-// Pip Responses
-export interface AddNewPipResponse {
-	pipName: string
-	userPipUUIDId: number
-}
-export interface PreviouslyAddedPipsResponse {
-	userPipData: PipData[]
 }
 
 export interface RetrieveIsPipUUIDValidResponse {
