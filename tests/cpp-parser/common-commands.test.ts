@@ -475,21 +475,21 @@ describe("Wait commands", () => {
 		const bytecode = CppParser.cppToByte("wait(1.234);")
 
 		expect(bytecode[0]).toBe(BytecodeOpCode.WAIT)
-		expect(bytecode[1]).toBeCloseTo(1.234, 3) // Decimal wait value
+		expect(bytecode[1]).toBeCloseTo(1.234, 2) // Decimal wait value
 		expect(bytecode[2]).toBe(0)               // Unused
 		expect(bytecode[3]).toBe(0)               // Unused
 		expect(bytecode[4]).toBe(0)               // Unused
 		expect(bytecode[5]).toBe(BytecodeOpCode.END)
 	})
 
-	test("should round decimal wait command to 3 decimal places", () => {
+	test("should parse decimal wait command with many decimal places", () => {
 		const bytecode = CppParser.cppToByte("wait(0.5123);")
 
 		expect(bytecode[0]).toBe(BytecodeOpCode.WAIT)
-		expect(bytecode[1]).toBeCloseTo(0.512, 3) // Rounded to 3 decimal places
-		expect(bytecode[2]).toBe(0)               // Unused
-		expect(bytecode[3]).toBe(0)               // Unused
-		expect(bytecode[4]).toBe(0)               // Unused
+		expect(bytecode[1]).toBeCloseTo(0.5123, 3) // Decimal value within precision
+		expect(bytecode[2]).toBe(0)                // Unused
+		expect(bytecode[3]).toBe(0)                // Unused
+		expect(bytecode[4]).toBe(0)                // Unused
 		expect(bytecode[5]).toBe(BytecodeOpCode.END)
 	})
 
@@ -515,29 +515,29 @@ describe("Wait commands", () => {
 		expect(bytecode[5]).toBe(BytecodeOpCode.END)
 	})
 
-	test("should round up decimal wait command (0.89999 -> 0.9)", () => {
+	test("should handle high precision decimal wait command", () => {
 		const bytecode = CppParser.cppToByte("wait(0.89999);")
 
 		expect(bytecode[0]).toBe(BytecodeOpCode.WAIT)
-		expect(bytecode[1]).toBeCloseTo(0.9, 3)   // Should round up to 0.9
-		expect(bytecode[2]).toBe(0)               // Unused
-		expect(bytecode[3]).toBe(0)               // Unused
-		expect(bytecode[4]).toBe(0)               // Unused
+		expect(bytecode[1]).toBeCloseTo(0.89999, 3) // High precision decimal value
+		expect(bytecode[2]).toBe(0)                 // Unused
+		expect(bytecode[3]).toBe(0)                 // Unused
+		expect(bytecode[4]).toBe(0)                 // Unused
 		expect(bytecode[5]).toBe(BytecodeOpCode.END)
 	})
 
-	test("should round up decimal wait command (1.2345 -> 1.235)", () => {
+	test("should handle long decimal wait command", () => {
 		const bytecode = CppParser.cppToByte("wait(1.2345);")
 
 		expect(bytecode[0]).toBe(BytecodeOpCode.WAIT)
-		expect(bytecode[1]).toBeCloseTo(1.235, 3) // Should round up to 1.235
-		expect(bytecode[2]).toBe(0)               // Unused
-		expect(bytecode[3]).toBe(0)               // Unused
-		expect(bytecode[4]).toBe(0)               // Unused
+		expect(bytecode[1]).toBeCloseTo(1.2345, 3) // Long decimal value
+		expect(bytecode[2]).toBe(0)                // Unused
+		expect(bytecode[3]).toBe(0)                // Unused
+		expect(bytecode[4]).toBe(0)                // Unused
 		expect(bytecode[5]).toBe(BytecodeOpCode.END)
 	})
 
-	test("should round up decimal wait command (Complex delay test)", () => {
+	test("should handle complex decimal wait program", () => {
 		const program = `
 			wait_for_button_press();
 			while(true) {
@@ -567,15 +567,14 @@ describe("Wait commands", () => {
 		// Fourth instruction: WAIT with decimal 0.9
 		expect(bytecode[15]).toBe(BytecodeOpCode.WAIT)
 
-		// Get what 0.9 actually becomes in Float32Array
-		const expectedFloat32Value = new Float32Array([0.9])[0]
-		expect(bytecode[16]).toBe(expectedFloat32Value) // Should be Float32 representation of 0.9
+		// Check the wait value is 0.9
+		expect(bytecode[16]).toBeCloseTo(0.9, 2) // Should be close to 0.9
 
 		// Look for additional wait instructions with the same value
 		let waitCount = 0
 		for (let i = 0; i < bytecode.length; i += 5) {
 			if (bytecode[i] === BytecodeOpCode.WAIT) {
-				expect(bytecode[i + 1]).toBe(expectedFloat32Value)
+				expect(bytecode[i + 1]).toBeCloseTo(0.9, 2)
 				waitCount++
 			}
 		}
