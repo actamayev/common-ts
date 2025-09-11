@@ -108,7 +108,7 @@ export const DRIVING_SCHOOL_CHALLENGE_S4_P5: CqChallengeData = {
 	difficulty: "beginner",
 	challengeIndex: 3,
 	isDefiniteSolution: true,
-	initialBlocklyJson: { },
+	initialBlocklyJson: {},
 	...createChallengeToolbox([
 		START_BLOCK_TYPES.BUTTON_PRESS_START,
 		MOTOR_BLOCK_TYPES.TURN,
@@ -151,7 +151,59 @@ export const DRIVING_SCHOOL_CHALLENGE_S5_P4: CqChallengeData = {
 	difficulty: "beginner",
 	challengeIndex: 4,
 	isDefiniteSolution: true,
-	initialBlocklyJson: {},
+	initialBlocklyJson: {
+		"blocks": {
+			"languageVersion": 0,
+			"blocks": [
+				{
+					"type": "button_press_start",
+					"id": "vc^/L`-2^N5k-/hG/DKS",
+					"x": -910,
+					"y": -750,
+					"next": {
+						"block": {
+							"type": "go_forward_distance",
+							"id": "vuJ!PuGlbNI19T@ssi@.",
+							"fields": {
+								"distance": 20,
+								"percentage": 40
+							},
+							"next": {
+								"block": {
+									"type": "turn",
+									"id": "/w?pH09x8CHmj0~-vD=J",
+									"fields": {
+										"turn_direction": "CLOCKWISE",
+										"turn_degrees": 90
+									},
+									"next": {
+										"block": {
+											"type": "go_forward_distance",
+											"id": "2!6)Ec6zBl/1~U|52F*^",
+											"fields": {
+												"distance": 20,
+												"percentage": 40
+											},
+											"next": {
+												"block": {
+													"type": "turn",
+													"id": "|5MRz#O)|)t`I`A,y[Rf",
+													"fields": {
+														"turn_direction": "CLOCKWISE",
+														"turn_degrees": 90
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			]
+		}
+	},
 	...createChallengeToolbox([
 		MOTOR_BLOCK_TYPES.GO_FORWARD_DISTANCE,
 		MOTOR_BLOCK_TYPES.TURN,
