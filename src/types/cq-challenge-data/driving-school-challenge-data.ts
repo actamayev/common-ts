@@ -20,8 +20,8 @@ import { BlocklyJson } from "../sandbox"
 export const DRIVING_SCHOOL_CHALLENGE_S2_P4: CqChallengeData = {
 	challengeUUID: "5892848a-8334-48a7-82aa-bbbe43d2e92f" as ChallengeUUID,
 	careerUUID: "af21b042-86ac-4790-a60d-fd102a469401" as CareerUUID,
-	title: "Driving School Challenge 2 Part 4",
-	description: "Driving School Challenge 2 Part 4",
+	title: "Driving School Challenge 1",
+	description: "Build a program that starts when my button is pressed, turns my LEDs blue for two seconds, then switches to red for two seconds, then turns off",
 	difficulty: "beginner",
 	challengeIndex: 1,
 	initialBlocklyJson: {},
@@ -61,8 +61,8 @@ export const DRIVING_SCHOOL_CHALLENGE_S2_P4: CqChallengeData = {
 export const DRIVING_SCHOOL_CHALLENGE_S3_P5: CqChallengeData = {
 	challengeUUID: "718e291a-1c03-4948-88c4-ef0762cfc4df" as ChallengeUUID,
 	careerUUID: "af21b042-86ac-4790-a60d-fd102a469401" as CareerUUID,
-	title: "Driving School Challenge 3 Part 5",
-	description: "Driving School Challenge 3 Part 5",
+	title: "Driving School Challenge 2",
+	description: "Build a program that makes me go forward 15 centimeters at 50% speed, then stop.",
 	difficulty: "beginner",
 	challengeIndex: 2,
 	initialBlocklyJson: {},
@@ -99,8 +99,8 @@ then turn 180 degrees counterclockwise
 export const DRIVING_SCHOOL_CHALLENGE_S4_P5: CqChallengeData = {
 	challengeUUID: "b9114111-48f1-4589-bc10-5030f2d9621f" as ChallengeUUID,
 	careerUUID: "af21b042-86ac-4790-a60d-fd102a469401" as CareerUUID,
-	title: "Driving School Challenge 4 Part 5",
-	description: "Driving School Challenge 4 Part 5",
+	title: "Driving School Challenge 3",
+	description: "Build a program that makes me turn 180 degrees clockwise, wait two seconds, then turn 180 degrees counterclockwise, then stop.",
 	difficulty: "beginner",
 	challengeIndex: 3,
 	initialBlocklyJson: { },
@@ -140,8 +140,8 @@ and return to where I started.”
 export const DRIVING_SCHOOL_CHALLENGE_S5_P4: CqChallengeData = {
 	challengeUUID: "d7eb2c2f-da43-4f6a-96e5-cffa51c51531" as ChallengeUUID,
 	careerUUID: "af21b042-86ac-4790-a60d-fd102a469401" as CareerUUID,
-	title: "Driving School Challenge 5 Part 4",
-	description: "Driving School Challenge 5 Part 4",
+	title: "Driving School Challenge 4",
+	description: "Build a program that makes me drive in a square and return to where I started.",
 	difficulty: "beginner",
 	challengeIndex: 4,
 	initialBlocklyJson: {},
