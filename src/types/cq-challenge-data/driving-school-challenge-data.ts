@@ -165,8 +165,8 @@ export const DRIVING_SCHOOL_CHALLENGE_S5_P4: CqChallengeData = {
 							"type": "go_forward_distance",
 							"id": "vuJ!PuGlbNI19T@ssi@.",
 							"fields": {
-								"distance": 20,
-								"percentage": 40
+								"distance": 8,
+								"percentage": 20
 							},
 							"next": {
 								"block": {
@@ -181,8 +181,8 @@ export const DRIVING_SCHOOL_CHALLENGE_S5_P4: CqChallengeData = {
 											"type": "go_forward_distance",
 											"id": "2!6)Ec6zBl/1~U|52F*^",
 											"fields": {
-												"distance": 20,
-												"percentage": 40
+												"distance": 8,
+												"percentage": 20
 											},
 											"next": {
 												"block": {
@@ -364,7 +364,7 @@ export const DRIVING_SCHOOL_VIEW_ONLY_S3_P4: BlocklyJson = {
 						"type": "go_forward_distance",
 						"id": "gtSvX|h4*v.N_NC2WBI7",
 						"fields": {
-							"distance": 5,
+							"distance": 8,
 							"percentage": 20
 						},
 						"next": {
@@ -458,7 +458,7 @@ export const DRIVING_SCHOOL_VIEW_ONLY_S5_P2: BlocklyJson = {
 						"type": "go_forward_distance",
 						"id": "vuJ!PuGlbNI19T@ssi@.",
 						"fields": {
-							"distance": 5,
+							"distance": 8,
 							"percentage": 20
 						},
 						"next": {
@@ -482,7 +482,7 @@ export const DRIVING_SCHOOL_VIEW_ONLY_S5_P2: BlocklyJson = {
 														"type": "go_forward_distance",
 														"id": "2!6)Ec6zBl/1~U|52F*^",
 														"fields": {
-															"distance": 5,
+															"distance": 8,
 															"percentage": 20
 														},
 														"next": {
