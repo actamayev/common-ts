@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable max-len */
 
-import { ChallengeUUID, CareerUUID } from "./utils"
-import { CqChallengeData } from "./career-quest"
-import { createChallengeToolbox } from "./utils/blockly-helpers"
-import { CONDITIONAL_BLOCK_TYPES, LOOP_BLOCK_TYPES, START_BLOCK_TYPES } from "./blockly/logic-block-types"
-import { SENSORS_BLOCK_TYPES } from "./blockly/sensor-block-types"
-import { LED_BLOCK_TYPES } from "./blockly/led-block-types"
-import { MOTOR_BLOCK_TYPES } from "./blockly/motor-block-types"
+import { ChallengeUUID, CareerUUID } from "../utils"
+import { CqChallengeData } from "../career-quest"
+import { createChallengeToolbox } from "../utils/blockly-helpers"
+import { CONDITIONAL_BLOCK_TYPES, LOOP_BLOCK_TYPES, START_BLOCK_TYPES } from "../blockly/logic-block-types"
+import { SENSORS_BLOCK_TYPES } from "../blockly/sensor-block-types"
+import { LED_BLOCK_TYPES } from "../blockly/led-block-types"
+import { MOTOR_BLOCK_TYPES } from "../blockly/motor-block-types"
 
 export const OBSTACLE_AVOIDANCE_CHALLENGE_1: CqChallengeData = {
 	challengeUUID: "0e4568c6-7f85-4930-8db6-56d91fc8aee6" as ChallengeUUID,
@@ -333,11 +333,10 @@ export const OBSTACLE_AVOIDANCE_CHALLENGE_5: CqChallengeData = {
 }
 
 // Array structure - easier to search and iterate
-export const CHALLENGES: CqChallengeData[] = [
+export const OBSTACLE_AVOIDANCE_CHALLENGES: CqChallengeData[] = [
 	OBSTACLE_AVOIDANCE_CHALLENGE_1,
 	OBSTACLE_AVOIDANCE_CHALLENGE_2,
 	OBSTACLE_AVOIDANCE_CHALLENGE_3,
 	OBSTACLE_AVOIDANCE_CHALLENGE_4,
 	OBSTACLE_AVOIDANCE_CHALLENGE_5,
 ]
-
