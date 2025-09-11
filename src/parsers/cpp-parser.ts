@@ -1321,12 +1321,12 @@ export class CppParser {
 				// Inside parseCppCode method's switch statement
 			case CommandType.MOTOR_FORWARD_DISTANCE:
 				if (command.matches && command.matches.length === 3) {
-					const centimeters = parseFloat(command.matches[1])
+					const inches = parseFloat(command.matches[1])
 					const throttlePercent = parseInt(command.matches[2], 10)
 
 					// Validate parameters
-					if (centimeters <= 0) {
-						throw new Error(`Invalid distance value: ${centimeters}. Must be greater than 0.`)
+					if (inches <= 0) {
+						throw new Error(`Invalid distance value: ${inches}. Must be greater than 0.`)
 					}
 
 					if (throttlePercent < 0 || throttlePercent > 100) {
@@ -1335,7 +1335,7 @@ export class CppParser {
 
 					instructions.push({
 						opcode: BytecodeOpCode.MOTOR_FORWARD_DISTANCE,
-						operand1: centimeters,  // Store distance in cm
+						operand1: inches,  // Store distance in inches
 						operand2: throttlePercent,
 						operand3: 0,
 						operand4: 0
@@ -1345,12 +1345,12 @@ export class CppParser {
 
 			case CommandType.MOTOR_BACKWARD_DISTANCE:
 				if (command.matches && command.matches.length === 3) {
-					const centimeters = parseFloat(command.matches[1])
+					const inches = parseFloat(command.matches[1])
 					const throttlePercent = parseInt(command.matches[2], 10)
 
 					// Validate parameters
-					if (centimeters <= 0) {
-						throw new Error(`Invalid distance value: ${centimeters}. Must be greater than 0.`)
+					if (inches <= 0) {
+						throw new Error(`Invalid distance value: ${inches}. Must be greater than 0.`)
 					}
 
 					if (throttlePercent < 0 || throttlePercent > 100) {
@@ -1359,7 +1359,7 @@ export class CppParser {
 
 					instructions.push({
 						opcode: BytecodeOpCode.MOTOR_BACKWARD_DISTANCE,
-						operand1: centimeters,  // Store distance in cm
+						operand1: inches,  // Store distance in inches
 						operand2: throttlePercent,
 						operand3: 0,
 						operand4: 0
