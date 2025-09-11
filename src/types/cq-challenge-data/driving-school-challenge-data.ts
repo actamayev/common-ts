@@ -48,7 +48,7 @@ export const DRIVING_SCHOOL_CHALLENGE_S2_P4: CqChallengeData = {
 	wait(2);
 	rgbLed.set_led_red();
 	wait(2);
-	rgbLed.set_led_off();
+	rgbLed.turn_led_off();
 	`,
 }
 
