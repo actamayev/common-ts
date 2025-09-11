@@ -88,7 +88,7 @@ export const DRIVING_SCHOOL_CHALLENGE_S3_P5: CqChallengeData = {
 	solutionCode: `
 	wait_for_button_press();
 	goForwardDistance(8, 20);
-	stop();
+	stopMotors();
 	`,
 }
 
@@ -131,7 +131,7 @@ export const DRIVING_SCHOOL_CHALLENGE_S4_P5: CqChallengeData = {
 	turn(CLOCKWISE, 180);
 	wait(2);
 	turn(COUNTERCLOCKWISE, 180);
-	stop();
+	stopMotors();
 	`,
 }
 
@@ -176,7 +176,7 @@ export const DRIVING_SCHOOL_CHALLENGE_S5_P4: CqChallengeData = {
 	goForwardDistance(8, 20);
 	turn(COUNTERCLOCKWISE, 90);
 	goForwardDistance(8, 20);
-	stop();
+	stopMotors();
 	`,
 }
 
