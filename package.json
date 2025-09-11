@@ -6,30 +6,11 @@
     "dist/src/**/*"
   ],
   "exports": {
-    "./types/*": {
-      "types": "./dist/src/types/*.d.ts",
-      "default": "./dist/src/types/*.js"
-    },
-    "./types/*/index": {
-      "types": "./dist/src/types/*/index.d.ts",
-      "default": "./dist/src/types/*/index.js"
-    },
-    "./types/*/*": {
-      "types": "./dist/src/types/*/*.d.ts",
-      "default": "./dist/src/types/*/*.js"
-    },
-    "./parsers": {
-      "types": "./dist/src/parsers/cpp-parser.d.ts",
-      "default": "./dist/src/parsers/cpp-parser.js"
-    },
-    "./message-builder": {
-      "types": "./dist/src/message-builder/message-builder.d.ts",
-      "default": "./dist/src/message-builder/message-builder.js"
-    },
-    "./protocol": {
-      "types": "./dist/src/message-builder/protocol.d.ts",
-      "default": "./dist/src/message-builder/protocol.js"
-    }
+    "./dist/*": "./dist/*",
+    "./types/*": "./dist/src/types/*",
+    "./parsers": "./dist/src/parsers/cpp-parser.js",
+    "./message-builder": "./dist/src/message-builder/message-builder.js",
+    "./protocol": "./dist/src/message-builder/protocol.js"
   },
   "scripts": {
     "test": "jest --config jest.config.js",
