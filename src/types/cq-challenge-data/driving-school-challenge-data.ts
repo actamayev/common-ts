@@ -198,7 +198,7 @@ export const DRIVING_SCHOOL_VIEW_ONLY_S2_P1: BlocklyJson = {
 						"id": "d_1x]$77XkkLn)]s=mOh",
 						"fields": {
 							"wait": 3,
-							"SECONDS_LABEL": "second"
+							"SECONDS_LABEL": "seconds"
 						},
 						"next": {
 							"block": {
