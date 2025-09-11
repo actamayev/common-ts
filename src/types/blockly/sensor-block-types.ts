@@ -48,6 +48,8 @@ export const SENSOR_TYPES = {
 		RED: "RED",
 		GREEN: "GREEN",
 		BLUE: "BLUE",
+		PURPLE: "PURPLE",
+		YELLOW: "YELLOW",
 		OFF: "OFF"
 	},
 	SOUND_NAMES: {

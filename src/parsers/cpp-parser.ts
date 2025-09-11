@@ -305,6 +305,16 @@ export class CppParser {
 				})
 				break
 
+			case CommandType.SET_LED_YELLOW:
+				instructions.push({
+					opcode: BytecodeOpCode.SET_ALL_LEDS,
+					operand1: MAX_LED_BRIGHTNESS,
+					operand2: MAX_LED_BRIGHTNESS,
+					operand3: 0,
+					operand4: 0
+				})
+				break
+
 			case CommandType.SET_ALL_LEDS:
 				if (command.matches && command.matches.length === 4) {
 					instructions.push({
