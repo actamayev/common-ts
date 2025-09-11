@@ -116,14 +116,14 @@
         "default": "./dist/src/types/workbench.js"
       }
     },
-    "./types/cq-challenge-data": {
+    "./types/cq-challenge-data/cq-challenge-data": {
       "import": {
-        "types": "./dist/src/types/cq-challenge-data.d.ts",
-        "default": "./dist/src/types/cq-challenge-data.js"
+        "types": "./dist/src/types/cq-challenge-data/cq-challenge-data.d.ts",
+        "default": "./dist/src/types/cq-challenge-data/cq-challenge-data.js"
       },
       "require": {
-        "types": "./dist/src/types/cq-challenge-data.d.ts",
-        "default": "./dist/src/types/cq-challenge-data.js"
+        "types": "./dist/src/types/cq-challenge-data/cq-challenge-data.d.ts",
+        "default": "./dist/src/types/cq-challenge-data/cq-challenge-data.js"
       }
     },
     "./types/cq-challenge-data/driving-school-challenge-data": {
@@ -381,8 +381,8 @@
       "types/blockly/logic": [
         "./dist/src/types/blockly/logic-block-types.d.ts"
       ],
-      "types/cq-challenge-data": [
-        "./dist/src/types/cq-challenge-data.d.ts"
+      "types/cq-challenge-data/cq-challenge-data": [
+        "./dist/src/types/cq-challenge-data/cq-challenge-data.d.ts"
       ],
       "types/cq-challenge-data/driving-school-challenge-data": [
         "./dist/src/types/cq-challenge-data/driving-school-challenge-data.d.ts"
