@@ -43,7 +43,8 @@ export const OBSTACLE_AVOIDANCE_CHALLENGE_1: CqChallengeData = {
                 rgbLed.set_led_green();
             }
         }
-    `
+    `,
+	isDefiniteSolution: true,
 }
 
 export const OBSTACLE_AVOIDANCE_CHALLENGE_2: CqChallengeData = {
@@ -134,7 +135,8 @@ export const OBSTACLE_AVOIDANCE_CHALLENGE_2: CqChallengeData = {
                 goForward(50);
             }
         }
-    `
+    `,
+	isDefiniteSolution: false,
 }
 
 export const OBSTACLE_AVOIDANCE_CHALLENGE_3: CqChallengeData = {
@@ -235,7 +237,8 @@ export const OBSTACLE_AVOIDANCE_CHALLENGE_3: CqChallengeData = {
                 goForward(50);
             }
         }
-    `
+    `,
+	isDefiniteSolution: false,
 }
 
 export const OBSTACLE_AVOIDANCE_CHALLENGE_4: CqChallengeData = {
@@ -274,7 +277,8 @@ export const OBSTACLE_AVOIDANCE_CHALLENGE_4: CqChallengeData = {
                 rgbLed.turn_led_off();
             }
         }
-    `
+    `,
+	isDefiniteSolution: true,
 }
 
 export const OBSTACLE_AVOIDANCE_CHALLENGE_5: CqChallengeData = {
@@ -329,7 +333,8 @@ export const OBSTACLE_AVOIDANCE_CHALLENGE_5: CqChallengeData = {
                 goForward(50);
             }
         }
-    `
+    `,
+	isDefiniteSolution: false,
 }
 
 // Array structure - easier to search and iterate
