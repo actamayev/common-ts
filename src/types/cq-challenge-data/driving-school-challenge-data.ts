@@ -24,6 +24,7 @@ export const DRIVING_SCHOOL_CHALLENGE_S2_P4: CqChallengeData = {
 	description: "Build a program that starts when my button is pressed, turns my LEDs blue for two seconds, then switches to red for two seconds, then turns off.",
 	difficulty: "beginner",
 	challengeIndex: 1,
+	isDefiniteSolution: true,
 	initialBlocklyJson: {},
 	...createChallengeToolbox([
 		START_BLOCK_TYPES.BUTTON_PRESS_START,
@@ -65,6 +66,7 @@ export const DRIVING_SCHOOL_CHALLENGE_S3_P5: CqChallengeData = {
 	description: "Build a program that makes Pip go forward 15 centimeters at 50% speed, then stop.",
 	difficulty: "beginner",
 	challengeIndex: 2,
+	isDefiniteSolution: true,
 	initialBlocklyJson: {},
 	beforeRunningText: "Place Pip on a flat surface with clear space ahead.",
 	...createChallengeToolbox([
@@ -105,6 +107,7 @@ export const DRIVING_SCHOOL_CHALLENGE_S4_P5: CqChallengeData = {
 	beforeRunningText: "Place Pip on a flat surface with clear space around.",
 	difficulty: "beginner",
 	challengeIndex: 3,
+	isDefiniteSolution: true,
 	initialBlocklyJson: { },
 	...createChallengeToolbox([
 		START_BLOCK_TYPES.BUTTON_PRESS_START,
@@ -147,11 +150,13 @@ export const DRIVING_SCHOOL_CHALLENGE_S5_P4: CqChallengeData = {
 	beforeRunningText: "Place Pip on a flat surface with clear space around.",
 	difficulty: "beginner",
 	challengeIndex: 4,
+	isDefiniteSolution: true,
 	initialBlocklyJson: {},
 	...createChallengeToolbox([
-		MOTOR_BLOCK_TYPES.GO_FORWARD,
+		MOTOR_BLOCK_TYPES.GO_FORWARD_DISTANCE,
 		MOTOR_BLOCK_TYPES.TURN,
 		MOTOR_BLOCK_TYPES.STOP,
+		START_BLOCK_TYPES.BUTTON_PRESS_START,
 	]),
 	expectedBehavior: "Pip starts on button A, drives in a square, and returns to where it started.",
 	commonMistakes: [
@@ -166,9 +171,11 @@ export const DRIVING_SCHOOL_CHALLENGE_S5_P4: CqChallengeData = {
 	],
 	solutionCode: `
 	wait_for_button_press();
-	goForward();
+	goForwardDistance(15, 50);
 	turn(CLOCKWISE, 90);
-	goForward();
+	goForwardDistance(15, 50);
+	turn(COUNTERCLOCKWISE, 90);
+	goForwardDistance(15, 50);
 	stop();
 	`,
 }

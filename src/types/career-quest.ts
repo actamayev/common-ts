@@ -30,6 +30,7 @@ export interface CqChallengeData {
 
 	// Solution for code checking
 	solutionCode: string
+	isDefiniteSolution: boolean
 	beforeRunningText?: string
 
 	initialBlocklyJson: BlocklyJson
