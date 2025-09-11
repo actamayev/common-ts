@@ -27,7 +27,8 @@ export const DRIVING_SCHOOL_CHALLENGE_S2_P4: CqChallengeData = {
 	initialBlocklyJson: {},
 	...createChallengeToolbox([
 		START_BLOCK_TYPES.BUTTON_PRESS_START,
-		LED_BLOCK_TYPES.CONTROL_ALL_LEDS
+		LED_BLOCK_TYPES.CONTROL_ALL_LEDS,
+		LOOP_BLOCK_TYPES.WAIT,
 	]),
 	expectedBehavior: "Pip starts on button A, turns LEDs blue for two seconds, then switches to red for two seconds, then turns off.",
 	commonMistakes: [
@@ -319,7 +320,7 @@ export const DRIVING_SCHOOL_VIEW_ONLY_S3_P4: BlocklyJson = {
 
 
 // [Prebuilt blocks: Start on Button A → Turn clockwise 90° at 35% speed → Stop. Pip pivots neatly]
-export const DRIVING_SCHOOL_VIEW_ONLY_S4_S3: BlocklyJson = {
+export const DRIVING_SCHOOL_VIEW_ONLY_S4_P3: BlocklyJson = {
 	"blocks": {
 		"languageVersion": 0,
 		"blocks": [
