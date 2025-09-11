@@ -1,6 +1,6 @@
 {
   "name": "@bluedotrobots/common-ts",
-  "version": "1.0.222",
+  "version": "1.0.223",
   "description": "Shared TypeScript code between frontend and backend",
   "files": [
     "dist/src/**/*"
@@ -11,7 +11,7 @@
       "default": "./dist/src/types/*.js"
     },
     "./types/*/index": {
-      "types": "./dist/src/types/*/index.d.ts", 
+      "types": "./dist/src/types/*/index.d.ts",
       "default": "./dist/src/types/*/index.js"
     },
     "./types/*/*": {
