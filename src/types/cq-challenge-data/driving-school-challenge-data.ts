@@ -54,8 +54,8 @@ export const DRIVING_SCHOOL_CHALLENGE_S2_P4: CqChallengeData = {
 
 // “Your turn.
 // Build a program that makes me
-// go forward 15 centimeters
-// at 50 percent speed,
+// go forward 8 inches
+// at 20% speed,
 // then stop.”
 // [Empty workspace; available blocks: Start on Button, Go forward x distance at x speed, Stop. Pip runs when uploaded.]
 
@@ -63,7 +63,7 @@ export const DRIVING_SCHOOL_CHALLENGE_S3_P5: CqChallengeData = {
 	challengeUUID: "718e291a-1c03-4948-88c4-ef0762cfc4df" as ChallengeUUID,
 	careerUUID: "af21b042-86ac-4790-a60d-fd102a469401" as CareerUUID,
 	title: "Driving School Challenge 2",
-	description: "Build a program that makes Pip go forward 15 centimeters at 50% speed, then stop.",
+	description: "Build a program that makes Pip go forward 8 inches at 20% speed, then stop.",
 	difficulty: "beginner",
 	challengeIndex: 2,
 	isDefiniteSolution: true,
@@ -74,7 +74,7 @@ export const DRIVING_SCHOOL_CHALLENGE_S3_P5: CqChallengeData = {
 		MOTOR_BLOCK_TYPES.GO_FORWARD_DISTANCE,
 		MOTOR_BLOCK_TYPES.STOP,
 	]),
-	expectedBehavior: "Pip starts on button A, goes forward 15 centimeters at 50 percent speed, then stops.",
+	expectedBehavior: "Pip starts on button A, goes forward 8 inches at 20% speed, then stops.",
 	commonMistakes: [
 		"Forgetting to use the delay block",
 		"Forgetting to use the LEDs block",
@@ -87,7 +87,7 @@ export const DRIVING_SCHOOL_CHALLENGE_S3_P5: CqChallengeData = {
 	],
 	solutionCode: `
 	wait_for_button_press();
-	goForwardDistance(15, 50);
+	goForwardDistance(8, 20);
 	stop();
 	`,
 }
@@ -171,11 +171,11 @@ export const DRIVING_SCHOOL_CHALLENGE_S5_P4: CqChallengeData = {
 	],
 	solutionCode: `
 	wait_for_button_press();
-	goForwardDistance(15, 50);
+	goForwardDistance(8, 20);
 	turn(CLOCKWISE, 90);
-	goForwardDistance(15, 50);
+	goForwardDistance(8, 20);
 	turn(COUNTERCLOCKWISE, 90);
-	goForwardDistance(15, 50);
+	goForwardDistance(8, 20);
 	stop();
 	`,
 }
@@ -265,7 +265,7 @@ export const DRIVING_SCHOOL_VIEW_ONLY_S2_P3: BlocklyJson = {
 	}
 }
 
-//[Prebuilt blocks: Start on Button A → Go forward for 2 seconds at 20% speed → Stop. When uploaded, Pip drives forward, then stops.]
+//[Prebuilt blocks: Start on Button A → Go forward for 1 second at 20% speed → Stop. When uploaded, Pip drives forward, then stops.]
 export const DRIVING_SCHOOL_VIEW_ONLY_S3_P2: BlocklyJson = {
 	"blocks": {
 		"languageVersion": 0,
@@ -280,7 +280,7 @@ export const DRIVING_SCHOOL_VIEW_ONLY_S3_P2: BlocklyJson = {
 						"type": "go_forward_time",
 						"id": ")a1=!#B_EUL?@g2Q~X`7",
 						"fields": {
-							"seconds": 2,
+							"seconds": 1,
 							"percentage": 20
 						},
 						"next": {
@@ -391,7 +391,7 @@ export const DRIVING_SCHOOL_VIEW_ONLY_S4_P4: BlocklyJson = {
 	}
 }
 
-// [Prebuilt blocks: Start on Button A → Go forward 20 cm at 40% → Turn clockwise 90° → Go forward 20 cm at 40% → Stop. Pip drives forward, turns, drives again, and stops.]
+// [Prebuilt blocks: Start on Button A → Go forward 5 cm at 20% → Turn clockwise 90° → Go forward 5 cm at 20% → Stop. Pip drives forward, turns, drives again, and stops.]
 export const DRIVING_SCHOOL_VIEW_ONLY_S5_P2: BlocklyJson = {
 	"blocks": {
 		"languageVersion": 0,
@@ -406,8 +406,8 @@ export const DRIVING_SCHOOL_VIEW_ONLY_S5_P2: BlocklyJson = {
 						"type": "go_forward_distance",
 						"id": "vuJ!PuGlbNI19T@ssi@.",
 						"fields": {
-							"distance": 20,
-							"percentage": 40
+							"distance": 5,
+							"percentage": 20
 						},
 						"next": {
 							"block": {
@@ -430,8 +430,8 @@ export const DRIVING_SCHOOL_VIEW_ONLY_S5_P2: BlocklyJson = {
 														"type": "go_forward_distance",
 														"id": "2!6)Ec6zBl/1~U|52F*^",
 														"fields": {
-															"distance": 20,
-															"percentage": 40
+															"distance": 5,
+															"percentage": 20
 														},
 														"next": {
 															"block": {
