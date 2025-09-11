@@ -6,6 +6,7 @@ import { LOOP_BLOCK_TYPES, START_BLOCK_TYPES } from "../blockly/logic-block-type
 import { LED_BLOCK_TYPES } from "../blockly/led-block-types"
 import { createChallengeToolbox } from "../utils/blockly-helpers"
 import { MOTOR_BLOCK_TYPES } from "../blockly/motor-block-types"
+import { BlocklyJson } from "../sandbox"
 
 //Panel #4:
 // “Your turn.
@@ -174,3 +175,270 @@ export const DRIVING_SCHOOL_CHALLENGES: CqChallengeData[] = [
 	DRIVING_SCHOOL_CHALLENGE_S4_P5,
 	DRIVING_SCHOOL_CHALLENGE_S5_P4,
 ]
+
+export const DRIVING_SCHOOL_VIEW_ONLY_S2_P1: BlocklyJson = {
+	"blocks": {
+		"languageVersion": 0,
+		"blocks": [
+			{
+				"type": "control_all_leds",
+				"id": "7$2ht=dC2Ythc,$rluNi",
+				"x": -550,
+				"y": -470,
+				"fields": {
+					"led_color": "BLUE"
+				},
+				"next": {
+					"block": {
+						"type": "wait",
+						"id": "d_1x]$77XkkLn)]s=mOh",
+						"fields": {
+							"wait": 3,
+							"SECONDS_LABEL": "second"
+						},
+						"next": {
+							"block": {
+								"type": "control_all_leds",
+								"id": "H:$HqX.l.hg+d[1J5Yif",
+								"fields": {
+									"led_color": "OFF"
+								}
+							}
+						}
+					}
+				}
+			}
+		]
+	}
+}
+
+export const DRIVING_SCHOOL_VIEW_ONLY_S2_P3: BlocklyJson = {
+	"blocks": {
+		"languageVersion": 0,
+		"blocks": [
+			{
+				"type": "button_press_start",
+				"id": "vc^/L`-2^N5k-/hG/DKS",
+				"x": -610,
+				"y": -650,
+				"next": {
+					"block": {
+						"type": "control_all_leds",
+						"id": "7$2ht=dC2Ythc,$rluNi",
+						"fields": {
+							"led_color": "YELLOW"
+						},
+						"next": {
+							"block": {
+								"type": "wait",
+								"id": "d_1x]$77XkkLn)]s=mOh",
+								"fields": {
+									"wait": 2,
+									"SECONDS_LABEL": "seconds"
+								},
+								"next": {
+									"block": {
+										"type": "control_all_leds",
+										"id": "H:$HqX.l.hg+d[1J5Yif",
+										"fields": {
+											"led_color": "OFF"
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		]
+	}
+}
+
+//[Prebuilt blocks: Start on Button A → Go forward for 2 seconds at 20% speed → Stop. When uploaded, Pip drives forward, then stops.]
+export const DRIVING_SCHOOL_VIEW_ONLY_S3_P2: BlocklyJson = {
+	"blocks": {
+		"languageVersion": 0,
+		"blocks": [
+			{
+				"type": "button_press_start",
+				"id": "vc^/L`-2^N5k-/hG/DKS",
+				"x": -790,
+				"y": -650,
+				"next": {
+					"block": {
+						"type": "go_forward_time",
+						"id": ")a1=!#B_EUL?@g2Q~X`7",
+						"fields": {
+							"seconds": 2,
+							"percentage": 20
+						},
+						"next": {
+							"block": {
+								"type": "stop",
+								"id": "xzj-yP6.|)Q1|mXeJ,/b"
+							}
+						}
+					}
+				}
+			}
+		]
+	}
+}
+
+// [Prebuilt blocks: Start on Button A → Go forward 5 cm at 20% speed → Stop.
+// When uploaded, Pip moves and stops at a taped line.]
+export const DRIVING_SCHOOL_VIEW_ONLY_S3_P4: BlocklyJson = {
+	"blocks": {
+		"languageVersion": 0,
+		"blocks": [
+			{
+				"type": "button_press_start",
+				"id": "vc^/L`-2^N5k-/hG/DKS",
+				"x": -790,
+				"y": -650,
+				"next": {
+					"block": {
+						"type": "go_forward_distance",
+						"id": "gtSvX|h4*v.N_NC2WBI7",
+						"fields": {
+							"distance": 5,
+							"percentage": 20
+						},
+						"next": {
+							"block": {
+								"type": "stop",
+								"id": "xzj-yP6.|)Q1|mXeJ,/b"
+							}
+						}
+					}
+				}
+			}
+		]
+	}
+}
+
+
+// [Prebuilt blocks: Start on Button A → Turn clockwise 90° at 35% speed → Stop. Pip pivots neatly]
+export const DRIVING_SCHOOL_VIEW_ONLY_S4_S3: BlocklyJson = {
+	"blocks": {
+		"languageVersion": 0,
+		"blocks": [
+			{
+				"type": "button_press_start",
+				"id": "vc^/L`-2^N5k-/hG/DKS",
+				"x": -790,
+				"y": -650,
+				"next": {
+					"block": {
+						"type": "turn",
+						"id": "/w?pH09x8CHmj0~-vD=J",
+						"fields": {
+							"turn_direction": "CLOCKWISE",
+							"turn_degrees": 90
+						},
+						"next": {
+							"block": {
+								"type": "stop",
+								"id": "Za~7`|7:oL2|-M2ownqR"
+							}
+						}
+					}
+				}
+			}
+		]
+	}
+}
+
+//[Prebuilt blocks: Start on Button A → Turn clockwise 360° → Stop. Pip rotates in a complete circle.]
+export const DRIVING_SCHOOL_VIEW_ONLY_S4_P4: BlocklyJson = {
+	"blocks": {
+		"languageVersion": 0,
+		"blocks": [
+			{
+				"type": "button_press_start",
+				"id": "vc^/L`-2^N5k-/hG/DKS",
+				"x": -790,
+				"y": -650,
+				"next": {
+					"block": {
+						"type": "turn",
+						"id": "/w?pH09x8CHmj0~-vD=J",
+						"fields": {
+							"turn_direction": "CLOCKWISE",
+							"turn_degrees": 360
+						},
+						"next": {
+							"block": {
+								"type": "stop",
+								"id": "Za~7`|7:oL2|-M2ownqR"
+							}
+						}
+					}
+				}
+			}
+		]
+	}
+}
+
+// [Prebuilt blocks: Start on Button A → Go forward 20 cm at 40% → Turn clockwise 90° → Go forward 20 cm at 40% → Stop. Pip drives forward, turns, drives again, and stops.]
+export const DRIVING_SCHOOL_VIEW_ONLY_S5_P2: BlocklyJson = {
+	"blocks": {
+		"languageVersion": 0,
+		"blocks": [
+			{
+				"type": "button_press_start",
+				"id": "vc^/L`-2^N5k-/hG/DKS",
+				"x": -810,
+				"y": -730,
+				"next": {
+					"block": {
+						"type": "go_forward_distance",
+						"id": "vuJ!PuGlbNI19T@ssi@.",
+						"fields": {
+							"distance": 20,
+							"percentage": 40
+						},
+						"next": {
+							"block": {
+								"type": "stop",
+								"id": "Za~7`|7:oL2|-M2ownqR",
+								"next": {
+									"block": {
+										"type": "turn",
+										"id": "/w?pH09x8CHmj0~-vD=J",
+										"fields": {
+											"turn_direction": "CLOCKWISE",
+											"turn_degrees": 90
+										},
+										"next": {
+											"block": {
+												"type": "stop",
+												"id": "%GoL+a8+rQ?Mb#9qR}T?",
+												"next": {
+													"block": {
+														"type": "go_forward_distance",
+														"id": "2!6)Ec6zBl/1~U|52F*^",
+														"fields": {
+															"distance": 20,
+															"percentage": 40
+														},
+														"next": {
+															"block": {
+																"type": "stop",
+																"id": ";i_]Z}G.@bZ-~CnS_yl8"
+															}
+														}
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		]
+	}
+}
