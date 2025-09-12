@@ -32,16 +32,8 @@ export const DRIVING_SCHOOL_CHALLENGE_S2_P4: CqChallengeData = {
 		LOOP_BLOCK_TYPES.WAIT,
 	]),
 	expectedBehavior: "Pip starts on button A, turns LEDs blue for two seconds, then switches to red for two seconds, then turns off.",
-	commonMistakes: [
-		"Forgetting to use the delay block",
-		"Forgetting to use the LEDs block",
-		"Forgetting to use the start button block",
-	],
-	learningObjectives: [
-		"Understanding how to use the delay block",
-		"Understanding how to use the LEDs block",
-		"Understanding how to use the start button block",
-	],
+	commonMistakes: [ ],
+	learningObjectives: [ ],
 	solutionCode: `
 	wait_for_button_press();
 	rgbLed.set_led_blue();
@@ -55,7 +47,7 @@ export const DRIVING_SCHOOL_CHALLENGE_S2_P4: CqChallengeData = {
 // “Your turn.
 // Build a program that makes me
 // go forward 8 inches
-// at 20% speed,
+// at 15% speed,
 // then stop.”
 // [Empty workspace; available blocks: Start on Button, Go forward x distance at x speed, Stop. Pip runs when uploaded.]
 
@@ -63,7 +55,7 @@ export const DRIVING_SCHOOL_CHALLENGE_S3_P5: CqChallengeData = {
 	challengeUUID: "718e291a-1c03-4948-88c4-ef0762cfc4df" as ChallengeUUID,
 	careerUUID: "af21b042-86ac-4790-a60d-fd102a469401" as CareerUUID,
 	title: "Driving School Challenge 2",
-	description: "Build a program that makes Pip go forward 8 inches at 20% speed, then stop.",
+	description: "Build a program that makes Pip go forward 8 inches at 15% speed, go backward 8 inches at 15% speed, then stop.",
 	difficulty: "beginner",
 	challengeIndex: 2,
 	isDefiniteSolution: true,
@@ -74,20 +66,13 @@ export const DRIVING_SCHOOL_CHALLENGE_S3_P5: CqChallengeData = {
 		MOTOR_BLOCK_TYPES.GO_FORWARD_DISTANCE,
 		MOTOR_BLOCK_TYPES.STOP,
 	]),
-	expectedBehavior: "Pip starts on button A, goes forward 8 inches at 20% speed, then stops.",
-	commonMistakes: [
-		"Forgetting to use the delay block",
-		"Forgetting to use the LEDs block",
-		"Forgetting to use the start button block",
-	],
-	learningObjectives: [
-		"Understanding how to use the delay block",
-		"Understanding how to use the LEDs block",
-		"Understanding how to use the start button block",
-	],
+	expectedBehavior: "Pip starts on button A, goes forward 8 inches at 15% speed, goes backward 8 inches at 15% speed, then stops.",
+	commonMistakes: [ ],
+	learningObjectives: [ ],
 	solutionCode: `
 	wait_for_button_press();
-	goForwardDistance(8, 20);
+	goForwardDistance(8, 15);
+	goBackwardDistance(8, 15);
 	stopMotors();
 	`,
 }
@@ -116,16 +101,8 @@ export const DRIVING_SCHOOL_CHALLENGE_S4_P5: CqChallengeData = {
 		MOTOR_BLOCK_TYPES.STOP,
 	]),
 	expectedBehavior: "Pip starts on button A, turns 180 degrees clockwise, waits two seconds, then turns 180 degrees counterclockwise, then stops.",
-	commonMistakes: [
-		"Forgetting to use the delay block",
-		"Forgetting to use the LEDs block",
-		"Forgetting to use the start button block",
-	],
-	learningObjectives: [
-		"Understanding how to use the delay block",
-		"Understanding how to use the LEDs block",
-		"Understanding how to use the start button block",
-	],
+	commonMistakes: [],
+	learningObjectives: [ ],
 	solutionCode: `
 	wait_for_button_press();
 	turn(CLOCKWISE, 180);
@@ -146,7 +123,7 @@ export const DRIVING_SCHOOL_CHALLENGE_S5_P4: CqChallengeData = {
 	challengeUUID: "d7eb2c2f-da43-4f6a-96e5-cffa51c51531" as ChallengeUUID,
 	careerUUID: "af21b042-86ac-4790-a60d-fd102a469401" as CareerUUID,
 	title: "Driving School Challenge 4",
-	description: "Build a program that makes Pip drive in a square and return to where it started.",
+	description: "Build a program that makes Pip drive clockwise in a square at 15% speed.",
 	beforeRunningText: "Place Pip on a flat surface with clear space around.",
 	difficulty: "beginner",
 	challengeIndex: 4,
@@ -166,7 +143,7 @@ export const DRIVING_SCHOOL_CHALLENGE_S5_P4: CqChallengeData = {
 							"id": "vuJ!PuGlbNI19T@ssi@.",
 							"fields": {
 								"distance": 8,
-								"percentage": 20
+								"percentage": 15
 							},
 							"next": {
 								"block": {
@@ -182,7 +159,7 @@ export const DRIVING_SCHOOL_CHALLENGE_S5_P4: CqChallengeData = {
 											"id": "2!6)Ec6zBl/1~U|52F*^",
 											"fields": {
 												"distance": 8,
-												"percentage": 20
+												"percentage": 15
 											},
 											"next": {
 												"block": {
@@ -210,24 +187,19 @@ export const DRIVING_SCHOOL_CHALLENGE_S5_P4: CqChallengeData = {
 		MOTOR_BLOCK_TYPES.STOP,
 		START_BLOCK_TYPES.BUTTON_PRESS_START,
 	]),
-	expectedBehavior: "Pip starts on button A, drives in a square, and returns to where it started.",
-	commonMistakes: [
-		"Forgetting to use the delay block",
-		"Forgetting to use the LEDs block",
-		"Forgetting to use the start button block",
-	],
-	learningObjectives: [
-		"Understanding how to use the delay block",
-		"Understanding how to use the LEDs block",
-		"Understanding how to use the start button block",
-	],
+	expectedBehavior: "Pip starts on button A, drives clockwise in a square at 15% speed.",
+	commonMistakes: [],
+	learningObjectives: [],
 	solutionCode: `
 	wait_for_button_press();
-	goForwardDistance(8, 20);
+	goForwardDistance(8, 15);
 	turn(CLOCKWISE, 90);
-	goForwardDistance(8, 20);
-	turn(COUNTERCLOCKWISE, 90);
-	goForwardDistance(8, 20);
+	goForwardDistance(8, 15);
+	turn(CLOCKWISE, 90);
+	goForwardDistance(8, 15);
+	turn(CLOCKWISE, 90);
+	goForwardDistance(8, 15);
+	turn(CLOCKWISE, 90);
 	stopMotors();
 	`,
 }
@@ -317,7 +289,7 @@ export const DRIVING_SCHOOL_VIEW_ONLY_S2_P3: BlocklyJson = {
 	}
 }
 
-//[Prebuilt blocks: Start on Button A → Go forward for 1 second at 20% speed → Stop. When uploaded, Pip drives forward, then stops.]
+//[Prebuilt blocks: Start on Button A → Go forward for 1 second at 15% speed → Stop. When uploaded, Pip drives forward, then stops.]
 export const DRIVING_SCHOOL_VIEW_ONLY_S3_P2: BlocklyJson = {
 	"blocks": {
 		"languageVersion": 0,
@@ -333,7 +305,7 @@ export const DRIVING_SCHOOL_VIEW_ONLY_S3_P2: BlocklyJson = {
 						"id": ")a1=!#B_EUL?@g2Q~X`7",
 						"fields": {
 							"seconds": 1,
-							"percentage": 20
+							"percentage": 15
 						},
 						"next": {
 							"block": {
@@ -348,7 +320,7 @@ export const DRIVING_SCHOOL_VIEW_ONLY_S3_P2: BlocklyJson = {
 	}
 }
 
-// [Prebuilt blocks: Start on Button A → Go forward 5 cm at 20% speed → Stop.
+// [Prebuilt blocks: Start on Button A → Go forward 8 inches at 15% speed → Stop.
 // When uploaded, Pip moves and stops at a taped line.]
 export const DRIVING_SCHOOL_VIEW_ONLY_S3_P4: BlocklyJson = {
 	"blocks": {
@@ -365,7 +337,7 @@ export const DRIVING_SCHOOL_VIEW_ONLY_S3_P4: BlocklyJson = {
 						"id": "gtSvX|h4*v.N_NC2WBI7",
 						"fields": {
 							"distance": 8,
-							"percentage": 20
+							"percentage": 15
 						},
 						"next": {
 							"block": {
@@ -443,7 +415,7 @@ export const DRIVING_SCHOOL_VIEW_ONLY_S4_P4: BlocklyJson = {
 	}
 }
 
-// [Prebuilt blocks: Start on Button A → Go forward 5 cm at 20% → Turn clockwise 90° → Go forward 5 cm at 20% → Stop. Pip drives forward, turns, drives again, and stops.]
+// [Prebuilt blocks: Start on Button A → Go forward 8 inches at 15% → Turn clockwise 90° → Go forward 8 inches at 15% → Stop. Pip drives forward, turns, drives again, and stops.]
 export const DRIVING_SCHOOL_VIEW_ONLY_S5_P2: BlocklyJson = {
 	"blocks": {
 		"languageVersion": 0,
@@ -459,7 +431,7 @@ export const DRIVING_SCHOOL_VIEW_ONLY_S5_P2: BlocklyJson = {
 						"id": "vuJ!PuGlbNI19T@ssi@.",
 						"fields": {
 							"distance": 8,
-							"percentage": 20
+							"percentage": 15
 						},
 						"next": {
 							"block": {
@@ -483,7 +455,7 @@ export const DRIVING_SCHOOL_VIEW_ONLY_S5_P2: BlocklyJson = {
 														"id": "2!6)Ec6zBl/1~U|52F*^",
 														"fields": {
 															"distance": 8,
-															"percentage": 20
+															"percentage": 15
 														},
 														"next": {
 															"block": {
