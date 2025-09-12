@@ -64,6 +64,7 @@ export const DRIVING_SCHOOL_CHALLENGE_S3_P5: CqChallengeData = {
 	...createChallengeToolbox([
 		START_BLOCK_TYPES.BUTTON_PRESS_START,
 		MOTOR_BLOCK_TYPES.GO_FORWARD_DISTANCE,
+		MOTOR_BLOCK_TYPES.GO_BACKWARD_DISTANCE,
 		MOTOR_BLOCK_TYPES.STOP,
 	]),
 	expectedBehavior: "Pip starts on button A, goes forward 8 inches at 15% speed, goes backward 8 inches at 15% speed, then stops.",
