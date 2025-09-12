@@ -1,6 +1,6 @@
 {
   "name": "@bluedotrobots/common-ts",
-  "version": "1.0.239",
+  "version": "1.0.240",
   "description": "Shared TypeScript code between frontend and backend",
   "files": [
     "dist/src/**/*"
@@ -117,16 +117,15 @@
       }
     },
     "./types/cq-challenge-data": {
-  "import": {
-    "types": "./dist/src/types/cq-challenge-data/index.d.ts",
-    "default": "./dist/src/types/cq-challenge-data/index.js"
-  },
-  "require": {
-    "types": "./dist/src/types/cq-challenge-data/index.d.ts",
-    "default": "./dist/src/types/cq-challenge-data/index.js"
-  }
-},
-
+      "import": {
+        "types": "./dist/src/types/cq-challenge-data/index.d.ts",
+        "default": "./dist/src/types/cq-challenge-data/index.js"
+      },
+      "require": {
+        "types": "./dist/src/types/cq-challenge-data/index.d.ts",
+        "default": "./dist/src/types/cq-challenge-data/index.js"
+      }
+    },
     "./types/cq-challenge-data/cq-challenge-data": {
       "import": {
         "types": "./dist/src/types/cq-challenge-data/cq-challenge-data.d.ts",
