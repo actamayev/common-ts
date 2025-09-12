@@ -55,7 +55,7 @@ export const DRIVING_SCHOOL_CHALLENGE_S3_P5: CqChallengeData = {
 	challengeUUID: "718e291a-1c03-4948-88c4-ef0762cfc4df" as ChallengeUUID,
 	careerUUID: "af21b042-86ac-4790-a60d-fd102a469401" as CareerUUID,
 	title: "Driving School Challenge 2",
-	description: "Build a program that makes Pip go forward 8 inches at 15% speed, go backward 8 inches at 15% speed, then stop.",
+	description: "Build a program that makes Pip go forward 8 inches at 15% speed, go backward 8 inches at 15% speed.",
 	difficulty: "beginner",
 	challengeIndex: 2,
 	isDefiniteSolution: true,
@@ -65,16 +65,14 @@ export const DRIVING_SCHOOL_CHALLENGE_S3_P5: CqChallengeData = {
 		START_BLOCK_TYPES.BUTTON_PRESS_START,
 		MOTOR_BLOCK_TYPES.GO_FORWARD_DISTANCE,
 		MOTOR_BLOCK_TYPES.GO_BACKWARD_DISTANCE,
-		MOTOR_BLOCK_TYPES.STOP,
 	]),
-	expectedBehavior: "Pip starts on button A, goes forward 8 inches at 15% speed, goes backward 8 inches at 15% speed, then stops.",
+	expectedBehavior: "Pip starts on button A, goes forward 8 inches at 15% speed, goes backward 8 inches at 15% speed.",
 	commonMistakes: [ ],
 	learningObjectives: [ ],
 	solutionCode: `
 	wait_for_button_press();
 	goForwardDistance(8, 15);
 	goBackwardDistance(8, 15);
-	stopMotors();
 	`,
 }
 
@@ -89,7 +87,7 @@ export const DRIVING_SCHOOL_CHALLENGE_S4_P5: CqChallengeData = {
 	challengeUUID: "b9114111-48f1-4589-bc10-5030f2d9621f" as ChallengeUUID,
 	careerUUID: "af21b042-86ac-4790-a60d-fd102a469401" as CareerUUID,
 	title: "Driving School Challenge 3",
-	description: "Build a program that makes Pip turn 180 degrees clockwise, wait two seconds, then turn 180 degrees counterclockwise, then stop.",
+	description: "Build a program that makes Pip turn 180 degrees clockwise, wait two seconds, then turn 180 degrees counterclockwise.",
 	beforeRunningText: "Place Pip on a flat surface with clear space around.",
 	difficulty: "beginner",
 	challengeIndex: 3,
@@ -98,10 +96,9 @@ export const DRIVING_SCHOOL_CHALLENGE_S4_P5: CqChallengeData = {
 	...createChallengeToolbox([
 		START_BLOCK_TYPES.BUTTON_PRESS_START,
 		MOTOR_BLOCK_TYPES.TURN,
-		LOOP_BLOCK_TYPES.WAIT,
-		MOTOR_BLOCK_TYPES.STOP,
+		LOOP_BLOCK_TYPES.WAIT
 	]),
-	expectedBehavior: "Pip starts on button A, turns 180 degrees clockwise, waits two seconds, then turns 180 degrees counterclockwise, then stops.",
+	expectedBehavior: "Pip starts on button A, turns 180 degrees clockwise, waits two seconds, then turns 180 degrees counterclockwise.",
 	commonMistakes: [],
 	learningObjectives: [ ],
 	solutionCode: `
@@ -109,7 +106,6 @@ export const DRIVING_SCHOOL_CHALLENGE_S4_P5: CqChallengeData = {
 	turn(CLOCKWISE, 180);
 	wait(2);
 	turn(COUNTERCLOCKWISE, 180);
-	stopMotors();
 	`,
 }
 
@@ -185,7 +181,6 @@ export const DRIVING_SCHOOL_CHALLENGE_S5_P4: CqChallengeData = {
 	...createChallengeToolbox([
 		MOTOR_BLOCK_TYPES.GO_FORWARD_DISTANCE,
 		MOTOR_BLOCK_TYPES.TURN,
-		MOTOR_BLOCK_TYPES.STOP,
 		START_BLOCK_TYPES.BUTTON_PRESS_START,
 	]),
 	expectedBehavior: "Pip starts on button A, drives clockwise in a square at 15% speed.",
@@ -201,7 +196,6 @@ export const DRIVING_SCHOOL_CHALLENGE_S5_P4: CqChallengeData = {
 	turn(CLOCKWISE, 90);
 	goForwardDistance(8, 15);
 	turn(CLOCKWISE, 90);
-	stopMotors();
 	`,
 }
 
@@ -339,12 +333,6 @@ export const DRIVING_SCHOOL_VIEW_ONLY_S3_P4: BlocklyJson = {
 						"fields": {
 							"distance": 8,
 							"percentage": 15
-						},
-						"next": {
-							"block": {
-								"type": "stop",
-								"id": "xzj-yP6.|)Q1|mXeJ,/b"
-							}
 						}
 					}
 				}
@@ -352,7 +340,6 @@ export const DRIVING_SCHOOL_VIEW_ONLY_S3_P4: BlocklyJson = {
 		]
 	}
 }
-
 
 // [Prebuilt blocks: Start on Button A → Turn clockwise 90° at 35% speed → Stop. Pip pivots neatly]
 export const DRIVING_SCHOOL_VIEW_ONLY_S4_P3: BlocklyJson = {
@@ -372,12 +359,6 @@ export const DRIVING_SCHOOL_VIEW_ONLY_S4_P3: BlocklyJson = {
 							"turn_direction": "CLOCKWISE",
 							"turn_degrees": 90
 						},
-						"next": {
-							"block": {
-								"type": "stop",
-								"id": "Za~7`|7:oL2|-M2ownqR"
-							}
-						}
 					}
 				}
 			}
@@ -402,12 +383,6 @@ export const DRIVING_SCHOOL_VIEW_ONLY_S4_P4: BlocklyJson = {
 						"fields": {
 							"turn_direction": "CLOCKWISE",
 							"turn_degrees": 360
-						},
-						"next": {
-							"block": {
-								"type": "stop",
-								"id": "Za~7`|7:oL2|-M2ownqR"
-							}
 						}
 					}
 				}
@@ -436,37 +411,19 @@ export const DRIVING_SCHOOL_VIEW_ONLY_S5_P2: BlocklyJson = {
 						},
 						"next": {
 							"block": {
-								"type": "stop",
-								"id": "Za~7`|7:oL2|-M2ownqR",
+								"type": "turn",
+								"id": "/w?pH09x8CHmj0~-vD=J",
+								"fields": {
+									"turn_direction": "CLOCKWISE",
+									"turn_degrees": 90
+								},
 								"next": {
 									"block": {
-										"type": "turn",
-										"id": "/w?pH09x8CHmj0~-vD=J",
+										"type": "go_forward_distance",
+										"id": "2!6)Ec6zBl/1~U|52F*^",
 										"fields": {
-											"turn_direction": "CLOCKWISE",
-											"turn_degrees": 90
-										},
-										"next": {
-											"block": {
-												"type": "stop",
-												"id": "%GoL+a8+rQ?Mb#9qR}T?",
-												"next": {
-													"block": {
-														"type": "go_forward_distance",
-														"id": "2!6)Ec6zBl/1~U|52F*^",
-														"fields": {
-															"distance": 8,
-															"percentage": 15
-														},
-														"next": {
-															"block": {
-																"type": "stop",
-																"id": ";i_]Z}G.@bZ-~CnS_yl8"
-															}
-														}
-													}
-												}
-											}
+											"distance": 8,
+											"percentage": 15
 										}
 									}
 								}
