@@ -145,6 +145,9 @@ export interface StudentClassroomData {
 	classroomName: string
 	classCode: ClassCode
 	activeHubs: StudentViewHubData[]
+	garageDrivingAllowed: boolean
+	garageSoundsAllowed: boolean
+	garageLightsAllowed: boolean
 }
 
 //Teacher Routes
