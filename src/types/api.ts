@@ -158,6 +158,7 @@ export interface BasicTeacherClassroomData {
 
 export interface DetailedClassroomData extends BasicTeacherClassroomData {
 	students: {
+		studentId: number
 		username: string
 	}[]
 	activeHubs: TeacherViewHubData[]
