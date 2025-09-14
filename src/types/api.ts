@@ -141,6 +141,7 @@ export interface RetrieveSandboxProjectsResponse {
 }
 
 export interface StudentClassroomData {
+	studentId: number
 	joinedClassroomAt: Date | null
 	classroomName: string
 	classCode: ClassCode
