@@ -161,6 +161,9 @@ export interface DetailedClassroomData extends BasicTeacherClassroomData {
 	students: {
 		studentId: number
 		username: string
+		garageDrivingAllowed: boolean
+		garageSoundsAllowed: boolean
+		garageLightsAllowed: boolean
 	}[]
 	activeHubs: TeacherViewHubData[]
 }
