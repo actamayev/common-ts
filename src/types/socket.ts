@@ -74,6 +74,7 @@ export interface DinoScoreUpdate extends PipUUIDInterface {
 }
 
 export interface StudentJoinedClassroom {
+    studentId: number
     classCode: ClassCode
     studentUsername: string
 }
