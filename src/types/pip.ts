@@ -2,7 +2,6 @@ import { FunSounds } from "./garage"
 import { PipUUID, PipUUIDInterface } from "./utils"
 
 export type PipConnectionStatus =
-	| "off" // Turned off.
 	| "online" // Pip is connected to the internet, but not connected to any browser clients
 	| "connected to online user" // Connected to the internet/is active
 	| "connected to serial"
