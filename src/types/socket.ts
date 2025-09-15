@@ -1,4 +1,4 @@
-import { PipConnectionStatus, SensorPayload, BatteryMonitorDataFull, PlayFunSoundPayload, SensorPayloadMZ } from "./pip"
+import { ClientPipConnectionStatus, SensorPayload, BatteryMonitorDataFull, PlayFunSoundPayload, SensorPayloadMZ } from "./pip"
 import { StudentViewHubData } from "./hub"
 import { ClassCode, HubUUID, PipUUIDInterface } from "./utils"
 import {
@@ -63,7 +63,7 @@ export interface ClientSocketEventMessage<E extends ClientSocketEvents = ClientS
 }
 
 export interface PipConnectionUpdate extends PipUUIDInterface {
-    newConnectionStatus: PipConnectionStatus
+    newConnectionStatus: ClientPipConnectionStatus
 }
 
 export interface BatteryMonitorDataUpdate extends PipUUIDInterface {
