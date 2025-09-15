@@ -124,7 +124,6 @@ export interface ProfilePictureUrl {
 export interface RetrieveIsPipUUIDValidResponse {
 	pipName: string | null
 	pipConnectionStatus: ClientPipConnectionStatus
-	isSomeoneConnectedToPip: boolean
 }
 
 // Sandbox Routes
