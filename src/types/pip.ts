@@ -112,7 +112,7 @@ export interface BatteryMonitorDataFull {
 
 // Incoming socket events:
 export interface PipStatusUpdate extends PipUUIDInterface {
-	newConnectionStatus: PipConnectionStatus
+	newConnectionStatus: ClientPipConnectionStatus
 }
 
 // This is both the data that Pip sends to the server, and the data the server sends to client
