@@ -31,7 +31,8 @@ export enum MessageType {
     STOP_SENSOR_POLLING = 26,
     TRIGGER_MESSAGE = 27,
     STOP_CAREER_QUEST_TRIGGER = 28,
-    SHOW_DISPLAY_START_SCREEN = 29
+    SHOW_DISPLAY_START_SCREEN = 29,
+    IS_USER_CONNECTED_TO_PIP = 30
 }
 
 export enum CareerType {
@@ -119,6 +120,11 @@ export enum HornSoundStatus {
 export enum BalanceStatus {
     UNBALANCED = 0,
     BALANCED = 1
+}
+
+export enum UserConnectedStatus {
+    NOT_CONNECTED = 0,
+    CONNECTED = 1
 }
 
 export enum WiFiConnectionStatus {

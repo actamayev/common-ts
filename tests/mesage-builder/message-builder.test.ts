@@ -1,7 +1,7 @@
 import { MessageBuilder } from "../../src/message-builder/message-builder"
 import {
 	BalanceStatus, CareerType, HeadlightStatus, HornSoundStatus, MeetPipTriggerType, LightAnimationType,
-	MessageType, SoundType, SpeakerStatus,
+	MessageType, SoundType, SpeakerStatus, UserConnectedStatus,
 } from "../../src/message-builder/protocol"
 import { END_MARKER, START_MARKER } from "../../src/types/utils/constants"
 import { BalancePidsProps, LedControlData } from "../../src/types/garage"
@@ -651,6 +651,24 @@ describe("MessageBuilder", () => {
 			const buffer = MessageBuilder.createShowDisplayStartScreenMessage()
 
 			validateFrameStructure(buffer, MessageType.SHOW_DISPLAY_START_SCREEN, 0)
+		})
+	})
+
+	describe("createIsUserConnectedToPipMessage", () => {
+		it("should create a valid is user connected to pip message", () => {
+			const buffer = MessageBuilder.createIsUserConnectedToPipMessage(UserConnectedStatus.CONNECTED)
+
+			validateFrameStructure(buffer, MessageType.IS_USER_CONNECTED_TO_PIP, 1)
+
+			const view = new DataView(buffer)
+			const offset = getPayloadOffset(buffer)
+			expect(view.getUint8(offset)).toBe(UserConnectedStatus.CONNECTED)
+		})
+
+		it("should create a valid is user connected to pip message", () => {
+			const buffer = MessageBuilder.createIsUserConnectedToPipMessage(UserConnectedStatus.NOT_CONNECTED)
+
+			validateFrameStructure(buffer, MessageType.IS_USER_CONNECTED_TO_PIP, 1)
 		})
 	})
 

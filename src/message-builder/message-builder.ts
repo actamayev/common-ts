@@ -1,7 +1,8 @@
 import { END_MARKER, START_MARKER } from "../types/utils/constants"
 import { BalancePidsProps, LedControlData } from "../types/garage"
 import { BalanceStatus, CareerType, HeadlightStatus, HornSoundStatus,
-	LightAnimationType, MessageType, SoundType, SpeakerStatus, ValidTriggerMessageType } from "./protocol"
+	LightAnimationType, MessageType, SoundType, SpeakerStatus,
+	ValidTriggerMessageType, UserConnectedStatus } from "./protocol"
 
 export class MessageBuilder {
 	// Add this helper method for framing messages
@@ -264,5 +265,10 @@ export class MessageBuilder {
 
 	static createShowDisplayStartScreenMessage(): ArrayBuffer {
 		return this.frameMessage(MessageType.SHOW_DISPLAY_START_SCREEN)
+	}
+
+	static createIsUserConnectedToPipMessage(userConnectedStatus: UserConnectedStatus): ArrayBuffer {
+		const payload = new Uint8Array([userConnectedStatus])
+		return this.frameMessage(MessageType.IS_USER_CONNECTED_TO_PIP, payload)
 	}
 }
