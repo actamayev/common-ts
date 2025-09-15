@@ -6,6 +6,13 @@ export type PipConnectionStatus =
 	| "connected to online user" // Connected to the internet/is active
 	| "connected to serial"
 
+export type ClientPipConnectionStatus =
+	| "offline"
+	| "online"
+	| "connected to serial"
+	| "connected to another user"
+	| "connected to you"
+
 export type ESPMessage =
     | { route: "/register"; payload: PipUUIDPayload }
     | { route: "/sensor-data"; payload: SensorPayload }
