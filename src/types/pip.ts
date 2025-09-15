@@ -6,11 +6,6 @@ export type PipConnectionStatus =
 	| "connected to online user" // Connected to the internet/is active
 	| "connected to serial"
 
-export interface FirmwareData {
-	firmwareVersion: number
-	firmwareBuffer: Buffer
-}
-
 export type ESPMessage =
     | { route: "/register"; payload: PipUUIDPayload }
     | { route: "/sensor-data"; payload: SensorPayload }
