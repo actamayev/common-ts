@@ -149,6 +149,7 @@ export interface StudentClassroomData {
 	garageDrivingAllowed: boolean
 	garageSoundsAllowed: boolean
 	garageLightsAllowed: boolean
+	garageDisplayAllowed: boolean
 }
 
 //Teacher Routes
@@ -164,6 +165,7 @@ export interface DetailedClassroomData extends BasicTeacherClassroomData {
 		garageDrivingAllowed: boolean
 		garageSoundsAllowed: boolean
 		garageLightsAllowed: boolean
+		garageDisplayAllowed: boolean
 	}[]
 	activeHubs: TeacherViewHubData[]
 }
