@@ -261,4 +261,8 @@ export class MessageBuilder {
 	static createStopCareerQuestTriggerMessage(): ArrayBuffer {
 		return this.frameMessage(MessageType.STOP_CAREER_QUEST_TRIGGER)
 	}
+
+	static createShowDisplayStartScreenMessage(): ArrayBuffer {
+		return this.frameMessage(MessageType.SHOW_DISPLAY_START_SCREEN)
+	}
 }

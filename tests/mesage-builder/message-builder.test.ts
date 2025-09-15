@@ -646,6 +646,14 @@ describe("MessageBuilder", () => {
 		})
 	})
 
+	describe("createShowDisplayStartScreenMessage", () => {
+		it("should create a valid show display start screen message", () => {
+			const buffer = MessageBuilder.createShowDisplayStartScreenMessage()
+
+			validateFrameStructure(buffer, MessageType.SHOW_DISPLAY_START_SCREEN, 0)
+		})
+	})
+
 	describe("createWiFiCredentialsMessage", () => {
 		it("should create a valid WiFi credentials message", () => {
 			const ssid = "MyWiFiNetwork"
