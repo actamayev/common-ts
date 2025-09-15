@@ -1,4 +1,4 @@
-import { ESPConnectionStatus } from "./pip"
+import { PipConnectionStatus } from "./pip"
 import { BlocklyJson, SandboxProject } from "./sandbox"
 import { StudentViewHubData, TeacherViewHubData } from "./hub"
 import { RetrievedQuestions, UserActivityProgress } from "./lab"
@@ -123,7 +123,7 @@ export interface ProfilePictureUrl {
 
 export interface RetrieveIsPipUUIDValidResponse {
 	pipName: string | null
-	pipConnectionStatus: ESPConnectionStatus
+	pipConnectionStatus: PipConnectionStatus
 	isSomeoneConnectedToPip: boolean
 }
 
