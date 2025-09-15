@@ -37,6 +37,7 @@ export type SocketEventPayloadMap = {
     "garage-driving-status-update": GarageDrivingStatusUpdate
     "garage-sounds-status-update": GarageSoundsStatusUpdate
     "garage-lights-status-update": GarageLightsStatusUpdate
+    "garage-display-status-update": GarageDisplayStatusUpdate
 }
 
 export type SocketEvents = keyof SocketEventPayloadMap
@@ -115,4 +116,8 @@ export interface GarageSoundsStatusUpdate {
 
 export interface GarageLightsStatusUpdate {
     garageLightsStatus: boolean
+}
+
+export interface GarageDisplayStatusUpdate {
+    garageDisplayStatus: boolean
 }
