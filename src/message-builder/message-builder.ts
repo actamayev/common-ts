@@ -271,4 +271,16 @@ export class MessageBuilder {
 		const payload = new Uint8Array([userConnectedStatus])
 		return this.frameMessage(MessageType.IS_USER_CONNECTED_TO_PIP, payload)
 	}
+
+	static createForgetNetworkMessage(networkName: string): ArrayBuffer {
+		const networkNameBytes = new TextEncoder().encode(networkName)
+		const payload = new ArrayBuffer(1 + networkNameBytes.length) // ✅ only 1 byte for length
+		const view = new DataView(payload)
+		const uint8View = new Uint8Array(payload)
+
+		view.setUint8(0, networkNameBytes.length) // length
+		uint8View.set(networkNameBytes, 1)        // copy network name starting at index 1
+
+		return this.frameMessage(MessageType.FORGET_NETWORK, new Uint8Array(payload))
+	  }
 }
