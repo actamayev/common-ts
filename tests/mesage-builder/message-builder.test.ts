@@ -672,6 +672,20 @@ describe("MessageBuilder", () => {
 		})
 	})
 
+	describe("createForgetNetworkMessage", () => {
+		it("should create a valid forget network message", () => {
+			const buffer = MessageBuilder.createForgetNetworkMessage("MyWiFiNetwork")
+
+			validateFrameStructure(buffer, MessageType.FORGET_NETWORK, 14)
+
+			const view = new DataView(buffer)
+			const offset = getPayloadOffset(buffer)
+			expect(view.getUint8(offset)).toBe(13) // Network name length
+			expect(view.getUint8(offset + 1)).toBe(77) // 'M'
+			expect(view.getUint8(offset + 2)).toBe(121) // 'y'
+		})
+	})
+
 	describe("createWiFiCredentialsMessage", () => {
 		it("should create a valid WiFi credentials message", () => {
 			const ssid = "MyWiFiNetwork"

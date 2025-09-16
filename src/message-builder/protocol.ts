@@ -32,7 +32,8 @@ export enum MessageType {
     TRIGGER_MESSAGE = 27,
     STOP_CAREER_QUEST_TRIGGER = 28,
     SHOW_DISPLAY_START_SCREEN = 29,
-    IS_USER_CONNECTED_TO_PIP = 30
+    IS_USER_CONNECTED_TO_PIP = 30,
+    FORGET_NETWORK = 31
 }
 
 export enum CareerType {
