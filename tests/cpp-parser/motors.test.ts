@@ -90,11 +90,11 @@ describe("Motor Command Functionality", () => {
 
 		test("should reject invalid degree value for turn", () => {
 			expect(() => {
-				CppParser.cppToByte("turn(CLOCKWISE, 0);")
+				CppParser.cppToByte("turn(CLOCKWISE, 29);")
 			}).toThrow(/Invalid degrees/)
 
 			expect(() => {
-				CppParser.cppToByte("turn(COUNTERCLOCKWISE, 361);")
+				CppParser.cppToByte("turn(COUNTERCLOCKWISE, 1081);")
 			}).toThrow(/Invalid degrees/)
 		})
 	})
