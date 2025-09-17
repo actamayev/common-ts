@@ -14,24 +14,25 @@ export type ClientPipConnectionStatus =
 	| "connected to you"
 
 export type ESPMessage =
-    | { route: "/register"; payload: PipUUIDPayload }
-    | { route: "/sensor-data"; payload: SensorPayload }
-    | { route: "/sensor-data-mz"; payload: SensorPayloadMZ }
-    | { route: "/bytecode-status"; payload: BytecodeMessage }
-    | { route: "/wifi-connection-result"; payload: WiFiConnectionResultPayload }
-    | { route: "/pip-id"; payload: PipIDPayload }
-    | { route: "/saved-networks"; payload: SavedWiFiNetwork[] }
-    | { route: "/scan-result-item"; payload: ScannedWiFiNetworkItem }
-    | { route: "/scan-complete"; payload: ScanCompletePayload }
-    | { route: "/scan-started"; payload: ScanStartedPayload }
-    | { route: "/motors-disabled-usb"; payload: StandardJsonStatusMessage }
-    | { route: "/program-paused-usb"; payload: StandardJsonStatusMessage }
-    | { route: "/play-fun-sound"; payload: StandardJsonStatusMessage }
-    | { route: "/battery-monitor-data-item"; payload: BatteryMonitorDataItem }
-    | { route: "/battery-monitor-data-complete"; payload: BatteryMonitorDataComplete }
-    | { route: "/battery-monitor-data-full"; payload: BatteryMonitorDataFull }
-    | { route: "/pip-turning-off"; payload: StandardJsonStatusMessage }
-    | { route: "/dino-score"; payload: DinoScorePayload }
+	| { route: "/register"; payload: PipUUIDPayload }
+	| { route: "/sensor-data"; payload: SensorPayload }
+	| { route: "/sensor-data-mz"; payload: SensorPayloadMZ }
+	| { route: "/bytecode-status"; payload: BytecodeMessage }
+	| { route: "/wifi-connection-result"; payload: WiFiConnectionResultPayload }
+	| { route: "/pip-id"; payload: PipIDPayload }
+	| { route: "/saved-networks"; payload: SavedWiFiNetwork[] }
+	| { route: "/scan-result-item"; payload: ScannedWiFiNetworkItem }
+	| { route: "/scan-complete"; payload: ScanCompletePayload }
+	| { route: "/scan-started"; payload: ScanStartedPayload }
+	| { route: "/motors-disabled-usb"; payload: StandardJsonStatusMessage }
+	| { route: "/program-paused-usb"; payload: StandardJsonStatusMessage }
+	| { route: "/play-fun-sound"; payload: StandardJsonStatusMessage }
+	| { route: "/battery-monitor-data-item"; payload: BatteryMonitorDataItem }
+	| { route: "/battery-monitor-data-complete"; payload: BatteryMonitorDataComplete }
+	| { route: "/battery-monitor-data-full"; payload: BatteryMonitorDataFull }
+	| { route: "/pip-turning-off"; payload: StandardJsonStatusMessage }
+	| { route: "/dino-score"; payload: DinoScorePayload }
+	| { route: "/wifi-deleted-network"; payload: DeletedWiFiNetworkPayload }
 
 export interface StandardJsonStatusMessage {
 	status: string
@@ -171,4 +172,8 @@ export interface ScanStartedPayload {
 
 export interface DinoScorePayload {
     score: number
+}
+
+export interface DeletedWiFiNetworkPayload {
+    status: boolean
 }
