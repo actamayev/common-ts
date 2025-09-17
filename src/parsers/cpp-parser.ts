@@ -1256,8 +1256,8 @@ export class CppParser {
 					const degrees = parseInt(command.matches[2], 10)
 
 					// Validate degrees
-					if (degrees < 30 || degrees > 1080) {
-						throw new Error(`Invalid degrees: ${degrees}. Must be between 30 and 1080.`)
+					if (degrees < 1 || degrees > 1080) {
+						throw new Error(`Invalid degrees: ${degrees}. Must be between 1 and 1080.`)
 					}
 
 					instructions.push({
