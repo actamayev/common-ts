@@ -282,5 +282,5 @@ export class MessageBuilder {
 		uint8View.set(networkNameBytes, 1)        // copy network name starting at index 1
 
 		return this.frameMessage(MessageType.FORGET_NETWORK, new Uint8Array(payload))
-	  }
+	}
 }
