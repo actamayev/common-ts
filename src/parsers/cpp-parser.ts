@@ -1325,8 +1325,8 @@ export class CppParser {
 					const throttlePercent = parseInt(command.matches[2], 10)
 
 					// Validate parameters
-					if (inches <= 0) {
-						throw new Error(`Invalid distance value: ${inches}. Must be greater than 0.`)
+					if (inches <= 0 || inches > 240) {
+						throw new Error(`Invalid distance value: ${inches}. Must be greater than 0 and less than 240.`)
 					}
 
 					if (throttlePercent < 0 || throttlePercent > 100) {
@@ -1349,8 +1349,8 @@ export class CppParser {
 					const throttlePercent = parseInt(command.matches[2], 10)
 
 					// Validate parameters
-					if (inches <= 0) {
-						throw new Error(`Invalid distance value: ${inches}. Must be greater than 0.`)
+					if (inches <= 0 || inches > 240) {
+						throw new Error(`Invalid distance value: ${inches}. Must be greater than 0 and less than 240.`)
 					}
 
 					if (throttlePercent < 0 || throttlePercent > 100) {
