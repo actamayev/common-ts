@@ -21,7 +21,7 @@ export type ClientPipConnectionStatus =
 // Generic Envelope
 // ---------------------------------------------------------------------
 
-export interface ESPMessage<TPayload, TRoute extends string = string> {
+interface ESPMessage<TPayload, TRoute extends string = string> {
   route: TRoute
   pipId: PipUUID
   payload: TPayload
