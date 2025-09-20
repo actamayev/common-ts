@@ -1,4 +1,3 @@
-import { PipUUID } from "./utils"
 import { FunSounds } from "./garage"
 
 // ---------------------------------------------------------------------
@@ -23,7 +22,6 @@ export type ClientPipConnectionStatus =
 
 interface ESPMessage<TPayload, TRoute extends string = string> {
 	route: TRoute
-	pipId: PipUUID
 	payload: TPayload
 }
 
@@ -40,7 +38,7 @@ export interface StandardJsonStatusMessage {
   status: string
 }
 
-export interface RegisterPayload {
+export interface DeviceInitialDataPayload {
   firmwareVersion: number
 }
 
@@ -192,7 +190,7 @@ export type ESPCommonMessage =
 
 export type ESPToServerMessage =
 	| ESPCommonMessage
-	| ESPMessage<RegisterPayload, "/register">
+	| ESPMessage<DeviceInitialDataPayload, "/device-initial-data">
 	| ESPMessage<BatteryMonitorDataFull, "/battery-monitor-data-full">
 	| ESPMessage<StandardJsonStatusMessage, "/pip-turning-off">
 
