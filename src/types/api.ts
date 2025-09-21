@@ -37,11 +37,13 @@ export interface LoginSuccess {
 	personalInfo: BasicPersonalInfoResponse
 	studentClasses: StudentClassroomData[]
 	teacherData: TeacherData | null
+	autoConnectedPipUUID: PipUUID | null
 }
 export interface GoogleAuthSuccess extends Omit<LoginSuccess, "personalInfo"> {
 	isNewUser: boolean
 	personalInfo?: BasicPersonalInfoResponse
 	teacherData: TeacherData | null
+	autoConnectedPipUUID: PipUUID | null
 }
 
 // Career Quest
@@ -127,8 +129,8 @@ export interface RetrieveIsPipUUIDValidResponse {
 }
 
 // Pip Routes
-export interface RetrieveActivePipConnectionResponse {
-	pipUUID: PipUUID | null
+export interface AutoConnectPipResponse {
+	autoConnectedPipUUID: PipUUID | null
 }
 
 // Sandbox Routes
