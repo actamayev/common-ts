@@ -127,7 +127,7 @@ export interface RetrieveIsPipUUIDValidResponse {
 }
 
 // Pip Routes
-export interface RetrieveActivePipConnection {
+export interface RetrieveActivePipConnectionResponse {
 	pipUUID: PipUUID | null
 }
 
