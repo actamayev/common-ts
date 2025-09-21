@@ -1,4 +1,5 @@
 import { FunSounds } from "./garage"
+import { PipUUID } from "./utils"
 
 // ---------------------------------------------------------------------
 // Connection Status Types
@@ -22,11 +23,6 @@ export type ClientPipConnectionStatus =
 // ---------------------------------------------------------------------
 
 interface ESPMessage<TPayload, TRoute extends string = string> {
-	route: TRoute
-	payload: TPayload
-}
-
-interface SerialMessage<TPayload, TRoute extends string = string> {
 	route: TRoute
 	payload: TPayload
 }
@@ -180,6 +176,10 @@ export interface PipStatusUpdate {
   newConnectionStatus: ClientPipConnectionStatus
 }
 
+export interface PipIDUpdate {
+  pipId: PipUUID
+}
+
 // ---------------------------------------------------------------------
 // Message Unions
 // ---------------------------------------------------------------------
@@ -196,19 +196,17 @@ export type ESPToServerMessage =
 	| ESPMessage<StandardJsonStatusMessage, "/pip-turning-off">
 
 export type ESPToSerialMessage =
-	| SerialMessage<SensorPayload, "/sensor-data">
-	| SerialMessage<SensorPayloadMZ, "/sensor-data-mz">
-	| SerialMessage<DinoScorePayload, "/dino-score">
-	| SerialMessage<BytecodeMessage, "/bytecode-status">
-	| SerialMessage<WiFiConnectionResultPayload, "/wifi-connection-result">
-	| ESPMessage<null, "/pip-id">
-	| SerialMessage<SavedWiFiNetwork[], "/saved-networks">
-	| SerialMessage<ScannedWiFiNetworkItem, "/scan-result-item">
-	| SerialMessage<ScanCompletePayload, "/scan-complete">
-	| SerialMessage<ScanStartedPayload, "/scan-started">
-	| SerialMessage<StandardJsonStatusMessage, "/motors-disabled-usb">
-	| SerialMessage<StandardJsonStatusMessage, "/program-paused-usb">
-	| SerialMessage<StandardJsonStatusMessage, "/play-fun-sound">
-	| SerialMessage<BatteryMonitorDataItem, "/battery-monitor-data-item">
-	| SerialMessage<BatteryMonitorDataComplete, "/battery-monitor-data-complete">
-	| SerialMessage<DeletedWiFiNetworkPayload, "/wifi-deleted-network">
+	| ESPCommonMessage
+	| ESPMessage<PipIDUpdate, "/pip-id">
+	| ESPMessage<BytecodeMessage, "/bytecode-status">
+	| ESPMessage<WiFiConnectionResultPayload, "/wifi-connection-result">
+	| ESPMessage<SavedWiFiNetwork[], "/saved-networks">
+	| ESPMessage<ScannedWiFiNetworkItem, "/scan-result-item">
+	| ESPMessage<ScanCompletePayload, "/scan-complete">
+	| ESPMessage<ScanStartedPayload, "/scan-started">
+	| ESPMessage<StandardJsonStatusMessage, "/motors-disabled-usb">
+	| ESPMessage<StandardJsonStatusMessage, "/program-paused-usb">
+	| ESPMessage<StandardJsonStatusMessage, "/play-fun-sound">
+	| ESPMessage<BatteryMonitorDataItem, "/battery-monitor-data-item">
+	| ESPMessage<BatteryMonitorDataComplete, "/battery-monitor-data-complete">
+	| ESPMessage<DeletedWiFiNetworkPayload, "/wifi-deleted-network">
