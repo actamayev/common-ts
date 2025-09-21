@@ -172,10 +172,6 @@ export interface DeletedWiFiNetworkPayload {
 // Incoming Socket Events
 // ---------------------------------------------------------------------
 
-export interface PipStatusUpdate {
-  newConnectionStatus: ClientPipConnectionStatus
-}
-
 export interface PipIDUpdate {
   pipId: PipUUID
 }
