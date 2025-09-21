@@ -52,7 +52,7 @@ export type ClientSocketEventPayloadMap = {
 	"new-led-colors": LedControlData
 	"headlight-update": HeadlightData
 	"horn-sound-update": HornData
-	"play-fun-sound": PlayFunSoundPayload
+	"play-fun-sound": ExtendedPlayFunSoundPayload
 }
 
 export type ClientSocketEvents = keyof ClientSocketEventPayloadMap
@@ -121,3 +121,5 @@ export interface GarageLightsStatusUpdate {
 export interface GarageDisplayStatusUpdate {
     garageDisplayStatus: boolean
 }
+
+export interface ExtendedPlayFunSoundPayload extends PlayFunSoundPayload, PipUUIDInterface {}
