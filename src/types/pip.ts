@@ -184,12 +184,12 @@ export type ESPCommonMessage =
 	| ESPMessage<SensorPayload, "/sensor-data">
 	| ESPMessage<SensorPayloadMZ, "/sensor-data-mz">
 	| ESPMessage<DinoScorePayload, "/dino-score">
+	| ESPMessage<StandardJsonStatusMessage, "/pip-turning-off">
 
 export type ESPToServerMessage =
 	| ESPCommonMessage
 	| ESPMessage<DeviceInitialDataPayload, "/device-initial-data">
 	| ESPMessage<BatteryMonitorDataFull, "/battery-monitor-data-full">
-	| ESPMessage<StandardJsonStatusMessage, "/pip-turning-off">
 
 export type ESPToSerialMessage =
 	| ESPCommonMessage
