@@ -17,6 +17,7 @@ export type ClientPipConnectionStatus =
   | "connected to serial to another user"
   | "connected online to you"
   | "connected online to another user"
+  | "connected to serial to you (in another tab)"
 
 // ---------------------------------------------------------------------
 // Generic Envelope
