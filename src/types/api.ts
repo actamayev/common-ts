@@ -4,6 +4,7 @@ import { StudentViewHubData, TeacherViewHubData } from "./hub"
 import { RetrievedQuestions, UserActivityProgress } from "./lab"
 import { ChallengeChatMessage, SandboxChatMessage } from "./chat"
 import { ChallengeUUID, ClassCode, HubUUID, PipUUID, ScoreboardUUID, SiteThemes } from "./utils"
+import { Scoreboard } from "./scoreboard"
 
 // Auth
 // Requests
@@ -169,6 +170,7 @@ export interface DetailedClassroomData extends BasicTeacherClassroomData {
 		garageDisplayAllowed: boolean
 	}[]
 	activeHubs: TeacherViewHubData[]
+	scoreboards: Scoreboard[]
 }
 
 export interface ClassCodeResponse {
