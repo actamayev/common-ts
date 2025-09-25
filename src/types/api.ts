@@ -3,7 +3,7 @@ import { BlocklyJson, SandboxProject } from "./sandbox"
 import { StudentViewHubData, TeacherViewHubData } from "./hub"
 import { RetrievedQuestions, UserActivityProgress } from "./lab"
 import { ChallengeChatMessage, SandboxChatMessage } from "./chat"
-import { ChallengeUUID, ClassCode, HubUUID, PipUUID, SiteThemes } from "./utils"
+import { ChallengeUUID, ClassCode, HubUUID, PipUUID, ScoreboardUUID, SiteThemes } from "./utils"
 
 // Auth
 // Requests
@@ -183,6 +183,10 @@ export interface IncomingTeacherRequestData {
 
 export interface CreateHubRequest {
 	hubId: HubUUID
+}
+
+export interface CreateScoreboardRequest {
+	scoreboardId: ScoreboardUUID
 }
 
 // Common Responses:
