@@ -128,12 +128,6 @@ export interface RetrieveIsPipUUIDValidResponse {
 	pipConnectionStatus: ClientPipConnectionStatus
 }
 
-// Pip Routes
-export interface AutoConnectPipResponse {
-	autoConnectedPipUUID: PipUUID | null
-	pipConnectionStatus?: ClientPipConnectionStatus
-}
-
 // Sandbox Routes
 export interface CreateSandboxProjectResponse {
 	sandboxProject: SandboxProject
