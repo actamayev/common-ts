@@ -187,10 +187,6 @@ export interface CreateHubRequest {
 	hubId: HubUUID
 }
 
-export interface CreateScoreboardRequest {
-	scoreboardId: ScoreboardUUID
-}
-
 // Common Responses:
 export type SuccessResponse = { success: string }
 export type MessageResponse = { message: string }
