@@ -176,6 +176,16 @@
         "default": "./dist/src/types/hub.js"
       }
     },
+    "./types/scoreboard": {
+      "import": {
+        "types": "./dist/src/types/scoreboard.d.ts",
+        "default": "./dist/src/types/scoreboard.js"
+      },
+      "require": {
+        "types": "./dist/src/types/scoreboard.d.ts",
+        "default": "./dist/src/types/scoreboard.js"
+      }
+    },
     "./types/utils": {
       "import": {
         "types": "./dist/src/types/utils.d.ts",
@@ -357,6 +367,9 @@
       ],
       "types/hub": [
         "./dist/src/types/hub.d.ts"
+      ],
+      "types/scoreboard": [
+        "./dist/src/types/scoreboard.d.ts"
       ],
       "types/utils": [
         "./dist/src/types/utils.d.ts"
