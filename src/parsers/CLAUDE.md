@@ -1,4 +1,4 @@
-# Blue Dot Robots C++ Parser System
+# Lever Labs C++ Parser System
 
 This directory contains the core C++ to ESP32 bytecode interpretation system that powers the educational robotics platform. The parser converts student-written C++ code into executable bytecode for a virtual machine running on physical robots.
 

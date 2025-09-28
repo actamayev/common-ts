@@ -1,5 +1,5 @@
 {
-  "name": "@bluedotrobots/common-ts",
+  "name": "@lever-labs/common-ts",
   "version": "1.0.282",
   "description": "Shared TypeScript code between frontend and backend",
   "files": [
@@ -443,9 +443,9 @@
   "license": "ISC",
   "type": "commonjs",
   "bugs": {
-    "url": "https://github.com/bluedotrobots/common-ts/issues"
+    "url": "https://github.com/lever-labs/common-ts/issues"
   },
-  "homepage": "https://github.com/bluedotrobots/common-ts#readme",
+  "homepage": "https://github.com/lever-labs/common-ts#readme",
   "devDependencies": {
     "@types/eslint-plugin-security": "^3.0.0",
     "@types/jest": "^29.5.14",
@@ -465,7 +465,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/bluedotrobots/common-ts.git"
+    "url": "git+https://github.com/lever-labs/common-ts.git"
   },
   "dependencies": {
     "blockly": "^12.1.0"

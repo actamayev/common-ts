@@ -23,7 +23,7 @@ jobs:
         with:
           node-version: 'lts/*'
           registry-url: 'https://npm.pkg.github.com'
-          scope: '@bluedotrobots'
+          scope: '@lever-labs'
       
       - name: Configure Git
         run: |
