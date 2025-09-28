@@ -1,6 +1,6 @@
-# Blue Dot Robots Common TypeScript Library
+# Lever LabsCommon TypeScript Library
 
-This is a shared TypeScript library (`@bluedotrobots/common-ts`) that provides core functionality for an educational robotics platform, including C++ to bytecode interpretation for ESP32-based robots.
+This is a shared TypeScript library (`@lever-labs/common-ts`) that provides core functionality for an educational robotics platform, including C++ to bytecode interpretation for ESP32-based robots.
 
 ## Project Context
 
