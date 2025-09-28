@@ -6,7 +6,6 @@ import { ChallengeChatMessage, SandboxChatMessage } from "./chat"
 import { ChallengeUUID, ClassCode, HubUUID, PipUUID, SiteThemes } from "./utils"
 import { Scoreboard } from "./scoreboard"
 
-
 // Auth
 // Requests
 export interface RegisterRequest {
