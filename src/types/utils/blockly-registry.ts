@@ -86,6 +86,14 @@ export const BLOCK_REGISTRY: Record<BlockNames, BlockDefinition> = {
 		parentCategory: "Sensors"
 	},
 
+	// Color sensor blocks
+	[SENSORS_BLOCK_TYPES.COLOR_SENSOR_READ]: {
+		description: "Reads the color sensor to detect objects (red, green, blue, white, black)",
+		codeTemplate: "is_object_{red|green|blue|white|black}()",
+		category: "Color Sensor",
+		parentCategory: "Sensors"
+	},
+
 	// Motion sensor blocks
 	[SENSORS_BLOCK_TYPES.IMU_READ]: {
 		description: "Reads the IMU (accelerometer/gyroscope) for orientation and movement data",

@@ -191,6 +191,30 @@ export class CppParserHelper {
 			return { operand: 0x8000 | register, updatedNextRegister: nextRegister }
 		}
 
+		// Check if this is a color detection function
+		const colorMatch = expr.match(/is_object_(red|green|blue|white|black)\(\)/)
+		if (colorMatch) {
+			// All color detection functions use the same sensor type
+			const sensorType = SensorType.COLOR_SENSOR_READ
+
+			// Allocate a register for the sensor value
+			if (nextRegister >= MAX_REGISTERS) {
+				throw new Error(`Program exceeds maximum register count (${MAX_REGISTERS})`)
+			}
+			const register = nextRegister++
+
+			// Add instruction to read sensor into register
+			instructions.push({
+				opcode: BytecodeOpCode.READ_SENSOR,
+				operand1: sensorType,
+				operand2: register,
+				operand3: 0,
+				operand4: 0
+			})
+
+			return { operand: 0x8000 | register, updatedNextRegister: nextRegister }
+		}
+
 		// Check if this is a standard sensor reading
 		const sensorMatch = expr.match(/Sensors::getInstance\(\)\.(\w+)\(\)/)
 		if (sensorMatch) {

@@ -257,4 +257,161 @@ describe("Sensor Functionality", () => {
 			expect(blueLEDFound).toBe(true)
 		})
 	})
+
+	describe("Color Sensor Detection", () => {
+		const colorTestCases = [
+			{ color: "red" },
+			{ color: "green" },
+			{ color: "blue" },
+			{ color: "white" },
+			{ color: "black" }
+		]
+
+		colorTestCases.forEach(({ color }) => {
+			test(`should parse if statement with ${color} color detection`, () => {
+				const code = `if (is_object_${color}()) {
+					rgbLed.set_led_red();
+				}`
+
+				const bytecode = CppParser.cppToByte(code)
+
+				// Find READ_SENSOR instruction for color sensor
+				let sensorReadFound = false
+				let compareFound = false
+				let jumpIfFalseFound = false
+
+				for (let i = 0; i < bytecode.length; i += 5) {
+					if (bytecode[i] === BytecodeOpCode.READ_SENSOR &&
+						bytecode[i + 1] === SensorType.COLOR_SENSOR_READ) {
+						sensorReadFound = true
+					} else if (bytecode[i] === BytecodeOpCode.COMPARE &&
+							  bytecode[i + 1] === ComparisonOp.EQUAL &&
+							  bytecode[i + 3] === 1) { // Comparing with true (1)
+						compareFound = true
+					} else if (bytecode[i] === BytecodeOpCode.JUMP_IF_FALSE) {
+						jumpIfFalseFound = true
+					}
+				}
+
+				expect(sensorReadFound).toBe(true)
+				expect(compareFound).toBe(true)
+				expect(jumpIfFalseFound).toBe(true)
+
+				// Check for red LED in true branch
+				let redLEDFound = false
+				for (let i = 0; i < bytecode.length; i += 5) {
+					if (bytecode[i] === BytecodeOpCode.SET_ALL_LEDS &&
+						bytecode[i + 1] === MAX_LED_BRIGHTNESS &&
+						bytecode[i + 2] === 0 &&
+						bytecode[i + 3] === 0) {
+						redLEDFound = true
+						break
+					}
+				}
+
+				expect(redLEDFound).toBe(true)
+			})
+		})
+
+		test("should parse if-else statement with color detection", () => {
+			const code = `if (is_object_red()) {
+				rgbLed.set_led_red();
+			} else {
+				rgbLed.set_led_green();
+			}`
+
+			const bytecode = CppParser.cppToByte(code)
+
+			// Find READ_SENSOR instruction for color sensor
+			let sensorReadFound = false
+			for (let i = 0; i < bytecode.length; i += 5) {
+				if (bytecode[i] === BytecodeOpCode.READ_SENSOR &&
+					bytecode[i + 1] === SensorType.COLOR_SENSOR_READ) {
+					sensorReadFound = true
+					break
+				}
+			}
+
+			expect(sensorReadFound).toBe(true)
+
+			// Check for both LED colors
+			let redLEDFound = false
+			let greenLEDFound = false
+
+			for (let i = 0; i < bytecode.length; i += 5) {
+				if (bytecode[i] === BytecodeOpCode.SET_ALL_LEDS) {
+					if (bytecode[i + 1] === MAX_LED_BRIGHTNESS && bytecode[i + 2] === 0 && bytecode[i + 3] === 0) {
+						redLEDFound = true
+					} else if (bytecode[i + 1] === 0 && bytecode[i + 2] === MAX_LED_BRIGHTNESS && bytecode[i + 3] === 0) {
+						greenLEDFound = true
+					}
+				}
+			}
+
+			expect(redLEDFound).toBe(true)
+			expect(greenLEDFound).toBe(true)
+		})
+
+		test("should parse compound condition with color detection", () => {
+			const code = `if ((is_object_red()) && (Sensors::getInstance().getPitch() > 10)) {
+				rgbLed.set_led_white();
+			}`
+
+			const bytecode = CppParser.cppToByte(code)
+
+			// Should have two READ_SENSOR instructions
+			let colorSensorFound = false
+			let pitchSensorFound = false
+
+			for (let i = 0; i < bytecode.length; i += 5) {
+				if (bytecode[i] === BytecodeOpCode.READ_SENSOR) {
+					if (bytecode[i + 1] === SensorType.COLOR_SENSOR_READ) {
+						colorSensorFound = true
+					} else if (bytecode[i + 1] === SensorType.PITCH) {
+						pitchSensorFound = true
+					}
+				}
+			}
+
+			expect(colorSensorFound).toBe(true)
+			expect(pitchSensorFound).toBe(true)
+
+			// Should have two COMPARE instructions and two JUMP_IF_FALSE instructions
+			let compareCount = 0
+			let jumpIfFalseCount = 0
+
+			for (let i = 0; i < bytecode.length; i += 5) {
+				if (bytecode[i] === BytecodeOpCode.COMPARE) {
+					compareCount++
+				} else if (bytecode[i] === BytecodeOpCode.JUMP_IF_FALSE) {
+					jumpIfFalseCount++
+				}
+			}
+
+			expect(compareCount).toBe(2)
+			expect(jumpIfFalseCount).toBe(2) // Short-circuit logic for AND
+		})
+
+		test("should handle color detection in variable assignment", () => {
+			const code = "bool colorDetected = is_object_blue();"
+
+			const bytecode = CppParser.cppToByte(code)
+
+			// Should have DECLARE_VAR, READ_SENSOR
+			let declareVarFound = false
+			let readSensorFound = false
+
+			for (let i = 0; i < bytecode.length; i += 5) {
+				if (bytecode[i] === BytecodeOpCode.DECLARE_VAR) {
+					declareVarFound = true
+				} else if (bytecode[i] === BytecodeOpCode.READ_SENSOR &&
+						   bytecode[i + 1] === SensorType.COLOR_SENSOR_READ) {
+					readSensorFound = true
+				}
+			}
+
+			expect(declareVarFound).toBe(true)
+			expect(readSensorFound).toBe(true)
+		})
+	})
 })

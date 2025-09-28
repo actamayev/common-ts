@@ -5,7 +5,8 @@ export enum SENSORS_BLOCK_TYPES {
     // IR_READ = "ir_read",
     // COLOR_SENSOR_READ = "color_sensor_read",
 	SIDE_TOF_READ = "side_tof_read",
-	CENTER_TOF_READ = "center_tof_read"
+	CENTER_TOF_READ = "center_tof_read",
+	COLOR_SENSOR_READ = "color_sensor_read"
 }
 
 export enum SENSORS_FIELD_VALUES {
@@ -65,6 +66,13 @@ export const SENSOR_TYPES = {
 		COUNTDOWN: "COUNTDOWN",
 		ENGINE: "ENGINE",
 		ROBOT: "ROBOT"
+	},
+	COLOR_SENSOR_READ_COLORS: {
+		RED: "RED",
+		GREEN: "GREEN",
+		BLUE: "BLUE",
+		WHITE: "WHITE",
+		BLACK: "BLACK"
 	}
 } as const
 
@@ -73,3 +81,4 @@ export type LeftRightSensorType = typeof SENSOR_TYPES.LEFTRIGHT[keyof typeof SEN
 export type IRSensorType = typeof SENSOR_TYPES.IR[keyof typeof SENSOR_TYPES.IR]
 export type LEDSensorType = typeof SENSOR_TYPES.LED_COLORS[keyof typeof SENSOR_TYPES.LED_COLORS]
 export type SoundNameSensorType = typeof SENSOR_TYPES.SOUND_NAMES[keyof typeof SENSOR_TYPES.SOUND_NAMES]
+export type ColorSensorReadColorsType = typeof SENSOR_TYPES.COLOR_SENSOR_READ_COLORS[keyof typeof SENSOR_TYPES.COLOR_SENSOR_READ_COLORS]
