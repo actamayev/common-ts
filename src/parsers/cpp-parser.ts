@@ -199,7 +199,17 @@ export class CppParser {
 						})
 					} else if (typeEnum === VarType.BOOL && colorMatch) {
 						// This is a color sensor assignment to a boolean
-						const sensorType = SensorType.COLOR_SENSOR_READ
+						const colorName = colorMatch[1] // red, green, blue, white, black
+						let sensorType: SensorType
+
+						switch (colorName) {
+						case "red": sensorType = SensorType.SENSOR_COLOR_RED; break
+						case "green": sensorType = SensorType.SENSOR_COLOR_GREEN; break
+						case "blue": sensorType = SensorType.SENSOR_COLOR_BLUE; break
+						case "white": sensorType = SensorType.SENSOR_COLOR_WHITE; break
+						case "black": sensorType = SensorType.SENSOR_COLOR_BLACK; break
+						default: throw new Error(`Unsupported color: ${colorName}`)
+						}
 
 						// Add instruction to read color sensor into the register
 						instructions.push({
@@ -1436,15 +1446,25 @@ export class CppParser {
 			}
 
 			case CommandType.COLOR_SENSOR_READ: {
-				if (command.matches) {
+				if (command.matches && command.matches.length >= 2) {
 					// Allocate a register for the boolean result
 					if (nextRegister >= MAX_REGISTERS) {
 						throw new Error(`Program exceeds maximum register count (${MAX_REGISTERS})`)
 					}
 					const boolResultRegister = nextRegister++
 
-					// Use the color sensor type
-					const sensorType = SensorType.COLOR_SENSOR_READ
+					// Extract color from the regex match
+					const colorName = command.matches[1] // red, green, blue, white, black
+					let sensorType: SensorType
+
+					switch (colorName) {
+					case "red": sensorType = SensorType.SENSOR_COLOR_RED; break
+					case "green": sensorType = SensorType.SENSOR_COLOR_GREEN; break
+					case "blue": sensorType = SensorType.SENSOR_COLOR_BLUE; break
+					case "white": sensorType = SensorType.SENSOR_COLOR_WHITE; break
+					case "black": sensorType = SensorType.SENSOR_COLOR_BLACK; break
+					default: throw new Error(`Unsupported color: ${colorName}`)
+					}
 
 					// Read sensor value
 					instructions.push({

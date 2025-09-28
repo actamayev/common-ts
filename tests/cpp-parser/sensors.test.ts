@@ -280,9 +280,18 @@ describe("Sensor Functionality", () => {
 				let compareFound = false
 				let jumpIfFalseFound = false
 
+				// Map color to expected sensor type
+				const expectedSensorType = {
+					"red": SensorType.SENSOR_COLOR_RED,
+					"green": SensorType.SENSOR_COLOR_GREEN,
+					"blue": SensorType.SENSOR_COLOR_BLUE,
+					"white": SensorType.SENSOR_COLOR_WHITE,
+					"black": SensorType.SENSOR_COLOR_BLACK
+				}[color]
+
 				for (let i = 0; i < bytecode.length; i += 5) {
 					if (bytecode[i] === BytecodeOpCode.READ_SENSOR &&
-						bytecode[i + 1] === SensorType.COLOR_SENSOR_READ) {
+						bytecode[i + 1] === expectedSensorType) {
 						sensorReadFound = true
 					} else if (bytecode[i] === BytecodeOpCode.COMPARE &&
 							  bytecode[i + 1] === ComparisonOp.EQUAL &&
@@ -326,7 +335,7 @@ describe("Sensor Functionality", () => {
 			let sensorReadFound = false
 			for (let i = 0; i < bytecode.length; i += 5) {
 				if (bytecode[i] === BytecodeOpCode.READ_SENSOR &&
-					bytecode[i + 1] === SensorType.COLOR_SENSOR_READ) {
+					bytecode[i + 1] === SensorType.SENSOR_COLOR_RED) {
 					sensorReadFound = true
 					break
 				}
@@ -365,7 +374,7 @@ describe("Sensor Functionality", () => {
 
 			for (let i = 0; i < bytecode.length; i += 5) {
 				if (bytecode[i] === BytecodeOpCode.READ_SENSOR) {
-					if (bytecode[i + 1] === SensorType.COLOR_SENSOR_READ) {
+					if (bytecode[i + 1] === SensorType.SENSOR_COLOR_RED) {
 						colorSensorFound = true
 					} else if (bytecode[i + 1] === SensorType.PITCH) {
 						pitchSensorFound = true
@@ -405,7 +414,7 @@ describe("Sensor Functionality", () => {
 				if (bytecode[i] === BytecodeOpCode.DECLARE_VAR) {
 					declareVarFound = true
 				} else if (bytecode[i] === BytecodeOpCode.READ_SENSOR &&
-						   bytecode[i + 1] === SensorType.COLOR_SENSOR_READ) {
+						   bytecode[i + 1] === SensorType.SENSOR_COLOR_BLUE) {
 					readSensorFound = true
 				}
 			}

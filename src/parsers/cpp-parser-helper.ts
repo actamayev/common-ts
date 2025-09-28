@@ -194,8 +194,18 @@ export class CppParserHelper {
 		// Check if this is a color detection function
 		const colorMatch = expr.match(/is_object_(red|green|blue|white|black)\(\)/)
 		if (colorMatch) {
-			// All color detection functions use the same sensor type
-			const sensorType = SensorType.COLOR_SENSOR_READ
+			// Extract color from the regex match
+			const colorName = colorMatch[1] // red, green, blue, white, black
+			let sensorType: SensorType
+
+			switch (colorName) {
+			case "red": sensorType = SensorType.SENSOR_COLOR_RED; break
+			case "green": sensorType = SensorType.SENSOR_COLOR_GREEN; break
+			case "blue": sensorType = SensorType.SENSOR_COLOR_BLUE; break
+			case "white": sensorType = SensorType.SENSOR_COLOR_WHITE; break
+			case "black": sensorType = SensorType.SENSOR_COLOR_BLACK; break
+			default: throw new Error(`Unsupported color: ${colorName}`)
+			}
 
 			// Allocate a register for the sensor value
 			if (nextRegister >= MAX_REGISTERS) {
