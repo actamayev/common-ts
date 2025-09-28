@@ -161,6 +161,9 @@ export class CppParser {
 					const rightProximityMatch = varValue.match(/is_object_near_side_right\(\)/)
 					const frontProximityMatch = varValue.match(/is_object_in_front\(\)/)
 
+					// Check if value is a color detection function
+					const colorMatch = varValue.match(/is_object_(red|green|blue|white|black)\(\)/)
+
 					if (sensorMatch) {
 						// This is a sensor reading assignment
 						const sensorMethod = sensorMatch[1]
@@ -187,6 +190,18 @@ export class CppParser {
 						}
 
 						// Add instruction to read proximity sensor into the register
+						instructions.push({
+							opcode: BytecodeOpCode.READ_SENSOR,
+							operand1: sensorType,
+							operand2: register,
+							operand3: 0,
+							operand4: 0
+						})
+					} else if (typeEnum === VarType.BOOL && colorMatch) {
+						// This is a color sensor assignment to a boolean
+						const sensorType = SensorType.COLOR_SENSOR_READ
+
+						// Add instruction to read color sensor into the register
 						instructions.push({
 							opcode: BytecodeOpCode.READ_SENSOR,
 							operand1: sensorType,
@@ -1419,6 +1434,30 @@ export class CppParser {
 				}
 				break
 			}
+
+			case CommandType.COLOR_SENSOR_READ: {
+				if (command.matches) {
+					// Allocate a register for the boolean result
+					if (nextRegister >= MAX_REGISTERS) {
+						throw new Error(`Program exceeds maximum register count (${MAX_REGISTERS})`)
+					}
+					const boolResultRegister = nextRegister++
+
+					// Use the color sensor type
+					const sensorType = SensorType.COLOR_SENSOR_READ
+
+					// Read sensor value
+					instructions.push({
+						opcode: BytecodeOpCode.READ_SENSOR,
+						operand1: sensorType,
+						operand2: boolResultRegister,
+						operand3: 0,
+						operand4: 0
+					})
+				}
+				break
+			}
+
 			case CommandType.WAIT_FOR_BUTTON: {
 				instructions.push({
 					opcode: BytecodeOpCode.WAIT_FOR_BUTTON,
