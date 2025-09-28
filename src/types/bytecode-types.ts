@@ -83,7 +83,11 @@ export enum SensorType {
     SIDE_LEFT_PROXIMITY = 13,
     SIDE_RIGHT_PROXIMITY = 14,
     FRONT_PROXIMITY = 15,
-    COLOR_SENSOR_READ = 16,
+    SENSOR_COLOR_RED = 16,
+    SENSOR_COLOR_GREEN = 17,
+    SENSOR_COLOR_BLUE = 18,
+    SENSOR_COLOR_WHITE = 19,
+    SENSOR_COLOR_BLACK = 20
 }
 
 export enum CommandType {
