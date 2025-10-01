@@ -76,6 +76,16 @@
         "default": "./dist/src/types/lab.js"
       }
     },
+    "./types/learn": {
+      "import": {
+        "types": "./dist/src/types/learn.d.ts",
+        "default": "./dist/src/types/learn.js"
+      },
+      "require": {
+        "types": "./dist/src/types/learn.d.ts",
+        "default": "./dist/src/types/learn.js"
+      }
+    },
     "./types/pip": {
       "import": {
         "types": "./dist/src/types/pip.d.ts",
@@ -349,6 +359,9 @@
       ],
       "types/lab": [
         "./dist/src/types/lab.d.ts"
+      ],
+      "types/learn": [
+        "./dist/src/types/learn.d.ts"
       ],
       "types/pip": [
         "./dist/src/types/pip.d.ts"

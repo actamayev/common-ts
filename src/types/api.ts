@@ -1,10 +1,11 @@
+import { Scoreboard } from "./scoreboard"
+import { DetailedLesson, Lesson } from "./learn"
 import { ClientPipConnectionStatus } from "./pip"
 import { BlocklyJson, SandboxProject } from "./sandbox"
 import { StudentViewHubData, TeacherViewHubData } from "./hub"
 import { RetrievedQuestions, UserActivityProgress } from "./lab"
 import { ChallengeChatMessage, SandboxChatMessage } from "./chat"
 import { ChallengeUUID, ClassCode, HubUUID, PipUUID, SiteThemes } from "./utils"
-import { Scoreboard } from "./scoreboard"
 
 // Auth
 // Requests
@@ -97,6 +98,15 @@ export interface RetrievedUserActivityProgressResponse {
 
 export interface RetrievedQuestionsResponse {
 	quizAttempts: RetrievedQuestions[]
+}
+
+// Learn Responses:
+export interface DetailedLessonResponse {
+	lesson: DetailedLesson
+}
+
+export interface LessonsResponse {
+	lessons: Lesson[]
 }
 
 // Personal Info Responses:
