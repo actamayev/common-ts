@@ -1,4 +1,4 @@
-import { LessonUUID, DuolingoQuestionUUID } from "./utils"
+import { LessonUUID, QuestionUUID } from "./utils"
 
 export type QuestionType =
 	| "BLOCK_TO_FUNCTION"
@@ -25,7 +25,7 @@ export interface LessonQuestionMap {
 
 // Core question shape with optional polymorphic payloads
 export interface Question {
-	questionId: DuolingoQuestionUUID
+	questionId: QuestionUUID
 	questionType: QuestionType
 	blockToFunctionFlashcard: {
 		codingBlockId: number
