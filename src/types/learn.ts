@@ -6,7 +6,7 @@ export type QuestionType =
 	| "FILL_IN_BLANK"
 
 export interface Lesson {
-	lessonUuid: LessonUUID
+	lessonId: LessonUUID
 	lessonName: string
 	isCompleted: boolean
 }
