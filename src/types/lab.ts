@@ -15,8 +15,7 @@ export interface UserActivityProgress {
 }
 export interface RetrievedQuestions {
 	questionText: string
-	readingQuestionId: number
-	readingQuestionUUID: QuestionUUID
+	readingQuestionId: QuestionUUID
 	questionAnswerChoices: {
 		answerText: string
 		isCorrect: boolean
