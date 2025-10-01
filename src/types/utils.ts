@@ -12,3 +12,4 @@ export type CareerUUID = UUID & { readonly __brand: unique symbol }
 export type HubUUID = UUID & { readonly __brand: unique symbol }
 export type ScoreboardUUID = UUID & { readonly __brand: unique symbol }
 export type SandboxProjectUUID = UUID & { readonly __brand: unique symbol }
+export type LessonUUID = UUID & { readonly __brand: unique symbol }
