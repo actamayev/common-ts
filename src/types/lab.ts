@@ -9,7 +9,7 @@ export type ActivityType =
 	| "Video"
 export interface UserActivityProgress {
 	status: ProgressStatus
-	activityUUID: ActivityUUID
+	activityId: ActivityUUID
 	activityType: ActivityType
 	activityName: string
 }
