@@ -3,7 +3,6 @@ import { DetailedLesson, Lesson } from "./learn"
 import { ClientPipConnectionStatus } from "./pip"
 import { BlocklyJson, SandboxProject } from "./sandbox"
 import { StudentViewHubData, TeacherViewHubData } from "./hub"
-import { RetrievedQuestions, UserActivityProgress } from "./lab"
 import { ChallengeChatMessage, SandboxChatMessage } from "./chat"
 import { ChallengeUUID, ClassCode, HubUUID, PipUUID, SiteThemes } from "./utils"
 
@@ -89,15 +88,6 @@ export interface StartChatSuccess {
 export interface CheckCodeResponse {
 	isCorrect: boolean
 	feedback: string
-}
-
-// Lab Activity Tracking Responses:
-export interface RetrievedUserActivityProgressResponse {
-	userActivityProgress: UserActivityProgress[]
-}
-
-export interface RetrievedQuestionsResponse {
-	quizAttempts: RetrievedQuestions[]
 }
 
 // Learn Responses:

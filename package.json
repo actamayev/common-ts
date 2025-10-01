@@ -66,16 +66,6 @@
         "default": "./dist/src/types/garage.js"
       }
     },
-    "./types/lab": {
-      "import": {
-        "types": "./dist/src/types/lab.d.ts",
-        "default": "./dist/src/types/lab.js"
-      },
-      "require": {
-        "types": "./dist/src/types/lab.d.ts",
-        "default": "./dist/src/types/lab.js"
-      }
-    },
     "./types/learn": {
       "import": {
         "types": "./dist/src/types/learn.d.ts",
@@ -356,9 +346,6 @@
       ],
       "types/garage": [
         "./dist/src/types/garage.d.ts"
-      ],
-      "types/lab": [
-        "./dist/src/types/lab.d.ts"
       ],
       "types/learn": [
         "./dist/src/types/learn.d.ts"
