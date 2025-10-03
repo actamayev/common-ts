@@ -92,6 +92,16 @@ export enum SoundType {
     ROBOT = 12
 }
 
+export enum ToneType {
+    A = 1,
+    B = 2,
+    C = 3,
+    D = 4,
+    E = 5,
+    F = 6,
+    G = 7
+}
+
 export enum LightAnimationType {
     NO_ANIMATION = 0,
     BREATHING = 1,

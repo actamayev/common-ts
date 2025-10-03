@@ -37,6 +37,7 @@ export enum BytecodeOpCode {
     MOTOR_BACKWARD_DISTANCE = 0x57,
 
     PLAY_SOUND = 0x60,
+    PLAY_TONE = 0x61,
 }
 
 export enum ComparisonOp {
@@ -108,6 +109,7 @@ export enum CommandType {
     SET_LEFT_HEADLIGHT = "SET_LEFT_HEADLIGHT",
     SET_RIGHT_HEADLIGHT = "SET_RIGHT_HEADLIGHT",
     PLAY_SOUND = "PLAY_SOUND",
+    PLAY_TONE = "PLAY_TONE",
     WAIT = "WAIT",
 
     VARIABLE_ASSIGNMENT = "VARIABLE_ASSIGNMENT",
@@ -162,6 +164,7 @@ export const CommandPatterns: Record<CommandType, RegExp> = {
 	[CommandType.SET_LEFT_HEADLIGHT]: /^rgbLed\.set_left_headlight\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*\)$/,
 	[CommandType.SET_RIGHT_HEADLIGHT]: /^rgbLed\.set_right_headlight\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*\)$/,
 	[CommandType.PLAY_SOUND]: /^play_sound\(\s*"([^"]*)"\s*\)$/,
+	[CommandType.PLAY_TONE]: /^play_tone\(\s*"([^"]*)"\s*\)$/,
 	[CommandType.WAIT]: /^wait\(\s*(\d+(?:\.\d+)?)\s*\)$/,
 
 	[CommandType.VARIABLE_ASSIGNMENT]: /^(float|int|bool)\s+(\w+)\s*=\s*(.+)$/,

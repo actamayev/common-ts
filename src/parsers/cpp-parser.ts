@@ -1,6 +1,6 @@
 /* eslint-disable max-len, complexity, max-lines-per-function, max-depth */
 import { INSTRUCTION_SIZE, MAX_JUMP_DISTANCE, MAX_LED_BRIGHTNESS, MAX_PROGRAM_SIZE, MAX_REGISTERS } from "../types/utils/constants"
-import { SoundType } from "../message-builder/protocol"
+import { SoundType, ToneType } from "../message-builder/protocol"
 import { BytecodeOpCode, CommandType, ComparisonOp, LedID, SensorType, VarType } from "../types/bytecode-types"
 import { CppParserHelper } from "./cpp-parser-helper"
 import { BytecodeInstruction, BlockStack, PendingJumps, VariableType } from "../types/utils/bytecode"
@@ -1505,6 +1505,30 @@ export class CppParser {
 					instructions.push({
 						opcode: BytecodeOpCode.PLAY_SOUND,
 						operand1: soundId,
+						operand2: 0,
+						operand3: 0,
+						operand4: 0
+					})
+				}
+				break
+			}
+
+			case CommandType.PLAY_TONE: {
+				if (command.matches && command.matches.length === 2) {
+					const soundName = command.matches[1].replace(/"/g, "").trim()
+
+					// Validate sound name against SoundType enum
+					const soundTypeKey = soundName.toUpperCase() as keyof typeof ToneType
+					if (!(soundTypeKey in ToneType)) {
+						const validSounds = Object.keys(ToneType).filter(key => isNaN(Number(key)))
+						throw new Error(`Invalid tone name: "${soundName}". Valid tones are: ${validSounds.join(", ")}`)
+					}
+
+					const toneId = ToneType[soundTypeKey]
+
+					instructions.push({
+						opcode: BytecodeOpCode.PLAY_TONE,
+						operand1: toneId,
 						operand2: 0,
 						operand3: 0,
 						operand4: 0
