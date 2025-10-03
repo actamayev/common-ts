@@ -5,6 +5,7 @@ export enum BytecodeOpCode {
     END = 0x01,
     WAIT = 0x02,
     WAIT_FOR_BUTTON = 0x03,  // Choose an appropriate unused value
+    CHECK_RIGHT_BUTTON_PRESS = 0x04,
     SET_LED = 0x10,
     SET_ALL_LEDS = 0x11,
 
@@ -142,6 +143,7 @@ export enum CommandType {
     FRONT_PROXIMITY_DETECTION = "FRONT_PROXIMITY_DETECTION",
     WAIT_FOR_BUTTON = "WAIT_FOR_BUTTON",
     COLOR_SENSOR_READ = "COLOR_SENSOR_READ",
+    CHECK_IF_RIGHT_BUTTON_PRESSED = "CHECK_IF_RIGHT_BUTTON_PRESSED",
 }
 
 // Command patterns for validation
@@ -170,9 +172,9 @@ export const CommandPatterns: Record<CommandType, RegExp> = {
 	[CommandType.VARIABLE_ASSIGNMENT]: /^(float|int|bool)\s+(\w+)\s*=\s*(.+)$/,
 
 	// Updated regex for IF_STATEMENT
-	[CommandType.IF_STATEMENT]: /^if\s*\(\s*(?:is_object_near_side_(left|right)\(\)|is_object_in_front\(\)|is_object_(red|green|blue|white|black)\(\)|(true|false)|\b(\w+)\b|(Sensors::getInstance\(\)\.\w+\(\)|[-\d.]+|\w+)\s*([<>=!][=]?)\s*(Sensors::getInstance\(\)\.\w+\(\)|[-\d.]+|\w+))\s*\)$/,
+	[CommandType.IF_STATEMENT]: /^if\s*\(\s*(?:is_object_near_side_(left|right)\(\)|is_object_in_front\(\)|is_right_button_pressed\(\)|is_object_(red|green|blue|white|black)\(\)|(true|false)|\b(\w+)\b|(Sensors::getInstance\(\)\.\w+\(\)|[-\d.]+|\w+)\s*([<>=!][=]?)\s*(Sensors::getInstance\(\)\.\w+\(\)|[-\d.]+|\w+))\s*\)$/,
 	[CommandType.COMPOUND_OR_IF_STATEMENT]: /^if\s*\(\s*\(.+?\)\s*\|\|\s*\(.+?\)\s*\)$/,
-	[CommandType.ELSE_IF_STATEMENT]: /^else\s+if\s*\(\s*(?:is_object_near_side_(left|right)\(\)|is_object_in_front\(\)|is_object_(red|green|blue|white|black)\(\)|(true|false)|\b(\w+)\b|(Sensors::getInstance\(\)\.\w+\(\)|[-\d.]+|\w+)\s*([<>=!][=]?)\s*(Sensors::getInstance\(\)\.\w+\(\)|[-\d.]+|\w+))\s*\)$/,
+	[CommandType.ELSE_IF_STATEMENT]: /^else\s+if\s*\(\s*(?:is_object_near_side_(left|right)\(\)|is_object_in_front\(\)|is_right_button_pressed\(\)|is_object_(red|green|blue|white|black)\(\)|(true|false)|\b(\w+)\b|(Sensors::getInstance\(\)\.\w+\(\)|[-\d.]+|\w+)\s*([<>=!][=]?)\s*(Sensors::getInstance\(\)\.\w+\(\)|[-\d.]+|\w+))\s*\)$/,
 	[CommandType.COMPOUND_AND_IF_STATEMENT]: /^if\s*\(\s*\(.+?\)\s*&&\s*\(.+?\)\s*\)$/,
 	[CommandType.COMPOUND_AND_ELSE_IF_STATEMENT]: /^else\s+if\s*\(\s*\(.+?\)\s*&&\s*\(.+?\)\s*\)$/,
 	[CommandType.COMPOUND_OR_ELSE_IF_STATEMENT]: /^else\s+if\s*\(\s*\(.+?\)\s*\|\|\s*\(.+?\)\s*\)$/,
@@ -198,4 +200,5 @@ export const CommandPatterns: Record<CommandType, RegExp> = {
 	[CommandType.FRONT_PROXIMITY_DETECTION]: /^is_object_in_front\(\)$/,
 	[CommandType.WAIT_FOR_BUTTON]: /^wait_for_button_press\(\)$/,
 	[CommandType.COLOR_SENSOR_READ]: /^is_object_(red|green|blue|white|black)\(\)$/,
+	[CommandType.CHECK_IF_RIGHT_BUTTON_PRESSED]: /^is_right_button_pressed\(\)$/,
 }
