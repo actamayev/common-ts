@@ -156,6 +156,9 @@ export class CppParser {
 					// Check if value is a sensor reading
 					const sensorMatch = varValue.match(/Sensors::getInstance\(\)\.(\w+)\(\)/)
 
+					// Check if value is a button press detection function
+					const buttonMatch = varValue.match(/is_right_button_pressed\(\)/)
+
 					// Check if value is a proximity detection function
 					const leftProximityMatch = varValue.match(/is_object_near_side_left\(\)/)
 					const rightProximityMatch = varValue.match(/is_object_near_side_right\(\)/)
@@ -165,7 +168,7 @@ export class CppParser {
 					const colorMatch = varValue.match(/is_object_(red|green|blue|white|black)\(\)/)
 
 					if (sensorMatch) {
-						// This is a sensor reading assignment
+					// This is a sensor reading assignment
 						const sensorMethod = sensorMatch[1]
 						const sensorType = CppParserHelper.getSensorTypeFromMethod(sensorMethod)
 
@@ -174,6 +177,15 @@ export class CppParser {
 							opcode: BytecodeOpCode.READ_SENSOR,
 							operand1: sensorType,
 							operand2: register,
+							operand3: 0,
+							operand4: 0
+						})
+					} else if (typeEnum === VarType.BOOL && buttonMatch) {
+					// This is a button press detection assignment to a boolean
+						instructions.push({
+							opcode: BytecodeOpCode.CHECK_RIGHT_BUTTON_PRESS,
+							operand1: register,
+							operand2: 0,
 							operand3: 0,
 							operand4: 0
 						})
@@ -1481,6 +1493,17 @@ export class CppParser {
 			case CommandType.WAIT_FOR_BUTTON: {
 				instructions.push({
 					opcode: BytecodeOpCode.WAIT_FOR_BUTTON,
+					operand1: 0,
+					operand2: 0,
+					operand3: 0,
+					operand4: 0
+				})
+				break
+			}
+
+			case CommandType.CHECK_IF_RIGHT_BUTTON_PRESSED: {
+				instructions.push({
+					opcode: BytecodeOpCode.CHECK_RIGHT_BUTTON_PRESS,
 					operand1: 0,
 					operand2: 0,
 					operand3: 0,

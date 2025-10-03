@@ -161,6 +161,27 @@ export class CppParserHelper {
 			return { operand: 0.0, updatedNextRegister: nextRegister }
 		}
 
+		// Check if this is a button press detection function
+		const buttonMatch = expr.match(/is_right_button_pressed\(\)/)
+		if (buttonMatch) {
+			// Allocate a register for the button state
+			if (nextRegister >= MAX_REGISTERS) {
+				throw new Error(`Program exceeds maximum register count (${MAX_REGISTERS})`)
+			}
+			const register = nextRegister++
+
+			// Add instruction to check button state into register
+			instructions.push({
+				opcode: BytecodeOpCode.CHECK_RIGHT_BUTTON_PRESS,
+				operand1: register,
+				operand2: 0,
+				operand3: 0,
+				operand4: 0
+			})
+
+			return { operand: 0x8000 | register, updatedNextRegister: nextRegister }
+		}
+
 		// Check if this is a proximity detection function
 		const proximityMatch = expr.match(/is_object_near_side_(left|right)\(\)/) || expr.match(/is_object_in_front\(\)/)
 		if (proximityMatch) {
