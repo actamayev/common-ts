@@ -32,6 +32,7 @@ export interface Question {
 		blockToFunctionAnswerChoice: BlockToFunctionAnswerChoice[]
 	} | null
 	functionToBlockFlashcard: {
+		questionText: string
 		functionToBlockAnswerChoice: FunctionToBlockAnswerChoice[]
 	} | null
 	fillInTheBlank: {
