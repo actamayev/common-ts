@@ -9,3 +9,6 @@ To publish
 
 To ensure no unused dependencies:
 	depcheck
+
+LOC check:
+	`cloc . --include-lang=TypeScript --exclude-dir=node_modules,dist`
