@@ -1,3 +1,4 @@
+import { BlockNames } from "./blockly/blockly"
 import { LessonUUID, QuestionUUID } from "./utils"
 
 export type QuestionType =
@@ -28,7 +29,7 @@ export interface Question {
 	questionId: QuestionUUID
 	questionType: QuestionType
 	blockToFunctionFlashcard: {
-		codingBlockId: number
+		codingBlock: CodingBlock
 		blockToFunctionAnswerChoice: BlockToFunctionAnswerChoice[]
 	} | null
 	functionToBlockFlashcard: {
@@ -51,7 +52,7 @@ export interface BlockToFunctionAnswerChoice {
 export interface FunctionToBlockAnswerChoice {
 	functionToBlockAnswerChoiceId: number
 	order: number
-	codingBlockId: number
+	codingBlock: CodingBlock
 	isCorrect: boolean
 }
 
@@ -60,4 +61,12 @@ export interface FillInTheBlankBlockBank {
 	order: number
 	codingBlockId: number
 	quantity: number
+}
+
+export interface CodingBlock {
+	codingBlockId: number
+	blockName: BlockNames
+	ledColor: string | null
+	colorSensorDetectionColor: string | null
+	speakerTone: string | null
 }
