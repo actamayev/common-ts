@@ -37,6 +37,7 @@ export interface Question {
 		functionToBlockAnswerChoice: FunctionToBlockAnswerChoice[]
 	} | null
 	fillInTheBlank: {
+		questionText: string
 		fillInTheBlankBlockBank: FillInTheBlankBlockBank[]
 	} | null
 }
@@ -59,8 +60,8 @@ export interface FunctionToBlockAnswerChoice {
 export interface FillInTheBlankBlockBank {
 	fillInTheBlankBlockBankId: number
 	order: number
-	codingBlockId: number
 	quantity: number
+	codingBlocks: CodingBlock[]
 }
 
 export interface CodingBlock {
