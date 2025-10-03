@@ -1,5 +1,6 @@
 import { BlockNames } from "./blockly/blockly"
 import { LessonUUID, QuestionUUID } from "./utils"
+import { BlocklyJson } from "./sandbox"
 
 export type QuestionType =
 	| "BLOCK_TO_FUNCTION"
@@ -38,6 +39,7 @@ export interface Question {
 	} | null
 	fillInTheBlank: {
 		questionText: string
+		initialBlocklyJson: BlocklyJson
 		fillInTheBlankBlockBank: FillInTheBlankBlockBank[]
 	} | null
 }
