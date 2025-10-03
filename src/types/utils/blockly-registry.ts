@@ -72,6 +72,12 @@ export const BLOCK_REGISTRY: Record<BlockNames, BlockDefinition> = {
 		category: "Speaker"
 	},
 
+	[SPEAKER_BLOCK_TYPES.PLAY_TONE]: {
+		description: "Plays a tone",
+		codeTemplate: "play_tone({tone_name});",
+		category: "Speaker"
+	},
+
 	// Distance sensor blocks
 	[SENSORS_BLOCK_TYPES.CENTER_TOF_READ]: {
 		description: "Reads the front distance sensor to detect objects",
