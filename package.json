@@ -286,6 +286,16 @@
         "default": "./dist/src/types/blockly/sensor-block-types.js"
       }
     },
+    "./types/blockly/button": {
+      "import": {
+        "types": "./dist/src/types/blockly/button-block-types.d.ts",
+        "default": "./dist/src/types/blockly/button-block-types.js"
+      },
+      "require": {
+        "types": "./dist/src/types/blockly/button-block-types.d.ts",
+        "default": "./dist/src/types/blockly/button-block-types.js"
+      }
+    },
     "./types/blockly/logic": {
       "import": {
         "types": "./dist/src/types/blockly/logic-block-types.d.ts",
@@ -400,6 +410,9 @@
       ],
       "types/blockly/sensor": [
         "./dist/src/types/blockly/sensor-block-types.d.ts"
+      ],
+      "types/blockly/button": [
+        "./dist/src/types/blockly/button-block-types.d.ts"
       ],
       "types/blockly/logic": [
         "./dist/src/types/blockly/logic-block-types.d.ts"
