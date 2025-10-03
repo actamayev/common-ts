@@ -61,7 +61,7 @@ export interface FillInTheBlankBlockBank {
 	fillInTheBlankBlockBankId: number
 	order: number
 	quantity: number
-	codingBlocks: CodingBlock[]
+	codingBlock: CodingBlock
 }
 
 export interface CodingBlock {
