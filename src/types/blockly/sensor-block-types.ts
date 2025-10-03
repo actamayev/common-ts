@@ -67,6 +67,15 @@ export const SENSOR_TYPES = {
 		ENGINE: "ENGINE",
 		ROBOT: "ROBOT"
 	},
+	TONE_NAMES: {
+		A: "A",
+		B: "B",
+		C: "C",
+		D: "D",
+		E: "E",
+		F: "F",
+		G: "G",
+	},
 	COLOR_SENSOR_READ_COLORS: {
 		RED: "RED",
 		GREEN: "GREEN",
