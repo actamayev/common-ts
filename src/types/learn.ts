@@ -61,8 +61,6 @@ export interface FunctionToBlockAnswerChoice {
 
 export interface FillInTheBlankBlockBank {
 	fillInTheBlankBlockBankId: number
-	order: number
-	quantity: number
 	codingBlock: CodingBlock
 }
 
