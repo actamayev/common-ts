@@ -1,6 +1,7 @@
 /* eslint-disable max-len */
 import { BlocklyCategoryName, ParentCategoryName } from "../blockly/block-categories"
 import { BlockNames } from "../blockly/blockly"
+import { BUTTON_BLOCK_TYPES } from "../blockly/button-block-types"
 import { LED_BLOCK_TYPES } from "../blockly/led-block-types"
 import { CONDITIONAL_BLOCK_TYPES, LOOP_BLOCK_TYPES, MATH_BLOCK_TYPES, START_BLOCK_TYPES, VARIABLE_BLOCK_TYPES } from "../blockly/logic-block-types"
 import { MOTOR_BLOCK_TYPES } from "../blockly/motor-block-types"
@@ -242,5 +243,12 @@ export const BLOCK_REGISTRY: Record<BlockNames, BlockDefinition> = {
 		codeTemplate: "wait({seconds});",
 		category: "Loops",
 		parentCategory: "Logic"
+	},
+
+	// Button blocks
+	[BUTTON_BLOCK_TYPES.RIGHT_BUTTON_PRESS]: {
+		description: "Reads the right button to detect if it is pressed",
+		codeTemplate: "is_right_button_pressed()",
+		category: "Button",
 	}
 }

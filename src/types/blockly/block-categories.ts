@@ -1,5 +1,6 @@
 export type BlocklyCategoryName =
   | "Screen"
+  | "Button"
   | "Motors"
   | "LED"
   | "Speaker"
