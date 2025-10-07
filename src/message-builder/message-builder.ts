@@ -250,10 +250,6 @@ export class MessageBuilder {
 		return this.frameMessage(MessageType.WIFI_CREDENTIALS, new Uint8Array(payload))
 	}
 
-	static createRequestBatteryMonitorDataMessage(): ArrayBuffer {
-		return this.frameMessage(MessageType.REQUEST_BATTERY_MONITOR_DATA)
-	}
-
 	static createTriggerMessage<T extends CareerType>(careerType: T, triggerMessageType: ValidTriggerMessageType<T>): ArrayBuffer {
 		const payload = new Uint8Array([careerType, triggerMessageType])
 		return this.frameMessage(MessageType.TRIGGER_MESSAGE, payload)
