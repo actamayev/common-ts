@@ -38,6 +38,7 @@ export interface StandardJsonStatusMessage {
 
 export interface DeviceInitialDataPayload {
   firmwareVersion: number
+  batteryData?: BatteryMonitorData
 }
 
 export interface PlayFunSoundPayload {
