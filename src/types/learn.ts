@@ -30,6 +30,7 @@ export interface Question {
 	questionId: QuestionUUID
 	questionType: QuestionType
 	blockToFunctionFlashcard: {
+		questionText: string
 		codingBlock: CodingBlock
 		blockToFunctionAnswerChoice: BlockToFunctionAnswerChoice[]
 	} | null
