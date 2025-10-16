@@ -41,7 +41,7 @@ export interface Question {
 	fillInTheBlank: {
 		questionText: string
 		initialBlocklyJson: BlocklyJson
-		fillInTheBlankBlockBank: FillInTheBlankBlockBank[]
+		availableBlocks: FillInTheBlankBlockBank[]
 	} | null
 }
 
@@ -61,14 +61,11 @@ export interface FunctionToBlockAnswerChoice {
 }
 
 export interface FillInTheBlankBlockBank {
-	fillInTheBlankBlockBankId: number
-	codingBlock: CodingBlock
+	blockNameId: number
+	blockName: BlockNames
 }
 
 export interface CodingBlock {
 	codingBlockId: number
-	blockName: BlockNames
-	ledColor: string | null
-	colorSensorDetectionColor: string | null
-	speakerTone: string | null
+	codingBlockJson: BlocklyJson
 }
