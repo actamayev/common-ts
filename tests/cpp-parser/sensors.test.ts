@@ -422,5 +422,23 @@ describe("Sensor Functionality", () => {
 			expect(declareVarFound).toBe(true)
 			expect(readSensorFound).toBe(true)
 		})
+
+		test("should parse if statement with yellow color detection", () => {
+			const code = `if (is_object_yellow()) {
+				rgbLed.set_led_yellow();
+			}`
+
+			const bytecode = CppParser.cppToByte(code)
+
+			expect(bytecode[0]).toBe(BytecodeOpCode.READ_SENSOR)
+			expect(bytecode[1]).toBe(SensorType.SENSOR_COLOR_YELLOW)
+			expect(bytecode[5]).toBe(BytecodeOpCode.COMPARE)
+			expect(bytecode[6]).toBe(ComparisonOp.EQUAL)
+			expect(bytecode[7]).toBe(0x8000) // Register reference
+			expect(bytecode[8]).toBe(1) // Right value
+			expect(bytecode[9]).toBe(0) // Unused
+			expect(bytecode[10]).toBe(51) // Unused
+			expect(bytecode[11]).toBe(40) // Unused
+		})
 	})
 })

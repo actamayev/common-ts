@@ -79,8 +79,9 @@ export const SENSOR_TYPES = {
 		RED: "RED",
 		GREEN: "GREEN",
 		BLUE: "BLUE",
+		YELLOW: "YELLOW",
 		WHITE: "WHITE",
-		BLACK: "BLACK"
+		BLACK: "BLACK",
 	}
 } as const
 

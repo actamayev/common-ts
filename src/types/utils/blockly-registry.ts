@@ -95,8 +95,8 @@ export const BLOCK_REGISTRY: Record<BlockNames, BlockDefinition> = {
 
 	// Color sensor blocks
 	[SENSORS_BLOCK_TYPES.COLOR_SENSOR_READ]: {
-		description: "Reads the color sensor to detect objects (red, green, blue, white, black)",
-		codeTemplate: "is_object_{red|green|blue|white|black}()",
+		description: "Reads the color sensor to detect objects (red, green, blue, white, black, yellow)",
+		codeTemplate: "is_object_{red|green|blue|white|black|yellow}()",
 		category: "Color Sensor",
 		parentCategory: "Sensors"
 	},

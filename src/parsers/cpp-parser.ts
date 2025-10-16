@@ -165,7 +165,7 @@ export class CppParser {
 					const frontProximityMatch = varValue.match(/is_object_in_front\(\)/)
 
 					// Check if value is a color detection function
-					const colorMatch = varValue.match(/is_object_(red|green|blue|white|black)\(\)/)
+					const colorMatch = varValue.match(/is_object_(red|green|blue|white|black|yellow)\(\)/)
 
 					if (sensorMatch) {
 					// This is a sensor reading assignment
@@ -211,7 +211,7 @@ export class CppParser {
 						})
 					} else if (typeEnum === VarType.BOOL && colorMatch) {
 						// This is a color sensor assignment to a boolean
-						const colorName = colorMatch[1] // red, green, blue, white, black
+						const colorName = colorMatch[1] // red, green, blue, white, black, yellow
 						let sensorType: SensorType
 
 						switch (colorName) {
@@ -220,6 +220,7 @@ export class CppParser {
 						case "blue": sensorType = SensorType.SENSOR_COLOR_BLUE; break
 						case "white": sensorType = SensorType.SENSOR_COLOR_WHITE; break
 						case "black": sensorType = SensorType.SENSOR_COLOR_BLACK; break
+						case "yellow": sensorType = SensorType.SENSOR_COLOR_YELLOW; break
 						default: throw new Error(`Unsupported color: ${colorName}`)
 						}
 
