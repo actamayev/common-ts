@@ -6,3 +6,8 @@ export const MAX_JUMP_DISTANCE = 65535 // Maximum jump distance in bytes (uint16
 export const INSTRUCTION_SIZE = 20   // Size of each instruction in bytes
 export const START_MARKER = 0xAA // 170 in decimal
 export const END_MARKER = 0x55   // 85 in decimal
+
+// Excludes easily confusable characters: 0, O, o, 1, l, I, S, 5, Z, 2, B, 8, G, 6
+export const ACCEPTABLE_PIP_ID_CHARACTERS = "ACDEFGHJKLMNPQRTUVWXYacdefhjkmnpqrtuvwxy3479"
+// Excludes confusing characters: l (1), o (O), 0 (zero), and 1 (one)
+export const ACCEPTABLE_CLASS_CODE_CHARACTERS = "abcdefghijkmnpqrstuvwxyz23456789"
