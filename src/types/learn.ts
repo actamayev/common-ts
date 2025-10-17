@@ -11,6 +11,7 @@ export interface Lesson {
 	lessonId: LessonUUID
 	lessonName: string
 	isCompleted: boolean
+	lessonOrder: number
 }
 
 // Lesson with questions (used by get-single-lesson)
