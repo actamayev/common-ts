@@ -216,6 +216,16 @@
         "default": "./dist/src/types/utils/blockly-registry.js"
       }
     },
+    "./types/utils/constants": {
+      "import": {
+        "types": "./dist/src/types/utils/constants.d.ts",
+        "default": "./dist/src/types/utils/constants.js"
+      },
+      "require": {
+        "types": "./dist/src/types/utils/constants.d.ts",
+        "default": "./dist/src/types/utils/constants.js"
+      }
+    },
     "./types/blockly": {
       "import": {
         "types": "./dist/src/types/blockly/index.d.ts",
@@ -389,6 +399,9 @@
       ],
       "types/utils/blockly-registry": [
         "./dist/src/types/utils/blockly-registry.d.ts"
+      ],
+      "types/utils/constants": [
+        "./dist/src/types/utils/constants.d.ts"
       ],
       "types/blockly": [
         "./dist/src/types/blockly/index.d.ts"
