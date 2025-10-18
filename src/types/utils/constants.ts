@@ -8,7 +8,7 @@ export const START_MARKER = 0xAA // 170 in decimal
 export const END_MARKER = 0x55   // 85 in decimal
 
 // Remove Z after Levi returns (PmKJZ)
-// Excludes easily confusable characters: 0, O, o, 1, l, I, S, 5, Z, 2, B, 8, G, 6
-export const ACCEPTABLE_PIP_ID_CHARACTERS = "ACDEFGHJKLMNPQRTUVWXYZacdefhjkmnpqrtuvwxy3479"
+// Excludes easily confusable characters: 0, O, o, 1, l, I, S, 5, Z, 2, B, 8, G, 6, c
+export const ACCEPTABLE_PIP_ID_CHARACTERS = "ACDEFGHJKLMNPQRTUVWXYZadefhjkmnpqrtuvwxy3479"
 // Excludes confusing characters: l (1), o (O), 0 (zero), and 1 (one)
 export const ACCEPTABLE_CLASS_CODE_CHARACTERS = "abcdefghijkmnpqrstuvwxyz23456789"
