@@ -30,7 +30,7 @@ export const BLOCK_REGISTRY: Record<BlockNames, BlockDefinition> = {
 	},
 	[MOTOR_BLOCK_TYPES.DRIVE_DISTANCE]: {
 		description: "Makes the robot move forward for a specific distance in millimeters",
-		codeTemplate: "drive_distance({direction}, {distance_mm}, {speed});",
+		codeTemplate: "drive_distance({direction}, {distance_inches}, {speed});",
 		category: "Motors"
 	},
 	[MOTOR_BLOCK_TYPES.STOP]: {
