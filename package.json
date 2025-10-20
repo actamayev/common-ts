@@ -1,6 +1,6 @@
 {
   "name": "@lever-labs/common-ts",
-  "version": "1.0.322",
+  "version": "1.0.323",
   "description": "Shared TypeScript code between frontend and backend",
   "files": [
     "dist/src/**/*"
