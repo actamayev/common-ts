@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 
 export enum MOTOR_BLOCK_TYPES {
-    GO = "go",
-    GO_TIME = "go_time",
-    GO_DISTANCE = "go_distance",
+    DRIVE = "drive",
+    DRIVE_TIME = "drive_time",
+    DRIVE_DISTANCE = "drive_distance",
     STOP = "stop",
     TURN = "turn"
 }

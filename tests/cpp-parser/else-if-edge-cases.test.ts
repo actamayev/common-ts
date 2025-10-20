@@ -197,15 +197,15 @@ describe("Else-If Edge Cases and Specific Scenarios", () => {
 				if (is_object_in_front()) {
 					stopMotors();
 				} else if (Sensors::getInstance().getPitch() > 45) {
-					goTime(BACKWARD, 2.0, 70);
+					drive_time(BACKWARD, 2.0, 70);
 				} else if (Sensors::getInstance().getPitch() < -45) {
-					goTime(FORWARD, 1.0, 50);
+					drive_time(FORWARD, 1.0, 50);
 				} else if (Sensors::getInstance().getRoll() > 30) {
 					turn(COUNTERCLOCKWISE, 90);
 				} else if (Sensors::getInstance().getRoll() < -30) {
 					turn(CLOCKWISE, 90);
 				} else {
-					go(FORWARD, 60);
+					drive(FORWARD, 60);
 				}
 			`
 
@@ -221,12 +221,12 @@ describe("Else-If Edge Cases and Specific Scenarios", () => {
 			for (let i = 0; i < bytecode.length; i += 5) {
 				if (bytecode[i] === BytecodeOpCode.MOTOR_STOP) {
 					motorStopFound = true
-				} else if (bytecode[i] === BytecodeOpCode.MOTOR_GO_TIME) {
+				} else if (bytecode[i] === BytecodeOpCode.MOTOR_DRIVE_TIME) {
 					motorGoTimeFound = true
 				} else if (bytecode[i] === BytecodeOpCode.MOTOR_TURN) {
 					if (bytecode[i + 1] === 0) motorTurnCCWFound = true // 0 = counterclockwise
 					else if (bytecode[i + 1] === 1) motorTurnCWFound = true // 1 = clockwise
-				} else if (bytecode[i] === BytecodeOpCode.MOTOR_GO) {
+				} else if (bytecode[i] === BytecodeOpCode.MOTOR_DRIVE) {
 					motorGoFound = true
 				}
 			}

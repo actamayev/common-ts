@@ -662,7 +662,7 @@ describe("Else-If Functionality", () => {
 					} else if (is_object_near_side_right()) {
 						rgbLed.set_led_blue();
 					} else {
-						go(FORWARD, 50);
+						drive(FORWARD, 50);
 					}
 				}
 			`
@@ -684,7 +684,7 @@ describe("Else-If Functionality", () => {
 			// Should have motor command in else block
 			let motorGoFound = false
 			for (let i = 0; i < bytecode.length; i += 5) {
-				if (bytecode[i] === BytecodeOpCode.MOTOR_GO) {
+				if (bytecode[i] === BytecodeOpCode.MOTOR_DRIVE) {
 					motorGoFound = true
 				}
 			}
@@ -790,15 +790,15 @@ describe("Else-If Functionality", () => {
 						} else if (is_object_near_side_right()) {
 							turn(COUNTERCLOCKWISE, 90);
 						} else {
-							go(BACKWARD, 50);
+							drive(BACKWARD, 50);
 							wait(0.5);
 						}
 					} else if (Sensors::getInstance().getPitch() > 30) {
-						goTime(BACKWARD, 1.0, 30);
+						drive_time(BACKWARD, 1.0, 30);
 					} else if (Sensors::getInstance().getRoll() < -30) {
-						goTime(BACKWARD, 1.0, 30);
+						drive_time(BACKWARD, 1.0, 30);
 					} else {
-						go(FORWARD, 60);
+						drive(FORWARD, 60);
 					}
 				}
 			`
@@ -836,9 +836,9 @@ describe("Else-If Functionality", () => {
 
 			for (let i = 0; i < bytecode.length; i += 5) {
 				if (bytecode[i] === BytecodeOpCode.MOTOR_STOP) motorStopFound = true
-				else if (bytecode[i] === BytecodeOpCode.MOTOR_GO) motorGoFound = true
+				else if (bytecode[i] === BytecodeOpCode.MOTOR_DRIVE) motorGoFound = true
 				else if (bytecode[i] === BytecodeOpCode.MOTOR_TURN) motorTurnFound = true
-				else if (bytecode[i] === BytecodeOpCode.MOTOR_GO_TIME) motorGoTimeFound = true
+				else if (bytecode[i] === BytecodeOpCode.MOTOR_DRIVE_TIME) motorGoTimeFound = true
 			}
 
 			expect(motorStopFound).toBe(true)
@@ -1103,15 +1103,15 @@ describe("Else-If Functionality", () => {
 		if (is_object_in_front()) {
 			stopMotors();
 		} else if (Sensors::getInstance().getPitch() > 45) {
-			goTime(BACKWARD, 2.0, 70);
+			drive_time(BACKWARD, 2.0, 70);
 		} else if (Sensors::getInstance().getPitch() < -45) {
-			goTime(FORWARD, 1.0, 50);
+			drive_time(FORWARD, 1.0, 50);
 		} else if (Sensors::getInstance().getRoll() > 30) {
 			turn(COUNTERCLOCKWISE, 90);
 		} else if (Sensors::getInstance().getRoll() < -30) {
 			turn(CLOCKWISE, 90);
 		} else {
-			go(FORWARD, 60);
+			drive(FORWARD, 60);
 		}
 	`
 
@@ -1126,7 +1126,7 @@ describe("Else-If Functionality", () => {
 			for (let i = 0; i < bytecode.length; i += 5) {
 				if (bytecode[i] === BytecodeOpCode.MOTOR_STOP) {
 					motorStopFound = true
-				} else if (bytecode[i] === BytecodeOpCode.MOTOR_GO_TIME) {
+				} else if (bytecode[i] === BytecodeOpCode.MOTOR_DRIVE_TIME) {
 					motorGoTimeFound = true
 				} else if (bytecode[i] === BytecodeOpCode.MOTOR_TURN) {
 					if (bytecode[i + 1] === 0) motorTurnCCWFound = true // 0 = counterclockwise

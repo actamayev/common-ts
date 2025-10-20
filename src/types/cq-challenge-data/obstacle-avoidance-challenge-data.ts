@@ -120,7 +120,7 @@ export const OBSTACLE_AVOIDANCE_CHALLENGE_2: CqChallengeData = {
 		LOOP_BLOCK_TYPES.FOREVER_LOOP,
 		CONDITIONAL_BLOCK_TYPES.IF_ELSE,
 		SENSORS_BLOCK_TYPES.CENTER_TOF_READ,
-		MOTOR_BLOCK_TYPES.GO,
+		MOTOR_BLOCK_TYPES.DRIVE,
 		MOTOR_BLOCK_TYPES.STOP,
 		LED_BLOCK_TYPES.CONTROL_ALL_LEDS
 	]),
@@ -132,7 +132,7 @@ export const OBSTACLE_AVOIDANCE_CHALLENGE_2: CqChallengeData = {
                 stopMotors();
             } else {
                 rgbLed.set_led_green();
-                go(FORWARD, 50);
+                drive(FORWARD, 50);
             }
         }
     `,
@@ -190,7 +190,7 @@ export const OBSTACLE_AVOIDANCE_CHALLENGE_3: CqChallengeData = {
 											},
 											"next": {
 												"block": {
-													"type": "go",
+													"type": "drive",
 													"id": "8EWhJuIkd}Dkiu^H3lQ8",
 													"fields": {
 														"direction": "FORWARD",
@@ -222,7 +222,7 @@ export const OBSTACLE_AVOIDANCE_CHALLENGE_3: CqChallengeData = {
 		LOOP_BLOCK_TYPES.FOREVER_LOOP,
 		CONDITIONAL_BLOCK_TYPES.IF_ELSE,
 		SENSORS_BLOCK_TYPES.CENTER_TOF_READ,
-		MOTOR_BLOCK_TYPES.GO,
+		MOTOR_BLOCK_TYPES.DRIVE,
 		MOTOR_BLOCK_TYPES.STOP,
 		MOTOR_BLOCK_TYPES.TURN,
 		LED_BLOCK_TYPES.CONTROL_ALL_LEDS
@@ -235,7 +235,7 @@ export const OBSTACLE_AVOIDANCE_CHALLENGE_3: CqChallengeData = {
                 turn(CLOCKWISE, 90);
             } else {
                 rgbLed.set_led_green();
-                go(FORWARD, 50);
+                drive(FORWARD, 50);
             }
         }
     `,
@@ -313,7 +313,7 @@ export const OBSTACLE_AVOIDANCE_CHALLENGE_5: CqChallengeData = {
 		CONDITIONAL_BLOCK_TYPES.IF_2ELSEIF_ELSE,
 		SENSORS_BLOCK_TYPES.CENTER_TOF_READ,
 		SENSORS_BLOCK_TYPES.SIDE_TOF_READ,
-		MOTOR_BLOCK_TYPES.GO,
+		MOTOR_BLOCK_TYPES.DRIVE,
 		MOTOR_BLOCK_TYPES.TURN,
 		LED_BLOCK_TYPES.CONTROL_ALL_LEDS
 	]),
@@ -331,7 +331,7 @@ export const OBSTACLE_AVOIDANCE_CHALLENGE_5: CqChallengeData = {
                 turn(COUNTERCLOCKWISE, 90);
             } else {
                 rgbLed.set_led_green();
-                go(FORWARD, 50);
+                drive(FORWARD, 50);
             }
         }
     `,

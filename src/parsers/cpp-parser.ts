@@ -1242,7 +1242,7 @@ export class CppParser {
 				blockStack.push({ type: "else", jumpIndex: instructions.length })
 				break
 
-			case CommandType.GO:
+			case CommandType.DRIVE:
 				if (command.matches && command.matches.length === 3) {
 					const direction = command.matches[1] // "FORWARD" or "BACKWARD"
 					const throttlePercent = parseInt(command.matches[2], 10)
@@ -1252,7 +1252,7 @@ export class CppParser {
 					}
 
 					instructions.push({
-						opcode: BytecodeOpCode.MOTOR_GO,
+						opcode: BytecodeOpCode.MOTOR_DRIVE,
 						operand1: direction === "FORWARD" ? 1 : 0, // 1 for forward, 0 for backward
 						operand2: throttlePercent,
 						operand3: 0,
@@ -1291,7 +1291,7 @@ export class CppParser {
 				}
 				break
 
-			case CommandType.GO_TIME:
+			case CommandType.DRIVE_TIME:
 				if (command.matches && command.matches.length === 4) {
 					const direction = command.matches[1] // "FORWARD" or "BACKWARD"
 					const seconds = parseFloat(command.matches[2])
@@ -1307,7 +1307,7 @@ export class CppParser {
 					}
 
 					instructions.push({
-						opcode: BytecodeOpCode.MOTOR_GO_TIME,
+						opcode: BytecodeOpCode.MOTOR_DRIVE_TIME,
 						operand1: direction === "FORWARD" ? 1 : 0, // 1 for forward, 0 for backward
 						operand2: seconds,
 						operand3: throttlePercent,
@@ -1316,7 +1316,7 @@ export class CppParser {
 				}
 				break
 
-			case CommandType.GO_DISTANCE:
+			case CommandType.DRIVE_DISTANCE:
 				if (command.matches && command.matches.length === 4) {
 					const direction = command.matches[1] // "FORWARD" or "BACKWARD"
 					const inches = parseFloat(command.matches[2])
@@ -1332,7 +1332,7 @@ export class CppParser {
 					}
 
 					instructions.push({
-						opcode: BytecodeOpCode.MOTOR_GO_DISTANCE,
+						opcode: BytecodeOpCode.MOTOR_DRIVE_DISTANCE,
 						operand1: direction === "FORWARD" ? 1 : 0, // 1 for forward, 0 for backward
 						operand2: inches,  // Store distance in inches
 						operand3: throttlePercent,

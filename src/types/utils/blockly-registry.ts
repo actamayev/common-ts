@@ -18,19 +18,19 @@ export interface BlockDefinition {
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export const BLOCK_REGISTRY: Record<BlockNames, BlockDefinition> = {
 	// Motor blocks
-	[MOTOR_BLOCK_TYPES.GO]: {
+	[MOTOR_BLOCK_TYPES.DRIVE]: {
 		description: "Makes the robot move forward continuously",
-		codeTemplate: "go({direction}, {speed});",
+		codeTemplate: "drive({direction}, {speed});",
 		category: "Motors"
 	},
-	[MOTOR_BLOCK_TYPES.GO_TIME]: {
+	[MOTOR_BLOCK_TYPES.DRIVE_TIME]: {
 		description: "Makes the robot move forward for a specific amount of time",
-		codeTemplate: "go_time({direction}, {seconds}, {speed});",
+		codeTemplate: "drive_time({direction}, {seconds}, {speed});",
 		category: "Motors"
 	},
-	[MOTOR_BLOCK_TYPES.GO_DISTANCE]: {
+	[MOTOR_BLOCK_TYPES.DRIVE_DISTANCE]: {
 		description: "Makes the robot move forward for a specific distance in millimeters",
-		codeTemplate: "go_distance({direction}, {distance_mm}, {speed});",
+		codeTemplate: "drive_distance({direction}, {distance_mm}, {speed});",
 		category: "Motors"
 	},
 	[MOTOR_BLOCK_TYPES.STOP]: {
