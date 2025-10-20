@@ -197,15 +197,15 @@ describe("Else-If Edge Cases and Specific Scenarios", () => {
 				if (is_object_in_front()) {
 					stopMotors();
 				} else if (Sensors::getInstance().getPitch() > 45) {
-					goBackwardTime(2.0, 70);
+					drive_time(BACKWARD, 2.0, 70);
 				} else if (Sensors::getInstance().getPitch() < -45) {
-					goForwardTime(1.0, 50);
+					drive_time(FORWARD, 1.0, 50);
 				} else if (Sensors::getInstance().getRoll() > 30) {
 					turn(COUNTERCLOCKWISE, 90);
 				} else if (Sensors::getInstance().getRoll() < -30) {
 					turn(CLOCKWISE, 90);
 				} else {
-					goForward(60);
+					drive(FORWARD, 60);
 				}
 			`
 
@@ -213,33 +213,29 @@ describe("Else-If Edge Cases and Specific Scenarios", () => {
 
 			// Should have all motor commands
 			let motorStopFound = false
-			let motorBackwardTimeFound = false
-			let motorForwardTimeFound = false
+			let motorGoTimeFound = false
 			let motorTurnCCWFound = false
 			let motorTurnCWFound = false
-			let motorForwardFound = false
+			let motorGoFound = false
 
 			for (let i = 0; i < bytecode.length; i += 5) {
 				if (bytecode[i] === BytecodeOpCode.MOTOR_STOP) {
 					motorStopFound = true
-				} else if (bytecode[i] === BytecodeOpCode.MOTOR_BACKWARD_TIME) {
-					motorBackwardTimeFound = true
-				} else if (bytecode[i] === BytecodeOpCode.MOTOR_FORWARD_TIME) {
-					motorForwardTimeFound = true
+				} else if (bytecode[i] === BytecodeOpCode.MOTOR_DRIVE_TIME) {
+					motorGoTimeFound = true
 				} else if (bytecode[i] === BytecodeOpCode.MOTOR_TURN) {
 					if (bytecode[i + 1] === 0) motorTurnCCWFound = true // 0 = counterclockwise
 					else if (bytecode[i + 1] === 1) motorTurnCWFound = true // 1 = clockwise
-				} else if (bytecode[i] === BytecodeOpCode.MOTOR_FORWARD) {
-					motorForwardFound = true
+				} else if (bytecode[i] === BytecodeOpCode.MOTOR_DRIVE) {
+					motorGoFound = true
 				}
 			}
 
 			expect(motorStopFound).toBe(true)
-			expect(motorBackwardTimeFound).toBe(true)
-			expect(motorForwardTimeFound).toBe(true)
+			expect(motorGoTimeFound).toBe(true)
 			expect(motorTurnCCWFound).toBe(true)
 			expect(motorTurnCWFound).toBe(true)
-			expect(motorForwardFound).toBe(true)
+			expect(motorGoFound).toBe(true)
 		})
 
 		test("should handle else-if with LED patterns and timing", () => {

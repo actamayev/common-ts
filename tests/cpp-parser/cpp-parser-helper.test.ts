@@ -29,7 +29,7 @@ describe("CppParserHelper", () => {
 				{ statement: "if (10 > 5)", type: CommandType.IF_STATEMENT },
 				{ statement: "while(true)", type: CommandType.WHILE_STATEMENT },
 				{ statement: "for (int i = 0; i < 10; i++)", type: CommandType.FOR_STATEMENT },
-				{ statement: "goForward(50)", type: CommandType.MOTOR_FORWARD },
+				{ statement: "drive(FORWARD, 50)", type: CommandType.DRIVE },
 				{ statement: "is_object_near_side_left()", type: CommandType.SIDE_PROXIMITY_DETECTION },
 				{ statement: "is_object_in_front()", type: CommandType.FRONT_PROXIMITY_DETECTION },
 				{ statement: "wait_for_button_press()", type: CommandType.WAIT_FOR_BUTTON }

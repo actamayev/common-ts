@@ -260,7 +260,7 @@ describe("Button commands", () => {
 		test("should work with motor commands", () => {
 			const program = `
 				if (is_right_button_pressed()) {
-					goForward(50);
+					drive(FORWARD, 50);
 					wait(2);
 					stopMotors();
 				}

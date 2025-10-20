@@ -662,7 +662,7 @@ describe("Else-If Functionality", () => {
 					} else if (is_object_near_side_right()) {
 						rgbLed.set_led_blue();
 					} else {
-						goForward(50);
+						drive(FORWARD, 50);
 					}
 				}
 			`
@@ -682,13 +682,13 @@ describe("Else-If Functionality", () => {
 			expect(whileEndFound).toBe(true)
 
 			// Should have motor command in else block
-			let motorForwardFound = false
+			let motorGoFound = false
 			for (let i = 0; i < bytecode.length; i += 5) {
-				if (bytecode[i] === BytecodeOpCode.MOTOR_FORWARD) {
-					motorForwardFound = true
+				if (bytecode[i] === BytecodeOpCode.MOTOR_DRIVE) {
+					motorGoFound = true
 				}
 			}
-			expect(motorForwardFound).toBe(true)
+			expect(motorGoFound).toBe(true)
 		})
 
 		test("should handle nested if-else inside else-if", () => {
@@ -790,15 +790,15 @@ describe("Else-If Functionality", () => {
 						} else if (is_object_near_side_right()) {
 							turn(COUNTERCLOCKWISE, 90);
 						} else {
-							goBackward(50);
+							drive(BACKWARD, 50);
 							wait(0.5);
 						}
 					} else if (Sensors::getInstance().getPitch() > 30) {
-						goBackwardTime(1.0, 30);
+						drive_time(BACKWARD, 1.0, 30);
 					} else if (Sensors::getInstance().getRoll() < -30) {
-						goBackwardTime(1.0, 30);
+						drive_time(BACKWARD, 1.0, 30);
 					} else {
-						goForward(60);
+						drive(FORWARD, 60);
 					}
 				}
 			`
@@ -830,24 +830,21 @@ describe("Else-If Functionality", () => {
 
 			// Should have all expected motor commands
 			let motorStopFound = false
-			let motorForwardFound = false
-			let motorBackwardFound = false
+			let motorGoFound = false
 			let motorTurnFound = false
-			let motorBackwardTimeFound = false
+			let motorGoTimeFound = false
 
 			for (let i = 0; i < bytecode.length; i += 5) {
 				if (bytecode[i] === BytecodeOpCode.MOTOR_STOP) motorStopFound = true
-				else if (bytecode[i] === BytecodeOpCode.MOTOR_FORWARD) motorForwardFound = true
-				else if (bytecode[i] === BytecodeOpCode.MOTOR_BACKWARD) motorBackwardFound = true
+				else if (bytecode[i] === BytecodeOpCode.MOTOR_DRIVE) motorGoFound = true
 				else if (bytecode[i] === BytecodeOpCode.MOTOR_TURN) motorTurnFound = true
-				else if (bytecode[i] === BytecodeOpCode.MOTOR_BACKWARD_TIME) motorBackwardTimeFound = true
+				else if (bytecode[i] === BytecodeOpCode.MOTOR_DRIVE_TIME) motorGoTimeFound = true
 			}
 
 			expect(motorStopFound).toBe(true)
-			expect(motorForwardFound).toBe(true)
-			expect(motorBackwardFound).toBe(true)
+			expect(motorGoFound).toBe(true)
 			expect(motorTurnFound).toBe(true)
-			expect(motorBackwardTimeFound).toBe(true)
+			expect(motorGoTimeFound).toBe(true)
 		})
 
 		test("should handle LED pattern with else-if and variables", () => {
@@ -1106,15 +1103,15 @@ describe("Else-If Functionality", () => {
 		if (is_object_in_front()) {
 			stopMotors();
 		} else if (Sensors::getInstance().getPitch() > 45) {
-			goBackwardTime(2.0, 70);
+			drive_time(BACKWARD, 2.0, 70);
 		} else if (Sensors::getInstance().getPitch() < -45) {
-			goForwardTime(1.0, 50);
+			drive_time(FORWARD, 1.0, 50);
 		} else if (Sensors::getInstance().getRoll() > 30) {
 			turn(COUNTERCLOCKWISE, 90);
 		} else if (Sensors::getInstance().getRoll() < -30) {
 			turn(CLOCKWISE, 90);
 		} else {
-			goForward(60);
+			drive(FORWARD, 60);
 		}
 	`
 
@@ -1122,33 +1119,25 @@ describe("Else-If Functionality", () => {
 
 			// Should have all motor commands
 			let motorStopFound = false
-			let motorBackwardTimeFound = false
-			let motorForwardTimeFound = false
+			let motorGoTimeFound = false
 			let motorTurnCCWFound = false
 			let motorTurnCWFound = false
-			let motorForwardFound = false
 
 			for (let i = 0; i < bytecode.length; i += 5) {
 				if (bytecode[i] === BytecodeOpCode.MOTOR_STOP) {
 					motorStopFound = true
-				} else if (bytecode[i] === BytecodeOpCode.MOTOR_BACKWARD_TIME) {
-					motorBackwardTimeFound = true
-				} else if (bytecode[i] === BytecodeOpCode.MOTOR_FORWARD_TIME) {
-					motorForwardTimeFound = true
+				} else if (bytecode[i] === BytecodeOpCode.MOTOR_DRIVE_TIME) {
+					motorGoTimeFound = true
 				} else if (bytecode[i] === BytecodeOpCode.MOTOR_TURN) {
 					if (bytecode[i + 1] === 0) motorTurnCCWFound = true // 0 = counterclockwise
 					else if (bytecode[i + 1] === 1) motorTurnCWFound = true // 1 = clockwise
-				} else if (bytecode[i] === BytecodeOpCode.MOTOR_FORWARD) {
-					motorForwardFound = true
 				}
 			}
 
 			expect(motorStopFound).toBe(true)
-			expect(motorBackwardTimeFound).toBe(true)
-			expect(motorForwardTimeFound).toBe(true)
+			expect(motorGoTimeFound).toBe(true)
 			expect(motorTurnCCWFound).toBe(true)
 			expect(motorTurnCWFound).toBe(true)
-			expect(motorForwardFound).toBe(true)
 		})
 
 		// 6. Fix the bytecode sequence verification test
