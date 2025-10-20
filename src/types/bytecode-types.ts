@@ -26,16 +26,11 @@ export enum BytecodeOpCode {
     DECLARE_VAR = 0x40,
     SET_VAR = 0x41,
 
-    MOTOR_FORWARD = 0x50,   // Forward movement at specified throttle
-    MOTOR_BACKWARD = 0x51,  // Backward movement at specified throttle
+    MOTOR_GO = 0x50,        // Go forward/backward at specified throttle
     MOTOR_STOP = 0x52,      // Stop all motors
     MOTOR_TURN = 0x53,      // Turn by specified degrees
-
-    MOTOR_FORWARD_TIME = 0x54,
-    MOTOR_BACKWARD_TIME = 0x55,
-
-    MOTOR_FORWARD_DISTANCE = 0x56,
-    MOTOR_BACKWARD_DISTANCE = 0x57,
+    MOTOR_GO_TIME = 0x54,   // Go forward/backward for specified time
+    MOTOR_GO_DISTANCE = 0x56, // Go forward/backward for specified distance
 
     PLAY_SOUND = 0x60,
     PLAY_TONE = 0x61,
@@ -129,16 +124,11 @@ export enum CommandType {
     FOR_STATEMENT = "FOR_STATEMENT",
     SENSOR_READ = "SENSOR_READ",
 
-    MOTOR_FORWARD = "MOTOR_FORWARD",
-    MOTOR_BACKWARD = "MOTOR_BACKWARD",
+    GO = "GO",
+    GO_TIME = "GO_TIME",
+    GO_DISTANCE = "GO_DISTANCE",
     MOTOR_STOP = "MOTOR_STOP",
     MOTOR_TURN = "MOTOR_TURN",
-
-    MOTOR_FORWARD_TIME = "MOTOR_FORWARD_TIME",
-    MOTOR_BACKWARD_TIME = "MOTOR_BACKWARD_TIME",
-
-    MOTOR_FORWARD_DISTANCE = "MOTOR_FORWARD_DISTANCE",
-    MOTOR_BACKWARD_DISTANCE = "MOTOR_BACKWARD_DISTANCE",
 
     SIDE_PROXIMITY_DETECTION = "SIDE_PROXIMITY_DETECTION",
     FRONT_PROXIMITY_DETECTION = "FRONT_PROXIMITY_DETECTION",
@@ -186,16 +176,11 @@ export const CommandPatterns: Record<CommandType, RegExp> = {
 	[CommandType.FOR_STATEMENT]: /^for\s*\(\s*int\s+(\w+)\s*=\s*(\d+)\s*;\s*\1\s*<\s*(\d+)\s*;\s*\1\s*\+\+\s*\)$/,
 	[CommandType.SENSOR_READ]: /^Sensors::getInstance\(\)\.(\w+)\(\)$/,
 
-	[CommandType.MOTOR_FORWARD]: /^goForward\(\s*(\d+)\s*\)$/,
-	[CommandType.MOTOR_BACKWARD]: /^goBackward\(\s*(\d+)\s*\)$/,
+	[CommandType.GO]: /^go\(\s*(FORWARD|BACKWARD)\s*,\s*(\d+)\s*\)$/,
+	[CommandType.GO_TIME]: /^goTime\(\s*(FORWARD|BACKWARD)\s*,\s*(\d+(?:\.\d+)?)\s*,\s*(\d+)\s*\)$/,
+	[CommandType.GO_DISTANCE]: /^goDistance\(\s*(FORWARD|BACKWARD)\s*,\s*(\d+(?:\.\d+)?)\s*,\s*(\d+)\s*\)$/,
 	[CommandType.MOTOR_STOP]: /^stopMotors\(\)$/,
 	[CommandType.MOTOR_TURN]: /^turn\(\s*(CLOCKWISE|COUNTERCLOCKWISE)\s*,\s*(\d+)\s*\)$/,
-
-	[CommandType.MOTOR_FORWARD_TIME]: /^goForwardTime\(\s*(\d+(?:\.\d+)?)\s*,\s*(\d+)\s*\)$/,
-	[CommandType.MOTOR_BACKWARD_TIME]: /^goBackwardTime\(\s*(\d+(?:\.\d+)?)\s*,\s*(\d+)\s*\)$/,
-
-	[CommandType.MOTOR_FORWARD_DISTANCE]: /^goForwardDistance\(\s*(\d+(?:\.\d+)?)\s*,\s*(\d+)\s*\)$/,
-	[CommandType.MOTOR_BACKWARD_DISTANCE]: /^goBackwardDistance\(\s*(\d+(?:\.\d+)?)\s*,\s*(\d+)\s*\)$/,
 
 	[CommandType.SIDE_PROXIMITY_DETECTION]: /^is_object_near_side_(left|right)\(\)$/,
 	[CommandType.FRONT_PROXIMITY_DETECTION]: /^is_object_in_front\(\)$/,

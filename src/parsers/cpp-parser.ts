@@ -1242,36 +1242,19 @@ export class CppParser {
 				blockStack.push({ type: "else", jumpIndex: instructions.length })
 				break
 
-			case CommandType.MOTOR_FORWARD:
-				if (command.matches && command.matches.length === 2) {
-					const throttlePercent = parseInt(command.matches[1], 10)
+			case CommandType.GO:
+				if (command.matches && command.matches.length === 3) {
+					const direction = command.matches[1] // "FORWARD" or "BACKWARD"
+					const throttlePercent = parseInt(command.matches[2], 10)
 					// Validate throttle percentage
 					if (throttlePercent < 0 || throttlePercent > 100) {
 						throw new Error(`Invalid throttle percentage: ${throttlePercent}. Must be between 0 and 100.`)
 					}
 
 					instructions.push({
-						opcode: BytecodeOpCode.MOTOR_FORWARD,
-						operand1: throttlePercent,
-						operand2: 0,
-						operand3: 0,
-						operand4: 0
-					})
-				}
-				break
-
-			case CommandType.MOTOR_BACKWARD:
-				if (command.matches && command.matches.length === 2) {
-					const throttlePercent = parseInt(command.matches[1], 10)
-					// Validate throttle percentage
-					if (throttlePercent < 0 || throttlePercent > 100) {
-						throw new Error(`Invalid throttle percentage: ${throttlePercent}. Must be between 0 and 100.`)
-					}
-
-					instructions.push({
-						opcode: BytecodeOpCode.MOTOR_BACKWARD,
-						operand1: throttlePercent,
-						operand2: 0,
+						opcode: BytecodeOpCode.MOTOR_GO,
+						operand1: direction === "FORWARD" ? 1 : 0, // 1 for forward, 0 for backward
+						operand2: throttlePercent,
 						operand3: 0,
 						operand4: 0
 					})
@@ -1308,10 +1291,11 @@ export class CppParser {
 				}
 				break
 
-			case CommandType.MOTOR_FORWARD_TIME:
-				if (command.matches && command.matches.length === 3) {
-					const seconds = parseFloat(command.matches[1])
-					const throttlePercent = parseInt(command.matches[2], 10)
+			case CommandType.GO_TIME:
+				if (command.matches && command.matches.length === 4) {
+					const direction = command.matches[1] // "FORWARD" or "BACKWARD"
+					const seconds = parseFloat(command.matches[2])
+					const throttlePercent = parseInt(command.matches[3], 10)
 
 					// Validate parameters
 					if (seconds <= 0) {
@@ -1323,44 +1307,20 @@ export class CppParser {
 					}
 
 					instructions.push({
-						opcode: BytecodeOpCode.MOTOR_FORWARD_TIME,
-						operand1: seconds,
-						operand2: throttlePercent,
-						operand3: 0,
+						opcode: BytecodeOpCode.MOTOR_GO_TIME,
+						operand1: direction === "FORWARD" ? 1 : 0, // 1 for forward, 0 for backward
+						operand2: seconds,
+						operand3: throttlePercent,
 						operand4: 0
 					})
 				}
 				break
 
-			case CommandType.MOTOR_BACKWARD_TIME:
-				if (command.matches && command.matches.length === 3) {
-					const seconds = parseFloat(command.matches[1])
-					const throttlePercent = parseInt(command.matches[2], 10)
-
-					// Validate parameters
-					if (seconds <= 0) {
-						throw new Error(`Invalid time value: ${seconds}. Must be greater than 0.`)
-					}
-
-					if (throttlePercent < 0 || throttlePercent > 100) {
-						throw new Error(`Invalid throttle percentage: ${throttlePercent}. Must be between 0 and 100.`)
-					}
-
-					instructions.push({
-						opcode: BytecodeOpCode.MOTOR_BACKWARD_TIME,
-						operand1: seconds,
-						operand2: throttlePercent,
-						operand3: 0,
-						operand4: 0
-					})
-				}
-				break
-
-				// Inside parseCppCode method's switch statement
-			case CommandType.MOTOR_FORWARD_DISTANCE:
-				if (command.matches && command.matches.length === 3) {
-					const inches = parseFloat(command.matches[1])
-					const throttlePercent = parseInt(command.matches[2], 10)
+			case CommandType.GO_DISTANCE:
+				if (command.matches && command.matches.length === 4) {
+					const direction = command.matches[1] // "FORWARD" or "BACKWARD"
+					const inches = parseFloat(command.matches[2])
+					const throttlePercent = parseInt(command.matches[3], 10)
 
 					// Validate parameters
 					if (inches <= 0 || inches > 240) {
@@ -1372,34 +1332,10 @@ export class CppParser {
 					}
 
 					instructions.push({
-						opcode: BytecodeOpCode.MOTOR_FORWARD_DISTANCE,
-						operand1: inches,  // Store distance in inches
-						operand2: throttlePercent,
-						operand3: 0,
-						operand4: 0
-					})
-				}
-				break
-
-			case CommandType.MOTOR_BACKWARD_DISTANCE:
-				if (command.matches && command.matches.length === 3) {
-					const inches = parseFloat(command.matches[1])
-					const throttlePercent = parseInt(command.matches[2], 10)
-
-					// Validate parameters
-					if (inches <= 0 || inches > 240) {
-						throw new Error(`Invalid distance value: ${inches}. Must be greater than 0 and less than 240.`)
-					}
-
-					if (throttlePercent < 0 || throttlePercent > 100) {
-						throw new Error(`Invalid throttle percentage: ${throttlePercent}. Must be between 0 and 100.`)
-					}
-
-					instructions.push({
-						opcode: BytecodeOpCode.MOTOR_BACKWARD_DISTANCE,
-						operand1: inches,  // Store distance in inches
-						operand2: throttlePercent,
-						operand3: 0,
+						opcode: BytecodeOpCode.MOTOR_GO_DISTANCE,
+						operand1: direction === "FORWARD" ? 1 : 0, // 1 for forward, 0 for backward
+						operand2: inches,  // Store distance in inches
+						operand3: throttlePercent,
 						operand4: 0
 					})
 				}

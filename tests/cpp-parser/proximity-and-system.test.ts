@@ -119,7 +119,7 @@ describe("Proximity Sensor Functions", () => {
             rgbLed.set_led_red();
             wait(0.5);
           } else {
-            goForward(50);
+            go(FORWARD, 50);
           }
         }
       `
@@ -140,16 +140,16 @@ describe("Proximity Sensor Functions", () => {
 			expect(frontSensorFound).toBe(true)
 
 			// Verify we have motor forward instruction in the else branch
-			let motorForwardFound = false
+			let motorGoFound = false
 
 			for (let i = 0; i < bytecode.length; i += 5) {
-				if (bytecode[i] === BytecodeOpCode.MOTOR_FORWARD) {
-					motorForwardFound = true
+				if (bytecode[i] === BytecodeOpCode.MOTOR_GO) {
+					motorGoFound = true
 					break
 				}
 			}
 
-			expect(motorForwardFound).toBe(true)
+			expect(motorGoFound).toBe(true)
 		})
 	})
 
@@ -286,7 +286,7 @@ describe("Proximity Sensor Functions", () => {
           } else {
             // Path is clear, move forward
             rgbLed.set_led_green();
-            goForward(50);
+            go(FORWARD, 50);
             wait(0.2);
           }
         }
