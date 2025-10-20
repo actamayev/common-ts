@@ -1,14 +1,16 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 
 export enum MOTOR_BLOCK_TYPES {
-    GO_FORWARD = "go_forward",
-    GO_BACKWARD = "go_backward",
-    GO_FORWARD_TIME = "go_forward_time",
-    GO_BACKWARD_TIME = "go_backward_time",
-    GO_FORWARD_DISTANCE = "go_forward_distance",
-    GO_BACKWARD_DISTANCE = "go_backward_distance",
+    GO = "go",
+    GO_TIME = "go_time",
+    GO_DISTANCE = "go_distance",
     STOP = "stop",
     TURN = "turn"
+}
+
+export enum MOTOR_DIRECTIONS {
+    FORWARD = "forward",
+    BACKWARD = "backward"
 }
 
 export enum MOTOR_FIELD_VALUES {
@@ -16,7 +18,8 @@ export enum MOTOR_FIELD_VALUES {
     DRIVING_SECONDS = "seconds",
     DRIVING_DISTANCE = "distance",
     TURN_DIRECTION = "turn_direction",
-    TURN_DEGREES = "turn_degrees"
+    TURN_DEGREES = "turn_degrees",
+    DIRECTION = "direction"
 }
 
 export const TURN_DIRECTIONS = {

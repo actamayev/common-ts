@@ -18,34 +18,19 @@ export interface BlockDefinition {
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export const BLOCK_REGISTRY: Record<BlockNames, BlockDefinition> = {
 	// Motor blocks
-	[MOTOR_BLOCK_TYPES.GO_FORWARD]: {
+	[MOTOR_BLOCK_TYPES.GO]: {
 		description: "Makes the robot move forward continuously",
-		codeTemplate: "goForward();",
+		codeTemplate: "go({direction}, {speed});",
 		category: "Motors"
 	},
-	[MOTOR_BLOCK_TYPES.GO_BACKWARD]: {
-		description: "Makes the robot move backward continuously",
-		codeTemplate: "goBackward();",
-		category: "Motors"
-	},
-	[MOTOR_BLOCK_TYPES.GO_FORWARD_TIME]: {
+	[MOTOR_BLOCK_TYPES.GO_TIME]: {
 		description: "Makes the robot move forward for a specific amount of time",
-		codeTemplate: "goForward({seconds});",
+		codeTemplate: "go_time({direction}, {seconds}, {speed});",
 		category: "Motors"
 	},
-	[MOTOR_BLOCK_TYPES.GO_BACKWARD_TIME]: {
-		description: "Makes the robot move backward for a specific amount of time",
-		codeTemplate: "goBackward({seconds});",
-		category: "Motors"
-	},
-	[MOTOR_BLOCK_TYPES.GO_FORWARD_DISTANCE]: {
+	[MOTOR_BLOCK_TYPES.GO_DISTANCE]: {
 		description: "Makes the robot move forward for a specific distance in millimeters",
-		codeTemplate: "goForward({distance_mm});",
-		category: "Motors"
-	},
-	[MOTOR_BLOCK_TYPES.GO_BACKWARD_DISTANCE]: {
-		description: "Makes the robot move backward for a specific distance in millimeters",
-		codeTemplate: "goBackward({distance_mm});",
+		codeTemplate: "go_distance({direction}, {distance_mm}, {speed});",
 		category: "Motors"
 	},
 	[MOTOR_BLOCK_TYPES.STOP]: {

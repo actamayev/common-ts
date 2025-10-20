@@ -63,16 +63,15 @@ export const DRIVING_SCHOOL_CHALLENGE_S3_P5: CqChallengeData = {
 	beforeRunningText: "Place Pip on a flat surface with clear space ahead.",
 	...createChallengeToolbox([
 		START_BLOCK_TYPES.BUTTON_PRESS_START,
-		MOTOR_BLOCK_TYPES.GO_FORWARD_DISTANCE,
-		MOTOR_BLOCK_TYPES.GO_BACKWARD_DISTANCE,
+		MOTOR_BLOCK_TYPES.GO_DISTANCE,
 	]),
 	expectedBehavior: "Pip starts on button A, goes forward 8 inches at 15% speed, goes backward 8 inches at 15% speed.",
 	commonMistakes: [ ],
 	learningObjectives: [ ],
 	solutionCode: `
 	wait_for_button_press();
-	goForwardDistance(8, 15);
-	goBackwardDistance(8, 15);
+	go_distance(FORWARD, 8, 15);
+	go_distance(BACKWARD, 8, 15);
 	`,
 }
 
@@ -136,9 +135,10 @@ export const DRIVING_SCHOOL_CHALLENGE_S5_P4: CqChallengeData = {
 					"y": -750,
 					"next": {
 						"block": {
-							"type": "go_forward_distance",
+							"type": "go_distance",
 							"id": "vuJ!PuGlbNI19T@ssi@.",
 							"fields": {
+								"direction": "FORWARD",
 								"distance": 8,
 								"percentage": 15
 							},
@@ -152,9 +152,10 @@ export const DRIVING_SCHOOL_CHALLENGE_S5_P4: CqChallengeData = {
 									},
 									"next": {
 										"block": {
-											"type": "go_forward_distance",
+											"type": "go_distance",
 											"id": "2!6)Ec6zBl/1~U|52F*^",
 											"fields": {
+												"direction": "FORWARD",
 												"distance": 8,
 												"percentage": 15
 											},
@@ -179,7 +180,7 @@ export const DRIVING_SCHOOL_CHALLENGE_S5_P4: CqChallengeData = {
 		}
 	},
 	...createChallengeToolbox([
-		MOTOR_BLOCK_TYPES.GO_FORWARD_DISTANCE,
+		MOTOR_BLOCK_TYPES.GO_DISTANCE,
 		MOTOR_BLOCK_TYPES.TURN,
 		START_BLOCK_TYPES.BUTTON_PRESS_START,
 	]),
@@ -188,13 +189,13 @@ export const DRIVING_SCHOOL_CHALLENGE_S5_P4: CqChallengeData = {
 	learningObjectives: [],
 	solutionCode: `
 	wait_for_button_press();
-	goForwardDistance(8, 15);
+	go_distance(FORWARD, 8, 15);
 	turn(CLOCKWISE, 90);
-	goForwardDistance(8, 15);
+	go_distance(FORWARD, 8, 15);
 	turn(CLOCKWISE, 90);
-	goForwardDistance(8, 15);
+	go_distance(FORWARD, 8, 15);
 	turn(CLOCKWISE, 90);
-	goForwardDistance(8, 15);
+	go_distance(FORWARD, 8, 15);
 	turn(CLOCKWISE, 90);
 	`,
 }
@@ -296,9 +297,10 @@ export const DRIVING_SCHOOL_VIEW_ONLY_S3_P2: BlocklyJson = {
 				"y": -650,
 				"next": {
 					"block": {
-						"type": "go_forward_time",
+						"type": "go_time",
 						"id": ")a1=!#B_EUL?@g2Q~X`7",
 						"fields": {
+							"direction": "FORWARD",
 							"seconds": 1,
 							"percentage": 15
 						},
@@ -328,9 +330,10 @@ export const DRIVING_SCHOOL_VIEW_ONLY_S3_P4: BlocklyJson = {
 				"y": -650,
 				"next": {
 					"block": {
-						"type": "go_forward_distance",
+						"type": "go_distance",
 						"id": "gtSvX|h4*v.N_NC2WBI7",
 						"fields": {
+							"direction": "FORWARD",
 							"distance": 8,
 							"percentage": 15
 						}
@@ -403,9 +406,10 @@ export const DRIVING_SCHOOL_VIEW_ONLY_S5_P2: BlocklyJson = {
 				"y": -730,
 				"next": {
 					"block": {
-						"type": "go_forward_distance",
+						"type": "go_distance",
 						"id": "vuJ!PuGlbNI19T@ssi@.",
 						"fields": {
+							"direction": "FORWARD",
 							"distance": 8,
 							"percentage": 15
 						},
@@ -419,9 +423,10 @@ export const DRIVING_SCHOOL_VIEW_ONLY_S5_P2: BlocklyJson = {
 								},
 								"next": {
 									"block": {
-										"type": "go_forward_distance",
+										"type": "go_distance",
 										"id": "2!6)Ec6zBl/1~U|52F*^",
 										"fields": {
+											"direction": "FORWARD",
 											"distance": 8,
 											"percentage": 15
 										}
