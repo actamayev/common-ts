@@ -9,8 +9,8 @@ export enum MOTOR_BLOCK_TYPES {
 }
 
 export enum MOTOR_DIRECTIONS {
-    FORWARD = "FORWARD",
-    BACKWARD = "BACKWARD"
+    FORWARD = "forward",
+    BACKWARD = "backward"
 }
 
 export enum MOTOR_FIELD_VALUES {
