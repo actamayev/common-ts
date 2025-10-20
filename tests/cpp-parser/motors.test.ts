@@ -3,14 +3,14 @@ import { BytecodeOpCode } from "../../src/types/bytecode-types"
 
 describe("Motor Command Functionality", () => {
 	describe("Basic Motor Commands", () => {
-		test("should parse goForward command", () => {
-			const code = "goForward(50);"
+		test("should parse go forward command", () => {
+			const code = "drive(FORWARD, 50);"
 			const bytecode = CppParser.cppToByte(code)
 
 			// Check bytecode
-			expect(bytecode[0]).toBe(BytecodeOpCode.MOTOR_FORWARD)
-			expect(bytecode[1]).toBe(50) // Throttle percentage
-			expect(bytecode[2]).toBe(0)  // Unused
+			expect(bytecode[0]).toBe(BytecodeOpCode.MOTOR_DRIVE)
+			expect(bytecode[1]).toBe(1)  // 1 for forward
+			expect(bytecode[2]).toBe(50) // Throttle percentage
 			expect(bytecode[3]).toBe(0)  // Unused
 			expect(bytecode[4]).toBe(0)  // Unused
 
@@ -18,13 +18,13 @@ describe("Motor Command Functionality", () => {
 			expect(bytecode[5]).toBe(BytecodeOpCode.END)
 		})
 
-		test("should parse goBackward command", () => {
-			const code = "goBackward(75);"
+		test("should parse go backward command", () => {
+			const code = "drive(BACKWARD, 75);"
 			const bytecode = CppParser.cppToByte(code)
 
-			expect(bytecode[0]).toBe(BytecodeOpCode.MOTOR_BACKWARD)
-			expect(bytecode[1]).toBe(75) // Throttle percentage
-			expect(bytecode[2]).toBe(0)  // Unused
+			expect(bytecode[0]).toBe(BytecodeOpCode.MOTOR_DRIVE)
+			expect(bytecode[1]).toBe(0)  // 0 for backward
+			expect(bytecode[2]).toBe(75) // Throttle percentage
 			expect(bytecode[3]).toBe(0)  // Unused
 			expect(bytecode[4]).toBe(0)  // Unused
 		})
@@ -40,27 +40,27 @@ describe("Motor Command Functionality", () => {
 			expect(bytecode[4]).toBe(0)  // Unused
 		})
 
-		test("should reject invalid throttle percentage for goForward", () => {
+		test("should reject invalid throttle percentage for go forward", () => {
 			expect(() => {
-				CppParser.cppToByte("goForward(101);")
+				CppParser.cppToByte("drive(FORWARD, 101);")
 			}).toThrow(/Invalid throttle percentage/)
 		})
 
-		test("should reject negative throttle value for goForward", () => {
+		test("should reject negative throttle value for go forward", () => {
 			expect(() => {
-				CppParser.cppToByte("goForward(-5);")
+				CppParser.cppToByte("drive(FORWARD, -5);")
 			}).toThrow(/Invalid command/)
 		})
 
-		test("should reject invalid throttle percentage for goBackward", () => {
+		test("should reject invalid throttle percentage for go backward", () => {
 			expect(() => {
-				CppParser.cppToByte("goBackward(101);")
+				CppParser.cppToByte("drive(BACKWARD, 101);")
 			}).toThrow(/Invalid throttle percentage/)
 		})
 
-		test("should reject negative throttle value for goBackward", () => {
+		test("should reject negative throttle value for go backward", () => {
 			expect(() => {
-				CppParser.cppToByte("goBackward(-5);")
+				CppParser.cppToByte("drive(BACKWARD, -5);")
 			}).toThrow(/Invalid command/)
 		})
 	})
@@ -100,97 +100,97 @@ describe("Motor Command Functionality", () => {
 	})
 
 	describe("Timed Motor Commands", () => {
-		test("should parse goForwardTime command", () => {
-			const code = "goForwardTime(2.5, 60);"
+		test("should parse drive_time forward command", () => {
+			const code = "drive_time(FORWARD, 2.5, 60);"
 			const bytecode = CppParser.cppToByte(code)
 
-			expect(bytecode[0]).toBe(BytecodeOpCode.MOTOR_FORWARD_TIME)
-			expect(bytecode[1]).toBe(2.5) // Seconds
-			expect(bytecode[2]).toBe(60)  // Throttle percentage
-			expect(bytecode[3]).toBe(0)   // Unused
+			expect(bytecode[0]).toBe(BytecodeOpCode.MOTOR_DRIVE_TIME)
+			expect(bytecode[1]).toBe(1)   // 1 for forward
+			expect(bytecode[2]).toBe(2.5) // Seconds
+			expect(bytecode[3]).toBe(60)  // Throttle percentage
 			expect(bytecode[4]).toBe(0)   // Unused
 		})
 
-		test("should parse goBackwardTime command", () => {
-			const code = "goBackwardTime(1.75, 45);"
+		test("should parse drive_time backward command", () => {
+			const code = "drive_time(BACKWARD, 1.75, 45);"
 			const bytecode = CppParser.cppToByte(code)
 
-			expect(bytecode[0]).toBe(BytecodeOpCode.MOTOR_BACKWARD_TIME)
-			expect(bytecode[1]).toBe(1.75) // Seconds
-			expect(bytecode[2]).toBe(45)   // Throttle percentage
-			expect(bytecode[3]).toBe(0)    // Unused
+			expect(bytecode[0]).toBe(BytecodeOpCode.MOTOR_DRIVE_TIME)
+			expect(bytecode[1]).toBe(0)    // 0 for backward
+			expect(bytecode[2]).toBe(1.75) // Seconds
+			expect(bytecode[3]).toBe(45)   // Throttle percentage
 			expect(bytecode[4]).toBe(0)    // Unused
 		})
 
-		test("should reject invalid time value for goForwardTime", () => {
+		test("should reject invalid time value for drive_time forward", () => {
 			expect(() => {
-				CppParser.cppToByte("goForwardTime(0, 50);")
+				CppParser.cppToByte("drive_time(FORWARD, 0, 50);")
 			}).toThrow(/Invalid time value/)
 		})
 
-		test("should reject negative time value for goForwardTime", () => {
+		test("should reject negative time value for drive_time forward", () => {
 			expect(() => {
-				CppParser.cppToByte("goForwardTime(-1.5, 50);")
+				CppParser.cppToByte("drive_time(FORWARD, -1.5, 50);")
 			}).toThrow(/Invalid command/)
 		})
 
-		test("should reject invalid throttle percentage for goBackwardTime", () => {
+		test("should reject invalid throttle percentage for drive_time backward", () => {
 			expect(() => {
-				CppParser.cppToByte("goBackwardTime(2.0, 101);")
+				CppParser.cppToByte("drive_time(BACKWARD, 2.0, 101);")
 			}).toThrow(/Invalid throttle percentage/)
 		})
 
-		test("should reject negative throttle value for goBackwardTime", () => {
+		test("should reject negative throttle value for drive_time backward", () => {
 			expect(() => {
-				CppParser.cppToByte("goBackwardTime(2.0, -10);")
+				CppParser.cppToByte("drive_time(BACKWARD, 2.0, -10);")
 			}).toThrow(/Invalid command/)
 		})
 	})
 
 	describe("Distance Motor Commands", () => {
-		test("should parse goForwardDistance command", () => {
-			const code = "goForwardDistance(15.5, 70);"
+		test("should parse drive_distance forward command", () => {
+			const code = "drive_distance(FORWARD, 15.5, 70);"
 			const bytecode = CppParser.cppToByte(code)
 
-			expect(bytecode[0]).toBe(BytecodeOpCode.MOTOR_FORWARD_DISTANCE)
-			expect(bytecode[1]).toBe(15.5) // Distance in cm
-			expect(bytecode[2]).toBe(70)   // Throttle percentage
-			expect(bytecode[3]).toBe(0)    // Unused
+			expect(bytecode[0]).toBe(BytecodeOpCode.MOTOR_DRIVE_DISTANCE)
+			expect(bytecode[1]).toBe(1)    // 1 for forward
+			expect(bytecode[2]).toBe(15.5) // Distance in inches
+			expect(bytecode[3]).toBe(70)   // Throttle percentage
 			expect(bytecode[4]).toBe(0)    // Unused
 		})
 
-		test("should parse goBackwardDistance command", () => {
-			const code = "goBackwardDistance(10.0, 55);"
+		test("should parse drive_distance backward command", () => {
+			const code = "drive_distance(BACKWARD, 10.0, 55);"
 			const bytecode = CppParser.cppToByte(code)
 
-			expect(bytecode[0]).toBe(BytecodeOpCode.MOTOR_BACKWARD_DISTANCE)
-			expect(bytecode[1]).toBe(10.0) // Distance in cm
-			expect(bytecode[2]).toBe(55)   // Throttle percentage
-			expect(bytecode[3]).toBe(0)    // Unused
+			expect(bytecode[0]).toBe(BytecodeOpCode.MOTOR_DRIVE_DISTANCE)
+			expect(bytecode[1]).toBe(0)    // 0 for backward
+			expect(bytecode[2]).toBe(10.0) // Distance in inches
+			expect(bytecode[3]).toBe(55)   // Throttle percentage
 			expect(bytecode[4]).toBe(0)    // Unused
 		})
 
-		test("should reject invalid distance value for goForwardDistance", () => {
+		test("should reject invalid distance value for drive_distance forward", () => {
 			expect(() => {
-				CppParser.cppToByte("goForwardDistance(0, 50);")
+				CppParser.cppToByte("drive_distance(FORWARD, 0, 50);")
 			}).toThrow(/Invalid distance value/)
 		})
 
-		test("should reject negative distance value for goForwardDistance", () => {
+		test("should reject negative distance value for drive_distance forward", () => {
 			expect(() => {
-				CppParser.cppToByte("goForwardDistance(-5.5, 50);")
+				CppParser.cppToByte("drive_distance(FORWARD, -5.5, 50);")
 			}).toThrow(/Invalid command/)
 		})
 
-		test("should reject invalid throttle percentage for goBackwardDistance", () => {
+		test("should reject invalid throttle percentage for drive_distance backward", () => {
 			expect(() => {
-				CppParser.cppToByte("goBackwardDistance(10.0, 101);")
+				CppParser.cppToByte("drive_distance(BACKWARD, 10.0, 101);")
 			}).toThrow(/Invalid throttle percentage/)
 		})
 
-		test("should reject negative throttle value for goBackwardDistance", () => {
+		test("should reject negative throttle value for drive_distance backward", () => {
 			expect(() => {
-				CppParser.cppToByte("goBackwardDistance(10.0, -10);")
+				CppParser.cppToByte("drive_distance(BACKWARD, 10.0, -10);")
 			}).toThrow(/Invalid command/)
 		})
 	})
@@ -198,24 +198,25 @@ describe("Motor Command Functionality", () => {
 	describe("Complex Motor Command Sequences", () => {
 		test("should parse a complex motor control sequence", () => {
 			const code = `
-        goForward(50);
+        drive(FORWARD, 50);
         wait(1);
         turn(CLOCKWISE, 90);
         wait(0.5);
-        goForward(75);
+        drive(FORWARD, 75);
         wait(2);
         turn(COUNTERCLOCKWISE, 45);
         wait(0.5);
-        goBackward(40);
+        drive(BACKWARD, 40);
         wait(1.5);
         stopMotors();
       `
 
 			const bytecode = CppParser.cppToByte(code)
 
-			// Check the first instruction is MOTOR_FORWARD
-			expect(bytecode[0]).toBe(BytecodeOpCode.MOTOR_FORWARD)
-			expect(bytecode[1]).toBe(50)
+			// Check the first instruction is MOTOR_DRIVE
+			expect(bytecode[0]).toBe(BytecodeOpCode.MOTOR_DRIVE)
+			expect(bytecode[1]).toBe(1)  // 1 for forward
+			expect(bytecode[2]).toBe(50) // throttle percentage
 
 			// Check the third instruction is MOTOR_TURN with clockwise
 			expect(bytecode[10]).toBe(BytecodeOpCode.MOTOR_TURN)
@@ -229,26 +230,28 @@ describe("Motor Command Functionality", () => {
 
 		test("should parse a sequence with timed and distance commands", () => {
 			const code = `
-        goForwardTime(3.0, 60);
+        drive_time(FORWARD, 3.0, 60);
         wait(0.5);
         turn(CLOCKWISE, 180);
         wait(0.5);
-        goBackwardDistance(20.0, 80);
+        drive_distance(BACKWARD, 20.0, 80);
         wait(0.5);
         stopMotors();
       `
 
 			const bytecode = CppParser.cppToByte(code)
 
-			// Check the first instruction is MOTOR_FORWARD_TIME
-			expect(bytecode[0]).toBe(BytecodeOpCode.MOTOR_FORWARD_TIME)
-			expect(bytecode[1]).toBe(3.0)
-			expect(bytecode[2]).toBe(60)
+			// Check the first instruction is MOTOR_DRIVE_TIME
+			expect(bytecode[0]).toBe(BytecodeOpCode.MOTOR_DRIVE_TIME)
+			expect(bytecode[1]).toBe(1)   // 1 for forward
+			expect(bytecode[2]).toBe(3.0) // seconds
+			expect(bytecode[3]).toBe(60)  // throttle percentage
 
-			// Check the fifth instruction is MOTOR_BACKWARD_DISTANCE
-			expect(bytecode[20]).toBe(BytecodeOpCode.MOTOR_BACKWARD_DISTANCE)
-			expect(bytecode[21]).toBe(20.0)
-			expect(bytecode[22]).toBe(80)
+			// Check the fifth instruction is MOTOR_DRIVE_DISTANCE
+			expect(bytecode[20]).toBe(BytecodeOpCode.MOTOR_DRIVE_DISTANCE)
+			expect(bytecode[21]).toBe(0)    // 0 for backward
+			expect(bytecode[22]).toBe(20.0) // distance
+			expect(bytecode[23]).toBe(80)   // throttle percentage
 		})
 	})
 
@@ -256,9 +259,9 @@ describe("Motor Command Functionality", () => {
 		test("should parse motor commands in if-else blocks", () => {
 			const code = `
         if (Sensors::getInstance().getPitch() > 10) {
-          goForward(70);
+          drive(FORWARD, 70);
         } else {
-          goBackward(70);
+          drive(BACKWARD, 70);
         }
       `
 
@@ -269,10 +272,12 @@ describe("Motor Command Functionality", () => {
 			let backwardFound = false
 
 			for (let i = 0; i < bytecode.length; i += 5) {
-				if (bytecode[i] === BytecodeOpCode.MOTOR_FORWARD) {
-					forwardFound = true
-				} else if (bytecode[i] === BytecodeOpCode.MOTOR_BACKWARD) {
-					backwardFound = true
+				if (bytecode[i] === BytecodeOpCode.MOTOR_DRIVE) {
+					if (bytecode[i + 1] === 1) { // Forward
+						forwardFound = true
+					} else if (bytecode[i + 1] === 0) { // Backward
+						backwardFound = true
+					}
 				}
 			}
 
@@ -283,7 +288,7 @@ describe("Motor Command Functionality", () => {
 		test("should parse motor commands in for loops", () => {
 			const code = `
         for (int i = 0; i < 3; i++) {
-          goForward(50);
+          drive(FORWARD, 50);
           wait(0.5);
           turn(CLOCKWISE, 120);
           wait(0.5);
@@ -297,7 +302,7 @@ describe("Motor Command Functionality", () => {
 			let turnCount = 0
 
 			for (let i = 0; i < bytecode.length; i += 5) {
-				if (bytecode[i] === BytecodeOpCode.MOTOR_FORWARD) {
+				if (bytecode[i] === BytecodeOpCode.MOTOR_DRIVE) {
 					forwardCount++
 				} else if (bytecode[i] === BytecodeOpCode.MOTOR_TURN) {
 					turnCount++
@@ -312,11 +317,11 @@ describe("Motor Command Functionality", () => {
 		test("should parse motor commands in while loops", () => {
 			const code = `
         while(true) {
-          goForwardDistance(10.0, 60);
+          drive_distance(FORWARD, 10.0, 60);
           wait(1);
           turn(COUNTERCLOCKWISE, 180);
           wait(1);
-          goBackwardDistance(10.0, 60);
+          drive_distance(BACKWARD, 10.0, 60);
           wait(1);
           turn(CLOCKWISE, 180);
           wait(1);
@@ -332,10 +337,12 @@ describe("Motor Command Functionality", () => {
 			let counterclockwiseTurnFound = false
 
 			for (let i = 0; i < bytecode.length; i += 5) {
-				if (bytecode[i] === BytecodeOpCode.MOTOR_FORWARD_DISTANCE) {
-					forwardFound = true
-				} else if (bytecode[i] === BytecodeOpCode.MOTOR_BACKWARD_DISTANCE) {
-					backwardFound = true
+				if (bytecode[i] === BytecodeOpCode.MOTOR_DRIVE_DISTANCE) {
+					if (bytecode[i + 1] === 1) { // Forward
+						forwardFound = true
+					} else if (bytecode[i + 1] === 0) { // Backward
+						backwardFound = true
+					}
 				} else if (bytecode[i] === BytecodeOpCode.MOTOR_TURN) {
 					if (bytecode[i + 1] === 1) { // Clockwise
 						clockwiseTurnFound = true
