@@ -193,7 +193,7 @@ export const OBSTACLE_AVOIDANCE_CHALLENGE_3: CqChallengeData = {
 													"type": "drive",
 													"id": "8EWhJuIkd}Dkiu^H3lQ8",
 													"fields": {
-														"direction": "FORWARD",
+														"direction": "forward",
 														"percentage": 50
 													}
 												}
