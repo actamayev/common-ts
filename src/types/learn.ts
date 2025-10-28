@@ -44,7 +44,18 @@ export interface Question {
 	fillInTheBlank: {
 		questionText: string
 		initialBlocklyJson: BlocklyJson
-		availableBlocks: FillInTheBlankBlockBank[]
+		availableBlocks: BlockBankData[]
+	} | null
+	actionToCodeMultipleChoice: {
+		questionText: string
+		referenceSolutionCpp: string
+		actionToCodeMultipleChoiceAnswerChoice: ActionToCodeMultipleChoiceAnswerChoice[]
+	} | null
+	actionToCodeOpenEnded: {
+		questionText: string
+		initialBlocklyJson: BlocklyJson
+		referenceSolutionCpp: string
+		availableBlocks: BlockBankData[]
 	} | null
 }
 
@@ -63,7 +74,7 @@ export interface FunctionToBlockAnswerChoice {
 	isCorrect: boolean
 }
 
-export interface FillInTheBlankBlockBank {
+export interface BlockBankData {
 	blockNameId: number
 	blockName: BlockNames
 }
@@ -71,4 +82,11 @@ export interface FillInTheBlankBlockBank {
 export interface CodingBlock {
 	codingBlockId: number
 	codingBlockJson: BlocklyJson
+}
+
+export interface ActionToCodeMultipleChoiceAnswerChoice {
+	actionToCodeMultipleChoiceAnswerChoiceId: number
+	order: number
+	codingBlock: CodingBlock
+	isCorrect: boolean
 }
