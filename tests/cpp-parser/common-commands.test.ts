@@ -539,7 +539,7 @@ describe("Wait commands", () => {
 
 	test("should handle complex decimal wait program", () => {
 		const program = `
-			wait_for_button_press();
+			left_button.wait_for_press();
 			while(true) {
 				rgbLed.set_led_white();
 				wait(0.9);

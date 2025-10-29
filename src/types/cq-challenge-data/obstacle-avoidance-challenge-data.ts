@@ -125,7 +125,7 @@ export const OBSTACLE_AVOIDANCE_CHALLENGE_2: CqChallengeData = {
 		LED_BLOCK_TYPES.CONTROL_ALL_LEDS
 	]),
 	solutionCode: `
-        wait_for_button_press();
+        left_button.wait_for_press();
         while(true) {
             if (is_object_in_front()) {
                 rgbLed.set_led_red();
@@ -228,7 +228,7 @@ export const OBSTACLE_AVOIDANCE_CHALLENGE_3: CqChallengeData = {
 		LED_BLOCK_TYPES.CONTROL_ALL_LEDS
 	]),
 	solutionCode: `
-        wait_for_button_press();
+        left_button.wait_for_press();
         while(true) {
             if (is_object_in_front()) {
                 rgbLed.set_led_red();
@@ -318,7 +318,7 @@ export const OBSTACLE_AVOIDANCE_CHALLENGE_5: CqChallengeData = {
 		LED_BLOCK_TYPES.CONTROL_ALL_LEDS
 	]),
 	solutionCode: `
-        wait_for_button_press();
+        left_button.wait_for_press();
         while(true) {
             if (is_object_in_front()) {
                 rgbLed.set_led_white();

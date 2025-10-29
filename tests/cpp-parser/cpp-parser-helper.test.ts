@@ -32,7 +32,7 @@ describe("CppParserHelper", () => {
 				{ statement: "drive(FORWARD, 50)", type: CommandType.DRIVE },
 				{ statement: "is_object_near_side_left()", type: CommandType.SIDE_PROXIMITY_DETECTION },
 				{ statement: "is_object_in_front()", type: CommandType.FRONT_PROXIMITY_DETECTION },
-				{ statement: "wait_for_button_press()", type: CommandType.WAIT_FOR_BUTTON }
+				{ statement: "left_button.wait_for_press()", type: CommandType.WAIT_FOR_BUTTON }
 			]
 
 			for (const { statement, type } of commandTests) {
