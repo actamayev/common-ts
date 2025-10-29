@@ -100,7 +100,7 @@ export interface LessonsResponse {
 }
 
 export interface CheckMCQResponse {
-	correctAnswerId: number
+	correctAnswerId: number | null
 }
 
 // Personal Info Responses:
