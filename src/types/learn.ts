@@ -64,14 +64,12 @@ export interface BlockToFunctionAnswerChoice {
 	blockToFunctionAnswerChoiceId: number
 	order: number
 	functionDescriptionText: string
-	isCorrect: boolean
 }
 
 export interface FunctionToBlockAnswerChoice {
 	functionToBlockAnswerChoiceId: number
 	order: number
 	codingBlock: CodingBlock
-	isCorrect: boolean
 }
 
 export interface BlockBankData {
@@ -88,5 +86,4 @@ export interface ActionToCodeMultipleChoiceAnswerChoice {
 	actionToCodeMultipleChoiceAnswerChoiceId: number
 	order: number
 	codingBlock: CodingBlock
-	isCorrect: boolean
 }
