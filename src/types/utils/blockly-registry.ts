@@ -67,7 +67,7 @@ export const BLOCK_REGISTRY: Record<BlockNames, BlockDefinition> = {
 	// Distance sensor blocks
 	[SENSORS_BLOCK_TYPES.CENTER_TOF_READ]: {
 		description: "Reads the front distance sensor to detect objects",
-		codeTemplate: "is_object_in_front()",
+		codeTemplate: "front_tof.is_object_in_front()",
 		category: "Distance Sensors",
 		parentCategory: "Sensors"
 	},

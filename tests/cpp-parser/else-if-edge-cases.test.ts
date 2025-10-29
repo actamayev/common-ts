@@ -194,8 +194,8 @@ describe("Else-If Edge Cases and Specific Scenarios", () => {
 	describe("Real-world Integration Scenarios", () => {
 		test("should handle else-if in motor control logic", () => {
 			const code = `
-				if (is_object_in_front()) {
-					stopMotors();
+				if (front_tof.is_object_in_front()) {
+					motors.stop();
 				} else if (imu.getPitch() > 45) {
 					drive_time(BACKWARD, 2.0, 70);
 				} else if (imu.getPitch() < -45) {
@@ -293,7 +293,7 @@ describe("Else-If Edge Cases and Specific Scenarios", () => {
 				left_button.wait_for_press();
 				
 				while (true) {
-					if (is_object_in_front()) {
+					if (front_tof.is_object_in_front()) {
 						rgbLed.set_led_red();
 						left_button.wait_for_press();
 					} else if (is_object_near_side_left()) {

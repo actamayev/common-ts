@@ -31,7 +31,7 @@ describe("CppParserHelper", () => {
 				{ statement: "for (int i = 0; i < 10; i++)", type: CommandType.FOR_STATEMENT },
 				{ statement: "drive(FORWARD, 50)", type: CommandType.DRIVE },
 				{ statement: "is_object_near_side_left()", type: CommandType.SIDE_PROXIMITY_DETECTION },
-				{ statement: "is_object_in_front()", type: CommandType.FRONT_PROXIMITY_DETECTION },
+				{ statement: "front_tof.is_object_in_front()", type: CommandType.FRONT_PROXIMITY_DETECTION },
 				{ statement: "left_button.wait_for_press()", type: CommandType.WAIT_FOR_BUTTON }
 			]
 
@@ -220,7 +220,7 @@ describe("CppParserHelper", () => {
 	// Integration test to ensure the parser and helper work together
 	describe("Integration with CppParser", () => {
 		test("should correctly parse front proximity sensor code", () => {
-			const code = "if (is_object_in_front()) { rgbLed.set_led_red(); }"
+			const code = "if (front_tof.is_object_in_front()) { rgbLed.set_led_red(); }"
 			const bytecode = CppParser.cppToByte(code)
 
 			// Should have READ_SENSOR for front proximity
@@ -488,7 +488,7 @@ describe("CppParserHelper", () => {
 
 		test("should process front proximity detection", () => {
 			// Setup
-			const expr = "is_object_in_front()"
+			const expr = "front_tof.is_object_in_front()"
 			const variables = new Map()
 			const nextRegister = 0
 			const instructions: BytecodeInstruction[] = []
@@ -510,7 +510,7 @@ describe("CppParserHelper", () => {
 
 		test("should throw error when registers are exhausted for proximity detection", () => {
 			// Setup
-			const expr = "is_object_in_front()"
+			const expr = "front_tof.is_object_in_front()"
 			const variables = new Map()
 			const nextRegister = MAX_REGISTERS // Set to max to trigger error
 			const instructions: BytecodeInstruction[] = []
@@ -542,7 +542,7 @@ describe("CppParserHelper", () => {
 
 			// Process second proximity
 			const result2 = CppParserHelper.processOperand(
-				"is_object_in_front()",
+				"front_tof.is_object_in_front()",
 				variables,
 				nextRegister,
 				instructions
@@ -588,7 +588,7 @@ describe("CppParserHelper", () => {
 
 			// Process proximity sensor
 			const result1 = CppParserHelper.processOperand(
-				"is_object_in_front()",
+				"front_tof.is_object_in_front()",
 				variables,
 				nextRegister,
 				instructions
