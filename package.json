@@ -1,6 +1,7 @@
 {
   "name": "@lever-labs/common-ts",
   "version": "1.0.332",
+  "packageManager": "pnpm",
   "description": "Shared TypeScript code between frontend and backend",
   "files": [
     "dist/src/**/*"
@@ -461,8 +462,8 @@
     "lint:fix": "eslint . --fix",
     "type-check": "tsc --noEmit --project tsconfig.test.json",
     "build": "rimraf dist && tsc --project tsconfig.json",
-    "validate": "npm run lint && npm run type-check && npm run test",
-    "prepublishOnly": "npm run build"
+    "validate": "pnpm run lint && pnpm run type-check && pnpm run test",
+    "prepublishOnly": "pnpm run build"
   },
   "keywords": [],
   "author": "",
@@ -473,18 +474,20 @@
   },
   "homepage": "https://github.com/lever-labs/common-ts#readme",
   "devDependencies": {
-    "@types/eslint-plugin-security": "^3.0.0",
+    "@eslint/eslintrc": "^3.3.1",
+    "@eslint/js": "^9.38.0",
     "@types/jest": "^29.5.14",
-    "@types/node": "^22.15.2",
-    "@typescript-eslint/eslint-plugin": "^8.18.2",
-    "@typescript-eslint/parser": "^8.18.2",
-    "eslint": "^9.17.0",
+    "@types/node": "^22.18.13",
+    "@typescript-eslint/eslint-plugin": "^8.46.2",
+    "@typescript-eslint/parser": "^8.46.2",
+    "eslint": "^9.38.0",
     "eslint-plugin-security": "^3.0.1",
+    "globals": "^16.4.0",
     "jest": "^29.7.0",
     "rimraf": "^6.0.1",
-    "ts-jest": "^29.3.2",
+    "ts-jest": "^29.4.5",
     "ts-node": "^10.9.2",
-    "typescript": "^5.8.3"
+    "typescript": "^5.9.3"
   },
   "publishConfig": {
     "registry": "https://npm.pkg.github.com"
@@ -494,6 +497,6 @@
     "url": "git+https://github.com/lever-labs/common-ts.git"
   },
   "dependencies": {
-    "blockly": "^12.1.0"
+    "blockly": "^12.3.1"
   }
 }

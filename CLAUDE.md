@@ -32,12 +32,12 @@ This is a shared TypeScript library (`@lever-labs/common-ts`) that provides core
 ## Development Commands
 
 ```bash
-npm run build          # Compile to dist/
-npm run test           # Jest tests
-npm run test:coverage  # Coverage report
-npm run lint           # ESLint check
-npm run type-check     # TypeScript validation
-npm run validate       # Full validation pipeline
+pnpm run build          # Compile to dist/
+pnpm run test           # Jest tests
+pnpm run test:coverage  # Coverage report
+pnpm run lint           # ESLint check
+pnpm run type-check     # TypeScript validation
+pnpm run validate       # Full validation pipeline
 ```
 
 ## Claude-Specific Guidelines
