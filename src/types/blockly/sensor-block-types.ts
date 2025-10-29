@@ -6,7 +6,7 @@ export enum SENSORS_BLOCK_TYPES {
 	SIDE_TOF_READ = "side_tof_read",
 	CENTER_TOF_READ = "center_tof_read",
 	COLOR_SENSOR_READ = "color_sensor_read",
-	GET_FRONT_TOF_DISTANCE = "get_front_tof_distance"
+	GET_FRONT_TOF_DISTANCE = "get_front_distance_sensor_distance"
 }
 
 export enum SENSORS_FIELD_VALUES {

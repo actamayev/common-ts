@@ -463,7 +463,7 @@ export class CppParser {
 							operand4: 0
 						})
 					} else {
-					// This is a simple condition (variable, front_tof.is_object_in_front(), etc.)
+					// This is a simple condition (variable, front_distance_sensor.is_object_in_front(), etc.)
 						const result = CppParserHelper.processOperand(condition, variables, nextRegister, instructions)
 						nextRegister = result.updatedNextRegister
 
@@ -954,7 +954,7 @@ export class CppParser {
 							operand4: 0
 						})
 					} else {
-						// This is a simple condition (variable, front_tof.is_object_in_front(), etc.)
+						// This is a simple condition (variable, front_distance_sensor.is_object_in_front(), etc.)
 						const result = CppParserHelper.processOperand(condition, variables, nextRegister, instructions)
 						nextRegister = result.updatedNextRegister
 

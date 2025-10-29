@@ -631,7 +631,7 @@ describe("Bidirectional Comparisons", () => {
 
 			test("should handle compound AND with proximity sensor functions", () => {
 				const code = `
-        if ((front_tof.is_object_in_front()) && (is_object_near_side_left())) {
+        if ((front_distance_sensor.is_object_in_front()) && (is_object_near_side_left())) {
           rgbLed.set_led_red();
         }
       `
@@ -781,7 +781,7 @@ describe("Bidirectional Comparisons", () => {
 
 			test("should handle compound OR with proximity sensor functions", () => {
 				const code = `
-        if ((front_tof.is_object_in_front()) || (is_object_near_side_right())) {
+        if ((front_distance_sensor.is_object_in_front()) || (is_object_near_side_right())) {
           rgbLed.set_led_red();
         }
       `
@@ -828,7 +828,7 @@ describe("Bidirectional Comparisons", () => {
 
 			test("should handle compound OR with mixed simple and comparison conditions", () => {
 				const code = `
-        if ((front_tof.is_object_in_front()) || (5 < 10)) {
+        if ((front_distance_sensor.is_object_in_front()) || (5 < 10)) {
           rgbLed.set_led_red();
         }
       `
@@ -878,7 +878,7 @@ describe("Bidirectional Comparisons", () => {
 		describe("Edge Cases for Simple Conditions", () => {
 			test("should handle boolean variable assigned from proximity sensor in compound condition", () => {
 				const code = `
-        bool frontSensor = front_tof.is_object_in_front();
+        bool frontSensor = front_distance_sensor.is_object_in_front();
         if ((frontSensor) && (5 > 3)) {
           rgbLed.set_led_red();
         }
