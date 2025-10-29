@@ -97,7 +97,7 @@ export const BLOCK_REGISTRY: Record<BlockNames, BlockDefinition> = {
 	// Distance sensor blocks
 	[SENSORS_BLOCK_TYPES.GET_FRONT_TOF_DISTANCE]: {
 		description: "Gets the distance from the front TOF sensor",
-		codeTemplate: "frontTof.get_distance()",
+		codeTemplate: "front_tof.get_distance()",
 		category: "Distance Sensors",
 		parentCategory: "Sensors"
 	},

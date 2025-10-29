@@ -168,9 +168,9 @@ export const CommandPatterns: Record<CommandType, RegExp> = {
 	[CommandType.VARIABLE_ASSIGNMENT]: /^(float|int|bool)\s+(\w+)\s*=\s*(.+)$/,
 
 	// Updated regex for IF_STATEMENT
-	[CommandType.IF_STATEMENT]: /^if\s*\(\s*(?:is_object_near_side_(left|right)\(\)|is_object_in_front\(\)|is_right_button_pressed\(\)|is_object_(red|green|blue|white|black|yellow)\(\)|(true|false)|\b(\w+)\b|(imu\.\w+\(\)|frontTof\.get_distance\(\)|[-\d.]+|\w+)\s*([<>=!][=]?)\s*(imu\.\w+\(\)|frontTof\.get_distance\(\)|[-\d.]+|\w+))\s*\)$/,
+	[CommandType.IF_STATEMENT]: /^if\s*\(\s*(?:is_object_near_side_(left|right)\(\)|is_object_in_front\(\)|is_right_button_pressed\(\)|is_object_(red|green|blue|white|black|yellow)\(\)|(true|false)|\b(\w+)\b|(imu\.\w+\(\)|front_tof\.get_distance\(\)|[-\d.]+|\w+)\s*([<>=!][=]?)\s*(imu\.\w+\(\)|front_tof\.get_distance\(\)|[-\d.]+|\w+))\s*\)$/,
 	[CommandType.COMPOUND_OR_IF_STATEMENT]: /^if\s*\(\s*\(.+?\)\s*\|\|\s*\(.+?\)\s*\)$/,
-	[CommandType.ELSE_IF_STATEMENT]: /^else\s+if\s*\(\s*(?:is_object_near_side_(left|right)\(\)|is_object_in_front\(\)|is_right_button_pressed\(\)|is_object_(red|green|blue|white|black|yellow)\(\)|(true|false)|\b(\w+)\b|(imu\.\w+\(\)|frontTof\.get_distance\(\)|[-\d.]+|\w+)\s*([<>=!][=]?)\s*(imu\.\w+\(\)|frontTof\.get_distance\(\)|[-\d.]+|\w+))\s*\)$/,
+	[CommandType.ELSE_IF_STATEMENT]: /^else\s+if\s*\(\s*(?:is_object_near_side_(left|right)\(\)|is_object_in_front\(\)|is_right_button_pressed\(\)|is_object_(red|green|blue|white|black|yellow)\(\)|(true|false)|\b(\w+)\b|(imu\.\w+\(\)|front_tof\.get_distance\(\)|[-\d.]+|\w+)\s*([<>=!][=]?)\s*(imu\.\w+\(\)|front_tof\.get_distance\(\)|[-\d.]+|\w+))\s*\)$/,
 	[CommandType.COMPOUND_AND_IF_STATEMENT]: /^if\s*\(\s*\(.+?\)\s*&&\s*\(.+?\)\s*\)$/,
 	[CommandType.COMPOUND_AND_ELSE_IF_STATEMENT]: /^else\s+if\s*\(\s*\(.+?\)\s*&&\s*\(.+?\)\s*\)$/,
 	[CommandType.COMPOUND_OR_ELSE_IF_STATEMENT]: /^else\s+if\s*\(\s*\(.+?\)\s*\|\|\s*\(.+?\)\s*\)$/,
@@ -192,5 +192,5 @@ export const CommandPatterns: Record<CommandType, RegExp> = {
 	[CommandType.WAIT_FOR_BUTTON]: /^wait_for_button_press\(\)$/,
 	[CommandType.COLOR_SENSOR_READ]: /^is_object_(red|green|blue|white|black|yellow)\(\)$/,
 	[CommandType.CHECK_IF_RIGHT_BUTTON_PRESSED]: /^is_right_button_pressed\(\)$/,
-	[CommandType.GET_FRONT_TOF_DISTANCE]: /^frontTof.get_distance\(\)$/,
+	[CommandType.GET_FRONT_TOF_DISTANCE]: /^front_tof.get_distance\(\)$/,
 }
