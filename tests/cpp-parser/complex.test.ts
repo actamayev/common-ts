@@ -403,19 +403,19 @@ describe("Boundary Conditions", () => {
 	// Create code that uses all available sensor types
 		const code = `
 		while(true) {
-		float pitch = Sensors::getInstance().getPitch();
-		float roll = Sensors::getInstance().getRoll();
-		float yaw = Sensors::getInstance().getYaw();
-		float accelX = Sensors::getInstance().getXAccel();
-		float accelY = Sensors::getInstance().getYAccel();
-		float accelZ = Sensors::getInstance().getZAccel();
-		float accelMag = Sensors::getInstance().getAccelMagnitude();
-		float rotRateX = Sensors::getInstance().getXRotationRate();
-		float rotRateY = Sensors::getInstance().getYRotationRate();
-		float rotRateZ = Sensors::getInstance().getZRotationRate();
-		float magX = Sensors::getInstance().getMagneticFieldX();
-		float magY = Sensors::getInstance().getMagneticFieldY();
-		float magZ = Sensors::getInstance().getMagneticFieldZ();
+		float pitch = imu.getPitch();
+		float roll = imu.getRoll();
+		float yaw = imu.getYaw();
+		float accelX = imu.getXAccel();
+		float accelY = imu.getYAccel();
+		float accelZ = imu.getZAccel();
+		float accelMag = imu.getAccelMagnitude();
+		float rotRateX = imu.getXRotationRate();
+		float rotRateY = imu.getYRotationRate();
+		float rotRateZ = imu.getZRotationRate();
+		float magX = imu.getMagneticFieldX();
+		float magY = imu.getMagneticFieldY();
+		float magZ = imu.getMagneticFieldZ();
 		
 		if ((pitch > 30) || (roll > 30)) {
 		rgbLed.set_led_red();

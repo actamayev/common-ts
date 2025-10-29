@@ -1,7 +1,7 @@
 /* eslint-disable max-len, complexity, max-lines-per-function, max-depth */
 import { INSTRUCTION_SIZE, MAX_JUMP_DISTANCE, MAX_LED_BRIGHTNESS, MAX_PROGRAM_SIZE, MAX_REGISTERS } from "../types/utils/constants"
 import { SoundType, ToneType } from "../message-builder/protocol"
-import { BytecodeOpCode, CommandType, ComparisonOp, LedID, SensorType, VarType } from "../types/bytecode-types"
+import { BytecodeOpCode, CommandPatterns, CommandType, ComparisonOp, comparisonOperatorPattern, LedID, SensorType, VarType } from "../types/bytecode-types"
 import { CppParserHelper } from "./cpp-parser-helper"
 import { BytecodeInstruction, BlockStack, PendingJumps, VariableType } from "../types/utils/bytecode"
 
@@ -153,29 +153,28 @@ export class CppParser {
 						operand4: 0
 					})
 
-					// Check if value is a sensor reading
-					const sensorMatch = varValue.match(/Sensors::getInstance\(\)\.(\w+)\(\)/)
+					// Check if value is an IMU sensor reading
+					const imuMatch = varValue.match(CommandPatterns[CommandType.IMU_READ])
 
 					// Check if value is a TOF distance sensor reading
-					const tofMatch = varValue.match(/frontTof\.get_distance\(\)/)
+					const tofMatch = varValue.match(CommandPatterns[CommandType.GET_FRONT_TOF_DISTANCE])
 
 					// Check if value is a button press detection function
-					const buttonMatch = varValue.match(/is_right_button_pressed\(\)/)
+					const buttonMatch = varValue.match(CommandPatterns[CommandType.CHECK_IF_RIGHT_BUTTON_PRESSED])
 
 					// Check if value is a proximity detection function
-					const leftProximityMatch = varValue.match(/is_object_near_side_left\(\)/)
-					const rightProximityMatch = varValue.match(/is_object_near_side_right\(\)/)
-					const frontProximityMatch = varValue.match(/is_object_in_front\(\)/)
+					const sideProximityMatch = varValue.match(CommandPatterns[CommandType.SIDE_PROXIMITY_DETECTION])
+					const frontProximityMatch = varValue.match(CommandPatterns[CommandType.FRONT_PROXIMITY_DETECTION])
 
 					// Check if value is a color detection function
-					const colorMatch = varValue.match(/is_object_(red|green|blue|white|black|yellow)\(\)/)
+					const colorMatch = varValue.match(CommandPatterns[CommandType.COLOR_SENSOR_READ])
 
-					if (sensorMatch) {
-					// This is a sensor reading assignment
-						const sensorMethod = sensorMatch[1]
+					if (imuMatch) {
+					// This is an IMU sensor reading assignment
+						const sensorMethod = imuMatch[1]
 						const sensorType = CppParserHelper.getSensorTypeFromMethod(sensorMethod)
 
-						// Add instruction to read sensor into the register
+						// Add instruction to read IMU sensor into the register
 						instructions.push({
 							opcode: BytecodeOpCode.READ_SENSOR,
 							operand1: sensorType,
@@ -201,16 +200,17 @@ export class CppParser {
 							operand3: 0,
 							operand4: 0
 						})
-					} else if (typeEnum === VarType.BOOL && (leftProximityMatch || rightProximityMatch || frontProximityMatch)) {
+					} else if (typeEnum === VarType.BOOL && (sideProximityMatch || frontProximityMatch)) {
 						// This is a proximity sensor assignment to a boolean
 						let sensorType: SensorType
 
-						if (leftProximityMatch) {
-							sensorType = SensorType.SIDE_LEFT_PROXIMITY
-						} else if (rightProximityMatch) {
-							sensorType = SensorType.SIDE_RIGHT_PROXIMITY
-						} else { // frontProximityMatch
+						if (frontProximityMatch) {
 							sensorType = SensorType.FRONT_PROXIMITY
+						} else if (sideProximityMatch) {
+							const side = sideProximityMatch[1] // 'left' or 'right'
+							sensorType = side === "left" ? SensorType.SIDE_LEFT_PROXIMITY : SensorType.SIDE_RIGHT_PROXIMITY
+						} else {
+							throw new Error(`Unknown proximity sensor: ${varValue}`)
 						}
 
 						// Add instruction to read proximity sensor into the register
@@ -436,7 +436,7 @@ export class CppParser {
 					const condition = conditionMatch[1]
 
 					// Check if this is a comparison (has a comparison operator) or a simple condition
-					const comparisonMatch = condition.match(/(.+?)([<>=!][=]?)(.+)/)
+					const comparisonMatch = condition.match(comparisonOperatorPattern)
 
 					if (comparisonMatch) {
 					// This is a comparison expression
@@ -663,7 +663,7 @@ export class CppParser {
 					const condition2 = conditionsMatch[2].trim()
 
 					// Parse first condition
-					const condition1Parts = condition1.match(/(.+?)([<>=!][=]?)(.+)/)
+					const condition1Parts = condition1.match(comparisonOperatorPattern)
 
 					if (!condition1Parts) {
 					// Handle simple condition (boolean variable or function)
@@ -715,7 +715,7 @@ export class CppParser {
 					})
 
 					// Parse second condition (similar to first)
-					const condition2Parts = condition2.match(/(.+?)([<>=!][=]?)(.+)/)
+					const condition2Parts = condition2.match(comparisonOperatorPattern)
 
 					if (!condition2Parts) {
 					// Handle simple condition (boolean variable or function)
@@ -792,7 +792,7 @@ export class CppParser {
 					const condition2 = conditionsMatch[2].trim()
 
 					// Parse first condition (similar to AND case)
-					const condition1Parts = condition1.match(/(.+?)([<>=!][=]?)(.+)/)
+					const condition1Parts = condition1.match(comparisonOperatorPattern)
 
 					if (!condition1Parts) {
 					// Handle simple condition (boolean variable or function)
@@ -844,7 +844,7 @@ export class CppParser {
 					})
 
 					// Parse second condition (similar to first)
-					const condition2Parts = condition2.match(/(.+?)([<>=!][=]?)(.+)/)
+					const condition2Parts = condition2.match(comparisonOperatorPattern)
 
 					if (!condition2Parts) {
 					// Handle simple condition (boolean variable or function)
@@ -927,7 +927,7 @@ export class CppParser {
 					const condition = conditionMatch[1]
 
 					// Check if this is a comparison (has a comparison operator) or a simple condition
-					const comparisonMatch = condition.match(/(.+?)([<>=!][=]?)(.+)/)
+					const comparisonMatch = condition.match(comparisonOperatorPattern)
 
 					if (comparisonMatch) {
 						// This is a comparison expression
@@ -1000,7 +1000,7 @@ export class CppParser {
 					const condition2 = conditionsMatch[2].trim()
 
 					// Parse first condition
-					const condition1Parts = condition1.match(/(.+?)([<>=!][=]?)(.+)/)
+					const condition1Parts = condition1.match(comparisonOperatorPattern)
 
 					if (!condition1Parts) {
 						// Handle simple condition (boolean variable or function)
@@ -1052,7 +1052,7 @@ export class CppParser {
 					})
 
 					// Parse second condition (similar to first)
-					const condition2Parts = condition2.match(/(.+?)([<>=!][=]?)(.+)/)
+					const condition2Parts = condition2.match(comparisonOperatorPattern)
 
 					if (!condition2Parts) {
 						// Handle simple condition (boolean variable or function)
@@ -1129,7 +1129,7 @@ export class CppParser {
 					const condition2 = conditionsMatch[2].trim()
 
 					// Parse first condition (similar to AND case)
-					const condition1Parts = condition1.match(/(.+?)([<>=!][=]?)(.+)/)
+					const condition1Parts = condition1.match(comparisonOperatorPattern)
 
 					if (!condition1Parts) {
 						// Handle simple condition (boolean variable or function)
@@ -1181,7 +1181,7 @@ export class CppParser {
 					})
 
 					// Parse second condition (similar to first)
-					const condition2Parts = condition2.match(/(.+?)([<>=!][=]?)(.+)/)
+					const condition2Parts = condition2.match(comparisonOperatorPattern)
 
 					if (!condition2Parts) {
 						// Handle simple condition (boolean variable or function)

@@ -89,7 +89,7 @@ describe("ESP32 Hardware Constraints", () => {
 
 		// Add some sensor reads to push it over the limit
 		for (let i = 0; i < 20; i++) {
-			complexProgram += "if (Sensors::getInstance().getPitch() > 0) {\n"
+			complexProgram += "if (imu.getPitch() > 0) {\n"
 			complexProgram += "  wait(1);\n"
 			complexProgram += "}\n"
 		}

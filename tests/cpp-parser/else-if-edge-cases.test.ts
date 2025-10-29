@@ -196,13 +196,13 @@ describe("Else-If Edge Cases and Specific Scenarios", () => {
 			const code = `
 				if (is_object_in_front()) {
 					stopMotors();
-				} else if (Sensors::getInstance().getPitch() > 45) {
+				} else if (imu.getPitch() > 45) {
 					drive_time(BACKWARD, 2.0, 70);
-				} else if (Sensors::getInstance().getPitch() < -45) {
+				} else if (imu.getPitch() < -45) {
 					drive_time(FORWARD, 1.0, 50);
-				} else if (Sensors::getInstance().getRoll() > 30) {
+				} else if (imu.getRoll() > 30) {
 					turn(COUNTERCLOCKWISE, 90);
-				} else if (Sensors::getInstance().getRoll() < -30) {
+				} else if (imu.getRoll() < -30) {
 					turn(CLOCKWISE, 90);
 				} else {
 					drive(FORWARD, 60);
@@ -240,7 +240,7 @@ describe("Else-If Edge Cases and Specific Scenarios", () => {
 
 		test("should handle else-if with LED patterns and timing", () => {
 			const code = `
-				float time = Sensors::getInstance().getYaw();
+				float time = imu.getYaw();
 				
 				if (time < 0) {
 					rgbLed.set_led_red();

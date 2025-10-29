@@ -123,7 +123,7 @@ export enum CommandType {
     BLOCK_END = "BLOCK_END",
     WHILE_STATEMENT = "WHILE_STATEMENT",
     FOR_STATEMENT = "FOR_STATEMENT",
-    SENSOR_READ = "SENSOR_READ",
+    IMU_READ = "IMU_READ",
 
     DRIVE = "DRIVE",
     DRIVE_TIME = "DRIVE_TIME",
@@ -138,6 +138,9 @@ export enum CommandType {
     CHECK_IF_RIGHT_BUTTON_PRESSED = "CHECK_IF_RIGHT_BUTTON_PRESSED",
     GET_FRONT_TOF_DISTANCE = "GET_FRONT_TOF_DISTANCE",
 }
+
+// Common regex patterns
+export const comparisonOperatorPattern = /(.+?)([<>=!][=]?)(.+)/
 
 // Command patterns for validation
 // eslint-disable-next-line @typescript-eslint/naming-convention
@@ -165,9 +168,9 @@ export const CommandPatterns: Record<CommandType, RegExp> = {
 	[CommandType.VARIABLE_ASSIGNMENT]: /^(float|int|bool)\s+(\w+)\s*=\s*(.+)$/,
 
 	// Updated regex for IF_STATEMENT
-	[CommandType.IF_STATEMENT]: /^if\s*\(\s*(?:is_object_near_side_(left|right)\(\)|is_object_in_front\(\)|is_right_button_pressed\(\)|is_object_(red|green|blue|white|black|yellow)\(\)|(true|false)|\b(\w+)\b|(Sensors::getInstance\(\)\.\w+\(\)|frontTof\.get_distance\(\)|[-\d.]+|\w+)\s*([<>=!][=]?)\s*(Sensors::getInstance\(\)\.\w+\(\)|frontTof\.get_distance\(\)|[-\d.]+|\w+))\s*\)$/,
+	[CommandType.IF_STATEMENT]: /^if\s*\(\s*(?:is_object_near_side_(left|right)\(\)|is_object_in_front\(\)|is_right_button_pressed\(\)|is_object_(red|green|blue|white|black|yellow)\(\)|(true|false)|\b(\w+)\b|(imu\.\w+\(\)|frontTof\.get_distance\(\)|[-\d.]+|\w+)\s*([<>=!][=]?)\s*(imu\.\w+\(\)|frontTof\.get_distance\(\)|[-\d.]+|\w+))\s*\)$/,
 	[CommandType.COMPOUND_OR_IF_STATEMENT]: /^if\s*\(\s*\(.+?\)\s*\|\|\s*\(.+?\)\s*\)$/,
-	[CommandType.ELSE_IF_STATEMENT]: /^else\s+if\s*\(\s*(?:is_object_near_side_(left|right)\(\)|is_object_in_front\(\)|is_right_button_pressed\(\)|is_object_(red|green|blue|white|black|yellow)\(\)|(true|false)|\b(\w+)\b|(Sensors::getInstance\(\)\.\w+\(\)|frontTof\.get_distance\(\)|[-\d.]+|\w+)\s*([<>=!][=]?)\s*(Sensors::getInstance\(\)\.\w+\(\)|frontTof\.get_distance\(\)|[-\d.]+|\w+))\s*\)$/,
+	[CommandType.ELSE_IF_STATEMENT]: /^else\s+if\s*\(\s*(?:is_object_near_side_(left|right)\(\)|is_object_in_front\(\)|is_right_button_pressed\(\)|is_object_(red|green|blue|white|black|yellow)\(\)|(true|false)|\b(\w+)\b|(imu\.\w+\(\)|frontTof\.get_distance\(\)|[-\d.]+|\w+)\s*([<>=!][=]?)\s*(imu\.\w+\(\)|frontTof\.get_distance\(\)|[-\d.]+|\w+))\s*\)$/,
 	[CommandType.COMPOUND_AND_IF_STATEMENT]: /^if\s*\(\s*\(.+?\)\s*&&\s*\(.+?\)\s*\)$/,
 	[CommandType.COMPOUND_AND_ELSE_IF_STATEMENT]: /^else\s+if\s*\(\s*\(.+?\)\s*&&\s*\(.+?\)\s*\)$/,
 	[CommandType.COMPOUND_OR_ELSE_IF_STATEMENT]: /^else\s+if\s*\(\s*\(.+?\)\s*\|\|\s*\(.+?\)\s*\)$/,
@@ -176,7 +179,7 @@ export const CommandPatterns: Record<CommandType, RegExp> = {
 	[CommandType.BLOCK_END]: /^}$/,
 	[CommandType.WHILE_STATEMENT]: /^while\s*\(\s*true\s*\)$/,
 	[CommandType.FOR_STATEMENT]: /^for\s*\(\s*int\s+(\w+)\s*=\s*(\d+)\s*;\s*\1\s*<\s*(\d+)\s*;\s*\1\s*\+\+\s*\)$/,
-	[CommandType.SENSOR_READ]: /^Sensors::getInstance\(\)\.(\w+)\(\)$/,
+	[CommandType.IMU_READ]: /^imu\.(\w+)\(\)$/,
 
 	[CommandType.DRIVE]: /^drive\(\s*(FORWARD|BACKWARD)\s*,\s*(\d+)\s*\)$/,
 	[CommandType.DRIVE_TIME]: /^drive_time\(\s*(FORWARD|BACKWARD)\s*,\s*(\d+(?:\.\d+)?)\s*,\s*(\d+)\s*\)$/,
