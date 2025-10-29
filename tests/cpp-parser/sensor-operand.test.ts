@@ -4,7 +4,7 @@ import { BytecodeOpCode, ComparisonOp, SensorType } from "../../src/types/byteco
 describe("Sensor Operand Processing", () => {
 	test("should handle sensors as left operands in comparisons", () => {
 		const code = `
-      if (Sensors::getInstance().getPitch() > 10) {
+      if (imu.getPitch() > 10) {
         rgbLed.set_led_red();
       }
     `
@@ -25,7 +25,7 @@ describe("Sensor Operand Processing", () => {
 
 	test("should handle sensors as right operands in comparisons", () => {
 		const code = `
-      if (10 < Sensors::getInstance().getRoll()) {
+      if (10 < imu.getRoll()) {
         rgbLed.set_led_green();
       }
     `
@@ -46,15 +46,15 @@ describe("Sensor Operand Processing", () => {
 
 	test("should handle multiple different sensor types in sequence", () => {
 		const code = `
-      if (Sensors::getInstance().getPitch() > 10) {
+      if (imu.getPitch() > 10) {
         rgbLed.set_led_red();
       }
       
-      if (Sensors::getInstance().getRoll() < -5) {
+      if (imu.getRoll() < -5) {
         rgbLed.set_led_green();
       }
       
-      if (Sensors::getInstance().getYaw() == 0) {
+      if (imu.getYaw() == 0) {
         rgbLed.set_led_blue();
       }
     `
@@ -111,7 +111,7 @@ describe("Sensor Operand Processing", () => {
 		]
 
 		for (const { method, type } of sensorMethods) {
-			const code = `if (Sensors::getInstance().${method}() > 0) { rgbLed.set_led_red(); }`
+			const code = `if (imu.${method}() > 0) { rgbLed.set_led_red(); }`
 			const bytecode = CppParser.cppToByte(code)
 
 			// First instruction should be READ_SENSOR with correct sensor type
@@ -135,7 +135,7 @@ describe("Sensor Operand Processing", () => {
 
 		const code = `
       ${registerSetup}
-      if (Sensors::getInstance().getPitch() > 0) {
+      if (imu.getPitch() > 0) {
         rgbLed.set_led_red();
       }
     `
@@ -157,7 +157,7 @@ describe("Sensor Operand Processing", () => {
 		]
 
 		for (const { op, compOp } of operators) {
-			const code = `if (Sensors::getInstance().getPitch() ${op} 0) { rgbLed.set_led_red(); }`
+			const code = `if (imu.getPitch() ${op} 0) { rgbLed.set_led_red(); }`
 			const bytecode = CppParser.cppToByte(code)
 
 			// Second instruction should be COMPARE with correct operator
@@ -170,7 +170,7 @@ describe("Sensor Operand Processing", () => {
 	test("should handle sensor comparison with variables", () => {
 		const code = `
       float threshold = 10.5;
-      if (Sensors::getInstance().getPitch() > threshold) {
+      if (imu.getPitch() > threshold) {
         rgbLed.set_led_red();
       }
     `
@@ -196,7 +196,7 @@ describe("Sensor Operand Processing", () => {
 
 	test("should handle sensor on both sides of comparison", () => {
 		const code = `
-      if (Sensors::getInstance().getPitch() > Sensors::getInstance().getRoll()) {
+      if (imu.getPitch() > imu.getRoll()) {
         rgbLed.set_led_red();
       }
     `
@@ -223,7 +223,7 @@ describe("Sensor Operand Processing", () => {
 	test("should handle sensors in complex expressions with loops", () => {
 		const code = `
       for (int i = 0; i < 5; i++) {
-        if (Sensors::getInstance().getPitch() > i) {
+        if (imu.getPitch() > i) {
           rgbLed.set_led_red();
         }
       }

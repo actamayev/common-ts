@@ -162,7 +162,7 @@ export class CppParserHelper {
 		}
 
 		// Check if this is a button press detection function
-		const buttonMatch = expr.match(/is_right_button_pressed\(\)/)
+		const buttonMatch = expr.match(CommandPatterns[CommandType.CHECK_IF_RIGHT_BUTTON_PRESSED])
 		if (buttonMatch) {
 			// Allocate a register for the button state
 			if (nextRegister >= MAX_REGISTERS) {
@@ -183,15 +183,19 @@ export class CppParserHelper {
 		}
 
 		// Check if this is a proximity detection function
-		const proximityMatch = expr.match(/is_object_near_side_(left|right)\(\)/) || expr.match(/is_object_in_front\(\)/)
+		const sideProximityMatch = expr.match(CommandPatterns[CommandType.SIDE_PROXIMITY_DETECTION])
+		const frontProximityMatch = expr.match(CommandPatterns[CommandType.FRONT_PROXIMITY_DETECTION])
+		const proximityMatch = sideProximityMatch || frontProximityMatch
 		if (proximityMatch) {
 		// Determine the sensor type based on the function name
 			let sensorType: SensorType
-			if (proximityMatch[0] === "is_object_in_front()") {
+			if (frontProximityMatch) {
 				sensorType = SensorType.FRONT_PROXIMITY
-			} else {
-				const side = proximityMatch[1] // 'left' or 'right'
+			} else if (sideProximityMatch) {
+				const side = sideProximityMatch[1] // 'left' or 'right'
 				sensorType = this.getSensorTypeFromProximity(side)
+			} else {
+				throw new Error(`Unknown proximity detection: ${expr}`)
 			}
 
 			// Allocate a register for the sensor value
@@ -213,7 +217,7 @@ export class CppParserHelper {
 		}
 
 		// Check if this is a color detection function
-		const colorMatch = expr.match(/is_object_(red|green|blue|white|black|yellow)\(\)/)
+		const colorMatch = expr.match(CommandPatterns[CommandType.COLOR_SENSOR_READ])
 		if (colorMatch) {
 			// Extract color from the regex match
 			const colorName = colorMatch[1] // red, green, blue, white, black, yellow
@@ -248,7 +252,7 @@ export class CppParserHelper {
 		}
 
 		// Check if this is a TOF distance sensor reading
-		const tofMatch = expr.match(/frontTof\.get_distance\(\)/)
+		const tofMatch = expr.match(CommandPatterns[CommandType.GET_FRONT_TOF_DISTANCE])
 		if (tofMatch) {
 			// Allocate a register for the TOF distance value
 			if (nextRegister >= MAX_REGISTERS) {
@@ -268,11 +272,11 @@ export class CppParserHelper {
 			return { operand: 0x8000 | register, updatedNextRegister: nextRegister }
 		}
 
-		// Check if this is a standard sensor reading
-		const sensorMatch = expr.match(/Sensors::getInstance\(\)\.(\w+)\(\)/)
-		if (sensorMatch) {
-		// This is a sensor comparison
-			const sensorMethod = sensorMatch[1]
+		// Check if this is an IMU sensor reading
+		const imuMatch = expr.match(CommandPatterns[CommandType.IMU_READ])
+		if (imuMatch) {
+		// This is an IMU sensor reading
+			const sensorMethod = imuMatch[1]
 			const sensorType = this.getSensorTypeFromMethod(sensorMethod)
 
 			// Allocate a register for the sensor value
@@ -281,7 +285,7 @@ export class CppParserHelper {
 			}
 			const register = nextRegister++
 
-			// Add instruction to read sensor into register
+			// Add instruction to read IMU sensor into register
 			instructions.push({
 				opcode: BytecodeOpCode.READ_SENSOR,
 				operand1: sensorType,

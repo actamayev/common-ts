@@ -168,10 +168,10 @@ rgbLed.set_led_purple();`
 
 	describe("Complex Sensor Usage", () => {
 		test("should handle sensors in if-else branches", () => {
-			const code = `if (Sensors::getInstance().getPitch() > 20) {
+			const code = `if (imu.getPitch() > 20) {
 			rgbLed.set_led_red();
 		} else {
-			if (Sensors::getInstance().getRoll() < -10) {
+			if (imu.getRoll() < -10) {
 				rgbLed.set_led_blue();
 			} else {
 				rgbLed.set_led_green();
@@ -243,7 +243,7 @@ rgbLed.set_led_purple();`
 
 		test("should handle sensors in loops", () => {
 			const code = `while (true) {
-		if (Sensors::getInstance().getAccelMagnitude() > 5) {
+		if (imu.getAccelMagnitude() > 5) {
 			rgbLed.set_led_white();
 		}
 		wait(0.1);
@@ -258,7 +258,7 @@ rgbLed.set_led_purple();`
 
 		test("should handle sensors in for loops", () => {
 			const code = `for (int i = 0; i < 10; i++) {
-		if (Sensors::getInstance().getYaw() > i) {
+		if (imu.getYaw() > i) {
 			rgbLed.set_led_red();
 		}
 	}`
@@ -330,7 +330,7 @@ describe("Bidirectional Comparisons", () => {
 	test("should handle sensor expressions on right side of comparison", () => {
 		const code = `
 			while(true) {
-				if (0 > Sensors::getInstance().getPitch()) {
+				if (0 > imu.getPitch()) {
 					rgbLed.set_led_red();
 				} else {
 					rgbLed.set_led_green();
@@ -368,7 +368,7 @@ describe("Bidirectional Comparisons", () => {
 		// Method 1: variable on left
 		const bytecode1 = CppParser.cppToByte(`
 	while(true) {
-		float pitch = Sensors::getInstance().getPitch();
+		float pitch = imu.getPitch();
 		if (pitch < 0) {
 			rgbLed.set_led_red();
 		} else {
@@ -380,7 +380,7 @@ describe("Bidirectional Comparisons", () => {
 		// Method 2: variable on right
 		const bytecode2 = CppParser.cppToByte(`
 	while(true) {
-		float pitch = Sensors::getInstance().getPitch();
+		float pitch = imu.getPitch();
 		if (0 > pitch) {
 			rgbLed.set_led_red();
 		} else {
@@ -457,7 +457,7 @@ describe("Bidirectional Comparisons", () => {
 	test("should handle sensor expressions on both sides of comparison", () => {
 		const bytecode = CppParser.cppToByte(`
 	while(true) {
-		if (Sensors::getInstance().getPitch() > Sensors::getInstance().getRoll()) {
+		if (imu.getPitch() > imu.getRoll()) {
 			rgbLed.set_led_blue();
 		}
 	}

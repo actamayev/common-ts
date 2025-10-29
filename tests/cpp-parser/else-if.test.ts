@@ -326,11 +326,11 @@ describe("Else-If Functionality", () => {
 	describe("Else-If with Sensor Readings", () => {
 		test("should handle sensor readings in else-if conditions", () => {
 			const code = `
-				if (Sensors::getInstance().getPitch() > 30) {
+				if (imu.getPitch() > 30) {
 					rgbLed.set_led_red();
-				} else if (Sensors::getInstance().getRoll() < -10) {
+				} else if (imu.getRoll() < -10) {
 					rgbLed.set_led_green();
-				} else if (Sensors::getInstance().getYaw() == 0) {
+				} else if (imu.getYaw() == 0) {
 					rgbLed.set_led_blue();
 				} else {
 					rgbLed.set_led_white();
@@ -370,11 +370,11 @@ describe("Else-If Functionality", () => {
 			const code = `
 				float threshold = 15.0;
 				
-				if (Sensors::getInstance().getPitch() > threshold) {
+				if (imu.getPitch() > threshold) {
 					rgbLed.set_led_red();
 				} else if (threshold < 20.0) {
 					rgbLed.set_led_green();
-				} else if (Sensors::getInstance().getRoll() != 0) {
+				} else if (imu.getRoll() != 0) {
 					rgbLed.set_led_blue();
 				}
 			`
@@ -447,7 +447,7 @@ describe("Else-If Functionality", () => {
 			const code = `
 				if (is_object_in_front()) {
 					rgbLed.set_led_red();
-				} else if (Sensors::getInstance().getPitch() > 45) {
+				} else if (imu.getPitch() > 45) {
 					rgbLed.set_led_green();
 				} else if (is_object_near_side_left()) {
 					rgbLed.set_led_blue();
@@ -793,9 +793,9 @@ describe("Else-If Functionality", () => {
 							drive(BACKWARD, 50);
 							wait(0.5);
 						}
-					} else if (Sensors::getInstance().getPitch() > 30) {
+					} else if (imu.getPitch() > 30) {
 						drive_time(BACKWARD, 1.0, 30);
-					} else if (Sensors::getInstance().getRoll() < -30) {
+					} else if (imu.getRoll() < -30) {
 						drive_time(BACKWARD, 1.0, 30);
 					} else {
 						drive(FORWARD, 60);
@@ -1102,13 +1102,13 @@ describe("Else-If Functionality", () => {
 			const code = `
 		if (is_object_in_front()) {
 			stopMotors();
-		} else if (Sensors::getInstance().getPitch() > 45) {
+		} else if (imu.getPitch() > 45) {
 			drive_time(BACKWARD, 2.0, 70);
-		} else if (Sensors::getInstance().getPitch() < -45) {
+		} else if (imu.getPitch() < -45) {
 			drive_time(FORWARD, 1.0, 50);
-		} else if (Sensors::getInstance().getRoll() > 30) {
+		} else if (imu.getRoll() > 30) {
 			turn(COUNTERCLOCKWISE, 90);
-		} else if (Sensors::getInstance().getRoll() < -30) {
+		} else if (imu.getRoll() < -30) {
 			turn(CLOCKWISE, 90);
 		} else {
 			drive(FORWARD, 60);

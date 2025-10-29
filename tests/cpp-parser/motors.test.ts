@@ -258,7 +258,7 @@ describe("Motor Command Functionality", () => {
 	describe("Motor Commands in Control Structures", () => {
 		test("should parse motor commands in if-else blocks", () => {
 			const code = `
-        if (Sensors::getInstance().getPitch() > 10) {
+        if (imu.getPitch() > 10) {
           drive(FORWARD, 70);
         } else {
           drive(BACKWARD, 70);

@@ -256,7 +256,7 @@ describe("CppParserHelper", () => {
 	// We'll directly test the processOperand method
 		test("should process sensor operand correctly", () => {
 		// Setup
-			const expr = "Sensors::getInstance().getPitch()"
+			const expr = "imu.getPitch()"
 			const variables = new Map()
 			const nextRegister = 0
 			const instructions: BytecodeInstruction[] = []
@@ -280,13 +280,13 @@ describe("CppParserHelper", () => {
 
 		test("should handle different sensor types", () => {
 			const sensorTests = [
-				{ expr: "Sensors::getInstance().getPitch()", type: SensorType.PITCH },
-				{ expr: "Sensors::getInstance().getRoll()", type: SensorType.ROLL },
-				{ expr: "Sensors::getInstance().getYaw()", type: SensorType.YAW },
-				{ expr: "Sensors::getInstance().getXAccel()", type: SensorType.ACCEL_X },
-				{ expr: "Sensors::getInstance().getAccelMagnitude()", type: SensorType.ACCEL_MAG },
-				{ expr: "Sensors::getInstance().getXRotationRate()", type: SensorType.ROT_RATE_X },
-				{ expr: "Sensors::getInstance().getMagneticFieldX()", type: SensorType.MAG_FIELD_X }
+				{ expr: "imu.getPitch()", type: SensorType.PITCH },
+				{ expr: "imu.getRoll()", type: SensorType.ROLL },
+				{ expr: "imu.getYaw()", type: SensorType.YAW },
+				{ expr: "imu.getXAccel()", type: SensorType.ACCEL_X },
+				{ expr: "imu.getAccelMagnitude()", type: SensorType.ACCEL_MAG },
+				{ expr: "imu.getXRotationRate()", type: SensorType.ROT_RATE_X },
+				{ expr: "imu.getMagneticFieldX()", type: SensorType.MAG_FIELD_X }
 			]
 
 			for (const { expr, type } of sensorTests) {
@@ -303,7 +303,7 @@ describe("CppParserHelper", () => {
 		})
 
 		test("should throw error when registers are exhausted", () => {
-			const expr = "Sensors::getInstance().getPitch()"
+			const expr = "imu.getPitch()"
 			const variables = new Map()
 			const nextRegister = MAX_REGISTERS // Setting to max to trigger error
 			const instructions: BytecodeInstruction[] = []
@@ -323,7 +323,7 @@ describe("CppParserHelper", () => {
 
 			// Process first sensor
 			const result1 = CppParserHelper.processOperand(
-				"Sensors::getInstance().getPitch()",
+				"imu.getPitch()",
 				variables,
 				nextRegister,
 				instructions
@@ -334,7 +334,7 @@ describe("CppParserHelper", () => {
 
 			// Process second sensor
 			const result2 = CppParserHelper.processOperand(
-				"Sensors::getInstance().getRoll()",
+				"imu.getRoll()",
 				variables,
 				nextRegister,
 				instructions
@@ -357,7 +357,7 @@ describe("CppParserHelper", () => {
 		})
 
 		test("should return high bit for register operand", () => {
-			const expr = "Sensors::getInstance().getYaw()"
+			const expr = "imu.getYaw()"
 			const variables = new Map()
 			const nextRegister = 5 // Start at register 5
 			const instructions: BytecodeInstruction[] = []
@@ -599,7 +599,7 @@ describe("CppParserHelper", () => {
 
 			// Process regular sensor
 			const result2 = CppParserHelper.processOperand(
-				"Sensors::getInstance().getPitch()",
+				"imu.getPitch()",
 				variables,
 				nextRegister,
 				instructions

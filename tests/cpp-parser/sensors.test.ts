@@ -5,13 +5,13 @@ import { BytecodeInstruction } from "../../src/types/utils/bytecode"
 
 describe("Sensor Functionality", () => {
 	function testSensorReading(sensorMethod: string, expectedSensorType: SensorType): void {
-		const code = `if (Sensors::getInstance().${sensorMethod}() > 10) {
+		const code = `if (imu.${sensorMethod}() > 10) {
 		rgbLed.set_led_red();
 	}`
 
 		const bytecode = CppParser.cppToByte(code)
 
-		// 1. READ_SENSOR
+		// 1. IMU_READ
 		expect(bytecode[0]).toBe(BytecodeOpCode.READ_SENSOR)
 		expect(bytecode[1]).toBe(expectedSensorType)
 		expect(bytecode[2]).toBe(0) // Register ID
@@ -88,7 +88,7 @@ describe("Sensor Functionality", () => {
 
 	describe("Sensor Comparison Operators", () => {
 		test("should parse sensor equality comparison", () => {
-			const code = `if (Sensors::getInstance().getPitch() == 0) {
+			const code = `if (imu.getPitch() == 0) {
 			rgbLed.set_led_red();
 		}`
 
@@ -102,7 +102,7 @@ describe("Sensor Functionality", () => {
 		})
 
 		test("should parse sensor inequality comparison", () => {
-			const code = `if (Sensors::getInstance().getYaw() != 45) {
+			const code = `if (imu.getYaw() != 45) {
 			rgbLed.set_led_green();
 		}`
 
@@ -116,7 +116,7 @@ describe("Sensor Functionality", () => {
 		})
 
 		test("should parse sensor less than comparison", () => {
-			const code = `if (Sensors::getInstance().getXAccel() < -5) {
+			const code = `if (imu.getXAccel() < -5) {
 			rgbLed.set_led_blue();
 		}`
 
@@ -130,7 +130,7 @@ describe("Sensor Functionality", () => {
 		})
 
 		test("should parse sensor greater than or equal comparison", () => {
-			const code = `if (Sensors::getInstance().getAccelMagnitude() >= 9.8) {
+			const code = `if (imu.getAccelMagnitude() >= 9.8) {
 			rgbLed.set_led_purple();
 		}`
 
@@ -144,7 +144,7 @@ describe("Sensor Functionality", () => {
 		})
 
 		test("should parse sensor less than or equal comparison", () => {
-			const code = `if (Sensors::getInstance().getZRotationRate() <= 180) {
+			const code = `if (imu.getZRotationRate() <= 180) {
 			rgbLed.set_led_white();
 		}`
 
@@ -161,7 +161,7 @@ describe("Sensor Functionality", () => {
 	test("should throw error for unknown sensor method", () => {
 		const originalParseCppCode = CppParser["parseCppCode"]
 		CppParser["parseCppCode"] = function(): BytecodeInstruction[] {
-			return originalParseCppCode.call(this, "if (Sensors::getInstance().getNonExistent() > 10)")
+			return originalParseCppCode.call(this, "if (imu.getNonExistent() > 10)")
 		}
 
 		try {
@@ -362,7 +362,7 @@ describe("Sensor Functionality", () => {
 		})
 
 		test("should parse compound condition with color detection", () => {
-			const code = `if ((is_object_red()) && (Sensors::getInstance().getPitch() > 10)) {
+			const code = `if ((is_object_red()) && (imu.getPitch() > 10)) {
 				rgbLed.set_led_white();
 			}`
 
@@ -513,7 +513,7 @@ describe("Sensor Functionality", () => {
 		})
 
 		test("should parse compound condition with TOF distance and other sensor", () => {
-			const code = `if ((frontTof.get_distance() > 30) && (Sensors::getInstance().getPitch() < 45)) {
+			const code = `if ((frontTof.get_distance() > 30) && (imu.getPitch() < 45)) {
 				rgbLed.set_led_white();
 			}`
 

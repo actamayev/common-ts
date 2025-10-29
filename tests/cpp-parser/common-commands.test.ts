@@ -675,7 +675,7 @@ describe("Variable in comparisons", () => {
 	test("should correctly handle variables from sensor readings in comparisons", () => {
 		const bytecode = CppParser.cppToByte(`
       while(true) {
-        float myFloat = Sensors::getInstance().getRoll();
+        float myFloat = imu.getRoll();
         if (myFloat < -1.1) {
           rgbLed.set_led_red();
         } else {
@@ -693,7 +693,7 @@ describe("Variable in comparisons", () => {
 		expect(() => {
 			CppParser.cppToByte(`
         while(true) {
-          float myFloat = Sensors::getInstance().getRoll();
+          float myFloat = imu.getRoll();
           if (myVar < -1.1) {  // myVar is undefined
             rgbLed.set_led_red();
           } else {
@@ -764,8 +764,8 @@ describe("Compound Conditional Statements", () => {
 		test("should handle compound AND with variables and sensor readings", () => {
 			const code = `
         while(true) {
-          float pitch = Sensors::getInstance().getPitch();
-          float roll = Sensors::getInstance().getRoll();
+          float pitch = imu.getPitch();
+          float roll = imu.getRoll();
           if ((pitch > 10) && (roll < -5)) {
             rgbLed.set_led_red();
           } else {
@@ -898,8 +898,8 @@ describe("Compound Conditional Statements", () => {
 		test("should handle compound OR with variables and sensor readings", () => {
 			const code = `
         while(true) {
-          float pitch = Sensors::getInstance().getPitch();
-          float roll = Sensors::getInstance().getRoll();
+          float pitch = imu.getPitch();
+          float roll = imu.getRoll();
           if ((pitch > 30) || (roll < -45)) {
             rgbLed.set_led_purple();
           } else {
@@ -1076,8 +1076,8 @@ describe("Compound Conditional Statements", () => {
 		test("should handle the example use case with roll and pitch sensor readings", () => {
 			const code = `
         while(true) {
-          float roll = Sensors::getInstance().getRoll();
-          float pitch = Sensors::getInstance().getPitch();
+          float roll = imu.getRoll();
+          float pitch = imu.getPitch();
           if ((roll > 0) && (pitch > 0)) {
             rgbLed.set_led_white();
           } else {
