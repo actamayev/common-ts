@@ -94,7 +94,7 @@ describe("Variable assignments", () => {
 
 	describe("Proximity Sensor Variable Assignments", () => {
 		test("should parse boolean variable assignment with front proximity sensor", () => {
-		  const bytecode = CppParser.cppToByte("bool isObjectInFront = is_object_in_front();")
+		  const bytecode = CppParser.cppToByte("bool isObjectInFront = front_tof.is_object_in_front();")
 
 		  // First instruction: DECLARE_VAR
 		  expect(bytecode[0]).toBe(BytecodeOpCode.DECLARE_VAR)
@@ -145,7 +145,7 @@ describe("Variable assignments", () => {
 
 		test("should handle multiple proximity sensor variables", () => {
 		  const bytecode = CppParser.cppToByte(`
-			bool front = is_object_in_front();
+			bool front = front_tof.is_object_in_front();
 			bool left = is_object_near_side_left();
 			bool right = is_object_near_side_right();
 		  `)
@@ -184,13 +184,13 @@ describe("Variable assignments", () => {
 		test("should throw error when assigning proximity sensor to non-boolean type", () => {
 		  // Proximity sensors return boolean values, so they should only be assigned to boolean variables
 		  expect(() => {
-				CppParser.cppToByte("int wrongType = is_object_in_front();")
+				CppParser.cppToByte("int wrongType = front_tof.is_object_in_front();")
 		  }).toThrow() // This should throw some kind of error
 		})
 
 		test("should handle proximity sensor with conditional logic", () => {
 		  const bytecode = CppParser.cppToByte(`
-			bool frontObject = is_object_in_front();
+			bool frontObject = front_tof.is_object_in_front();
 			if (frontObject) {
 			  rgbLed.set_led_red();
 			} else {

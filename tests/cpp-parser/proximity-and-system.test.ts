@@ -81,7 +81,7 @@ describe("Proximity Sensor Functions", () => {
 
 	describe("Front Proximity Detection", () => {
 		test("should parse standalone front proximity detection function", () => {
-			const code = "is_object_in_front();"
+			const code = "front_tof.is_object_in_front();"
 			const bytecode = CppParser.cppToByte(code)
 
 			// Should generate a READ_SENSOR instruction for front proximity
@@ -103,7 +103,7 @@ describe("Proximity Sensor Functions", () => {
 
 			const code = `
         ${registerSetup}
-        is_object_in_front();
+        front_tof.is_object_in_front();
       `
 
 			// Should throw error about exceeding register count
@@ -115,7 +115,7 @@ describe("Proximity Sensor Functions", () => {
 		test("should handle loops with front proximity checks", () => {
 			const code = `
         while(true) {
-          if (is_object_in_front()) {
+          if (front_tof.is_object_in_front()) {
             rgbLed.set_led_red();
             wait(0.5);
           } else {
@@ -218,7 +218,7 @@ describe("Proximity Sensor Functions", () => {
 
 		test("should handle left_button.wait_for_press in control structures", () => {
 			const code = `
-        if (is_object_in_front()) {
+        if (front_tof.is_object_in_front()) {
           rgbLed.set_led_red();
           left_button.wait_for_press();
         } else {
@@ -264,7 +264,7 @@ describe("Proximity Sensor Functions", () => {
         
         while(true) {
           // Check front obstacle
-          if (is_object_in_front()) {
+          if (front_tof.is_object_in_front()) {
             // Front blocked, check sides
             rgbLed.set_led_red();
             wait(0.3);

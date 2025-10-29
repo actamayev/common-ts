@@ -216,7 +216,7 @@ describe("Button commands", () => {
 
 		test("should work with sensor combinations using compound condition", () => {
 			const code = `
-				if ((right_button.is_pressed()) && (is_object_in_front())) {
+				if ((right_button.is_pressed()) && (front_tof.is_object_in_front())) {
 					rgbLed.set_led_purple();
 				}
 			`
@@ -262,7 +262,7 @@ describe("Button commands", () => {
 				if (right_button.is_pressed()) {
 					drive(FORWARD, 50);
 					wait(2);
-					stopMotors();
+					motors.stop();
 				}
 			`
 

@@ -7,7 +7,7 @@ describe("Complex Nested Structures", () => {
 		const code = `
     left_button.wait_for_press();
     while(true) {
-        if (is_object_in_front()) {
+        if (front_tof.is_object_in_front()) {
             rgbLed.set_led_white();
         } else {
             if (is_object_near_side_right()) {
@@ -526,8 +526,8 @@ describe("Error Handling Edge Cases", () => {
 
 describe("Proximity Sensor Functionality", () => {
 	describe("Front Proximity Sensor", () => {
-		test("should parse is_object_in_front function", () => {
-			const code = `if (is_object_in_front()) {
+		test("should parse front_tof.is_object_in_front function", () => {
+			const code = `if (front_tof.is_object_in_front()) {
         rgbLed.set_led_red();
       } else {
         rgbLed.set_led_green();
@@ -572,7 +572,7 @@ describe("Proximity Sensor Functionality", () => {
 
 		test("should handle front proximity sensor in loops", () => {
 			const code = `while(true) {
-        if (is_object_in_front()) {
+        if (front_tof.is_object_in_front()) {
           rgbLed.set_led_red();
           wait(0.1);
         } else {
@@ -617,7 +617,7 @@ describe("Proximity Sensor Functionality", () => {
 
 		test("should handle assigning front proximity sensor result to variable", () => {
 			const code = `
-			  bool objectDetected = is_object_in_front();
+			  bool objectDetected = front_tof.is_object_in_front();
 			  if (objectDetected) {
 				rgbLed.set_led_red();
 			  } else {

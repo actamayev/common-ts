@@ -27,7 +27,7 @@ Raw C++ Code → Sanitization → Syntax Validation → Statement Parsing → By
 
 #### Statement Processing Engine
 The parser uses a massive switch statement (52 cases) handling:
-- **Variable declarations**: `int x = 5`, `float y = sensor.getValue()`, `bool detected = is_object_in_front()`
+- **Variable declarations**: `int x = 5`, `float y = sensor.getValue()`, `bool detected = front_tof.is_object_in_front()`
 - **Control flow**: `if/else/else-if` with complex conditions, `for` loops, `while` loops
 - **LED control**: Individual LED manipulation, color presets, brightness control
 - **Motor commands**: Forward/backward with throttle, turning, distance/time-based movement

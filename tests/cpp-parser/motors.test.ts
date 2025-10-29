@@ -29,8 +29,8 @@ describe("Motor Command Functionality", () => {
 			expect(bytecode[4]).toBe(0)  // Unused
 		})
 
-		test("should parse stopMotors command", () => {
-			const code = "stopMotors();"
+		test("should parse motors.stop command", () => {
+			const code = "motors.stop();"
 			const bytecode = CppParser.cppToByte(code)
 
 			expect(bytecode[0]).toBe(BytecodeOpCode.MOTOR_STOP)
@@ -208,7 +208,7 @@ describe("Motor Command Functionality", () => {
         wait(0.5);
         drive(BACKWARD, 40);
         wait(1.5);
-        stopMotors();
+        motors.stop();
       `
 
 			const bytecode = CppParser.cppToByte(code)
@@ -236,7 +236,7 @@ describe("Motor Command Functionality", () => {
         wait(0.5);
         drive_distance(BACKWARD, 20.0, 80);
         wait(0.5);
-        stopMotors();
+        motors.stop();
       `
 
 			const bytecode = CppParser.cppToByte(code)

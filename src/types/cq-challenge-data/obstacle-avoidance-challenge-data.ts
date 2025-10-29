@@ -37,7 +37,7 @@ export const OBSTACLE_AVOIDANCE_CHALLENGE_1: CqChallengeData = {
 	]),
 	solutionCode: `
         while(true) {
-            if (is_object_in_front()) {
+            if (front_tof.is_object_in_front()) {
                 rgbLed.set_led_red();
             } else {
                 rgbLed.set_led_green();
@@ -127,9 +127,9 @@ export const OBSTACLE_AVOIDANCE_CHALLENGE_2: CqChallengeData = {
 	solutionCode: `
         left_button.wait_for_press();
         while(true) {
-            if (is_object_in_front()) {
+            if (front_tof.is_object_in_front()) {
                 rgbLed.set_led_red();
-                stopMotors();
+                motors.stop();
             } else {
                 rgbLed.set_led_green();
                 drive(FORWARD, 50);
@@ -230,7 +230,7 @@ export const OBSTACLE_AVOIDANCE_CHALLENGE_3: CqChallengeData = {
 	solutionCode: `
         left_button.wait_for_press();
         while(true) {
-            if (is_object_in_front()) {
+            if (front_tof.is_object_in_front()) {
                 rgbLed.set_led_red();
                 turn(CLOCKWISE, 90);
             } else {
@@ -320,7 +320,7 @@ export const OBSTACLE_AVOIDANCE_CHALLENGE_5: CqChallengeData = {
 	solutionCode: `
         left_button.wait_for_press();
         while(true) {
-            if (is_object_in_front()) {
+            if (front_tof.is_object_in_front()) {
                 rgbLed.set_led_white();
                 turn(CLOCKWISE, 90);
             } else if (is_object_near_side_left()) {
