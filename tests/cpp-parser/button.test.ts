@@ -216,7 +216,7 @@ describe("Button commands", () => {
 
 		test("should work with sensor combinations using compound condition", () => {
 			const code = `
-				if ((right_button.is_pressed()) && (front_tof.is_object_in_front())) {
+				if ((right_button.is_pressed()) && (front_distance_sensor.is_object_in_front())) {
 					rgbLed.set_led_purple();
 				}
 			`

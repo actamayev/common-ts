@@ -401,7 +401,7 @@ describe("Else-If Functionality", () => {
 	describe("Else-If with Proximity Sensors", () => {
 		test("should handle proximity sensors in else-if conditions", () => {
 			const code = `
-				if (front_tof.is_object_in_front()) {
+				if (front_distance_sensor.is_object_in_front()) {
 					rgbLed.set_led_red();
 				} else if (is_object_near_side_left()) {
 					rgbLed.set_led_green();
@@ -445,7 +445,7 @@ describe("Else-If Functionality", () => {
 
 		test("should handle mixed proximity and regular sensor conditions", () => {
 			const code = `
-				if (front_tof.is_object_in_front()) {
+				if (front_distance_sensor.is_object_in_front()) {
 					rgbLed.set_led_red();
 				} else if (imu.getPitch() > 45) {
 					rgbLed.set_led_green();
@@ -655,7 +655,7 @@ describe("Else-If Functionality", () => {
 		test("should handle else-if inside while loops", () => {
 			const code = `
 				while (true) {
-					if (front_tof.is_object_in_front()) {
+					if (front_distance_sensor.is_object_in_front()) {
 						rgbLed.set_led_red();
 					} else if (is_object_near_side_left()) {
 						rgbLed.set_led_green();
@@ -783,7 +783,7 @@ describe("Else-If Functionality", () => {
 		test("should handle robot navigation with else-if logic", () => {
 			const code = `
 				while (true) {
-					if (front_tof.is_object_in_front()) {
+					if (front_distance_sensor.is_object_in_front()) {
 						motors.stop();
 						if (is_object_near_side_left()) {
 							turn(CLOCKWISE, 90);
@@ -1100,7 +1100,7 @@ describe("Else-If Functionality", () => {
 	describe("Misc Tests", () => {
 		test("should handle else-if in motor control logic", () => {
 			const code = `
-		if (front_tof.is_object_in_front()) {
+		if (front_distance_sensor.is_object_in_front()) {
 			motors.stop();
 		} else if (imu.getPitch() > 45) {
 			drive_time(BACKWARD, 2.0, 70);
