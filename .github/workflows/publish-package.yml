@@ -14,16 +14,22 @@ jobs:
     
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
       
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+      
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: 'lts/*'
           registry-url: 'https://npm.pkg.github.com'
           scope: '@lever-labs'
+          cache: 'pnpm'
       
       - name: Configure Git
         run: |
@@ -31,18 +37,18 @@ jobs:
           git config --global user.email 'actions@github.com'
       
       - name: Install dependencies
-        run: npm ci
+        run: pnpm install --frozen-lockfile
       
       - name: Build package
-        run: npm run build
+        run: pnpm run build
       
       - name: Increment version
-        run: npm version patch
+        run: pnpm version patch
       
       - name: Push version change
         run: git push --follow-tags
       
       - name: Publish to GitHub Packages
-        run: npm publish
+        run: pnpm publish --no-git-checks
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
