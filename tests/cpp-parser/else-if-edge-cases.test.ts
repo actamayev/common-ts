@@ -290,12 +290,12 @@ describe("Else-If Edge Cases and Specific Scenarios", () => {
 
 		test("should handle wait_for_button with else-if logic", () => {
 			const code = `
-				wait_for_button_press();
+				left_button.wait_for_press();
 				
 				while (true) {
 					if (is_object_in_front()) {
 						rgbLed.set_led_red();
-						wait_for_button_press();
+						left_button.wait_for_press();
 					} else if (is_object_near_side_left()) {
 						rgbLed.set_led_green();
 						wait(1);

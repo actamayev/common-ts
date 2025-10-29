@@ -154,8 +154,8 @@ describe("Proximity Sensor Functions", () => {
 	})
 
 	describe("Wait For Button", () => {
-		test("should parse wait_for_button_press command", () => {
-			const code = "wait_for_button_press();"
+		test("should parse left_button.wait_for_press command", () => {
+			const code = "left_button.wait_for_press();"
 			const bytecode = CppParser.cppToByte(code)
 
 			// Should generate a WAIT_FOR_BUTTON instruction
@@ -169,13 +169,13 @@ describe("Proximity Sensor Functions", () => {
 			expect(bytecode[5]).toBe(BytecodeOpCode.END)
 		})
 
-		test("should handle wait_for_button_press in a complex sequence", () => {
+		test("should handle left_button.wait_for_press in a complex sequence", () => {
 			const code = `
         rgbLed.set_led_blue();
-        wait_for_button_press();
+        left_button.wait_for_press();
         rgbLed.set_led_green();
         wait(1);
-        wait_for_button_press();
+        left_button.wait_for_press();
         rgbLed.set_led_red();
       `
 
@@ -216,17 +216,17 @@ describe("Proximity Sensor Functions", () => {
 			expect(bytecode[28]).toBe(0)
 		})
 
-		test("should handle wait_for_button_press in control structures", () => {
+		test("should handle left_button.wait_for_press in control structures", () => {
 			const code = `
         if (is_object_in_front()) {
           rgbLed.set_led_red();
-          wait_for_button_press();
+          left_button.wait_for_press();
         } else {
           rgbLed.set_led_green();
         }
         
         for (int i = 0; i < 3; i++) {
-          wait_for_button_press();
+          left_button.wait_for_press();
           rgbLed.set_led_blue();
           wait(0.5);
         }
@@ -252,7 +252,7 @@ describe("Proximity Sensor Functions", () => {
 	describe("Ultimate Robot Navigation Example", () => {
 		test("should handle a complete navigation example with all features", () => {
 			const code = `
-        wait_for_button_press();  // Wait for start button
+        left_button.wait_for_press();  // Wait for start button
         
         for (int i = 0; i < 3; i++) {
           // Flash light to indicate start
@@ -274,7 +274,7 @@ describe("Proximity Sensor Functions", () => {
               if (is_object_near_side_right()) {
                 // All directions blocked
                 rgbLed.set_led_purple();
-                wait_for_button_press();  // Wait for manual intervention
+                left_button.wait_for_press();  // Wait for manual intervention
               } else {
                 // Turn right
                 turn(CLOCKWISE, 90);

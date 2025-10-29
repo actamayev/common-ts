@@ -5,7 +5,7 @@ import { MAX_LED_BRIGHTNESS } from "../../src/types/utils/constants"
 describe("Complex Nested Structures", () => {
 	test("should correctly parse and translate the proximity sensor LED indicator logic", () => {
 		const code = `
-    wait_for_button_press();
+    left_button.wait_for_press();
     while(true) {
         if (is_object_in_front()) {
             rgbLed.set_led_white();

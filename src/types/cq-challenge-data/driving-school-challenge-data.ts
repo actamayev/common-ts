@@ -35,7 +35,7 @@ export const DRIVING_SCHOOL_CHALLENGE_S2_P4: CqChallengeData = {
 	commonMistakes: [ ],
 	learningObjectives: [ ],
 	solutionCode: `
-	wait_for_button_press();
+	left_button.wait_for_press();
 	rgbLed.set_led_blue();
 	wait(2);
 	rgbLed.set_led_red();
@@ -69,7 +69,7 @@ export const DRIVING_SCHOOL_CHALLENGE_S3_P5: CqChallengeData = {
 	commonMistakes: [ ],
 	learningObjectives: [ ],
 	solutionCode: `
-	wait_for_button_press();
+	left_button.wait_for_press();
 	drive_distance(FORWARD, 8, 15);
 	drive_distance(BACKWARD, 8, 15);
 	`,
@@ -101,7 +101,7 @@ export const DRIVING_SCHOOL_CHALLENGE_S4_P5: CqChallengeData = {
 	commonMistakes: [],
 	learningObjectives: [ ],
 	solutionCode: `
-	wait_for_button_press();
+	left_button.wait_for_press();
 	turn(CLOCKWISE, 180);
 	wait(2);
 	turn(COUNTERCLOCKWISE, 180);
@@ -188,7 +188,7 @@ export const DRIVING_SCHOOL_CHALLENGE_S5_P4: CqChallengeData = {
 	commonMistakes: [],
 	learningObjectives: [],
 	solutionCode: `
-	wait_for_button_press();
+	left_button.wait_for_press();
 	drive_distance(FORWARD, 8, 15);
 	turn(CLOCKWISE, 90);
 	drive_distance(FORWARD, 8, 15);

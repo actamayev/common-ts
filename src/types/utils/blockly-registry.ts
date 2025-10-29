@@ -105,7 +105,7 @@ export const BLOCK_REGISTRY: Record<BlockNames, BlockDefinition> = {
 	// Start blocks
 	[START_BLOCK_TYPES.BUTTON_PRESS_START]: {
 		description: "Waits for the button to be pressed before continuing",
-		codeTemplate: "wait_for_button_press();",
+		codeTemplate: "left_button.wait_for_press();",
 		category: "Start",
 		parentCategory: "Logic"
 	},
@@ -241,7 +241,7 @@ export const BLOCK_REGISTRY: Record<BlockNames, BlockDefinition> = {
 	// Button blocks
 	[BUTTON_BLOCK_TYPES.RIGHT_BUTTON_PRESS]: {
 		description: "Reads the right button to detect if it is pressed",
-		codeTemplate: "is_right_button_pressed()",
+		codeTemplate: "right_button.is_pressed()",
 		category: "Button",
 	}
 }
