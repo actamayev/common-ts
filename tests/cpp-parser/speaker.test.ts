@@ -5,7 +5,7 @@ import { BytecodeOpCode } from "../../src/types/bytecode-types"
 describe("Speaker commands", () => {
 	describe("play_sound command", () => {
 		test("should parse play_sound with Chime", () => {
-			const bytecode = CppParser.cppToByte("play_sound(\"Chime\");")
+			const bytecode = CppParser.cppToByte("speaker.play_sound(\"Chime\");")
 
 			expect(bytecode[0]).toBe(BytecodeOpCode.PLAY_SOUND)
 			expect(bytecode[1]).toBe(SoundType.CHIME)
@@ -16,7 +16,7 @@ describe("Speaker commands", () => {
 		})
 
 		test("should parse play_sound with Chirp", () => {
-			const bytecode = CppParser.cppToByte("play_sound(\"Chirp\");")
+			const bytecode = CppParser.cppToByte("speaker.play_sound(\"Chirp\");")
 
 			expect(bytecode[0]).toBe(BytecodeOpCode.PLAY_SOUND)
 			expect(bytecode[1]).toBe(SoundType.CHIRP)
@@ -26,79 +26,79 @@ describe("Speaker commands", () => {
 		})
 
 		test("should parse play_sound with Pop", () => {
-			const bytecode = CppParser.cppToByte("play_sound(\"Pop\");")
+			const bytecode = CppParser.cppToByte("speaker.play_sound(\"Pop\");")
 
 			expect(bytecode[0]).toBe(BytecodeOpCode.PLAY_SOUND)
 			expect(bytecode[1]).toBe(SoundType.POP)
 		})
 
 		test("should parse play_sound with Drop", () => {
-			const bytecode = CppParser.cppToByte("play_sound(\"Drop\");")
+			const bytecode = CppParser.cppToByte("speaker.play_sound(\"Drop\");")
 
 			expect(bytecode[0]).toBe(BytecodeOpCode.PLAY_SOUND)
 			expect(bytecode[1]).toBe(SoundType.DROP)
 		})
 
 		test("should parse play_sound with Fart", () => {
-			const bytecode = CppParser.cppToByte("play_sound(\"Fart\");")
+			const bytecode = CppParser.cppToByte("speaker.play_sound(\"Fart\");")
 
 			expect(bytecode[0]).toBe(BytecodeOpCode.PLAY_SOUND)
 			expect(bytecode[1]).toBe(SoundType.FART)
 		})
 
 		test("should parse play_sound with Monkey", () => {
-			const bytecode = CppParser.cppToByte("play_sound(\"Monkey\");")
+			const bytecode = CppParser.cppToByte("speaker.play_sound(\"Monkey\");")
 
 			expect(bytecode[0]).toBe(BytecodeOpCode.PLAY_SOUND)
 			expect(bytecode[1]).toBe(SoundType.MONKEY)
 		})
 
 		test("should parse play_sound with Elephant", () => {
-			const bytecode = CppParser.cppToByte("play_sound(\"Elephant\");")
+			const bytecode = CppParser.cppToByte("speaker.play_sound(\"Elephant\");")
 
 			expect(bytecode[0]).toBe(BytecodeOpCode.PLAY_SOUND)
 			expect(bytecode[1]).toBe(SoundType.ELEPHANT)
 		})
 
 		test("should parse play_sound with Party", () => {
-			const bytecode = CppParser.cppToByte("play_sound(\"Party\");")
+			const bytecode = CppParser.cppToByte("speaker.play_sound(\"Party\");")
 
 			expect(bytecode[0]).toBe(BytecodeOpCode.PLAY_SOUND)
 			expect(bytecode[1]).toBe(SoundType.PARTY)
 		})
 
 		test("should parse play_sound with UFO", () => {
-			const bytecode = CppParser.cppToByte("play_sound(\"UFO\");")
+			const bytecode = CppParser.cppToByte("speaker.play_sound(\"UFO\");")
 
 			expect(bytecode[0]).toBe(BytecodeOpCode.PLAY_SOUND)
 			expect(bytecode[1]).toBe(SoundType.UFO)
 		})
 
 		test("should parse play_sound with Countdown", () => {
-			const bytecode = CppParser.cppToByte("play_sound(\"Countdown\");")
+			const bytecode = CppParser.cppToByte("speaker.play_sound(\"Countdown\");")
 
 			expect(bytecode[0]).toBe(BytecodeOpCode.PLAY_SOUND)
 			expect(bytecode[1]).toBe(SoundType.COUNTDOWN)
 		})
 
 		test("should parse play_sound with Engine", () => {
-			const bytecode = CppParser.cppToByte("play_sound(\"Engine\");")
+			const bytecode = CppParser.cppToByte("speaker.play_sound(\"Engine\");")
 
 			expect(bytecode[0]).toBe(BytecodeOpCode.PLAY_SOUND)
 			expect(bytecode[1]).toBe(SoundType.ENGINE)
 		})
 
 		test("should parse play_sound with Robot", () => {
-			const bytecode = CppParser.cppToByte("play_sound(\"Robot\");")
+			const bytecode = CppParser.cppToByte("speaker.play_sound(\"Robot\");")
 
 			expect(bytecode[0]).toBe(BytecodeOpCode.PLAY_SOUND)
 			expect(bytecode[1]).toBe(SoundType.ROBOT)
 		})
 
 		test("should handle case-insensitive sound names", () => {
-			const bytecode1 = CppParser.cppToByte("play_sound(\"chime\");")
-			const bytecode2 = CppParser.cppToByte("play_sound(\"CHIME\");")
-			const bytecode3 = CppParser.cppToByte("play_sound(\"ChImE\");")
+			const bytecode1 = CppParser.cppToByte("speaker.play_sound(\"chime\");")
+			const bytecode2 = CppParser.cppToByte("speaker.play_sound(\"CHIME\");")
+			const bytecode3 = CppParser.cppToByte("speaker.play_sound(\"ChImE\");")
 
 			expect(bytecode1[1]).toBe(SoundType.CHIME)
 			expect(bytecode2[1]).toBe(SoundType.CHIME)
@@ -107,9 +107,9 @@ describe("Speaker commands", () => {
 
 		test("should parse multiple play_sound commands", () => {
 			const program = `
-				play_sound("Chime");
-				play_sound("Chirp");
-				play_sound("Pop");
+				speaker.play_sound("Chime");
+				speaker.play_sound("Chirp");
+				speaker.play_sound("Pop");
 			`
 
 			const bytecode = CppParser.cppToByte(program)
@@ -133,9 +133,9 @@ describe("Speaker commands", () => {
 		test("should parse play_sound in conditional statements", () => {
 			const code = `
 				if (10 > 5) {
-					play_sound("Party");
+					speaker.play_sound("Party");
 				} else {
-					play_sound("Drop");
+					speaker.play_sound("Drop");
 				}
 			`
 
@@ -163,7 +163,7 @@ describe("Speaker commands", () => {
 		test("should parse play_sound in loops", () => {
 			const code = `
 				for (int i = 0; i < 3; i++) {
-					play_sound("Robot");
+					speaker.play_sound("Robot");
 				}
 			`
 
@@ -184,10 +184,10 @@ describe("Speaker commands", () => {
 		test("should combine play_sound with other commands", () => {
 			const program = `
 				rgbLed.set_led_red();
-				play_sound("Chime");
+				speaker.play_sound("Chime");
 				wait(1);
 				rgbLed.turn_led_off();
-				play_sound("Drop");
+				speaker.play_sound("Drop");
 			`
 
 			const bytecode = CppParser.cppToByte(program)
@@ -206,44 +206,44 @@ describe("Speaker commands", () => {
 	describe("play_sound error handling", () => {
 		test("should reject invalid sound name", () => {
 			expect(() => {
-				CppParser.cppToByte("play_sound(\"InvalidSound\");")
+				CppParser.cppToByte("speaker.play_sound(\"InvalidSound\");")
 			}).toThrow(/Invalid sound name: "InvalidSound"/)
 		})
 
 		test("should reject empty sound name", () => {
 			expect(() => {
-				CppParser.cppToByte("play_sound(\"\");")
+				CppParser.cppToByte("speaker.play_sound(\"\");")
 			}).toThrow(/Invalid sound name: ""/)
 		})
 
 		test("should reject sound name with wrong case for invalid sounds", () => {
 			expect(() => {
-				CppParser.cppToByte("play_sound(\"beep\");")
+				CppParser.cppToByte("speaker.play_sound(\"beep\");")
 			}).toThrow(/Invalid sound name: "beep"/)
 		})
 
 		test("should provide helpful error message with valid sound names", () => {
 			expect(() => {
-				CppParser.cppToByte("play_sound(\"WrongName\");")
+				CppParser.cppToByte("speaker.play_sound(\"WrongName\");")
 			}).toThrow(/Valid sounds are: CHIME, CHIRP, POP, DROP, FART, MONKEY, ELEPHANT, PARTY, UFO, COUNTDOWN, ENGINE, ROBOT/)
 		})
 
 		test("should reject malformed play_sound syntax", () => {
 			expect(() => {
-				CppParser.cppToByte("play_sound();")
+				CppParser.cppToByte("speaker.play_sound();")
 			}).toThrow(/Invalid command/)
 		})
 
 		test("should reject play_sound with number instead of string", () => {
 			expect(() => {
-				CppParser.cppToByte("play_sound(123);")
+				CppParser.cppToByte("speaker.play_sound(123);")
 			}).toThrow(/Invalid command/)
 		})
 	})
 
 	describe("play_tone command", () => {
 		test("should parse play_tone with A", () => {
-			const bytecode = CppParser.cppToByte("play_tone(\"A\");")
+			const bytecode = CppParser.cppToByte("speaker.play_tone(\"A\");")
 
 			expect(bytecode[0]).toBe(BytecodeOpCode.PLAY_TONE)
 			expect(bytecode[1]).toBe(ToneType.A)
@@ -254,7 +254,7 @@ describe("Speaker commands", () => {
 		})
 
 		test("should parse play_tone with B", () => {
-			const bytecode = CppParser.cppToByte("play_tone(\"B\");")
+			const bytecode = CppParser.cppToByte("speaker.play_tone(\"B\");")
 
 			expect(bytecode[0]).toBe(BytecodeOpCode.PLAY_TONE)
 			expect(bytecode[1]).toBe(ToneType.B)
@@ -264,44 +264,44 @@ describe("Speaker commands", () => {
 		})
 
 		test("should parse play_tone with C", () => {
-			const bytecode = CppParser.cppToByte("play_tone(\"C\");")
+			const bytecode = CppParser.cppToByte("speaker.play_tone(\"C\");")
 
 			expect(bytecode[0]).toBe(BytecodeOpCode.PLAY_TONE)
 			expect(bytecode[1]).toBe(ToneType.C)
 		})
 
 		test("should parse play_tone with D", () => {
-			const bytecode = CppParser.cppToByte("play_tone(\"D\");")
+			const bytecode = CppParser.cppToByte("speaker.play_tone(\"D\");")
 
 			expect(bytecode[0]).toBe(BytecodeOpCode.PLAY_TONE)
 			expect(bytecode[1]).toBe(ToneType.D)
 		})
 
 		test("should parse play_tone with E", () => {
-			const bytecode = CppParser.cppToByte("play_tone(\"E\");")
+			const bytecode = CppParser.cppToByte("speaker.play_tone(\"E\");")
 
 			expect(bytecode[0]).toBe(BytecodeOpCode.PLAY_TONE)
 			expect(bytecode[1]).toBe(ToneType.E)
 		})
 
 		test("should parse play_tone with F", () => {
-			const bytecode = CppParser.cppToByte("play_tone(\"F\");")
+			const bytecode = CppParser.cppToByte("speaker.play_tone(\"F\");")
 
 			expect(bytecode[0]).toBe(BytecodeOpCode.PLAY_TONE)
 			expect(bytecode[1]).toBe(ToneType.F)
 		})
 
 		test("should parse play_tone with G", () => {
-			const bytecode = CppParser.cppToByte("play_tone(\"G\");")
+			const bytecode = CppParser.cppToByte("speaker.play_tone(\"G\");")
 
 			expect(bytecode[0]).toBe(BytecodeOpCode.PLAY_TONE)
 			expect(bytecode[1]).toBe(ToneType.G)
 		})
 
 		test("should handle case-insensitive tone names", () => {
-			const bytecode1 = CppParser.cppToByte("play_tone(\"a\");")
-			const bytecode2 = CppParser.cppToByte("play_tone(\"A\");")
-			const bytecode3 = CppParser.cppToByte("play_tone(\"c\");")
+			const bytecode1 = CppParser.cppToByte("speaker.play_tone(\"a\");")
+			const bytecode2 = CppParser.cppToByte("speaker.play_tone(\"A\");")
+			const bytecode3 = CppParser.cppToByte("speaker.play_tone(\"c\");")
 
 			expect(bytecode1[1]).toBe(ToneType.A)
 			expect(bytecode2[1]).toBe(ToneType.A)
@@ -310,9 +310,9 @@ describe("Speaker commands", () => {
 
 		test("should parse multiple play_tone commands", () => {
 			const program = `
-				play_tone("A");
-				play_tone("B");
-				play_tone("C");
+				speaker.play_tone("A");
+				speaker.play_tone("B");
+				speaker.play_tone("C");
 			`
 
 			const bytecode = CppParser.cppToByte(program)
@@ -336,9 +336,9 @@ describe("Speaker commands", () => {
 		test("should parse play_tone in conditional statements", () => {
 			const code = `
 				if (10 > 5) {
-					play_tone("A");
+					speaker.play_tone("A");
 				} else {
-					play_tone("B");
+					speaker.play_tone("B");
 				}
 			`
 
@@ -366,7 +366,7 @@ describe("Speaker commands", () => {
 		test("should parse play_tone in loops", () => {
 			const code = `
 				for (int i = 0; i < 3; i++) {
-					play_tone("C");
+					speaker.play_tone("C");
 				}
 			`
 
@@ -387,10 +387,10 @@ describe("Speaker commands", () => {
 		test("should combine play_tone with other commands", () => {
 			const program = `
 				rgbLed.set_led_red();
-				play_tone("A");
+				speaker.play_tone("A");
 				wait(1);
 				rgbLed.turn_led_off();
-				play_tone("B");
+				speaker.play_tone("B");
 			`
 
 			const bytecode = CppParser.cppToByte(program)
@@ -407,9 +407,9 @@ describe("Speaker commands", () => {
 
 		test("should combine play_tone with play_sound", () => {
 			const program = `
-				play_tone("A");
-				play_sound("Chime");
-				play_tone("B");
+				speaker.play_tone("A");
+				speaker.play_sound("Chime");
+				speaker.play_tone("B");
 			`
 
 			const bytecode = CppParser.cppToByte(program)
@@ -427,43 +427,43 @@ describe("Speaker commands", () => {
 	describe("play_tone error handling", () => {
 		test("should reject invalid tone name", () => {
 			expect(() => {
-				CppParser.cppToByte("play_tone(\"InvalidTone\");")
+				CppParser.cppToByte("speaker.play_tone(\"InvalidTone\");")
 			}).toThrow(/Invalid tone name: "InvalidTone"/)
 		})
 
 		test("should reject empty tone name", () => {
 			expect(() => {
-				CppParser.cppToByte("play_tone(\"\");")
+				CppParser.cppToByte("speaker.play_tone(\"\");")
 			}).toThrow(/Invalid tone name: ""/)
 		})
 
 		test("should reject tone name with wrong case for invalid tones", () => {
 			expect(() => {
-				CppParser.cppToByte("play_tone(\"h\");")
+				CppParser.cppToByte("speaker.play_tone(\"h\");")
 			}).toThrow(/Invalid tone name: "h"/)
 		})
 
 		test("should provide helpful error message with valid tone names", () => {
 			expect(() => {
-				CppParser.cppToByte("play_tone(\"WrongTone\");")
+				CppParser.cppToByte("speaker.play_tone(\"WrongTone\");")
 			}).toThrow(/Valid tones are: A, B, C, D, E, F, G/)
 		})
 
 		test("should reject malformed play_tone syntax", () => {
 			expect(() => {
-				CppParser.cppToByte("play_tone();")
+				CppParser.cppToByte("speaker.play_tone();")
 			}).toThrow(/Invalid command/)
 		})
 
 		test("should reject play_tone with number instead of string", () => {
 			expect(() => {
-				CppParser.cppToByte("play_tone(123);")
+				CppParser.cppToByte("speaker.play_tone(123);")
 			}).toThrow(/Invalid command/)
 		})
 
 		test("should reject play_tone with multiple parameters", () => {
 			expect(() => {
-				CppParser.cppToByte("play_tone(\"A\", \"B\");")
+				CppParser.cppToByte("speaker.play_tone(\"A\", \"B\");")
 			}).toThrow(/Invalid command/)
 		})
 	})

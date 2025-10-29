@@ -161,8 +161,8 @@ export const CommandPatterns: Record<CommandType, RegExp> = {
 	[CommandType.SET_BACK_RIGHT_LED]: /^rgbLed\.set_back_right_led\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*\)$/,
 	[CommandType.SET_LEFT_HEADLIGHT]: /^rgbLed\.set_left_headlight\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*\)$/,
 	[CommandType.SET_RIGHT_HEADLIGHT]: /^rgbLed\.set_right_headlight\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*\)$/,
-	[CommandType.PLAY_SOUND]: /^play_sound\(\s*"([^"]*)"\s*\)$/,
-	[CommandType.PLAY_TONE]: /^play_tone\(\s*"([^"]*)"\s*\)$/,
+	[CommandType.PLAY_SOUND]: /^speaker\.play_sound\(\s*"([^"]*)"\s*\)$/,
+	[CommandType.PLAY_TONE]: /^speaker\.play_tone\(\s*"([^"]*)"\s*\)$/,
 	[CommandType.WAIT]: /^wait\(\s*(\d+(?:\.\d+)?)\s*\)$/,
 
 	[CommandType.VARIABLE_ASSIGNMENT]: /^(float|int|bool)\s+(\w+)\s*=\s*(.+)$/,

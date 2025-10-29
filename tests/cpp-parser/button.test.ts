@@ -238,8 +238,8 @@ describe("Button commands", () => {
 		test("should work with sound commands", () => {
 			const program = `
 				if (is_right_button_pressed()) {
-					play_sound("Chime");
-					play_tone("A");
+					speaker.play_sound("Chime");
+					speaker.play_tone("A");
 				}
 			`
 
