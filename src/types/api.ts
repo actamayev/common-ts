@@ -99,8 +99,8 @@ export interface LessonsResponse {
 	lessons: Lesson[]
 }
 
-export interface CheckAnswerResponse {
-	isCorrect: boolean
+export interface CheckMCQResponse {
+	correctAnswerId: number
 }
 
 // Personal Info Responses:
