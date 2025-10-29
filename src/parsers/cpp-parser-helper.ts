@@ -247,6 +247,27 @@ export class CppParserHelper {
 			return { operand: 0x8000 | register, updatedNextRegister: nextRegister }
 		}
 
+		// Check if this is a TOF distance sensor reading
+		const tofMatch = expr.match(/frontTof\.get_distance\(\)/)
+		if (tofMatch) {
+			// Allocate a register for the TOF distance value
+			if (nextRegister >= MAX_REGISTERS) {
+				throw new Error(`Program exceeds maximum register count (${MAX_REGISTERS})`)
+			}
+			const register = nextRegister++
+
+			// Add instruction to read TOF distance sensor into register
+			instructions.push({
+				opcode: BytecodeOpCode.READ_SENSOR,
+				operand1: SensorType.FRONT_TOF_DISTANCE,
+				operand2: register,
+				operand3: 0,
+				operand4: 0
+			})
+
+			return { operand: 0x8000 | register, updatedNextRegister: nextRegister }
+		}
+
 		// Check if this is a standard sensor reading
 		const sensorMatch = expr.match(/Sensors::getInstance\(\)\.(\w+)\(\)/)
 		if (sensorMatch) {

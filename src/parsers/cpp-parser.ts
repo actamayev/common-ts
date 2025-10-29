@@ -156,6 +156,9 @@ export class CppParser {
 					// Check if value is a sensor reading
 					const sensorMatch = varValue.match(/Sensors::getInstance\(\)\.(\w+)\(\)/)
 
+					// Check if value is a TOF distance sensor reading
+					const tofMatch = varValue.match(/frontTof\.get_distance\(\)/)
+
 					// Check if value is a button press detection function
 					const buttonMatch = varValue.match(/is_right_button_pressed\(\)/)
 
@@ -176,6 +179,15 @@ export class CppParser {
 						instructions.push({
 							opcode: BytecodeOpCode.READ_SENSOR,
 							operand1: sensorType,
+							operand2: register,
+							operand3: 0,
+							operand4: 0
+						})
+					} else if (tofMatch) {
+					// This is a TOF distance sensor reading assignment
+						instructions.push({
+							opcode: BytecodeOpCode.READ_SENSOR,
+							operand1: SensorType.FRONT_TOF_DISTANCE,
 							operand2: register,
 							operand3: 0,
 							operand4: 0
