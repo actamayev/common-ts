@@ -94,6 +94,14 @@ export const BLOCK_REGISTRY: Record<BlockNames, BlockDefinition> = {
 		parentCategory: "Sensors"
 	},
 
+	// Distance sensor blocks
+	[SENSORS_BLOCK_TYPES.GET_FRONT_TOF_DISTANCE]: {
+		description: "Gets the distance from the front TOF sensor",
+		codeTemplate: "frontTof.get_distance()",
+		category: "Distance Sensors",
+		parentCategory: "Sensors"
+	},
+
 	// Start blocks
 	[START_BLOCK_TYPES.BUTTON_PRESS_START]: {
 		description: "Waits for the button to be pressed before continuing",

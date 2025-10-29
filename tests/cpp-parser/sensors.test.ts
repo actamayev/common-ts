@@ -441,4 +441,154 @@ describe("Sensor Functionality", () => {
 			expect(bytecode[11]).toBe(40) // Unused
 		})
 	})
+
+	describe("TOF Distance Sensor", () => {
+		test("should parse TOF distance in variable assignment", () => {
+			const code = "float distance = frontTof.get_distance();"
+
+			const bytecode = CppParser.cppToByte(code)
+
+			// Should have DECLARE_VAR, READ_SENSOR with FRONT_TOF_DISTANCE, END
+			let declareVarFound = false
+			let readSensorFound = false
+			let endFound = false
+
+			for (let i = 0; i < bytecode.length; i += 5) {
+				if (bytecode[i] === BytecodeOpCode.DECLARE_VAR) {
+					declareVarFound = true
+				} else if (bytecode[i] === BytecodeOpCode.READ_SENSOR &&
+						   bytecode[i + 1] === SensorType.FRONT_TOF_DISTANCE) {
+					readSensorFound = true
+				} else if (bytecode[i] === BytecodeOpCode.END) {
+					endFound = true
+				}
+			}
+
+			expect(declareVarFound).toBe(true)
+			expect(readSensorFound).toBe(true)
+			expect(endFound).toBe(true)
+		})
+
+		test("should parse TOF distance in if statement comparison", () => {
+			const code = `if (frontTof.get_distance() > 50) {
+				rgbLed.set_led_green();
+			}`
+
+			const bytecode = CppParser.cppToByte(code)
+
+			// Should have READ_SENSOR, COMPARE, JUMP_IF_FALSE
+			expect(bytecode[0]).toBe(BytecodeOpCode.READ_SENSOR)
+			expect(bytecode[1]).toBe(SensorType.FRONT_TOF_DISTANCE)
+			expect(bytecode[2]).toBe(0) // Register ID
+			expect(bytecode[3]).toBe(0) // Unused
+			expect(bytecode[4]).toBe(0) // Unused
+
+			expect(bytecode[5]).toBe(BytecodeOpCode.COMPARE)
+			expect(bytecode[6]).toBe(ComparisonOp.GREATER_THAN)
+			expect(bytecode[7]).toBe(0x8000) // Register reference
+			expect(bytecode[8]).toBe(50) // Right value
+			expect(bytecode[9]).toBe(0) // Unused
+		})
+
+		test("should parse TOF distance with different comparison operators", () => {
+			const testCases = [
+				{ code: "if (frontTof.get_distance() < 20) { rgbLed.set_led_red(); }", operator: ComparisonOp.LESS_THAN, value: 20 },
+				{ code: "if (frontTof.get_distance() == 100) { rgbLed.set_led_blue(); }", operator: ComparisonOp.EQUAL, value: 100 },
+				{ code: "if (frontTof.get_distance() != 0) { rgbLed.set_led_white(); }", operator: ComparisonOp.NOT_EQUAL, value: 0 },
+				{ code: "if (frontTof.get_distance() >= 75) { rgbLed.set_led_purple(); }",
+				  operator: ComparisonOp.GREATER_EQUAL, value: 75 },
+				{ code: "if (frontTof.get_distance() <= 25) { rgbLed.set_led_yellow(); }", operator: ComparisonOp.LESS_EQUAL, value: 25 }
+			]
+
+			testCases.forEach(({ code, operator, value }) => {
+				const bytecode = CppParser.cppToByte(code)
+
+				expect(bytecode[0]).toBe(BytecodeOpCode.READ_SENSOR)
+				expect(bytecode[1]).toBe(SensorType.FRONT_TOF_DISTANCE)
+				expect(bytecode[5]).toBe(BytecodeOpCode.COMPARE)
+				expect(bytecode[6]).toBe(operator)
+				expect(bytecode[7]).toBe(0x8000) // Register reference
+				expect(bytecode[8]).toBe(value) // Right value
+			})
+		})
+
+		test("should parse compound condition with TOF distance and other sensor", () => {
+			const code = `if ((frontTof.get_distance() > 30) && (Sensors::getInstance().getPitch() < 45)) {
+				rgbLed.set_led_white();
+			}`
+
+			const bytecode = CppParser.cppToByte(code)
+
+			// Should have two READ_SENSOR instructions
+			let tofSensorFound = false
+			let pitchSensorFound = false
+
+			for (let i = 0; i < bytecode.length; i += 5) {
+				if (bytecode[i] === BytecodeOpCode.READ_SENSOR) {
+					if (bytecode[i + 1] === SensorType.FRONT_TOF_DISTANCE) {
+						tofSensorFound = true
+					} else if (bytecode[i + 1] === SensorType.PITCH) {
+						pitchSensorFound = true
+					}
+				}
+			}
+
+			expect(tofSensorFound).toBe(true)
+			expect(pitchSensorFound).toBe(true)
+
+			// Should have two COMPARE instructions and two JUMP_IF_FALSE instructions
+			let compareCount = 0
+			let jumpIfFalseCount = 0
+
+			for (let i = 0; i < bytecode.length; i += 5) {
+				if (bytecode[i] === BytecodeOpCode.COMPARE) {
+					compareCount++
+				} else if (bytecode[i] === BytecodeOpCode.JUMP_IF_FALSE) {
+					jumpIfFalseCount++
+				}
+			}
+
+			expect(compareCount).toBe(2)
+			expect(jumpIfFalseCount).toBe(2) // Short-circuit logic for AND
+		})
+
+		test("should parse if-else statement with TOF distance", () => {
+			const code = `if (frontTof.get_distance() > 100) {
+				rgbLed.set_led_green();
+			} else {
+				rgbLed.set_led_red();
+			}`
+
+			const bytecode = CppParser.cppToByte(code)
+
+			// Find READ_SENSOR instruction for TOF distance
+			let sensorReadFound = false
+			for (let i = 0; i < bytecode.length; i += 5) {
+				if (bytecode[i] === BytecodeOpCode.READ_SENSOR &&
+					bytecode[i + 1] === SensorType.FRONT_TOF_DISTANCE) {
+					sensorReadFound = true
+					break
+				}
+			}
+
+			expect(sensorReadFound).toBe(true)
+
+			// Check for both LED colors
+			let redLEDFound = false
+			let greenLEDFound = false
+
+			for (let i = 0; i < bytecode.length; i += 5) {
+				if (bytecode[i] === BytecodeOpCode.SET_ALL_LEDS) {
+					if (bytecode[i + 1] === MAX_LED_BRIGHTNESS && bytecode[i + 2] === 0 && bytecode[i + 3] === 0) {
+						redLEDFound = true
+					} else if (bytecode[i + 1] === 0 && bytecode[i + 2] === MAX_LED_BRIGHTNESS && bytecode[i + 3] === 0) {
+						greenLEDFound = true
+					}
+				}
+			}
+
+			expect(redLEDFound).toBe(true)
+			expect(greenLEDFound).toBe(true)
+		})
+	})
 })

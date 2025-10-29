@@ -86,6 +86,7 @@ export enum SensorType {
     SENSOR_COLOR_WHITE = 19,
     SENSOR_COLOR_BLACK = 20,
     SENSOR_COLOR_YELLOW = 21,
+    FRONT_TOF_DISTANCE = 22,
 }
 
 export enum CommandType {
@@ -135,6 +136,7 @@ export enum CommandType {
     WAIT_FOR_BUTTON = "WAIT_FOR_BUTTON",
     COLOR_SENSOR_READ = "COLOR_SENSOR_READ",
     CHECK_IF_RIGHT_BUTTON_PRESSED = "CHECK_IF_RIGHT_BUTTON_PRESSED",
+    GET_FRONT_TOF_DISTANCE = "GET_FRONT_TOF_DISTANCE",
 }
 
 // Command patterns for validation
@@ -163,9 +165,9 @@ export const CommandPatterns: Record<CommandType, RegExp> = {
 	[CommandType.VARIABLE_ASSIGNMENT]: /^(float|int|bool)\s+(\w+)\s*=\s*(.+)$/,
 
 	// Updated regex for IF_STATEMENT
-	[CommandType.IF_STATEMENT]: /^if\s*\(\s*(?:is_object_near_side_(left|right)\(\)|is_object_in_front\(\)|is_right_button_pressed\(\)|is_object_(red|green|blue|white|black|yellow)\(\)|(true|false)|\b(\w+)\b|(Sensors::getInstance\(\)\.\w+\(\)|[-\d.]+|\w+)\s*([<>=!][=]?)\s*(Sensors::getInstance\(\)\.\w+\(\)|[-\d.]+|\w+))\s*\)$/,
+	[CommandType.IF_STATEMENT]: /^if\s*\(\s*(?:is_object_near_side_(left|right)\(\)|is_object_in_front\(\)|is_right_button_pressed\(\)|is_object_(red|green|blue|white|black|yellow)\(\)|(true|false)|\b(\w+)\b|(Sensors::getInstance\(\)\.\w+\(\)|frontTof\.get_distance\(\)|[-\d.]+|\w+)\s*([<>=!][=]?)\s*(Sensors::getInstance\(\)\.\w+\(\)|frontTof\.get_distance\(\)|[-\d.]+|\w+))\s*\)$/,
 	[CommandType.COMPOUND_OR_IF_STATEMENT]: /^if\s*\(\s*\(.+?\)\s*\|\|\s*\(.+?\)\s*\)$/,
-	[CommandType.ELSE_IF_STATEMENT]: /^else\s+if\s*\(\s*(?:is_object_near_side_(left|right)\(\)|is_object_in_front\(\)|is_right_button_pressed\(\)|is_object_(red|green|blue|white|black|yellow)\(\)|(true|false)|\b(\w+)\b|(Sensors::getInstance\(\)\.\w+\(\)|[-\d.]+|\w+)\s*([<>=!][=]?)\s*(Sensors::getInstance\(\)\.\w+\(\)|[-\d.]+|\w+))\s*\)$/,
+	[CommandType.ELSE_IF_STATEMENT]: /^else\s+if\s*\(\s*(?:is_object_near_side_(left|right)\(\)|is_object_in_front\(\)|is_right_button_pressed\(\)|is_object_(red|green|blue|white|black|yellow)\(\)|(true|false)|\b(\w+)\b|(Sensors::getInstance\(\)\.\w+\(\)|frontTof\.get_distance\(\)|[-\d.]+|\w+)\s*([<>=!][=]?)\s*(Sensors::getInstance\(\)\.\w+\(\)|frontTof\.get_distance\(\)|[-\d.]+|\w+))\s*\)$/,
 	[CommandType.COMPOUND_AND_IF_STATEMENT]: /^if\s*\(\s*\(.+?\)\s*&&\s*\(.+?\)\s*\)$/,
 	[CommandType.COMPOUND_AND_ELSE_IF_STATEMENT]: /^else\s+if\s*\(\s*\(.+?\)\s*&&\s*\(.+?\)\s*\)$/,
 	[CommandType.COMPOUND_OR_ELSE_IF_STATEMENT]: /^else\s+if\s*\(\s*\(.+?\)\s*\|\|\s*\(.+?\)\s*\)$/,
@@ -187,4 +189,5 @@ export const CommandPatterns: Record<CommandType, RegExp> = {
 	[CommandType.WAIT_FOR_BUTTON]: /^wait_for_button_press\(\)$/,
 	[CommandType.COLOR_SENSOR_READ]: /^is_object_(red|green|blue|white|black|yellow)\(\)$/,
 	[CommandType.CHECK_IF_RIGHT_BUTTON_PRESSED]: /^is_right_button_pressed\(\)$/,
+	[CommandType.GET_FRONT_TOF_DISTANCE]: /^frontTof.get_distance\(\)$/,
 }
