@@ -99,6 +99,10 @@ export interface LessonsResponse {
 	lessons: Lesson[]
 }
 
+export interface CheckAnswerResponse {
+	isCorrect: boolean
+}
+
 // Personal Info Responses:
 export interface BasicPersonalInfoResponse {
 	username: string
