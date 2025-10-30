@@ -149,11 +149,8 @@ export class CppParserHelper {
 		variables: Map<string, VariableType>,
 		nextRegister: number,
 		instructions: BytecodeInstruction[]
-	): {
-	operand: number,
-	updatedNextRegister: number
-} {
-	// Check if this is a boolean literal first (before checking variables)
+	): { operand: number, updatedNextRegister: number } {
+		// Check if this is a boolean literal first (before checking variables)
 		const trimmedExpr = expr.trim()
 		if (trimmedExpr === "true") {
 			return { operand: 1.0, updatedNextRegister: nextRegister }
