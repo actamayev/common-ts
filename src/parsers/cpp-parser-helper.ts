@@ -1,7 +1,7 @@
 /* eslint-disable max-depth */
 /* eslint-disable complexity */
 /* eslint-disable max-lines-per-function */
-import { BytecodeOpCode, CommandPatterns, CommandType, ComparisonOp, LedID, SensorType } from "../types/bytecode-types"
+import { BytecodeOpCode, CommandPatterns, CommandType, ComparisonOp, SensorType } from "../types/bytecode-types"
 import { BytecodeInstruction, VariableType, ValidCommand, CharacterStack } from "../types/utils/bytecode"
 import { MAX_REGISTERS } from "../types/utils/constants"
 
@@ -314,18 +314,6 @@ export class CppParserHelper {
 		case "right": return SensorType.SIDE_RIGHT_PROXIMITY
 		case "front": return SensorType.FRONT_PROXIMITY
 		default: throw new Error(`Unknown proximity type: ${proximityType}`)
-		}
-	}
-
-	static handleIndividualLed(matches: RegExpMatchArray | null, ledId: LedID, instructions: BytecodeInstruction[]): void {
-		if (matches && matches.length === 4) {
-			instructions.push({
-				opcode: BytecodeOpCode.SET_LED,
-				operand1: ledId,
-				operand2: parseInt(matches[1], 10), // Red
-				operand3: parseInt(matches[2], 10), // Green
-				operand4: parseInt(matches[3], 10)  // Blue
-			})
 		}
 	}
 

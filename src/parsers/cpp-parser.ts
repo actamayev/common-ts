@@ -1,7 +1,7 @@
 /* eslint-disable max-len, complexity, max-lines-per-function, max-depth */
 import { INSTRUCTION_SIZE, MAX_JUMP_DISTANCE, MAX_LED_BRIGHTNESS, MAX_PROGRAM_SIZE, MAX_REGISTERS } from "../types/utils/constants"
 import { SoundType, ToneType } from "../message-builder/protocol"
-import { BytecodeOpCode, CommandPatterns, CommandType, ComparisonOp, comparisonOperatorPattern, LedID, SensorType, VarType } from "../types/bytecode-types"
+import { BytecodeOpCode, CommandPatterns, CommandType, ComparisonOp, comparisonOperatorPattern, SensorType, VarType } from "../types/bytecode-types"
 import { CppParserHelper } from "./cpp-parser-helper"
 import { BytecodeInstruction, BlockStack, PendingJumps, VariableType } from "../types/utils/bytecode"
 
@@ -365,50 +365,6 @@ export class CppParser {
 					operand3: 0,
 					operand4: 0
 				})
-				break
-
-			case CommandType.SET_ALL_LEDS:
-				if (command.matches && command.matches.length === 4) {
-					instructions.push({
-						opcode: BytecodeOpCode.SET_ALL_LEDS,
-						operand1: parseInt(command.matches[1], 10),
-						operand2: parseInt(command.matches[2], 10),
-						operand3: parseInt(command.matches[3], 10),
-						operand4: 0
-					})
-				}
-				break
-
-			case CommandType.SET_TOP_LEFT_LED:
-				CppParserHelper.handleIndividualLed(command.matches, LedID.TOP_LEFT, instructions)
-				break
-
-			case CommandType.SET_TOP_RIGHT_LED:
-				CppParserHelper.handleIndividualLed(command.matches, LedID.TOP_RIGHT, instructions)
-				break
-
-			case CommandType.SET_MIDDLE_LEFT_LED:
-				CppParserHelper.handleIndividualLed(command.matches, LedID.MIDDLE_LEFT, instructions)
-				break
-
-			case CommandType.SET_MIDDLE_RIGHT_LED:
-				CppParserHelper.handleIndividualLed(command.matches, LedID.MIDDLE_RIGHT, instructions)
-				break
-
-			case CommandType.SET_BACK_LEFT_LED:
-				CppParserHelper.handleIndividualLed(command.matches, LedID.BACK_LEFT, instructions)
-				break
-
-			case CommandType.SET_BACK_RIGHT_LED:
-				CppParserHelper.handleIndividualLed(command.matches, LedID.BACK_RIGHT, instructions)
-				break
-
-			case CommandType.SET_LEFT_HEADLIGHT:
-				CppParserHelper.handleIndividualLed(command.matches, LedID.LEFT_HEADLIGHT, instructions)
-				break
-
-			case CommandType.SET_RIGHT_HEADLIGHT:
-				CppParserHelper.handleIndividualLed(command.matches, LedID.RIGHT_HEADLIGHT, instructions)
 				break
 
 			case CommandType.WAIT:
