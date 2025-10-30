@@ -222,16 +222,16 @@ export class CppParserHelper {
 		const colorMatch = expr.match(CommandPatterns[CommandType.COLOR_SENSOR_READ])
 		if (colorMatch) {
 			// Extract color from the regex match
-			const colorName = colorMatch[1] // red, green, blue, white, black, yellow
+			const colorName = colorMatch[1] // RED, GREEN, BLUE, WHITE, BLACK, YELLOW
 			let sensorType: SensorType
 
 			switch (colorName) {
-			case "red": sensorType = SensorType.SENSOR_COLOR_RED; break
-			case "green": sensorType = SensorType.SENSOR_COLOR_GREEN; break
-			case "blue": sensorType = SensorType.SENSOR_COLOR_BLUE; break
-			case "white": sensorType = SensorType.SENSOR_COLOR_WHITE; break
-			case "black": sensorType = SensorType.SENSOR_COLOR_BLACK; break
-			case "yellow": sensorType = SensorType.SENSOR_COLOR_YELLOW; break
+			case "RED": sensorType = SensorType.SENSOR_COLOR_RED; break
+			case "GREEN": sensorType = SensorType.SENSOR_COLOR_GREEN; break
+			case "BLUE": sensorType = SensorType.SENSOR_COLOR_BLUE; break
+			case "WHITE": sensorType = SensorType.SENSOR_COLOR_WHITE; break
+			case "BLACK": sensorType = SensorType.SENSOR_COLOR_BLACK; break
+			case "YELLOW": sensorType = SensorType.SENSOR_COLOR_YELLOW; break
 			default: throw new Error(`Unsupported color: ${colorName}`)
 			}
 

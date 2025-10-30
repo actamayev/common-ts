@@ -260,16 +260,16 @@ describe("Sensor Functionality", () => {
 
 	describe("Color Sensor Detection", () => {
 		const colorTestCases = [
-			{ color: "red" },
-			{ color: "green" },
-			{ color: "blue" },
-			{ color: "white" },
-			{ color: "black" }
+			{ color: "RED" },
+			{ color: "GREEN" },
+			{ color: "BLUE" },
+			{ color: "WHITE" },
+			{ color: "BLACK" }
 		]
 
 		colorTestCases.forEach(({ color }) => {
 			test(`should parse if statement with ${color} color detection`, () => {
-				const code = `if (is_object_${color}()) {
+				const code = `if (color_sensor.is_object(${color})) {
 					rgbLed.set_led_red();
 				}`
 
@@ -282,11 +282,11 @@ describe("Sensor Functionality", () => {
 
 				// Map color to expected sensor type
 				const expectedSensorType = {
-					"red": SensorType.SENSOR_COLOR_RED,
-					"green": SensorType.SENSOR_COLOR_GREEN,
-					"blue": SensorType.SENSOR_COLOR_BLUE,
-					"white": SensorType.SENSOR_COLOR_WHITE,
-					"black": SensorType.SENSOR_COLOR_BLACK
+					"RED": SensorType.SENSOR_COLOR_RED,
+					"GREEN": SensorType.SENSOR_COLOR_GREEN,
+					"BLUE": SensorType.SENSOR_COLOR_BLUE,
+					"WHITE": SensorType.SENSOR_COLOR_WHITE,
+					"BLACK": SensorType.SENSOR_COLOR_BLACK
 				}[color]
 
 				for (let i = 0; i < bytecode.length; i += 5) {
@@ -323,7 +323,7 @@ describe("Sensor Functionality", () => {
 		})
 
 		test("should parse if-else statement with color detection", () => {
-			const code = `if (is_object_red()) {
+			const code = `if (color_sensor.is_object(RED)) {
 				rgbLed.set_led_red();
 			} else {
 				rgbLed.set_led_green();
@@ -362,7 +362,7 @@ describe("Sensor Functionality", () => {
 		})
 
 		test("should parse compound condition with color detection", () => {
-			const code = `if ((is_object_red()) && (imu.getPitch() > 10)) {
+			const code = `if ((color_sensor.is_object(RED)) && (imu.getPitch() > 10)) {
 				rgbLed.set_led_white();
 			}`
 
@@ -402,7 +402,7 @@ describe("Sensor Functionality", () => {
 		})
 
 		test("should handle color detection in variable assignment", () => {
-			const code = "bool colorDetected = is_object_blue();"
+			const code = "bool colorDetected = color_sensor.is_object(BLUE);"
 
 			const bytecode = CppParser.cppToByte(code)
 
@@ -424,7 +424,7 @@ describe("Sensor Functionality", () => {
 		})
 
 		test("should parse if statement with yellow color detection", () => {
-			const code = `if (is_object_yellow()) {
+			const code = `if (color_sensor.is_object(YELLOW)) {
 				rgbLed.set_led_yellow();
 			}`
 
