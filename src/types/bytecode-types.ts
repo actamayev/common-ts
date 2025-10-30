@@ -145,11 +145,11 @@ export const CommandPatterns: Record<CommandType, RegExp> = {
 	[CommandType.MOTOR_STOP]: /^motors.stop\(\)$/,
 	[CommandType.MOTOR_TURN]: /^motors.turn\(\s*(CLOCKWISE|COUNTERCLOCKWISE)\s*,\s*(\d+)\s*\)$/,
 
+	[CommandType.WAIT_FOR_BUTTON]: /^left_button.wait_for_press\(\)$/,
+	[CommandType.CHECK_IF_RIGHT_BUTTON_PRESSED]: /^right_button.is_pressed\(\)$/,
 	[CommandType.LEFT_DISTANCE_SENSOR]: /^left_distance_sensor\.is_object_near\(\)$/,
 	[CommandType.RIGHT_DISTANCE_SENSOR]: /^right_distance_sensor\.is_object_near\(\)$/,
-	[CommandType.FRONT_PROXIMITY_DETECTION]: /^front_distance_sensor.is_object_in_front\(\)$/,
-	[CommandType.WAIT_FOR_BUTTON]: /^left_button.wait_for_press\(\)$/,
-	[CommandType.COLOR_SENSOR_READ]: /^color_sensor\.is_object\(\s*(RED|GREEN|BLUE|WHITE|BLACK|YELLOW)\s*\)$/,
-	[CommandType.CHECK_IF_RIGHT_BUTTON_PRESSED]: /^right_button.is_pressed\(\)$/,
 	[CommandType.GET_FRONT_TOF_DISTANCE]: /^front_distance_sensor.get_distance\(\)$/,
+	[CommandType.FRONT_PROXIMITY_DETECTION]: /^front_distance_sensor.is_object_in_front\(\)$/,
+	[CommandType.COLOR_SENSOR_READ]: /^color_sensor\.is_object\(\s*(RED|GREEN|BLUE|WHITE|BLACK|YELLOW)\s*\)$/,
 }
