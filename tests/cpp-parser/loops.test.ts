@@ -5,7 +5,7 @@ import { CppParser } from "../../src/parsers/cpp-parser"
 describe("While Loop Functionality", () => {
 	test("should parse basic while(true) loop", () => {
 		const code = `while(true) {
-		rgbLed.set_color(RED);
+		all_leds.set_color(RED);
 		wait(0.5);
 	}`
 
@@ -37,9 +37,9 @@ describe("While Loop Functionality", () => {
 
 	test("should handle nested while loops", () => {
 		const code = `while(true) {
-		rgbLed.set_color(RED);
+		all_leds.set_color(RED);
 		while(true) {
-			rgbLed.set_color(BLUE);
+			all_leds.set_color(BLUE);
 			wait(0.1);
 		}
 		wait(0.5);
@@ -80,9 +80,9 @@ describe("While Loop Functionality", () => {
 	test("should handle loops with conditionals", () => {
 		const code = `while(true) {
 			if (10 > 5) {
-				rgbLed.set_color(GREEN);
+				all_leds.set_color(GREEN);
 			} else {
-				rgbLed.set_color(RED);
+				all_leds.set_color(RED);
 			}
 			wait(1);
 		}`
@@ -134,11 +134,11 @@ describe("While Loop Functionality", () => {
 	test("should handle multiple loops in sequence", () => {
 		const code = `
 		while(true) {
-			rgbLed.set_color(RED);
+			all_leds.set_color(RED);
 			wait(0.1);
 		}
 		while(true) {
-			rgbLed.set_color(BLUE);
+			all_leds.set_color(BLUE);
 			wait(0.2);
 		}`
 
@@ -187,10 +187,10 @@ describe("While Loop Functionality", () => {
 
 	test("should handle while loop at the end of program", () => {
 		const code = `
-			rgbLed.set_color(GREEN);
+			all_leds.set_color(GREEN);
 			wait(2);
 			while(true) {
-				rgbLed.set_color(BLUE);
+				all_leds.set_color(BLUE);
 			}
 		`
 
@@ -229,7 +229,7 @@ describe("While Loop Functionality", () => {
 describe("For Loop Functionality", () => {
 	test("should parse basic for loop", () => {
 		const code = `for (int i = 0; i < 5; i++) {
-		rgbLed.set_color(RED);
+		all_leds.set_color(RED);
 		wait(0.1);
 	}`
 
@@ -291,7 +291,7 @@ describe("For Loop Functionality", () => {
 
 	test("should handle for loop with non-zero start value", () => {
 		const code = `for (int j = 3; j < 8; j++) {
-		rgbLed.set_color(BLUE);
+		all_leds.set_color(BLUE);
 	}`
 
 		const bytecode = CppParser.cppToByte(code)
@@ -304,10 +304,10 @@ describe("For Loop Functionality", () => {
 
 	test("should handle multiple for loops in sequence", () => {
 		const code = `for (int i = 0; i < 3; i++) {
-		rgbLed.set_color(RED);
+		all_leds.set_color(RED);
 	}
 	for (int j = 0; j < 2; j++) {
-		rgbLed.set_color(BLUE);
+		all_leds.set_color(BLUE);
 	}`
 
 		const bytecode = CppParser.cppToByte(code)
@@ -333,9 +333,9 @@ describe("For Loop Functionality", () => {
 
 	test("should handle nested for loops", () => {
 		const code = `for (int i = 0; i < 3; i++) {
-		rgbLed.set_color(RED);
+		all_leds.set_color(RED);
 		for (int j = 0; j < 2; j++) {
-			rgbLed.set_color(BLUE);
+			all_leds.set_color(BLUE);
 		}
 	}`
 
@@ -365,9 +365,9 @@ describe("For Loop Functionality", () => {
 	test("should handle for loop with conditional inside", () => {
 		const code = `for (int i = 0; i < 5; i++) {
 			if (2 > 1) {
-				rgbLed.set_color(GREEN);
+				all_leds.set_color(GREEN);
 			} else {
-				rgbLed.set_color(RED);
+				all_leds.set_color(RED);
 			}
 		}`
 
@@ -428,11 +428,11 @@ describe("For Loop Functionality", () => {
 
 	test("should handle complex for loop pattern with multiple operations", () => {
 		const code = `for (int i = 1; i < 4; i++) {
-		rgbLed.set_color(WHITE);
+		all_leds.set_color(WHITE);
 		wait(0.1);
-		rgbLed.set_color(BLUE);
+		all_leds.set_color(BLUE);
 		wait(0.1);
-		rgbLed.set_color(RED);
+		all_leds.set_color(RED);
 		wait(0.1);
 	}`
 
@@ -469,10 +469,10 @@ describe("For Loop Functionality", () => {
 
 	test("should handle for loop with variable reuse", () => {
 		const code = `for (int i = 0; i < 2; i++) {
-		rgbLed.set_color(RED);
+		all_leds.set_color(RED);
 	}
 	for (int i = 0; i < 3; i++) {
-		rgbLed.set_color(BLUE);
+		all_leds.set_color(BLUE);
 	}`
 
 		const bytecode = CppParser.cppToByte(code)

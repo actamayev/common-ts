@@ -6,11 +6,11 @@ describe("Else-If Edge Cases and Specific Scenarios", () => {
 		test("should correctly fix jump addresses in simple else-if chain", () => {
 			const code = `
 				if (false) {
-					rgbLed.set_color(RED);
+					all_leds.set_color(RED);
 				} else if (false) {
-					rgbLed.set_color(GREEN);
+					all_leds.set_color(GREEN);
 				} else {
-					rgbLed.set_color(BLUE);
+					all_leds.set_color(BLUE);
 				}
 			`
 
@@ -54,12 +54,12 @@ describe("Else-If Edge Cases and Specific Scenarios", () => {
 			const simpleCode = `
 				for (int i = 0; i < 3; i++) {
 					if (i == 0) {
-						rgbLed.set_color(RED);
+						all_leds.set_color(RED);
 					} else if (i == 1) {
-						rgbLed.set_color(GREEN);
+						all_leds.set_color(GREEN);
 						wait(0.1);
 					} else if (i == 2) {
-						rgbLed.set_color(BLUE);
+						all_leds.set_color(BLUE);
 						wait(0.2);
 					}
 				}
@@ -88,11 +88,11 @@ describe("Else-If Edge Cases and Specific Scenarios", () => {
 		test("should generate correct bytecode sequence for two-condition else-if", () => {
 			const code = `
 				if (5 > 10) {
-					rgbLed.set_color(RED);
+					all_leds.set_color(RED);
 				} else if (15 > 10) {
-					rgbLed.set_color(GREEN);
+					all_leds.set_color(GREEN);
 				} else {
-					rgbLed.set_color(BLUE);
+					all_leds.set_color(BLUE);
 				}
 			`
 
@@ -142,11 +142,11 @@ describe("Else-If Edge Cases and Specific Scenarios", () => {
 				float c = 3.0;
 				
 				if (a > b) {
-					rgbLed.set_color(RED);
+					all_leds.set_color(RED);
 				} else if (b > c) {
-					rgbLed.set_color(GREEN);
+					all_leds.set_color(GREEN);
 				} else if (c > a) {
-					rgbLed.set_color(BLUE);
+					all_leds.set_color(BLUE);
 				}
 			`
 
@@ -243,19 +243,19 @@ describe("Else-If Edge Cases and Specific Scenarios", () => {
 				float time = imu.getYaw();
 				
 				if (time < 0) {
-					rgbLed.set_color(RED);
+					all_leds.set_color(RED);
 					wait(0.1);
 				} else if ((time >= 0) && (time < 90)) {
-					rgbLed.set_color(GREEN);
+					all_leds.set_color(GREEN);
 					wait(0.2);
 				} else if ((time >= 90) && (time < 180)) {
-					rgbLed.set_color(BLUE);
+					all_leds.set_color(BLUE);
 					wait(0.3);
 				} else if ((time >= 180) && (time < 270)) {
-					rgbLed.set_color(WHITE);
+					all_leds.set_color(WHITE);
 					wait(0.4);
 				} else {
-					rgbLed.set_color(PURPLE);
+					all_leds.set_color(PURPLE);
 					wait(0.5);
 				}
 			`
@@ -294,16 +294,16 @@ describe("Else-If Edge Cases and Specific Scenarios", () => {
 				
 				while (true) {
 					if (front_distance_sensor.is_object_in_front()) {
-						rgbLed.set_color(RED);
+						all_leds.set_color(RED);
 						left_button.wait_for_press();
 					} else if (left_distance_sensor.is_object_near()) {
-						rgbLed.set_color(GREEN);
+						all_leds.set_color(GREEN);
 						wait(1);
 					} else if (right_distance_sensor.is_object_near()) {
-						rgbLed.set_color(BLUE);
+						all_leds.set_color(BLUE);
 						wait(1);
 					} else {
-						rgbLed.set_color(OFF);
+						all_leds.set_color(OFF);
 						wait(0.1);
 					}
 				}
@@ -343,11 +343,11 @@ describe("Else-If Edge Cases and Specific Scenarios", () => {
 			}
 
 			// Add else-if chain
-			code += "if (var0 > var1) { rgbLed.set_color(RED); }"
+			code += "if (var0 > var1) { all_leds.set_color(RED); }"
 			for (let i = 2; i < 20; i++) {
 				code += ` else if (var${i} > var${i - 1}) { wait(${i * 10}); }`
 			}
-			code += " else { rgbLed.set_color(BLUE); }"
+			code += " else { all_leds.set_color(BLUE); }"
 
 			// Should parse successfully
 			expect(() => {
@@ -360,20 +360,20 @@ describe("Else-If Edge Cases and Specific Scenarios", () => {
 				if (false) {
 					if (false) {
 						if (5 > 6) {
-							rgbLed.set_color(RED);
+							all_leds.set_color(RED);
 						} else if (7 > 8) {
-							rgbLed.set_color(GREEN);
+							all_leds.set_color(GREEN);
 						}
 					} else if (9 > 10) {
 						if (11 > 12) {
-							rgbLed.set_color(BLUE);
+							all_leds.set_color(BLUE);
 						} else if (13 > 14) {
-							rgbLed.set_color(WHITE);
+							all_leds.set_color(WHITE);
 						}
 					}
 				} else if (15 > 16) {
 					if (17 > 18) {
-						rgbLed.set_color(PURPLE);
+						all_leds.set_color(PURPLE);
 					}
 				}
 			`

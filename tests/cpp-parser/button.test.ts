@@ -42,9 +42,9 @@ describe("Button commands", () => {
 		test("should parse right_button.is_pressed in conditional statements", () => {
 			const code = `
 				if (right_button.is_pressed()) {
-					rgbLed.set_color(RED);
+					all_leds.set_color(RED);
 				} else {
-					rgbLed.set_color(GREEN);
+					all_leds.set_color(GREEN);
 				}
 			`
 
@@ -66,7 +66,7 @@ describe("Button commands", () => {
 			const code = `
 				for (int i = 0; i < 3; i++) {
 					if (right_button.is_pressed()) {
-						rgbLed.set_color(BLUE);
+						all_leds.set_color(BLUE);
 					}
 				}
 			`
@@ -87,10 +87,10 @@ describe("Button commands", () => {
 
 		test("should combine right_button.is_pressed with other commands", () => {
 			const program = `
-				rgbLed.set_color(RED);
+				all_leds.set_color(RED);
 				right_button.is_pressed();
 				wait(1);
-				rgbLed.set_color(OFF);
+				all_leds.set_color(OFF);
 			`
 
 			const bytecode = CppParser.cppToByte(program)
@@ -106,7 +106,7 @@ describe("Button commands", () => {
 			const program = `
 				bool buttonPressed = right_button.is_pressed();
 				if (buttonPressed) {
-					rgbLed.set_color(GREEN);
+					all_leds.set_color(GREEN);
 				}
 			`
 
@@ -127,7 +127,7 @@ describe("Button commands", () => {
 		test("should work with compound conditions", () => {
 			const code = `
 				if ((right_button.is_pressed()) && (10 > 5)) {
-					rgbLed.set_color(BLUE);
+					all_leds.set_color(BLUE);
 				}
 			`
 
@@ -148,7 +148,7 @@ describe("Button commands", () => {
 		test("should work with OR conditions", () => {
 			const code = `
 				if ((right_button.is_pressed()) || (5 > 10)) {
-					rgbLed.set_color(YELLOW);
+					all_leds.set_color(YELLOW);
 				}
 			`
 
@@ -169,11 +169,11 @@ describe("Button commands", () => {
 		test("should work with else-if statements", () => {
 			const code = `
 				if (right_button.is_pressed()) {
-					rgbLed.set_color(RED);
+					all_leds.set_color(RED);
 				} else if (5 > 3) {
-					rgbLed.set_color(GREEN);
+					all_leds.set_color(GREEN);
 				} else {
-					rgbLed.set_color(BLUE);
+					all_leds.set_color(BLUE);
 				}
 			`
 
@@ -195,7 +195,7 @@ describe("Button commands", () => {
 			const code = `
 				while (true) {
 					if (right_button.is_pressed()) {
-						rgbLed.set_color(WHITE);
+						all_leds.set_color(WHITE);
 					}
 				}
 			`
@@ -217,7 +217,7 @@ describe("Button commands", () => {
 		test("should work with sensor combinations using compound condition", () => {
 			const code = `
 				if ((right_button.is_pressed()) && (front_distance_sensor.is_object_in_front())) {
-					rgbLed.set_color(PURPLE);
+					all_leds.set_color(PURPLE);
 				}
 			`
 
@@ -330,7 +330,7 @@ describe("Button commands", () => {
 			const code = `
 				if (right_button.is_pressed()) {
 					if (right_button.is_pressed()) {
-						rgbLed.set_color(RED);
+						all_leds.set_color(RED);
 					}
 				}
 			`
@@ -352,7 +352,7 @@ describe("Button commands", () => {
 			const code = `
 				for (int i = 0; i < 5; i++) {
 					if (right_button.is_pressed()) {
-						rgbLed.set_color(GREEN);
+						all_leds.set_color(GREEN);
 					}
 				}
 			`
@@ -374,7 +374,7 @@ describe("Button commands", () => {
 		test("should handle button check with arithmetic comparisons using compound condition", () => {
 			const code = `
 				if ((right_button.is_pressed()) && (10 > 5)) {
-					rgbLed.set_color(BLUE);
+					all_leds.set_color(BLUE);
 				}
 			`
 
@@ -396,7 +396,7 @@ describe("Button commands", () => {
 			const code = `
 				int counter = 5;
 				if ((right_button.is_pressed()) && (counter > 3)) {
-					rgbLed.set_color(YELLOW);
+					all_leds.set_color(YELLOW);
 				}
 			`
 

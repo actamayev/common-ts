@@ -116,7 +116,7 @@ describe("Proximity Sensor Functions", () => {
 			const code = `
         while(true) {
           if (front_distance_sensor.is_object_in_front()) {
-            rgbLed.set_color(RED);
+            all_leds.set_color(RED);
             wait(0.5);
           } else {
             drive(FORWARD, 50);
@@ -171,12 +171,12 @@ describe("Proximity Sensor Functions", () => {
 
 		test("should handle left_button.wait_for_press in a complex sequence", () => {
 			const code = `
-        rgbLed.set_color(BLUE);
+        all_leds.set_color(BLUE);
         left_button.wait_for_press();
-        rgbLed.set_color(GREEN);
+        all_leds.set_color(GREEN);
         wait(1);
         left_button.wait_for_press();
-        rgbLed.set_color(RED);
+        all_leds.set_color(RED);
       `
 
 			const bytecode = CppParser.cppToByte(code)
@@ -219,15 +219,15 @@ describe("Proximity Sensor Functions", () => {
 		test("should handle left_button.wait_for_press in control structures", () => {
 			const code = `
         if (front_distance_sensor.is_object_in_front()) {
-          rgbLed.set_color(RED);
+          all_leds.set_color(RED);
           left_button.wait_for_press();
         } else {
-          rgbLed.set_color(GREEN);
+          all_leds.set_color(GREEN);
         }
         
         for (int i = 0; i < 3; i++) {
           left_button.wait_for_press();
-          rgbLed.set_color(BLUE);
+          all_leds.set_color(BLUE);
           wait(0.5);
         }
       `
@@ -256,9 +256,9 @@ describe("Proximity Sensor Functions", () => {
         
         for (int i = 0; i < 3; i++) {
           // Flash light to indicate start
-          rgbLed.set_color(BLUE);
+          all_leds.set_color(BLUE);
           wait(0.2);
-          rgbLed.set_color(OFF);
+          all_leds.set_color(OFF);
           wait(0.2);
         }
         
@@ -266,14 +266,14 @@ describe("Proximity Sensor Functions", () => {
           // Check front obstacle
           if (front_distance_sensor.is_object_in_front()) {
             // Front blocked, check sides
-            rgbLed.set_color(RED);
+            all_leds.set_color(RED);
             wait(0.3);
             
             if (left_distance_sensor.is_object_near()) {
               // Left blocked too, try right
               if (right_distance_sensor.is_object_near()) {
                 // All directions blocked
-                rgbLed.set_color(PURPLE);
+                all_leds.set_color(PURPLE);
                 left_button.wait_for_press();  // Wait for manual intervention
               } else {
                 // Turn right
@@ -285,7 +285,7 @@ describe("Proximity Sensor Functions", () => {
             }
           } else {
             // Path is clear, move forward
-            rgbLed.set_color(GREEN);
+            all_leds.set_color(GREEN);
             drive(FORWARD, 50);
             wait(0.2);
           }

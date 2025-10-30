@@ -38,9 +38,9 @@ export const OBSTACLE_AVOIDANCE_CHALLENGE_1: CqChallengeData = {
 	solutionCode: `
         while(true) {
             if (front_distance_sensor.is_object_in_front()) {
-                rgbLed.set_color(RED)();
+                all_leds.set_color(RED)();
             } else {
-                rgbLed.set_color(GREEN)();
+                all_leds.set_color(GREEN)();
             }
         }
     `,
@@ -128,10 +128,10 @@ export const OBSTACLE_AVOIDANCE_CHALLENGE_2: CqChallengeData = {
         left_button.wait_for_press();
         while(true) {
             if (front_distance_sensor.is_object_in_front()) {
-                rgbLed.set_color(RED)();
+                all_leds.set_color(RED)();
                 motors.stop();
             } else {
-                rgbLed.set_color(GREEN)();
+                all_leds.set_color(GREEN)();
                 drive(FORWARD, 50);
             }
         }
@@ -231,10 +231,10 @@ export const OBSTACLE_AVOIDANCE_CHALLENGE_3: CqChallengeData = {
         left_button.wait_for_press();
         while(true) {
             if (front_distance_sensor.is_object_in_front()) {
-                rgbLed.set_color(RED)();
+                all_leds.set_color(RED)();
                 turn(CLOCKWISE, 90);
             } else {
-                rgbLed.set_color(GREEN)();
+                all_leds.set_color(GREEN)();
                 drive(FORWARD, 50);
             }
         }
@@ -273,9 +273,9 @@ export const OBSTACLE_AVOIDANCE_CHALLENGE_4: CqChallengeData = {
 	solutionCode: `
         while(true) {
             if (right_distance_sensor.is_object_near()) {
-                rgbLed.set_color(BLUE)();
+                all_leds.set_color(BLUE)();
             } else {
-                rgbLed.set_color(OFF);
+                all_leds.set_color(OFF);
             }
         }
     `,
@@ -321,16 +321,16 @@ export const OBSTACLE_AVOIDANCE_CHALLENGE_5: CqChallengeData = {
         left_button.wait_for_press();
         while(true) {
             if (front_distance_sensor.is_object_in_front()) {
-                rgbLed.set_color(WHITE);
+                all_leds.set_color(WHITE);
                 turn(CLOCKWISE, 90);
             } else if (left_distance_sensor.is_object_near()) {
-                rgbLed.set_color(RED)();
+                all_leds.set_color(RED)();
                 turn(CLOCKWISE, 90);
             } else if (right_distance_sensor.is_object_near()) {
-                rgbLed.set_color(BLUE)();
+                all_leds.set_color(BLUE)();
                 turn(COUNTERCLOCKWISE, 90);
             } else {
-                rgbLed.set_color(GREEN)();
+                all_leds.set_color(GREEN)();
                 drive(FORWARD, 50);
             }
         }
