@@ -1,7 +1,7 @@
 /* eslint-disable max-len, complexity, max-lines-per-function, max-depth */
 import { INSTRUCTION_SIZE, MAX_JUMP_DISTANCE, MAX_LED_BRIGHTNESS, MAX_PROGRAM_SIZE, MAX_REGISTERS } from "../types/utils/constants"
 import { SoundType, ToneType } from "../message-builder/protocol"
-import { BytecodeOpCode, CommandPatterns, CommandType, ComparisonOp, comparisonOperatorPattern, LedColor, SensorType, VarType } from "../types/bytecode-types"
+import { BytecodeOpCode, CommandPatterns, CommandType, ComparisonOp, comparisonOperatorPattern, SensorType, VarType } from "../types/bytecode-types"
 import { CppParserHelper } from "./cpp-parser-helper"
 import { BytecodeInstruction, BlockStack, PendingJumps, VariableType } from "../types/utils/bytecode"
 

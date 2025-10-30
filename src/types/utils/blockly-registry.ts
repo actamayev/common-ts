@@ -47,7 +47,7 @@ export const BLOCK_REGISTRY: Record<BlockNames, BlockDefinition> = {
 	// LED blocks
 	[LED_BLOCK_TYPES.CONTROL_ALL_LEDS]: {
 		description: "Controls the RGB LED color (red, green, blue, white, off)",
-		codeTemplate: "rgbLed.set_led_{color}();",
+		codeTemplate: "all_leds.set_led_{color}();",
 		category: "LED"
 	},
 
