@@ -8,15 +8,15 @@ describe("Complex Nested Structures", () => {
     left_button.wait_for_press();
     while(true) {
         if (front_distance_sensor.is_object_in_front()) {
-            rgbLed.set_led_white();
+            rgbLed.set_color(WHITE);
         } else {
             if (right_distance_sensor.is_object_near()) {
-                rgbLed.set_led_red();
+                rgbLed.set_color(RED);
             } else {
                 if (left_distance_sensor.is_object_near()) {
-                    rgbLed.set_led_blue();
+                    rgbLed.set_color(BLUE);
                 } else {
-                    rgbLed.set_led_green();
+                    rgbLed.set_color(GREEN);
                 }
             }
         }
@@ -246,9 +246,9 @@ describe("Boundary Conditions", () => {
 	// Generate a program with a large number of simple statements
 		const statements: string[] = []
 		for (let i = 0; i < 100; i++) {
-			statements.push("rgbLed.set_led_red();")
+			statements.push("rgbLed.set_color(RED);")
 			statements.push("wait(10);")
-			statements.push("rgbLed.set_led_blue();")
+			statements.push("rgbLed.set_color(BLUE);")
 			statements.push("wait(10);")
 		}
 
@@ -272,9 +272,9 @@ describe("Boundary Conditions", () => {
 	test("should handle loops with edge-case iteration values", () => {
 	// Test cases with extreme loop bounds
 		const testCases: { code: string, iterations: number }[] = [
-			{ code: "for (int i = 0; i < 0; i++) { rgbLed.set_led_red(); }", iterations: 0 },
-			{ code: "for (int i = 0; i < 1; i++) { rgbLed.set_led_red(); }", iterations: 1 },
-			{ code: "for (int i = 32766; i < 32767; i++) { rgbLed.set_led_red(); }", iterations: 1 }, // Near uint16 max
+			{ code: "for (int i = 0; i < 0; i++) { rgbLed.set_color(RED); }", iterations: 0 },
+			{ code: "for (int i = 0; i < 1; i++) { rgbLed.set_color(RED); }", iterations: 1 },
+			{ code: "for (int i = 32766; i < 32767; i++) { rgbLed.set_color(RED); }", iterations: 1 }, // Near uint16 max
 		]
 
 		for (const { code, iterations } of testCases) {
@@ -327,7 +327,7 @@ describe("Boundary Conditions", () => {
 
 		// Use the variables in a series of if statements
 		for (let i = 0; i < numVars; i++) {
-			code += `if (var${i} < ${i + 1}) { rgbLed.set_led_red(); } else { rgbLed.set_led_blue(); }\n`
+			code += `if (var${i} < ${i + 1}) { rgbLed.set_color(RED); } else { rgbLed.set_color(BLUE); }\n`
 		}
 
 		// Should parse without issues
@@ -364,13 +364,13 @@ describe("Boundary Conditions", () => {
 		}
 
 		// Add statement at deepest level
-		code += `${currentIndent}rgbLed.set_led_red();\n`
+		code += `${currentIndent}rgbLed.set_color(RED);\n`
 
 		// Close all the open if blocks
 		for (let i = 0; i < nestingDepth; i++) {
 			currentIndent = currentIndent.substring(2) // Reduce indent
 			code += `${currentIndent}} else {\n`
-			code += `${currentIndent}  rgbLed.set_led_blue();\n`
+			code += `${currentIndent}  rgbLed.set_color(BLUE);\n`
 			code += `${currentIndent}}\n`
 		}
 
@@ -418,19 +418,19 @@ describe("Boundary Conditions", () => {
 		float magZ = imu.getMagneticFieldZ();
 		
 		if ((pitch > 30) || (roll > 30)) {
-		rgbLed.set_led_red();
+		rgbLed.set_color(RED);
 		} 
 
 		if (yaw > 90) {
-		rgbLed.set_led_green();
+		rgbLed.set_color(GREEN);
 		}
 
 		if (accelMag > 2) {
-		rgbLed.set_led_blue();
+		rgbLed.set_color(BLUE);
 		}
 
 		if (magX < 0) {
-		rgbLed.set_led_white();
+		rgbLed.set_color(WHITE);
 		}
 		
 		wait(0.1);
@@ -465,7 +465,7 @@ describe("Boundary Conditions", () => {
 			float z = 30.7;
 			
 			if ((x > 5 && y < 30) || (z > 20 && x < 15) || (y > 15 && z < 40)) {
-			  rgbLed.set_led_red();
+			  rgbLed.set_color(RED);
 			}
 		  `
 
@@ -487,7 +487,7 @@ describe("Error Handling Edge Cases", () => {
 			currentIndent += "  "
 		}
 
-		code += `${currentIndent}rgbLed.set_led_red();\n`
+		code += `${currentIndent}rgbLed.set_color(RED);\n`
 
 		// Close one fewer block than we opened
 		for (let i = 0; i < nestingDepth - 1; i++) {
@@ -503,15 +503,15 @@ describe("Error Handling Edge Cases", () => {
 	test("should reject mismatched brackets at different structural positions", () => {
 		const testCases = [
 			{
-				code: "if (x > 5) { rgbLed.set_led_red(); ]",
+				code: "if (x > 5) { rgbLed.set_color(RED); ]",
 				errorPattern: /Expected '\}' but found '\]'/
 			},
 			{
-				code: "if (x > 5) [ rgbLed.set_led_red(); }",
+				code: "if (x > 5) [ rgbLed.set_color(RED); }",
 				errorPattern: /Expected '\]' but found '\}'/
 			},
 			{
-				code: "for (int i = 0; i < 10; i++) { rgbLed.set_led_red(); ) }",
+				code: "for (int i = 0; i < 10; i++) { rgbLed.set_color(RED); ) }",
 				errorPattern: /Expected '\}' but found '\)'/ // Match the actual error message format
 			}
 		]
@@ -528,9 +528,9 @@ describe("Proximity Sensor Functionality", () => {
 	describe("Front Proximity Sensor", () => {
 		test("should parse front_distance_sensor.is_object_in_front function", () => {
 			const code = `if (front_distance_sensor.is_object_in_front()) {
-        rgbLed.set_led_red();
+        rgbLed.set_color(RED);
       } else {
-        rgbLed.set_led_green();
+        rgbLed.set_color(GREEN);
       }`
 
 			const bytecode = CppParser.cppToByte(code)
@@ -573,10 +573,10 @@ describe("Proximity Sensor Functionality", () => {
 		test("should handle front proximity sensor in loops", () => {
 			const code = `while(true) {
         if (front_distance_sensor.is_object_in_front()) {
-          rgbLed.set_led_red();
+          rgbLed.set_color(RED);
           wait(0.1);
         } else {
-          rgbLed.set_led_green();
+          rgbLed.set_color(GREEN);
           wait(0.5);
         }
       }`
@@ -619,9 +619,9 @@ describe("Proximity Sensor Functionality", () => {
 			const code = `
 			  bool objectDetected = front_distance_sensor.is_object_in_front();
 			  if (objectDetected) {
-				rgbLed.set_led_red();
+				rgbLed.set_color(RED);
 			  } else {
-				rgbLed.set_led_green();
+				rgbLed.set_color(GREEN);
 			  }
 			`
 

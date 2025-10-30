@@ -183,10 +183,10 @@ describe("Speaker commands", () => {
 
 		test("should combine play_sound with other commands", () => {
 			const program = `
-				rgbLed.set_led_red();
+				rgbLed.set_color(RED);
 				speaker.play_sound("Chime");
 				wait(1);
-				rgbLed.turn_led_off();
+				rgbLed.set_color(OFF);
 				speaker.play_sound("Drop");
 			`
 
@@ -386,10 +386,10 @@ describe("Speaker commands", () => {
 
 		test("should combine play_tone with other commands", () => {
 			const program = `
-				rgbLed.set_led_red();
+				rgbLed.set_color(RED);
 				speaker.play_tone("A");
 				wait(1);
-				rgbLed.turn_led_off();
+				rgbLed.set_color(OFF);
 				speaker.play_tone("B");
 			`
 

@@ -6,12 +6,12 @@ describe("Control flow", () => {
 	test("should parse basic if-else statement", () => {
 		const code = `
 		if (5 > 10) {
-			rgbLed.set_led_white();
+			rgbLed.set_color(WHITE);
 		} else {
-			rgbLed.set_led_red();
+			rgbLed.set_color(RED);
 		}
 		wait(1);
-		rgbLed.set_led_green();
+		rgbLed.set_color(GREEN);
 	`
 
 		const bytecode = CppParser.cppToByte(code)
@@ -60,9 +60,9 @@ describe("Control flow", () => {
 
 	test("should parse if without else", () => {
 		const code = `if (3 < 7) {
-	rgbLed.set_led_blue();
+	rgbLed.set_color(BLUE);
 }
-rgbLed.set_led_purple();`
+rgbLed.set_color(PURPLE);`
 
 		const bytecode = CppParser.cppToByte(code)
 
@@ -98,12 +98,12 @@ rgbLed.set_led_purple();`
 	test("should parse nested if-else statements", () => {
 		const code = `if (10 == 10) {
 	if (5 != 5) {
-		rgbLed.set_led_green();
+		rgbLed.set_color(GREEN);
 	} else {
-		rgbLed.set_led_blue();
+		rgbLed.set_color(BLUE);
 	}
 } else {
-	rgbLed.set_led_red();
+	rgbLed.set_color(RED);
 }`
 
 		const bytecode = CppParser.cppToByte(code)
@@ -133,12 +133,12 @@ rgbLed.set_led_purple();`
 
 	test("should parse equality and inequality operators", () => {
 		const tests = [
-			{ code: "if (5 == 5) { rgbLed.set_led_red(); }", op: ComparisonOp.EQUAL },
-			{ code: "if (5 != 5) { rgbLed.set_led_red(); }", op: ComparisonOp.NOT_EQUAL },
-			{ code: "if (5 > 5) { rgbLed.set_led_red(); }", op: ComparisonOp.GREATER_THAN },
-			{ code: "if (5 < 5) { rgbLed.set_led_red(); }", op: ComparisonOp.LESS_THAN },
-			{ code: "if (5 >= 5) { rgbLed.set_led_red(); }", op: ComparisonOp.GREATER_EQUAL },
-			{ code: "if (5 <= 5) { rgbLed.set_led_red(); }", op: ComparisonOp.LESS_EQUAL }
+			{ code: "if (5 == 5) { rgbLed.set_color(RED); }", op: ComparisonOp.EQUAL },
+			{ code: "if (5 != 5) { rgbLed.set_color(RED); }", op: ComparisonOp.NOT_EQUAL },
+			{ code: "if (5 > 5) { rgbLed.set_color(RED); }", op: ComparisonOp.GREATER_THAN },
+			{ code: "if (5 < 5) { rgbLed.set_color(RED); }", op: ComparisonOp.LESS_THAN },
+			{ code: "if (5 >= 5) { rgbLed.set_color(RED); }", op: ComparisonOp.GREATER_EQUAL },
+			{ code: "if (5 <= 5) { rgbLed.set_color(RED); }", op: ComparisonOp.LESS_EQUAL }
 		]
 
 		for (const test of tests) {
@@ -155,13 +155,13 @@ rgbLed.set_led_purple();`
 	describe("Control flow error handling", () => {
 		test("should reject unsupported comparison operator", () => {
 			expect(() => {
-				CppParser.cppToByte("if (5 = 10) { rgbLed.set_led_red(); }")
+				CppParser.cppToByte("if (5 = 10) { rgbLed.set_color(RED); }")
 			}).toThrow(/Unsupported operator/)
 		})
 
 		test("should reject invalid command for malformed if statement", () => {
 			expect(() => {
-				CppParser.cppToByte("if (5 <> 10) { rgbLed.set_led_red(); }")
+				CppParser.cppToByte("if (5 <> 10) { rgbLed.set_color(RED); }")
 			}).toThrow(/Invalid command/)
 		})
 	})
@@ -169,12 +169,12 @@ rgbLed.set_led_purple();`
 	describe("Complex Sensor Usage", () => {
 		test("should handle sensors in if-else branches", () => {
 			const code = `if (imu.getPitch() > 20) {
-			rgbLed.set_led_red();
+			rgbLed.set_color(RED);
 		} else {
 			if (imu.getRoll() < -10) {
-				rgbLed.set_led_blue();
+				rgbLed.set_color(BLUE);
 			} else {
-				rgbLed.set_led_green();
+				rgbLed.set_color(GREEN);
 			}
 		}`
 
@@ -244,7 +244,7 @@ rgbLed.set_led_purple();`
 		test("should handle sensors in loops", () => {
 			const code = `while (true) {
 		if (imu.getAccelMagnitude() > 5) {
-			rgbLed.set_led_white();
+			rgbLed.set_color(WHITE);
 		}
 		wait(0.1);
 	}`
@@ -259,7 +259,7 @@ rgbLed.set_led_purple();`
 		test("should handle sensors in for loops", () => {
 			const code = `for (int i = 0; i < 10; i++) {
 		if (imu.getYaw() > i) {
-			rgbLed.set_led_red();
+			rgbLed.set_color(RED);
 		}
 	}`
 
@@ -282,9 +282,9 @@ describe("Bidirectional Comparisons", () => {
 		const bytecode = CppParser.cppToByte(`
 	float myFloat = 10.5;
 	if (myFloat > 0) {
-	rgbLed.set_led_red();
+	rgbLed.set_color(RED);
 	} else {
-	rgbLed.set_led_green();
+	rgbLed.set_color(GREEN);
 	}
 `)
 
@@ -306,9 +306,9 @@ describe("Bidirectional Comparisons", () => {
 	test("should handle variables on right side of comparison", () => {
 		const code = `float myFloat = 10.5;
 			if (0 < myFloat) {
-			rgbLed.set_led_red();
+			rgbLed.set_color(RED);
 			} else {
-			rgbLed.set_led_green();
+			rgbLed.set_color(GREEN);
 			}`
 		const bytecode = CppParser.cppToByte(code)
 
@@ -331,9 +331,9 @@ describe("Bidirectional Comparisons", () => {
 		const code = `
 			while(true) {
 				if (0 > imu.getPitch()) {
-					rgbLed.set_led_red();
+					rgbLed.set_color(RED);
 				} else {
-					rgbLed.set_led_green();
+					rgbLed.set_color(GREEN);
 				}
 			}
 		`
@@ -370,9 +370,9 @@ describe("Bidirectional Comparisons", () => {
 	while(true) {
 		float pitch = imu.getPitch();
 		if (pitch < 0) {
-			rgbLed.set_led_red();
+			rgbLed.set_color(RED);
 		} else {
-			rgbLed.set_led_green();
+			rgbLed.set_color(GREEN);
 		}
 	}
 	`)
@@ -382,9 +382,9 @@ describe("Bidirectional Comparisons", () => {
 	while(true) {
 		float pitch = imu.getPitch();
 		if (0 > pitch) {
-			rgbLed.set_led_red();
+			rgbLed.set_color(RED);
 		} else {
-			rgbLed.set_led_green();
+			rgbLed.set_color(GREEN);
 		}
 	}
 	`)
@@ -432,7 +432,7 @@ describe("Bidirectional Comparisons", () => {
 		float var1 = 5.0;
 		float var2 = 10.0;
 		if (var1 < var2) {
-			rgbLed.set_led_red();
+			rgbLed.set_color(RED);
 		}
 	}
 	`)
@@ -458,7 +458,7 @@ describe("Bidirectional Comparisons", () => {
 		const bytecode = CppParser.cppToByte(`
 	while(true) {
 		if (imu.getPitch() > imu.getRoll()) {
-			rgbLed.set_led_blue();
+			rgbLed.set_color(BLUE);
 		}
 	}
 	`)
@@ -495,12 +495,12 @@ describe("Bidirectional Comparisons", () => {
 		test("should handle all comparison operators correctly", () => {
 			// Test all comparison operators
 			const operatorTests = [
-				{ code: "if (5 > 3) { rgbLed.set_led_red(); }", op: ComparisonOp.GREATER_THAN },
-				{ code: "if (3 < 5) { rgbLed.set_led_red(); }", op: ComparisonOp.LESS_THAN },
-				{ code: "if (5 >= 5) { rgbLed.set_led_red(); }", op: ComparisonOp.GREATER_EQUAL },
-				{ code: "if (5 <= 5) { rgbLed.set_led_red(); }", op: ComparisonOp.LESS_EQUAL },
-				{ code: "if (5 == 5) { rgbLed.set_led_red(); }", op: ComparisonOp.EQUAL },
-				{ code: "if (5 != 6) { rgbLed.set_led_red(); }", op: ComparisonOp.NOT_EQUAL }
+				{ code: "if (5 > 3) { rgbLed.set_color(RED); }", op: ComparisonOp.GREATER_THAN },
+				{ code: "if (3 < 5) { rgbLed.set_color(RED); }", op: ComparisonOp.LESS_THAN },
+				{ code: "if (5 >= 5) { rgbLed.set_color(RED); }", op: ComparisonOp.GREATER_EQUAL },
+				{ code: "if (5 <= 5) { rgbLed.set_color(RED); }", op: ComparisonOp.LESS_EQUAL },
+				{ code: "if (5 == 5) { rgbLed.set_color(RED); }", op: ComparisonOp.EQUAL },
+				{ code: "if (5 != 6) { rgbLed.set_color(RED); }", op: ComparisonOp.NOT_EQUAL }
 			]
 
 			for (const test of operatorTests) {
@@ -513,7 +513,7 @@ describe("Bidirectional Comparisons", () => {
 
 		test("should call parseComparisonOperator for all operators in compound conditions", () => {
 			// Testing compound AND condition
-			const andCode = "if ((5 >= 3) && (10 <= 15)) { rgbLed.set_led_red(); }"
+			const andCode = "if ((5 >= 3) && (10 <= 15)) { rgbLed.set_color(RED); }"
 			const andBytecode = CppParser.cppToByte(andCode)
 
 			// Find COMPARE instructions
@@ -534,7 +534,7 @@ describe("Bidirectional Comparisons", () => {
 			expect(foundLessEqual).toBe(true)
 
 			// Testing compound OR condition
-			const orCode = "if ((5 == 5) || (10 != 15)) { rgbLed.set_led_red(); }"
+			const orCode = "if ((5 == 5) || (10 != 15)) { rgbLed.set_color(RED); }"
 			const orBytecode = CppParser.cppToByte(orCode)
 
 			// Find COMPARE instructions
@@ -563,7 +563,7 @@ describe("Bidirectional Comparisons", () => {
         bool a = true;
         bool b = true;
         if ((a) && (b)) {
-          rgbLed.set_led_red();
+          rgbLed.set_color(RED);
         }
       `
 
@@ -632,7 +632,7 @@ describe("Bidirectional Comparisons", () => {
 			test("should handle compound AND with proximity sensor functions", () => {
 				const code = `
         if ((front_distance_sensor.is_object_in_front()) && (left_distance_sensor.is_object_near())) {
-          rgbLed.set_led_red();
+          rgbLed.set_color(RED);
         }
       `
 
@@ -680,7 +680,7 @@ describe("Bidirectional Comparisons", () => {
 				const code = `
         bool a = true;
         if ((a) && (5 > 3)) {
-          rgbLed.set_led_red();
+          rgbLed.set_color(RED);
         }
       `
 
@@ -726,7 +726,7 @@ describe("Bidirectional Comparisons", () => {
         bool a = false;
         bool b = true;
         if ((a) || (b)) {
-          rgbLed.set_led_red();
+          rgbLed.set_color(RED);
         }
       `
 
@@ -782,7 +782,7 @@ describe("Bidirectional Comparisons", () => {
 			test("should handle compound OR with proximity sensor functions", () => {
 				const code = `
         if ((front_distance_sensor.is_object_in_front()) || (right_distance_sensor.is_object_near())) {
-          rgbLed.set_led_red();
+          rgbLed.set_color(RED);
         }
       `
 
@@ -829,7 +829,7 @@ describe("Bidirectional Comparisons", () => {
 			test("should handle compound OR with mixed simple and comparison conditions", () => {
 				const code = `
         if ((front_distance_sensor.is_object_in_front()) || (5 < 10)) {
-          rgbLed.set_led_red();
+          rgbLed.set_color(RED);
         }
       `
 
@@ -880,7 +880,7 @@ describe("Bidirectional Comparisons", () => {
 				const code = `
         bool frontSensor = front_distance_sensor.is_object_in_front();
         if ((frontSensor) && (5 > 3)) {
-          rgbLed.set_led_red();
+          rgbLed.set_color(RED);
         }
       `
 

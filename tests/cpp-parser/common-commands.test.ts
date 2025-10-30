@@ -192,9 +192,9 @@ describe("Variable assignments", () => {
 		  const bytecode = CppParser.cppToByte(`
 			bool frontObject = front_distance_sensor.is_object_in_front();
 			if (frontObject) {
-			  rgbLed.set_led_red();
+			  rgbLed.set_color(RED);
 			} else {
-			  rgbLed.set_led_green();
+			  rgbLed.set_color(GREEN);
 			}
 		  `)
 
@@ -237,7 +237,7 @@ describe("Variable assignments", () => {
 // 2.2 Test LED operations
 describe("LED operations", () => {
 	test("should parse turn_led_off command", () => {
-		const bytecode = CppParser.cppToByte("rgbLed.turn_led_off();")
+		const bytecode = CppParser.cppToByte("rgbLed.set_color(OFF);")
 
 		expect(bytecode[0]).toBe(BytecodeOpCode.SET_ALL_LEDS)
 		expect(bytecode[1]).toBe(0) // R
@@ -341,11 +341,11 @@ describe("Wait commands", () => {
 		const program = `
 			left_button.wait_for_press();
 			while(true) {
-				rgbLed.set_led_white();
+				rgbLed.set_color(WHITE);
 				wait(0.9);
-				rgbLed.set_led_red();
+				rgbLed.set_color(RED);
 				wait(0.9);
-				rgbLed.set_led_green();
+				rgbLed.set_color(GREEN);
 				wait(0.9);
 			}
 
@@ -385,9 +385,9 @@ describe("Wait commands", () => {
 describe("Combining multiple commands", () => {
 	test("should parse a simple LED blink program", () => {
 		const program = `
-			rgbLed.set_led_red();
+			rgbLed.set_color(RED);
 			wait(0.5);
-			rgbLed.turn_led_off();
+			rgbLed.set_color(OFF);
 			wait(0.5);
 		`
 
@@ -426,7 +426,7 @@ describe("Variable in comparisons", () => {
 			CppParser.cppToByte(`
         float myFloat = 1.5;
         if (undefinedVar > 0) {
-          rgbLed.set_led_red();
+          rgbLed.set_color(RED);
         }
       `)
 		}).toThrow(/Undefined variable or invalid number: undefinedVar/)
@@ -437,7 +437,7 @@ describe("Variable in comparisons", () => {
 			CppParser.cppToByte(`
         float myFloat = 1.5;
         if (2 > undefinedVar) {
-          rgbLed.set_led_red();
+          rgbLed.set_color(RED);
         }
       `)
 		}).toThrow(/Undefined variable or invalid number: undefinedVar/)
@@ -447,9 +447,9 @@ describe("Variable in comparisons", () => {
 		const bytecode = CppParser.cppToByte(`
       float myFloat = 1.5;
       if (myFloat > 0) {
-        rgbLed.set_led_red();
+        rgbLed.set_color(RED);
       } else {
-        rgbLed.set_led_green();
+        rgbLed.set_color(GREEN);
       }
     `)
 
@@ -477,9 +477,9 @@ describe("Variable in comparisons", () => {
       while(true) {
         float myFloat = imu.getRoll();
         if (myFloat < -1.1) {
-          rgbLed.set_led_red();
+          rgbLed.set_color(RED);
         } else {
-          rgbLed.set_led_green();
+          rgbLed.set_color(GREEN);
         }
       }
     `)
@@ -495,9 +495,9 @@ describe("Variable in comparisons", () => {
         while(true) {
           float myFloat = imu.getRoll();
           if (myVar < -1.1) {  // myVar is undefined
-            rgbLed.set_led_red();
+            rgbLed.set_color(RED);
           } else {
-            rgbLed.set_led_green();
+            rgbLed.set_color(GREEN);
           }
         }
       `)
@@ -511,9 +511,9 @@ describe("Compound Conditional Statements", () => {
 		test("should parse basic AND condition with simple comparisons", () => {
 			const code = `
         if ((10 > 5) && (20 > 15)) {
-          rgbLed.set_led_red();
+          rgbLed.set_color(RED);
         } else {
-          rgbLed.set_led_green();
+          rgbLed.set_color(GREEN);
         }
       `
 
@@ -567,9 +567,9 @@ describe("Compound Conditional Statements", () => {
           float pitch = imu.getPitch();
           float roll = imu.getRoll();
           if ((pitch > 10) && (roll < -5)) {
-            rgbLed.set_led_red();
+            rgbLed.set_color(RED);
           } else {
-            rgbLed.set_led_blue();
+            rgbLed.set_color(BLUE);
           }
         }
       `
@@ -613,9 +613,9 @@ describe("Compound Conditional Statements", () => {
 		test("should handle complex AND condition that evaluates to false", () => {
 			const code = `
         if ((5 > 10) && (20 > 15)) {
-          rgbLed.set_led_red();
+          rgbLed.set_color(RED);
         } else {
-          rgbLed.set_led_green();
+          rgbLed.set_color(GREEN);
         }
       `
 
@@ -650,9 +650,9 @@ describe("Compound Conditional Statements", () => {
 		test("should parse basic OR condition with simple comparisons", () => {
 			const code = `
         if ((10 > 5) || (20 < 15)) {
-          rgbLed.set_led_red();
+          rgbLed.set_color(RED);
         } else {
-          rgbLed.set_led_green();
+          rgbLed.set_color(GREEN);
         }
       `
 
@@ -701,9 +701,9 @@ describe("Compound Conditional Statements", () => {
           float pitch = imu.getPitch();
           float roll = imu.getRoll();
           if ((pitch > 30) || (roll < -45)) {
-            rgbLed.set_led_purple();
+            rgbLed.set_color(PURPLE);
           } else {
-            rgbLed.set_led_white();
+            rgbLed.set_color(WHITE);
           }
         }
       `
@@ -761,9 +761,9 @@ describe("Compound Conditional Statements", () => {
 		test("should handle complex OR condition where both sides evaluate to false", () => {
 			const code = `
         if ((5 > 10) || (15 > 20)) {
-          rgbLed.set_led_red();
+          rgbLed.set_color(RED);
         } else {
-          rgbLed.set_led_green();
+          rgbLed.set_color(GREEN);
         }
       `
 
@@ -812,9 +812,9 @@ describe("Compound Conditional Statements", () => {
 			const code = `
         for (int i = 0; i < 5; i++) {
           if ((i > 2) && (i < 4)) {
-            rgbLed.set_led_blue();
+            rgbLed.set_color(BLUE);
           } else {
-            rgbLed.set_led_red();
+            rgbLed.set_color(RED);
           }
         }
       `
@@ -879,9 +879,9 @@ describe("Compound Conditional Statements", () => {
           float roll = imu.getRoll();
           float pitch = imu.getPitch();
           if ((roll > 0) && (pitch > 0)) {
-            rgbLed.set_led_white();
+            rgbLed.set_color(WHITE);
           } else {
-            rgbLed.set_led_green();
+            rgbLed.set_color(GREEN);
           }
         }
       `

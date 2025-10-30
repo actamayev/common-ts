@@ -6,7 +6,7 @@ import { BytecodeInstruction } from "../../src/types/utils/bytecode"
 describe("Sensor Functionality", () => {
 	function testSensorReading(sensorMethod: string, expectedSensorType: SensorType): void {
 		const code = `if (imu.${sensorMethod}() > 10) {
-		rgbLed.set_led_red();
+		rgbLed.set_color(RED);
 	}`
 
 		const bytecode = CppParser.cppToByte(code)
@@ -89,7 +89,7 @@ describe("Sensor Functionality", () => {
 	describe("Sensor Comparison Operators", () => {
 		test("should parse sensor equality comparison", () => {
 			const code = `if (imu.getPitch() == 0) {
-			rgbLed.set_led_red();
+			rgbLed.set_color(RED);
 		}`
 
 			const bytecode = CppParser.cppToByte(code)
@@ -103,7 +103,7 @@ describe("Sensor Functionality", () => {
 
 		test("should parse sensor inequality comparison", () => {
 			const code = `if (imu.getYaw() != 45) {
-			rgbLed.set_led_green();
+			rgbLed.set_color(GREEN);
 		}`
 
 			const bytecode = CppParser.cppToByte(code)
@@ -117,7 +117,7 @@ describe("Sensor Functionality", () => {
 
 		test("should parse sensor less than comparison", () => {
 			const code = `if (imu.getXAccel() < -5) {
-			rgbLed.set_led_blue();
+			rgbLed.set_color(BLUE);
 		}`
 
 			const bytecode = CppParser.cppToByte(code)
@@ -131,7 +131,7 @@ describe("Sensor Functionality", () => {
 
 		test("should parse sensor greater than or equal comparison", () => {
 			const code = `if (imu.getAccelMagnitude() >= 9.8) {
-			rgbLed.set_led_purple();
+			rgbLed.set_color(PURPLE);
 		}`
 
 			const bytecode = CppParser.cppToByte(code)
@@ -145,7 +145,7 @@ describe("Sensor Functionality", () => {
 
 		test("should parse sensor less than or equal comparison", () => {
 			const code = `if (imu.getZRotationRate() <= 180) {
-			rgbLed.set_led_white();
+			rgbLed.set_color(WHITE);
 		}`
 
 			const bytecode = CppParser.cppToByte(code)
@@ -176,9 +176,9 @@ describe("Sensor Functionality", () => {
 	describe("Proximity Detection in Conditionals", () => {
 		test("should parse if statement with left proximity detection", () => {
 			const code = `if (left_distance_sensor.is_object_near()) {
-				rgbLed.set_led_red();
+				rgbLed.set_color(RED);
 			} else {
-				rgbLed.set_led_green();
+				rgbLed.set_color(GREEN);
 			}`
 
 			const bytecode = CppParser.cppToByte(code)
@@ -225,7 +225,7 @@ describe("Sensor Functionality", () => {
 
 		test("should parse if statement with right proximity detection", () => {
 			const code = `if (right_distance_sensor.is_object_near()) {
-				rgbLed.set_led_blue();
+				rgbLed.set_color(BLUE);
 			}`
 
 			const bytecode = CppParser.cppToByte(code)
@@ -270,7 +270,7 @@ describe("Sensor Functionality", () => {
 		colorTestCases.forEach(({ color }) => {
 			test(`should parse if statement with ${color} color detection`, () => {
 				const code = `if (color_sensor.is_object(${color})) {
-					rgbLed.set_led_red();
+					rgbLed.set_color(RED);
 				}`
 
 				const bytecode = CppParser.cppToByte(code)
@@ -324,9 +324,9 @@ describe("Sensor Functionality", () => {
 
 		test("should parse if-else statement with color detection", () => {
 			const code = `if (color_sensor.is_object(RED)) {
-				rgbLed.set_led_red();
+				rgbLed.set_color(RED);
 			} else {
-				rgbLed.set_led_green();
+				rgbLed.set_color(GREEN);
 			}`
 
 			const bytecode = CppParser.cppToByte(code)
@@ -363,7 +363,7 @@ describe("Sensor Functionality", () => {
 
 		test("should parse compound condition with color detection", () => {
 			const code = `if ((color_sensor.is_object(RED)) && (imu.getPitch() > 10)) {
-				rgbLed.set_led_white();
+				rgbLed.set_color(WHITE);
 			}`
 
 			const bytecode = CppParser.cppToByte(code)
@@ -425,7 +425,7 @@ describe("Sensor Functionality", () => {
 
 		test("should parse if statement with yellow color detection", () => {
 			const code = `if (color_sensor.is_object(YELLOW)) {
-				rgbLed.set_led_yellow();
+				rgbLed.set_color(YELLOW);
 			}`
 
 			const bytecode = CppParser.cppToByte(code)
@@ -471,7 +471,7 @@ describe("Sensor Functionality", () => {
 
 		test("should parse TOF distance in if statement comparison", () => {
 			const code = `if (front_distance_sensor.get_distance() > 50) {
-				rgbLed.set_led_green();
+				rgbLed.set_color(GREEN);
 			}`
 
 			const bytecode = CppParser.cppToByte(code)
@@ -493,23 +493,23 @@ describe("Sensor Functionality", () => {
 		test("should parse TOF distance with different comparison operators", () => {
 			const testCases = [
 				{
-					code: "if (front_distance_sensor.get_distance() < 20) { rgbLed.set_led_red(); }",
+					code: "if (front_distance_sensor.get_distance() < 20) { rgbLed.set_color(RED); }",
 					operator: ComparisonOp.LESS_THAN, value: 20
 				},
 				{
-					code: "if (front_distance_sensor.get_distance() == 100) { rgbLed.set_led_blue(); }",
+					code: "if (front_distance_sensor.get_distance() == 100) { rgbLed.set_color(BLUE); }",
 					operator: ComparisonOp.EQUAL, value: 100
 				},
 				{
-					code: "if (front_distance_sensor.get_distance() != 0) { rgbLed.set_led_white(); }",
+					code: "if (front_distance_sensor.get_distance() != 0) { rgbLed.set_color(WHITE); }",
 					operator: ComparisonOp.NOT_EQUAL, value: 0
 				},
 				{
-					code: "if (front_distance_sensor.get_distance() >= 75) { rgbLed.set_led_purple(); }",
+					code: "if (front_distance_sensor.get_distance() >= 75) { rgbLed.set_color(PURPLE); }",
 				  	operator: ComparisonOp.GREATER_EQUAL, value: 75
 				},
 				{
-					code: "if (front_distance_sensor.get_distance() <= 25) { rgbLed.set_led_yellow(); }",
+					code: "if (front_distance_sensor.get_distance() <= 25) { rgbLed.set_color(YELLOW); }",
 					operator: ComparisonOp.LESS_EQUAL, value: 25
 				}
 			]
@@ -528,7 +528,7 @@ describe("Sensor Functionality", () => {
 
 		test("should parse compound condition with TOF distance and other sensor", () => {
 			const code = `if ((front_distance_sensor.get_distance() > 30) && (imu.getPitch() < 45)) {
-				rgbLed.set_led_white();
+				rgbLed.set_color(WHITE);
 			}`
 
 			const bytecode = CppParser.cppToByte(code)
@@ -568,9 +568,9 @@ describe("Sensor Functionality", () => {
 
 		test("should parse if-else statement with TOF distance", () => {
 			const code = `if (front_distance_sensor.get_distance() > 100) {
-				rgbLed.set_led_green();
+				rgbLed.set_color(GREEN);
 			} else {
-				rgbLed.set_led_red();
+				rgbLed.set_color(RED);
 			}`
 
 			const bytecode = CppParser.cppToByte(code)

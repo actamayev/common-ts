@@ -5,7 +5,7 @@ describe("Sensor Operand Processing", () => {
 	test("should handle sensors as left operands in comparisons", () => {
 		const code = `
       if (imu.getPitch() > 10) {
-        rgbLed.set_led_red();
+        rgbLed.set_color(RED);
       }
     `
 
@@ -26,7 +26,7 @@ describe("Sensor Operand Processing", () => {
 	test("should handle sensors as right operands in comparisons", () => {
 		const code = `
       if (10 < imu.getRoll()) {
-        rgbLed.set_led_green();
+        rgbLed.set_color(GREEN);
       }
     `
 
@@ -47,15 +47,15 @@ describe("Sensor Operand Processing", () => {
 	test("should handle multiple different sensor types in sequence", () => {
 		const code = `
       if (imu.getPitch() > 10) {
-        rgbLed.set_led_red();
+        rgbLed.set_color(RED);
       }
       
       if (imu.getRoll() < -5) {
-        rgbLed.set_led_green();
+        rgbLed.set_color(GREEN);
       }
       
       if (imu.getYaw() == 0) {
-        rgbLed.set_led_blue();
+        rgbLed.set_color(BLUE);
       }
     `
 
@@ -111,7 +111,7 @@ describe("Sensor Operand Processing", () => {
 		]
 
 		for (const { method, type } of sensorMethods) {
-			const code = `if (imu.${method}() > 0) { rgbLed.set_led_red(); }`
+			const code = `if (imu.${method}() > 0) { rgbLed.set_color(RED); }`
 			const bytecode = CppParser.cppToByte(code)
 
 			// First instruction should be READ_SENSOR with correct sensor type
@@ -136,7 +136,7 @@ describe("Sensor Operand Processing", () => {
 		const code = `
       ${registerSetup}
       if (imu.getPitch() > 0) {
-        rgbLed.set_led_red();
+        rgbLed.set_color(RED);
       }
     `
 
@@ -157,7 +157,7 @@ describe("Sensor Operand Processing", () => {
 		]
 
 		for (const { op, compOp } of operators) {
-			const code = `if (imu.getPitch() ${op} 0) { rgbLed.set_led_red(); }`
+			const code = `if (imu.getPitch() ${op} 0) { rgbLed.set_color(RED); }`
 			const bytecode = CppParser.cppToByte(code)
 
 			// Second instruction should be COMPARE with correct operator
@@ -171,7 +171,7 @@ describe("Sensor Operand Processing", () => {
 		const code = `
       float threshold = 10.5;
       if (imu.getPitch() > threshold) {
-        rgbLed.set_led_red();
+        rgbLed.set_color(RED);
       }
     `
 
@@ -197,7 +197,7 @@ describe("Sensor Operand Processing", () => {
 	test("should handle sensor on both sides of comparison", () => {
 		const code = `
       if (imu.getPitch() > imu.getRoll()) {
-        rgbLed.set_led_red();
+        rgbLed.set_color(RED);
       }
     `
 
@@ -224,7 +224,7 @@ describe("Sensor Operand Processing", () => {
 		const code = `
       for (int i = 0; i < 5; i++) {
         if (imu.getPitch() > i) {
-          rgbLed.set_led_red();
+          rgbLed.set_color(RED);
         }
       }
     `
