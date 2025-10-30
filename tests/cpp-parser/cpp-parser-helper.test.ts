@@ -1,8 +1,8 @@
 import { BytecodeInstruction } from "../../src/types/utils/bytecode"
 import { CppParser } from "../../src/parsers/cpp-parser"
 import { CppParserHelper } from "../../src/parsers/cpp-parser-helper"
-import { MAX_REGISTERS } from "../../src/types/utils/constants"
-import { BytecodeOpCode, CommandType, ComparisonOp, LedID, SensorType } from "../../src/types/bytecode-types"
+import { MAX_LED_BRIGHTNESS, MAX_REGISTERS } from "../../src/types/utils/constants"
+import { BytecodeOpCode, CommandType, ComparisonOp, SensorType } from "../../src/types/bytecode-types"
 
 describe("CppParserHelper", () => {
 	describe("identifyCommand", () => {
@@ -64,63 +64,6 @@ describe("CppParserHelper", () => {
 			expect(() => {
 				CppParserHelper.getSensorTypeFromProximity("unknown")
 			}).toThrow(/Unknown proximity type/)
-		})
-	})
-
-	describe("handleIndividualLed", () => {
-		test("should add LED instruction with valid matches", () => {
-			const instructions: BytecodeInstruction[] = []
-			const matches = ["full_match", "10", "20", "30"] as RegExpMatchArray
-
-			CppParserHelper.handleIndividualLed(matches, LedID.TOP_LEFT, instructions)
-
-			expect(instructions.length).toBe(1)
-			expect(instructions[0].opcode).toBe(BytecodeOpCode.SET_LED)
-			expect(instructions[0].operand1).toBe(LedID.TOP_LEFT)
-			expect(instructions[0].operand2).toBe(10)
-			expect(instructions[0].operand3).toBe(20)
-			expect(instructions[0].operand4).toBe(30)
-		})
-
-		test("should not add instruction with invalid matches", () => {
-			const instructions: BytecodeInstruction[] = []
-			const matches = ["full_match", "10", "20"] as RegExpMatchArray // Only 3 elements, not 4
-
-			CppParserHelper.handleIndividualLed(matches, LedID.TOP_LEFT, instructions)
-
-			expect(instructions.length).toBe(0) // Should not add any instruction
-		})
-
-		test("should not add instruction with null matches", () => {
-			const instructions: BytecodeInstruction[] = []
-
-			CppParserHelper.handleIndividualLed(null, LedID.TOP_LEFT, instructions)
-
-			expect(instructions.length).toBe(0) // Should not add any instruction
-		})
-
-		test("should work with different LED IDs", () => {
-			const testLedIds = [
-				LedID.TOP_LEFT,
-				LedID.TOP_RIGHT,
-				LedID.MIDDLE_LEFT,
-				LedID.MIDDLE_RIGHT,
-				LedID.BACK_LEFT,
-				LedID.BACK_RIGHT,
-				LedID.LEFT_HEADLIGHT,
-				LedID.RIGHT_HEADLIGHT
-			]
-
-			for (const ledId of testLedIds) {
-				const instructions: BytecodeInstruction[] = []
-				const matches = ["full_match", "10", "20", "30"] as RegExpMatchArray
-
-				CppParserHelper.handleIndividualLed(matches, ledId, instructions)
-
-				expect(instructions.length).toBe(1)
-				expect(instructions[0].opcode).toBe(BytecodeOpCode.SET_LED)
-				expect(instructions[0].operand1).toBe(ledId)
-			}
 		})
 	})
 
@@ -231,25 +174,24 @@ describe("CppParserHelper", () => {
 
 		test("should correctly generate LED commands", () => {
 			const code = `
-	rgbLed.set_top_left_led(10, 20, 30);
-	rgbLed.set_top_right_led(40, 50, 60);
+	rgbLed.set_led_red();
+	rgbLed.set_led_blue();
 	`
 
 			const bytecode = CppParser.cppToByte(code)
 
 			// Should have SET_LED for top left
-			expect(bytecode[0]).toBe(BytecodeOpCode.SET_LED)
-			expect(bytecode[1]).toBe(LedID.TOP_LEFT)
-			expect(bytecode[2]).toBe(10)
-			expect(bytecode[3]).toBe(20)
-			expect(bytecode[4]).toBe(30)
+			expect(bytecode[0]).toBe(BytecodeOpCode.SET_ALL_LEDS)
+			expect(bytecode[1]).toBe(MAX_LED_BRIGHTNESS)
+			expect(bytecode[2]).toBe(0)
+			expect(bytecode[3]).toBe(0)
+			expect(bytecode[4]).toBe(0)
 
-			// Should have SET_LED for top right
-			expect(bytecode[5]).toBe(BytecodeOpCode.SET_LED)
-			expect(bytecode[6]).toBe(LedID.TOP_RIGHT)
-			expect(bytecode[7]).toBe(40)
-			expect(bytecode[8]).toBe(50)
-			expect(bytecode[9]).toBe(60)
+			expect(bytecode[5]).toBe(BytecodeOpCode.SET_ALL_LEDS)
+			expect(bytecode[6]).toBe(0)
+			expect(bytecode[7]).toBe(0)
+			expect(bytecode[8]).toBe(MAX_LED_BRIGHTNESS)
+			expect(bytecode[9]).toBe(0)
 		})
 	})
 

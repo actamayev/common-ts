@@ -6,7 +6,6 @@ export enum BytecodeOpCode {
     WAIT = 0x02,
     WAIT_FOR_BUTTON = 0x03,  // Choose an appropriate unused value
     CHECK_RIGHT_BUTTON_PRESS = 0x04,
-    SET_LED = 0x10,
     SET_ALL_LEDS = 0x11,
 
     READ_SENSOR = 0x20,  // Read sensor value into register
@@ -51,18 +50,6 @@ export enum VarType {
     BOOL = 0x03,
 }
 
-export enum LedID {
-    ALL = 0,
-    TOP_LEFT = 1,
-    TOP_RIGHT = 2,
-    MIDDLE_LEFT = 3,
-    MIDDLE_RIGHT = 4,
-    BACK_LEFT = 5,
-    BACK_RIGHT = 6,
-    LEFT_HEADLIGHT = 7,
-    RIGHT_HEADLIGHT = 8,
-}
-
 export enum SensorType {
     PITCH = 0,
     ROLL = 1,
@@ -97,15 +84,6 @@ export enum CommandType {
     SET_LED_WHITE = "SET_LED_WHITE",
     SET_LED_PURPLE = "SET_LED_PURPLE",
     SET_LED_YELLOW = "SET_LED_YELLOW",
-    SET_ALL_LEDS = "SET_ALL_LEDS",
-    SET_TOP_LEFT_LED = "SET_TOP_LEFT_LED",
-    SET_TOP_RIGHT_LED = "SET_TOP_RIGHT_LED",
-    SET_MIDDLE_LEFT_LED = "SET_MIDDLE_LEFT_LED",
-    SET_MIDDLE_RIGHT_LED = "SET_MIDDLE_RIGHT_LED",
-    SET_BACK_LEFT_LED = "SET_BACK_LEFT_LED",
-    SET_BACK_RIGHT_LED = "SET_BACK_RIGHT_LED",
-    SET_LEFT_HEADLIGHT = "SET_LEFT_HEADLIGHT",
-    SET_RIGHT_HEADLIGHT = "SET_RIGHT_HEADLIGHT",
     PLAY_SOUND = "PLAY_SOUND",
     PLAY_TONE = "PLAY_TONE",
     WAIT = "WAIT",
@@ -153,15 +131,6 @@ export const CommandPatterns: Record<CommandType, RegExp> = {
 	[CommandType.SET_LED_WHITE]: /^rgbLed.set_led_white\(\)$/,
 	[CommandType.SET_LED_PURPLE]: /^rgbLed.set_led_purple\(\)$/,
 	[CommandType.SET_LED_YELLOW]: /^rgbLed.set_led_yellow\(\)$/,
-	[CommandType.SET_ALL_LEDS]: /^set_all_leds_to_color\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*\)$/,
-	[CommandType.SET_TOP_LEFT_LED]: /^rgbLed\.set_top_left_led\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*\)$/,
-	[CommandType.SET_TOP_RIGHT_LED]: /^rgbLed\.set_top_right_led\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*\)$/,
-	[CommandType.SET_MIDDLE_LEFT_LED]: /^rgbLed\.set_middle_left_led\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*\)$/,
-	[CommandType.SET_MIDDLE_RIGHT_LED]: /^rgbLed\.set_middle_right_led\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*\)$/,
-	[CommandType.SET_BACK_LEFT_LED]: /^rgbLed\.set_back_left_led\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*\)$/,
-	[CommandType.SET_BACK_RIGHT_LED]: /^rgbLed\.set_back_right_led\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*\)$/,
-	[CommandType.SET_LEFT_HEADLIGHT]: /^rgbLed\.set_left_headlight\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*\)$/,
-	[CommandType.SET_RIGHT_HEADLIGHT]: /^rgbLed\.set_right_headlight\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*\)$/,
 	[CommandType.PLAY_SOUND]: /^speaker\.play_sound\(\s*"([^"]*)"\s*\)$/,
 	[CommandType.PLAY_TONE]: /^speaker\.play_tone\(\s*"([^"]*)"\s*\)$/,
 	[CommandType.WAIT]: /^wait\(\s*(\d+(?:\.\d+)?)\s*\)$/,

@@ -859,7 +859,7 @@ describe("Else-If Functionality", () => {
 			} else if (pattern == 3) {
 				rgbLed.set_led_blue();
 			} else if (pattern == 4) {
-				set_all_leds_to_color(255, 255, 0);
+				rgbLed.set_led_yellow();
 			} else {
 				rgbLed.set_led_white();
 			}
