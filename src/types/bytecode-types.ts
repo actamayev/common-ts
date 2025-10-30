@@ -50,6 +50,16 @@ export enum VarType {
     BOOL = 0x03,
 }
 
+export enum LedColor {
+    OFF = 0,
+    RED = 1,
+    GREEN = 2,
+    BLUE = 3,
+    WHITE = 4,
+    PURPLE = 5,
+    YELLOW = 6,
+}
+
 export enum SensorType {
     PITCH = 0,
     ROLL = 1,
@@ -77,13 +87,7 @@ export enum SensorType {
 }
 
 export enum CommandType {
-    TURN_LED_OFF = "TURN_LED_OFF",
-    SET_LED_RED = "SET_LED_RED",
-    SET_LED_GREEN = "SET_LED_GREEN",
-    SET_LED_BLUE = "SET_LED_BLUE",
-    SET_LED_WHITE = "SET_LED_WHITE",
-    SET_LED_PURPLE = "SET_LED_PURPLE",
-    SET_LED_YELLOW = "SET_LED_YELLOW",
+    SET_LED_COLOR = "SET_LED_COLOR",
     PLAY_SOUND = "PLAY_SOUND",
     PLAY_TONE = "PLAY_TONE",
     WAIT = "WAIT",
@@ -124,13 +128,7 @@ export const comparisonOperatorPattern = /(.+?)([<>=!][=]?)(.+)/
 // Command patterns for validation
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export const CommandPatterns: Record<CommandType, RegExp> = {
-	[CommandType.TURN_LED_OFF]: /^rgbLed.turn_led_off\(\)$/,
-	[CommandType.SET_LED_RED]: /^rgbLed.set_led_red\(\)$/,
-	[CommandType.SET_LED_GREEN]: /^rgbLed.set_led_green\(\)$/,
-	[CommandType.SET_LED_BLUE]: /^rgbLed.set_led_blue\(\)$/,
-	[CommandType.SET_LED_WHITE]: /^rgbLed.set_led_white\(\)$/,
-	[CommandType.SET_LED_PURPLE]: /^rgbLed.set_led_purple\(\)$/,
-	[CommandType.SET_LED_YELLOW]: /^rgbLed.set_led_yellow\(\)$/,
+	[CommandType.SET_LED_COLOR]: /^rgbLed\.set_color\(\s*(OFF|RED|GREEN|BLUE|WHITE|PURPLE|YELLOW)\s*\)$/,
 	[CommandType.PLAY_SOUND]: /^speaker\.play_sound\(\s*"([^"]*)"\s*\)$/,
 	[CommandType.PLAY_TONE]: /^speaker\.play_tone\(\s*"([^"]*)"\s*\)$/,
 	[CommandType.WAIT]: /^wait\(\s*(\d+(?:\.\d+)?)\s*\)$/,

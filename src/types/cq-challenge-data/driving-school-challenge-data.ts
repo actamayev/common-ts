@@ -36,11 +36,11 @@ export const DRIVING_SCHOOL_CHALLENGE_S2_P4: CqChallengeData = {
 	learningObjectives: [ ],
 	solutionCode: `
 	left_button.wait_for_press();
-	rgbLed.set_led_blue();
+	rgbLed.set_color(BLUE)();
 	wait(2);
-	rgbLed.set_led_red();
+	rgbLed.set_color(RED)();
 	wait(2);
-	rgbLed.turn_led_off();
+	rgbLed.set_color(OFF);
 	`,
 }
 

@@ -1,7 +1,7 @@
 /* eslint-disable max-len, complexity, max-lines-per-function, max-depth */
 import { INSTRUCTION_SIZE, MAX_JUMP_DISTANCE, MAX_LED_BRIGHTNESS, MAX_PROGRAM_SIZE, MAX_REGISTERS } from "../types/utils/constants"
 import { SoundType, ToneType } from "../message-builder/protocol"
-import { BytecodeOpCode, CommandPatterns, CommandType, ComparisonOp, comparisonOperatorPattern, SensorType, VarType } from "../types/bytecode-types"
+import { BytecodeOpCode, CommandPatterns, CommandType, ComparisonOp, comparisonOperatorPattern, LedColor, SensorType, VarType } from "../types/bytecode-types"
 import { CppParserHelper } from "./cpp-parser-helper"
 import { BytecodeInstruction, BlockStack, PendingJumps, VariableType } from "../types/utils/bytecode"
 
@@ -297,74 +297,30 @@ export class CppParser {
 				}
 				break
 
-			case CommandType.TURN_LED_OFF:
-				instructions.push({
-					opcode: BytecodeOpCode.SET_ALL_LEDS,
-					operand1: 0,
-					operand2: 0,
-					operand3: 0,
-					operand4: 0
-				})
-				break
+			case CommandType.SET_LED_COLOR:
+				if (command.matches && command.matches.length === 2) {
+					const colorName = command.matches[1] // OFF, RED, GREEN, BLUE, WHITE, PURPLE, YELLOW
+					let red = 0, green = 0, blue = 0
 
-			case CommandType.SET_LED_RED:
-				instructions.push({
-					opcode: BytecodeOpCode.SET_ALL_LEDS,
-					operand1: MAX_LED_BRIGHTNESS,
-					operand2: 0,
-					operand3: 0,
-					operand4: 0
-				})
-				break
+					switch (colorName) {
+					case "OFF": red = 0; green = 0; blue = 0; break
+					case "RED": red = MAX_LED_BRIGHTNESS; green = 0; blue = 0; break
+					case "GREEN": red = 0; green = MAX_LED_BRIGHTNESS; blue = 0; break
+					case "BLUE": red = 0; green = 0; blue = MAX_LED_BRIGHTNESS; break
+					case "WHITE": red = MAX_LED_BRIGHTNESS; green = MAX_LED_BRIGHTNESS; blue = MAX_LED_BRIGHTNESS; break
+					case "PURPLE": red = MAX_LED_BRIGHTNESS; green = 0; blue = MAX_LED_BRIGHTNESS; break
+					case "YELLOW": red = MAX_LED_BRIGHTNESS; green = MAX_LED_BRIGHTNESS; blue = 0; break
+					default: throw new Error(`Unsupported LED color: ${colorName}`)
+					}
 
-			case CommandType.SET_LED_GREEN:
-				instructions.push({
-					opcode: BytecodeOpCode.SET_ALL_LEDS,
-					operand1: 0,
-					operand2: MAX_LED_BRIGHTNESS,
-					operand3: 0,
-					operand4: 0
-				})
-				break
-
-			case CommandType.SET_LED_BLUE:
-				instructions.push({
-					opcode: BytecodeOpCode.SET_ALL_LEDS,
-					operand1: 0,
-					operand2: 0,
-					operand3: MAX_LED_BRIGHTNESS,
-					operand4: 0
-				})
-				break
-
-			case CommandType.SET_LED_WHITE:
-				instructions.push({
-					opcode: BytecodeOpCode.SET_ALL_LEDS,
-					operand1: MAX_LED_BRIGHTNESS,
-					operand2: MAX_LED_BRIGHTNESS,
-					operand3: MAX_LED_BRIGHTNESS,
-					operand4: 0
-				})
-				break
-
-			case CommandType.SET_LED_PURPLE:
-				instructions.push({
-					opcode: BytecodeOpCode.SET_ALL_LEDS,
-					operand1: MAX_LED_BRIGHTNESS,
-					operand2: 0,
-					operand3: MAX_LED_BRIGHTNESS,
-					operand4: 0
-				})
-				break
-
-			case CommandType.SET_LED_YELLOW:
-				instructions.push({
-					opcode: BytecodeOpCode.SET_ALL_LEDS,
-					operand1: MAX_LED_BRIGHTNESS,
-					operand2: MAX_LED_BRIGHTNESS,
-					operand3: 0,
-					operand4: 0
-				})
+					instructions.push({
+						opcode: BytecodeOpCode.SET_ALL_LEDS,
+						operand1: red,
+						operand2: green,
+						operand3: blue,
+						operand4: 0
+					})
+				}
 				break
 
 			case CommandType.WAIT:

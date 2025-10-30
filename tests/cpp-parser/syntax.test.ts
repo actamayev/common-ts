@@ -19,19 +19,19 @@ describe("Invalid inputs", () => {
 
 describe("Syntax validation", () => {
 	test("should detect unclosed brackets", () => {
-		const result = CppParserHelper.validateBalancedSyntax("if (x > 5) { rgbLed.set_led_red();")
+		const result = CppParserHelper.validateBalancedSyntax("if (x > 5) { rgbLed.set_color(RED);")
 		expect(result).not.toBe(true)
 		expect(result).toContain("Unclosed")
 	})
 
 	test("should detect unexpected closing brackets", () => {
-		const result = CppParserHelper.validateBalancedSyntax("if (x > 5) } rgbLed.set_led_red();")
+		const result = CppParserHelper.validateBalancedSyntax("if (x > 5) } rgbLed.set_color(RED);")
 		expect(result).not.toBe(true)
 		expect(result).toContain("Unexpected closing")
 	})
 
 	test("should detect mismatched brackets", () => {
-		const result = CppParserHelper.validateBalancedSyntax("if (x > 5) { rgbLed.set_led_red(); ]")
+		const result = CppParserHelper.validateBalancedSyntax("if (x > 5) { rgbLed.set_color(RED); ]")
 		expect(result).not.toBe(true)
 		expect(result).toContain("Expected")
 		expect(result).toContain("but found")
@@ -42,7 +42,7 @@ describe("Syntax validation", () => {
 		const code = `
 	// This comment has escaped quotes \\"like this\\"
 	if (10 > 5) {
-	rgbLed.set_led_red();
+	rgbLed.set_color(RED);
 	/* This block comment also has escaped chars: \\", \\', \\\\ */
 	wait(0.1);
 	}
@@ -57,7 +57,7 @@ describe("Syntax validation", () => {
 		const code = `
 	// This comment has {brackets} and [square brackets]
 	if (10 > 5) {
-	rgbLed.set_led_red();
+	rgbLed.set_color(RED);
 	/* This block comment has {unbalanced brackets */
 	wait(0.1);
 	}
@@ -74,7 +74,7 @@ describe("Code sanitization", () => {
 		const code = `
 	for (int i = 0; i < 10; i++) {
 	for (int j = 0; j < 5; j++) {
-		rgbLed.set_led_red();
+		rgbLed.set_color(RED);
 		wait(0.1);
 	}
 	}
@@ -102,9 +102,9 @@ describe("Code sanitization", () => {
 	test("should correctly handle else statements without whitespace", () => {
 		const code = `
 	if (10 > 5) {
-	rgbLed.set_led_red();
+	rgbLed.set_color(RED);
 	}else{
-	rgbLed.set_led_blue();
+	rgbLed.set_color(BLUE);
 	}
 `
 
@@ -131,7 +131,7 @@ describe("Code sanitization", () => {
 	test("should remove both line and block comments", () => {
 		const code = `
 	// Line comment that should be removed
-	rgbLed.set_led_red();
+	rgbLed.set_color(RED);
 	/* Block comment
 		spanning multiple lines */
 	wait(0.1);
@@ -155,7 +155,7 @@ describe("Code sanitization", () => {
 		const code = `
 	if (10 > 5) {
 	// This comment contains a single quote: '
-	rgbLed.set_led_red();
+	rgbLed.set_color(RED);
 	}
 `
 
@@ -175,7 +175,7 @@ describe("Code sanitization", () => {
 describe("Specific Edge Cases for Uncovered Lines", () => {
 	test("should throw error for invalid command with unsupported comparison operator", () => {
 		expect(() => {
-			CppParser.cppToByte("if (10 ? 5) { rgbLed.set_led_red(); }")
+			CppParser.cppToByte("if (10 ? 5) { rgbLed.set_color(RED); }")
 		}).toThrow(/Invalid command/)
 	})
 
@@ -190,7 +190,7 @@ describe("Specific Edge Cases for Uncovered Lines", () => {
 			expect(() => {
 				CppParser.cppToByte(`
 		if (10 > 5) {
-		rgbLed.set_led_red();
+		rgbLed.set_color(RED);
 		// Missing closing brace
 	`)
 			}).toThrow(/Syntax error: Missing .* closing brace/)
@@ -206,7 +206,7 @@ describe("Specific Edge Cases for Uncovered Lines", () => {
 			const code = `
 	if (x > 5) {
 	// This comment has an unbalanced bracket }
-	rgbLed.set_led_red();
+	rgbLed.set_color(RED);
 	}
 	`
 
@@ -220,7 +220,7 @@ describe("Specific Edge Cases for Uncovered Lines", () => {
 	if (x > 5) {
 	/* This block comment has multiple unbalanced brackets:
 		{ [ } ] { } [ */
-	rgbLed.set_led_red();
+	rgbLed.set_color(RED);
 	}
 	`
 
@@ -233,7 +233,7 @@ describe("Specific Edge Cases for Uncovered Lines", () => {
 			const code = `
 	if (x > 5) {
 	/* This comment has what looks like /* nested */ comments */
-	rgbLed.set_led_red();
+	rgbLed.set_color(RED);
 	}
 	`
 
@@ -245,7 +245,7 @@ describe("Specific Edge Cases for Uncovered Lines", () => {
 		// Code with a line comment with a line continuation
 			const code = `
 	if (x > 5) { // comment
-	rgbLed.set_led_red(); // Another comment \\
+	rgbLed.set_color(RED); // Another comment \\
 	continued comment
 	}
 	`
@@ -260,7 +260,7 @@ describe("Specific Edge Cases for Uncovered Lines", () => {
 	if (x > 5) {
 	// String with escaped quotes: "This has \\"quotes\\" inside"
 	// String with escaped brackets: "This has \\{brackets\\} inside"
-	rgbLed.set_led_red();
+	rgbLed.set_color(RED);
 	}
 	`
 

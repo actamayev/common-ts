@@ -7,11 +7,11 @@ import { BytecodeOpCode, CommandType, ComparisonOp, SensorType } from "../../src
 describe("CppParserHelper", () => {
 	describe("identifyCommand", () => {
 		test("should identify a valid command", () => {
-			const statement = "rgbLed.set_led_red()"
+			const statement = "rgbLed.set_color(RED)"
 			const result = CppParserHelper.identifyCommand(statement)
 
 			expect(result).not.toBeNull()
-			expect(result?.type).toBe(CommandType.SET_LED_RED)
+			expect(result?.type).toBe(CommandType.SET_LED_COLOR)
 		})
 
 		test("should return null for unrecognized command", () => {
@@ -24,7 +24,7 @@ describe("CppParserHelper", () => {
 		test("should match all command types", () => {
 		// Test a sample of different command types
 			const commandTests = [
-				{ statement: "rgbLed.set_led_blue()", type: CommandType.SET_LED_BLUE },
+				{ statement: "rgbLed.set_color(BLUE)", type: CommandType.SET_LED_COLOR },
 				{ statement: "wait(0.1)", type: CommandType.WAIT },
 				{ statement: "if (10 > 5)", type: CommandType.IF_STATEMENT },
 				{ statement: "while(true)", type: CommandType.WHILE_STATEMENT },
@@ -164,7 +164,7 @@ describe("CppParserHelper", () => {
 	// Integration test to ensure the parser and helper work together
 	describe("Integration with CppParser", () => {
 		test("should correctly parse front proximity sensor code", () => {
-			const code = "if (front_distance_sensor.is_object_in_front()) { rgbLed.set_led_red(); }"
+			const code = "if (front_distance_sensor.is_object_in_front()) { rgbLed.set_color(RED); }"
 			const bytecode = CppParser.cppToByte(code)
 
 			// Should have READ_SENSOR for front proximity
@@ -174,8 +174,8 @@ describe("CppParserHelper", () => {
 
 		test("should correctly generate LED commands", () => {
 			const code = `
-	rgbLed.set_led_red();
-	rgbLed.set_led_blue();
+	rgbLed.set_color(RED);
+	rgbLed.set_color(BLUE);
 	`
 
 			const bytecode = CppParser.cppToByte(code)
@@ -376,7 +376,7 @@ describe("CppParserHelper", () => {
 
 		  // This should now throw the unsupported operator error
 		  expect(() => {
-				CppParser.cppToByte("if (10 <=> 5) { rgbLed.set_led_red(); }")
+				CppParser.cppToByte("if (10 <=> 5) { rgbLed.set_color(RED); }")
 		  }).toThrow("Invalid command: \"if (10 <=> 5)\"")
 		} finally {
 		  // Restore original method
