@@ -169,9 +169,9 @@ export const CommandPatterns: Record<CommandType, RegExp> = {
 	[CommandType.VARIABLE_ASSIGNMENT]: /^(float|int|bool)\s+(\w+)\s*=\s*(.+)$/,
 
 	// Updated regex for IF_STATEMENT
-	[CommandType.IF_STATEMENT]: /^if\s*\(\s*(?:left_distance_sensor\.is_object_near\(\)|right_distance_sensor\.is_object_near\(\)|front_distance_sensor\.is_object_in_front\(\)|right_button\.is_pressed\(\)|is_object_(red|green|blue|white|black|yellow)\(\)|(true|false)|\b(\w+)\b|(imu\.\w+\(\)|front_distance_sensor\.get_distance\(\)|[-\d.]+|\w+)\s*([<>=!][=]?)\s*(imu\.\w+\(\)|front_distance_sensor\.get_distance\(\)|[-\d.]+|\w+))\s*\)$/,
+	[CommandType.IF_STATEMENT]: /^if\s*\(\s*(?:left_distance_sensor\.is_object_near\(\)|right_distance_sensor\.is_object_near\(\)|front_distance_sensor\.is_object_in_front\(\)|right_button\.is_pressed\(\)|color_sensor\.is_object\(\s*(RED|GREEN|BLUE|WHITE|BLACK|YELLOW)\s*\)|(true|false)|\b(\w+)\b|(imu\.\w+\(\)|front_distance_sensor\.get_distance\(\)|[-\d.]+|\w+)\s*([<>=!][=]?)\s*(imu\.\w+\(\)|front_distance_sensor\.get_distance\(\)|[-\d.]+|\w+))\s*\)$/,
 	[CommandType.COMPOUND_OR_IF_STATEMENT]: /^if\s*\(\s*\(.+?\)\s*\|\|\s*\(.+?\)\s*\)$/,
-	[CommandType.ELSE_IF_STATEMENT]: /^else\s+if\s*\(\s*(?:left_distance_sensor\.is_object_near\(\)|right_distance_sensor\.is_object_near\(\)|front_distance_sensor\.is_object_in_front\(\)|right_button\.is_pressed\(\)|is_object_(red|green|blue|white|black|yellow)\(\)|(true|false)|\b(\w+)\b|(imu\.\w+\(\)|front_distance_sensor\.get_distance\(\)|[-\d.]+|\w+)\s*([<>=!][=]?)\s*(imu\.\w+\(\)|front_distance_sensor\.get_distance\(\)|[-\d.]+|\w+))\s*\)$/,
+	[CommandType.ELSE_IF_STATEMENT]: /^else\s+if\s*\(\s*(?:left_distance_sensor\.is_object_near\(\)|right_distance_sensor\.is_object_near\(\)|front_distance_sensor\.is_object_in_front\(\)|right_button\.is_pressed\(\)|color_sensor\.is_object\(\s*(RED|GREEN|BLUE|WHITE|BLACK|YELLOW)\s*\)|(true|false)|\b(\w+)\b|(imu\.\w+\(\)|front_distance_sensor\.get_distance\(\)|[-\d.]+|\w+)\s*([<>=!][=]?)\s*(imu\.\w+\(\)|front_distance_sensor\.get_distance\(\)|[-\d.]+|\w+))\s*\)$/,
 	[CommandType.COMPOUND_AND_IF_STATEMENT]: /^if\s*\(\s*\(.+?\)\s*&&\s*\(.+?\)\s*\)$/,
 	[CommandType.COMPOUND_AND_ELSE_IF_STATEMENT]: /^else\s+if\s*\(\s*\(.+?\)\s*&&\s*\(.+?\)\s*\)$/,
 	[CommandType.COMPOUND_OR_ELSE_IF_STATEMENT]: /^else\s+if\s*\(\s*\(.+?\)\s*\|\|\s*\(.+?\)\s*\)$/,
@@ -192,7 +192,7 @@ export const CommandPatterns: Record<CommandType, RegExp> = {
 	[CommandType.RIGHT_DISTANCE_SENSOR]: /^right_distance_sensor\.is_object_near\(\)$/,
 	[CommandType.FRONT_PROXIMITY_DETECTION]: /^front_distance_sensor.is_object_in_front\(\)$/,
 	[CommandType.WAIT_FOR_BUTTON]: /^left_button.wait_for_press\(\)$/,
-	[CommandType.COLOR_SENSOR_READ]: /^is_object_(red|green|blue|white|black|yellow)\(\)$/,
+	[CommandType.COLOR_SENSOR_READ]: /^color_sensor\.is_object\(\s*(RED|GREEN|BLUE|WHITE|BLACK|YELLOW)\s*\)$/,
 	[CommandType.CHECK_IF_RIGHT_BUTTON_PRESSED]: /^right_button.is_pressed\(\)$/,
 	[CommandType.GET_FRONT_TOF_DISTANCE]: /^front_distance_sensor.get_distance\(\)$/,
 }
