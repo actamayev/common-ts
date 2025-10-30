@@ -132,7 +132,7 @@ export const OBSTACLE_AVOIDANCE_CHALLENGE_2: CqChallengeData = {
                 motors.stop();
             } else {
                 all_leds.set_color(GREEN)();
-                drive(FORWARD, 50);
+                motors.drive(FORWARD, 50);
             }
         }
     `,
@@ -232,10 +232,10 @@ export const OBSTACLE_AVOIDANCE_CHALLENGE_3: CqChallengeData = {
         while(true) {
             if (front_distance_sensor.is_object_in_front()) {
                 all_leds.set_color(RED)();
-                turn(CLOCKWISE, 90);
+                motors.turn(CLOCKWISE, 90);
             } else {
                 all_leds.set_color(GREEN)();
-                drive(FORWARD, 50);
+                motors.drive(FORWARD, 50);
             }
         }
     `,
@@ -322,16 +322,16 @@ export const OBSTACLE_AVOIDANCE_CHALLENGE_5: CqChallengeData = {
         while(true) {
             if (front_distance_sensor.is_object_in_front()) {
                 all_leds.set_color(WHITE);
-                turn(CLOCKWISE, 90);
+                motors.turn(CLOCKWISE, 90);
             } else if (left_distance_sensor.is_object_near()) {
                 all_leds.set_color(RED)();
-                turn(CLOCKWISE, 90);
+                motors.turn(CLOCKWISE, 90);
             } else if (right_distance_sensor.is_object_near()) {
                 all_leds.set_color(BLUE)();
-                turn(COUNTERCLOCKWISE, 90);
+                motors.turn(COUNTERCLOCKWISE, 90);
             } else {
                 all_leds.set_color(GREEN)();
-                drive(FORWARD, 50);
+                motors.drive(FORWARD, 50);
             }
         }
     `,

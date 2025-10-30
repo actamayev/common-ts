@@ -139,11 +139,11 @@ export const CommandPatterns: Record<CommandType, RegExp> = {
 	[CommandType.FOR_STATEMENT]: /^for\s*\(\s*int\s+(\w+)\s*=\s*(\d+)\s*;\s*\1\s*<\s*(\d+)\s*;\s*\1\s*\+\+\s*\)$/,
 	[CommandType.IMU_READ]: /^imu\.(\w+)\(\)$/,
 
-	[CommandType.DRIVE]: /^drive\(\s*(FORWARD|BACKWARD)\s*,\s*(\d+)\s*\)$/,
-	[CommandType.DRIVE_TIME]: /^drive_time\(\s*(FORWARD|BACKWARD)\s*,\s*(\d+(?:\.\d+)?)\s*,\s*(\d+)\s*\)$/,
-	[CommandType.DRIVE_DISTANCE]: /^drive_distance\(\s*(FORWARD|BACKWARD)\s*,\s*(\d+(?:\.\d+)?)\s*,\s*(\d+)\s*\)$/,
+	[CommandType.DRIVE]: /^motors.drive\(\s*(FORWARD|BACKWARD)\s*,\s*(\d+)\s*\)$/,
+	[CommandType.DRIVE_TIME]: /^motors.drive_time\(\s*(FORWARD|BACKWARD)\s*,\s*(\d+(?:\.\d+)?)\s*,\s*(\d+)\s*\)$/,
+	[CommandType.DRIVE_DISTANCE]: /^motors.drive_distance\(\s*(FORWARD|BACKWARD)\s*,\s*(\d+(?:\.\d+)?)\s*,\s*(\d+)\s*\)$/,
 	[CommandType.MOTOR_STOP]: /^motors.stop\(\)$/,
-	[CommandType.MOTOR_TURN]: /^turn\(\s*(CLOCKWISE|COUNTERCLOCKWISE)\s*,\s*(\d+)\s*\)$/,
+	[CommandType.MOTOR_TURN]: /^motors.turn\(\s*(CLOCKWISE|COUNTERCLOCKWISE)\s*,\s*(\d+)\s*\)$/,
 
 	[CommandType.LEFT_DISTANCE_SENSOR]: /^left_distance_sensor\.is_object_near\(\)$/,
 	[CommandType.RIGHT_DISTANCE_SENSOR]: /^right_distance_sensor\.is_object_near\(\)$/,

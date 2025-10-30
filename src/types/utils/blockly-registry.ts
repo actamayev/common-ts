@@ -20,34 +20,34 @@ export const BLOCK_REGISTRY: Record<BlockNames, BlockDefinition> = {
 	// Motor blocks
 	[MOTOR_BLOCK_TYPES.DRIVE]: {
 		description: "Makes the robot move forward continuously",
-		codeTemplate: "drive({direction}, {speed});",
+		codeTemplate: "motors.drive({direction}, {speed});",
 		category: "Motors"
 	},
 	[MOTOR_BLOCK_TYPES.DRIVE_TIME]: {
 		description: "Makes the robot move forward for a specific amount of time",
-		codeTemplate: "drive_time({direction}, {seconds}, {speed});",
+		codeTemplate: "motors.drive_time({direction}, {seconds}, {speed});",
 		category: "Motors"
 	},
 	[MOTOR_BLOCK_TYPES.DRIVE_DISTANCE]: {
 		description: "Makes the robot move forward for a specific distance in millimeters",
-		codeTemplate: "drive_distance({direction}, {distance_inches}, {speed});",
+		codeTemplate: "motors.drive_distance({direction}, {distance_inches}, {speed});",
 		category: "Motors"
 	},
 	[MOTOR_BLOCK_TYPES.STOP]: {
 		description: "Stops all motor movement",
-		codeTemplate: "stop();",
+		codeTemplate: "motors.stop();",
 		category: "Motors"
 	},
 	[MOTOR_BLOCK_TYPES.TURN]: {
 		description: "Turns the robot in a specific direction by degrees",
-		codeTemplate: "turn({CLOCKWISE|COUNTERCLOCKWISE}, {degrees});",
+		codeTemplate: "motors.turn({CLOCKWISE|COUNTERCLOCKWISE}, {degrees});",
 		category: "Motors"
 	},
 
 	// LED blocks
 	[LED_BLOCK_TYPES.CONTROL_ALL_LEDS]: {
 		description: "Controls the RGB LED color (red, green, blue, white, off)",
-		codeTemplate: "all_leds.set_led_{color}();",
+		codeTemplate: "all_leds.set_color({color});",
 		category: "LED"
 	},
 
@@ -73,7 +73,7 @@ export const BLOCK_REGISTRY: Record<BlockNames, BlockDefinition> = {
 	},
 	[SENSORS_BLOCK_TYPES.SIDE_TOF_READ]: {
 		description: "Reads the side distance sensors to detect objects on left or right",
-		codeTemplate: "is_object_near_{left|right}_side()",
+		codeTemplate: "left_distance_sensor.is_object_near() || right_distance_sensor.is_object_near()",
 		category: "Distance Sensors",
 		parentCategory: "Sensors"
 	},
@@ -81,7 +81,7 @@ export const BLOCK_REGISTRY: Record<BlockNames, BlockDefinition> = {
 	// Color sensor blocks
 	[SENSORS_BLOCK_TYPES.COLOR_SENSOR_READ]: {
 		description: "Reads the color sensor to detect objects (red, green, blue, white, black, yellow)",
-		codeTemplate: "is_object_{red|green|blue|white|black|yellow}()",
+		codeTemplate: "color_sensor.is_object({color})",
 		category: "Color Sensor",
 		parentCategory: "Sensors"
 	},
@@ -89,7 +89,7 @@ export const BLOCK_REGISTRY: Record<BlockNames, BlockDefinition> = {
 	// Motion sensor blocks
 	[SENSORS_BLOCK_TYPES.IMU_READ]: {
 		description: "Reads the IMU (accelerometer/gyroscope) for orientation and movement data",
-		codeTemplate: "get_imu_{axis|angle}()",
+		codeTemplate: "imu.get_{axis|angle}()",
 		category: "Motion Sensor",
 		parentCategory: "Sensors"
 	},

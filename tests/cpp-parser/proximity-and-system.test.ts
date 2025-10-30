@@ -119,7 +119,7 @@ describe("Proximity Sensor Functions", () => {
             all_leds.set_color(RED);
             wait(0.5);
           } else {
-            drive(FORWARD, 50);
+            motors.drive(FORWARD, 50);
           }
         }
       `
@@ -277,16 +277,16 @@ describe("Proximity Sensor Functions", () => {
                 left_button.wait_for_press();  // Wait for manual intervention
               } else {
                 // Turn right
-                turn(CLOCKWISE, 90);
+                motors.turn(CLOCKWISE, 90);
               }
             } else {
               // Turn left
-              turn(COUNTERCLOCKWISE, 90);
+              motors.turn(COUNTERCLOCKWISE, 90);
             }
           } else {
             // Path is clear, move forward
             all_leds.set_color(GREEN);
-            drive(FORWARD, 50);
+            motors.drive(FORWARD, 50);
             wait(0.2);
           }
         }

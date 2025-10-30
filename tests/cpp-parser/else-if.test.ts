@@ -662,7 +662,7 @@ describe("Else-If Functionality", () => {
 					} else if (right_distance_sensor.is_object_near()) {
 						all_leds.set_color(BLUE);
 					} else {
-						drive(FORWARD, 50);
+						motors.drive(FORWARD, 50);
 					}
 				}
 			`
@@ -786,19 +786,19 @@ describe("Else-If Functionality", () => {
 					if (front_distance_sensor.is_object_in_front()) {
 						motors.stop();
 						if (left_distance_sensor.is_object_near()) {
-							turn(CLOCKWISE, 90);
+							motors.turn(CLOCKWISE, 90);
 						} else if (right_distance_sensor.is_object_near()) {
-							turn(COUNTERCLOCKWISE, 90);
+							motors.turn(COUNTERCLOCKWISE, 90);
 						} else {
-							drive(BACKWARD, 50);
+							motors.drive(BACKWARD, 50);
 							wait(0.5);
 						}
 					} else if (imu.getPitch() > 30) {
-						drive_time(BACKWARD, 1.0, 30);
+						motors.drive_time(BACKWARD, 1.0, 30);
 					} else if (imu.getRoll() < -30) {
-						drive_time(BACKWARD, 1.0, 30);
+						motors.drive_time(BACKWARD, 1.0, 30);
 					} else {
-						drive(FORWARD, 60);
+						motors.drive(FORWARD, 60);
 					}
 				}
 			`
@@ -1103,15 +1103,15 @@ describe("Else-If Functionality", () => {
 		if (front_distance_sensor.is_object_in_front()) {
 			motors.stop();
 		} else if (imu.getPitch() > 45) {
-			drive_time(BACKWARD, 2.0, 70);
+			motors.drive_time(BACKWARD, 2.0, 70);
 		} else if (imu.getPitch() < -45) {
-			drive_time(FORWARD, 1.0, 50);
+			motors.drive_time(FORWARD, 1.0, 50);
 		} else if (imu.getRoll() > 30) {
-			turn(COUNTERCLOCKWISE, 90);
+			motors.turn(COUNTERCLOCKWISE, 90);
 		} else if (imu.getRoll() < -30) {
-			turn(CLOCKWISE, 90);
+			motors.turn(CLOCKWISE, 90);
 		} else {
-			drive(FORWARD, 60);
+			motors.drive(FORWARD, 60);
 		}
 	`
 

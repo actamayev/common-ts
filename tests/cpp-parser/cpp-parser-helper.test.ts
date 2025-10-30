@@ -29,7 +29,7 @@ describe("CppParserHelper", () => {
 				{ statement: "if (10 > 5)", type: CommandType.IF_STATEMENT },
 				{ statement: "while(true)", type: CommandType.WHILE_STATEMENT },
 				{ statement: "for (int i = 0; i < 10; i++)", type: CommandType.FOR_STATEMENT },
-				{ statement: "drive(FORWARD, 50)", type: CommandType.DRIVE },
+				{ statement: "motors.drive(FORWARD, 50)", type: CommandType.DRIVE },
 				{ statement: "left_distance_sensor.is_object_near()", type: CommandType.LEFT_DISTANCE_SENSOR },
 				{ statement: "right_distance_sensor.is_object_near()", type: CommandType.RIGHT_DISTANCE_SENSOR },
 				{ statement: "front_distance_sensor.is_object_in_front()", type: CommandType.FRONT_PROXIMITY_DETECTION },

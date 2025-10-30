@@ -197,15 +197,15 @@ describe("Else-If Edge Cases and Specific Scenarios", () => {
 				if (front_distance_sensor.is_object_in_front()) {
 					motors.stop();
 				} else if (imu.getPitch() > 45) {
-					drive_time(BACKWARD, 2.0, 70);
+					motors.drive_time(BACKWARD, 2.0, 70);
 				} else if (imu.getPitch() < -45) {
-					drive_time(FORWARD, 1.0, 50);
+					motors.drive_time(FORWARD, 1.0, 50);
 				} else if (imu.getRoll() > 30) {
-					turn(COUNTERCLOCKWISE, 90);
+					motors.turn(COUNTERCLOCKWISE, 90);
 				} else if (imu.getRoll() < -30) {
-					turn(CLOCKWISE, 90);
+					motors.turn(CLOCKWISE, 90);
 				} else {
-					drive(FORWARD, 60);
+					motors.drive(FORWARD, 60);
 				}
 			`
 
