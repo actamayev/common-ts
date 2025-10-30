@@ -5,7 +5,7 @@ import { MAX_LED_BRIGHTNESS } from "../../src/types/utils/constants"
 describe("Proximity Sensor Functions", () => {
 	describe("Side Proximity Detection", () => {
 		test("should parse standalone left proximity detection function", () => {
-			const code = "is_object_near_side_left();"
+			const code = "left_distance_sensor.is_object_near();"
 			const bytecode = CppParser.cppToByte(code)
 
 			// Should generate a READ_SENSOR instruction for left proximity
@@ -20,7 +20,7 @@ describe("Proximity Sensor Functions", () => {
 		})
 
 		test("should parse standalone right proximity detection function", () => {
-			const code = "is_object_near_side_right();"
+			const code = "right_distance_sensor.is_object_near();"
 			const bytecode = CppParser.cppToByte(code)
 
 			// Should generate a READ_SENSOR instruction for right proximity
@@ -42,7 +42,7 @@ describe("Proximity Sensor Functions", () => {
 
 			const code = `
         ${registerSetup}
-        is_object_near_side_left();
+        left_distance_sensor.is_object_near();
       `
 
 			// Should throw error about exceeding register count
@@ -53,9 +53,9 @@ describe("Proximity Sensor Functions", () => {
 
 		test("should handle multiple side proximity sensors", () => {
 			const code = `
-        is_object_near_side_left();
+        left_distance_sensor.is_object_near();
         wait(0.1);
-        is_object_near_side_right();
+        right_distance_sensor.is_object_near();
       `
 
 			const bytecode = CppParser.cppToByte(code)
@@ -269,9 +269,9 @@ describe("Proximity Sensor Functions", () => {
             rgbLed.set_led_red();
             wait(0.3);
             
-            if (is_object_near_side_left()) {
+            if (left_distance_sensor.is_object_near()) {
               // Left blocked too, try right
-              if (is_object_near_side_right()) {
+              if (right_distance_sensor.is_object_near()) {
                 // All directions blocked
                 rgbLed.set_led_purple();
                 left_button.wait_for_press();  // Wait for manual intervention

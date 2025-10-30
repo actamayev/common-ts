@@ -403,9 +403,9 @@ describe("Else-If Functionality", () => {
 			const code = `
 				if (front_distance_sensor.is_object_in_front()) {
 					rgbLed.set_led_red();
-				} else if (is_object_near_side_left()) {
+				} else if (left_distance_sensor.is_object_near()) {
 					rgbLed.set_led_green();
-				} else if (is_object_near_side_right()) {
+				} else if (right_distance_sensor.is_object_near()) {
 					rgbLed.set_led_blue();
 				} else {
 					rgbLed.set_led_white();
@@ -449,7 +449,7 @@ describe("Else-If Functionality", () => {
 					rgbLed.set_led_red();
 				} else if (imu.getPitch() > 45) {
 					rgbLed.set_led_green();
-				} else if (is_object_near_side_left()) {
+				} else if (left_distance_sensor.is_object_near()) {
 					rgbLed.set_led_blue();
 				}
 			`
@@ -657,9 +657,9 @@ describe("Else-If Functionality", () => {
 				while (true) {
 					if (front_distance_sensor.is_object_in_front()) {
 						rgbLed.set_led_red();
-					} else if (is_object_near_side_left()) {
+					} else if (left_distance_sensor.is_object_near()) {
 						rgbLed.set_led_green();
-					} else if (is_object_near_side_right()) {
+					} else if (right_distance_sensor.is_object_near()) {
 						rgbLed.set_led_blue();
 					} else {
 						drive(FORWARD, 50);
@@ -785,9 +785,9 @@ describe("Else-If Functionality", () => {
 				while (true) {
 					if (front_distance_sensor.is_object_in_front()) {
 						motors.stop();
-						if (is_object_near_side_left()) {
+						if (left_distance_sensor.is_object_near()) {
 							turn(CLOCKWISE, 90);
-						} else if (is_object_near_side_right()) {
+						} else if (right_distance_sensor.is_object_near()) {
 							turn(COUNTERCLOCKWISE, 90);
 						} else {
 							drive(BACKWARD, 50);

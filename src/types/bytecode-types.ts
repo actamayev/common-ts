@@ -131,7 +131,8 @@ export enum CommandType {
     MOTOR_STOP = "MOTOR_STOP",
     MOTOR_TURN = "MOTOR_TURN",
 
-    SIDE_PROXIMITY_DETECTION = "SIDE_PROXIMITY_DETECTION",
+    LEFT_DISTANCE_SENSOR = "LEFT_DISTANCE_SENSOR",
+    RIGHT_DISTANCE_SENSOR = "RIGHT_DISTANCE_SENSOR",
     FRONT_PROXIMITY_DETECTION = "FRONT_PROXIMITY_DETECTION",
     WAIT_FOR_BUTTON = "WAIT_FOR_BUTTON",
     COLOR_SENSOR_READ = "COLOR_SENSOR_READ",
@@ -168,9 +169,9 @@ export const CommandPatterns: Record<CommandType, RegExp> = {
 	[CommandType.VARIABLE_ASSIGNMENT]: /^(float|int|bool)\s+(\w+)\s*=\s*(.+)$/,
 
 	// Updated regex for IF_STATEMENT
-	[CommandType.IF_STATEMENT]: /^if\s*\(\s*(?:is_object_near_side_(left|right)\(\)|front_distance_sensor.is_object_in_front\(\)|right_button.is_pressed\(\)|is_object_(red|green|blue|white|black|yellow)\(\)|(true|false)|\b(\w+)\b|(imu\.\w+\(\)|front_distance_sensor\.get_distance\(\)|[-\d.]+|\w+)\s*([<>=!][=]?)\s*(imu\.\w+\(\)|front_distance_sensor\.get_distance\(\)|[-\d.]+|\w+))\s*\)$/,
+	[CommandType.IF_STATEMENT]: /^if\s*\(\s*(?:left_distance_sensor\.is_object_near\(\)|right_distance_sensor\.is_object_near\(\)|front_distance_sensor\.is_object_in_front\(\)|right_button\.is_pressed\(\)|is_object_(red|green|blue|white|black|yellow)\(\)|(true|false)|\b(\w+)\b|(imu\.\w+\(\)|front_distance_sensor\.get_distance\(\)|[-\d.]+|\w+)\s*([<>=!][=]?)\s*(imu\.\w+\(\)|front_distance_sensor\.get_distance\(\)|[-\d.]+|\w+))\s*\)$/,
 	[CommandType.COMPOUND_OR_IF_STATEMENT]: /^if\s*\(\s*\(.+?\)\s*\|\|\s*\(.+?\)\s*\)$/,
-	[CommandType.ELSE_IF_STATEMENT]: /^else\s+if\s*\(\s*(?:is_object_near_side_(left|right)\(\)|front_distance_sensor.is_object_in_front\(\)|right_button.is_pressed\(\)|is_object_(red|green|blue|white|black|yellow)\(\)|(true|false)|\b(\w+)\b|(imu\.\w+\(\)|front_distance_sensor\.get_distance\(\)|[-\d.]+|\w+)\s*([<>=!][=]?)\s*(imu\.\w+\(\)|front_distance_sensor\.get_distance\(\)|[-\d.]+|\w+))\s*\)$/,
+	[CommandType.ELSE_IF_STATEMENT]: /^else\s+if\s*\(\s*(?:left_distance_sensor\.is_object_near\(\)|right_distance_sensor\.is_object_near\(\)|front_distance_sensor\.is_object_in_front\(\)|right_button\.is_pressed\(\)|is_object_(red|green|blue|white|black|yellow)\(\)|(true|false)|\b(\w+)\b|(imu\.\w+\(\)|front_distance_sensor\.get_distance\(\)|[-\d.]+|\w+)\s*([<>=!][=]?)\s*(imu\.\w+\(\)|front_distance_sensor\.get_distance\(\)|[-\d.]+|\w+))\s*\)$/,
 	[CommandType.COMPOUND_AND_IF_STATEMENT]: /^if\s*\(\s*\(.+?\)\s*&&\s*\(.+?\)\s*\)$/,
 	[CommandType.COMPOUND_AND_ELSE_IF_STATEMENT]: /^else\s+if\s*\(\s*\(.+?\)\s*&&\s*\(.+?\)\s*\)$/,
 	[CommandType.COMPOUND_OR_ELSE_IF_STATEMENT]: /^else\s+if\s*\(\s*\(.+?\)\s*\|\|\s*\(.+?\)\s*\)$/,
@@ -187,7 +188,8 @@ export const CommandPatterns: Record<CommandType, RegExp> = {
 	[CommandType.MOTOR_STOP]: /^motors.stop\(\)$/,
 	[CommandType.MOTOR_TURN]: /^turn\(\s*(CLOCKWISE|COUNTERCLOCKWISE)\s*,\s*(\d+)\s*\)$/,
 
-	[CommandType.SIDE_PROXIMITY_DETECTION]: /^is_object_near_side_(left|right)\(\)$/,
+	[CommandType.LEFT_DISTANCE_SENSOR]: /^left_distance_sensor\.is_object_near\(\)$/,
+	[CommandType.RIGHT_DISTANCE_SENSOR]: /^right_distance_sensor\.is_object_near\(\)$/,
 	[CommandType.FRONT_PROXIMITY_DETECTION]: /^front_distance_sensor.is_object_in_front\(\)$/,
 	[CommandType.WAIT_FOR_BUTTON]: /^left_button.wait_for_press\(\)$/,
 	[CommandType.COLOR_SENSOR_READ]: /^is_object_(red|green|blue|white|black|yellow)\(\)$/,

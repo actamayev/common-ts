@@ -175,7 +175,7 @@ describe("Sensor Functionality", () => {
 
 	describe("Proximity Detection in Conditionals", () => {
 		test("should parse if statement with left proximity detection", () => {
-			const code = `if (is_object_near_side_left()) {
+			const code = `if (left_distance_sensor.is_object_near()) {
 				rgbLed.set_led_red();
 			} else {
 				rgbLed.set_led_green();
@@ -224,7 +224,7 @@ describe("Sensor Functionality", () => {
 		})
 
 		test("should parse if statement with right proximity detection", () => {
-			const code = `if (is_object_near_side_right()) {
+			const code = `if (right_distance_sensor.is_object_near()) {
 				rgbLed.set_led_blue();
 			}`
 
@@ -492,12 +492,26 @@ describe("Sensor Functionality", () => {
 
 		test("should parse TOF distance with different comparison operators", () => {
 			const testCases = [
-				{ code: "if (front_distance_sensor.get_distance() < 20) { rgbLed.set_led_red(); }", operator: ComparisonOp.LESS_THAN, value: 20 },
-				{ code: "if (front_distance_sensor.get_distance() == 100) { rgbLed.set_led_blue(); }", operator: ComparisonOp.EQUAL, value: 100 },
-				{ code: "if (front_distance_sensor.get_distance() != 0) { rgbLed.set_led_white(); }", operator: ComparisonOp.NOT_EQUAL, value: 0 },
-				{ code: "if (front_distance_sensor.get_distance() >= 75) { rgbLed.set_led_purple(); }",
-				  operator: ComparisonOp.GREATER_EQUAL, value: 75 },
-				{ code: "if (front_distance_sensor.get_distance() <= 25) { rgbLed.set_led_yellow(); }", operator: ComparisonOp.LESS_EQUAL, value: 25 }
+				{
+					code: "if (front_distance_sensor.get_distance() < 20) { rgbLed.set_led_red(); }",
+					operator: ComparisonOp.LESS_THAN, value: 20
+				},
+				{
+					code: "if (front_distance_sensor.get_distance() == 100) { rgbLed.set_led_blue(); }",
+					operator: ComparisonOp.EQUAL, value: 100
+				},
+				{
+					code: "if (front_distance_sensor.get_distance() != 0) { rgbLed.set_led_white(); }",
+					operator: ComparisonOp.NOT_EQUAL, value: 0
+				},
+				{
+					code: "if (front_distance_sensor.get_distance() >= 75) { rgbLed.set_led_purple(); }",
+				  	operator: ComparisonOp.GREATER_EQUAL, value: 75
+				},
+				{
+					code: "if (front_distance_sensor.get_distance() <= 25) { rgbLed.set_led_yellow(); }",
+					operator: ComparisonOp.LESS_EQUAL, value: 25
+				}
 			]
 
 			testCases.forEach(({ code, operator, value }) => {

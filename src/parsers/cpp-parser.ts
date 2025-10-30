@@ -163,7 +163,8 @@ export class CppParser {
 					const buttonMatch = varValue.match(CommandPatterns[CommandType.CHECK_IF_RIGHT_BUTTON_PRESSED])
 
 					// Check if value is a proximity detection function
-					const sideProximityMatch = varValue.match(CommandPatterns[CommandType.SIDE_PROXIMITY_DETECTION])
+					const leftDistanceSensorMatch = varValue.match(CommandPatterns[CommandType.LEFT_DISTANCE_SENSOR])
+					const rightDistanceSensorMatch = varValue.match(CommandPatterns[CommandType.RIGHT_DISTANCE_SENSOR])
 					const frontProximityMatch = varValue.match(CommandPatterns[CommandType.FRONT_PROXIMITY_DETECTION])
 
 					// Check if value is a color detection function
@@ -200,15 +201,16 @@ export class CppParser {
 							operand3: 0,
 							operand4: 0
 						})
-					} else if (typeEnum === VarType.BOOL && (sideProximityMatch || frontProximityMatch)) {
+					} else if (typeEnum === VarType.BOOL && (leftDistanceSensorMatch || rightDistanceSensorMatch || frontProximityMatch)) {
 						// This is a proximity sensor assignment to a boolean
 						let sensorType: SensorType
 
 						if (frontProximityMatch) {
 							sensorType = SensorType.FRONT_PROXIMITY
-						} else if (sideProximityMatch) {
-							const side = sideProximityMatch[1] // 'left' or 'right'
-							sensorType = side === "left" ? SensorType.SIDE_LEFT_PROXIMITY : SensorType.SIDE_RIGHT_PROXIMITY
+						} else if (leftDistanceSensorMatch) {
+							sensorType = SensorType.SIDE_LEFT_PROXIMITY
+						} else if (rightDistanceSensorMatch) {
+							sensorType = SensorType.SIDE_RIGHT_PROXIMITY
 						} else {
 							throw new Error(`Unknown proximity sensor: ${varValue}`)
 						}
@@ -1353,26 +1355,42 @@ export class CppParser {
 				}
 				break
 
-			case CommandType.SIDE_PROXIMITY_DETECTION: {
-				if (command.matches && command.matches.length === 2) {
-					// Extract the sensor side (left or right)
-					const sensorSide = command.matches[1]
-
+			case CommandType.LEFT_DISTANCE_SENSOR: {
+				if (command.matches) {
 					// Allocate a register for the boolean result
 					if (nextRegister >= MAX_REGISTERS) {
 						throw new Error(`Program exceeds maximum register count (${MAX_REGISTERS})`)
 					}
 					const boolResultRegister = nextRegister++
 
-					// Determine sensor type based on side
-					const sensorType = sensorSide === "left" ?
-						SensorType.SIDE_LEFT_PROXIMITY : SensorType.SIDE_RIGHT_PROXIMITY
+					// Since the VM now handles the threshold comparison internally,
+					// we only need to read the sensor value which will return a boolean
+					instructions.push({
+						opcode: BytecodeOpCode.READ_SENSOR,
+						operand1: SensorType.SIDE_LEFT_PROXIMITY,
+						operand2: boolResultRegister,
+						operand3: 0,
+						operand4: 0
+					})
+
+					// No need for additional comparison or boolean conversion
+					// as the VM now returns a boolean directly
+				}
+				break
+			}
+			case CommandType.RIGHT_DISTANCE_SENSOR: {
+				if (command.matches) {
+					// Allocate a register for the boolean result
+					if (nextRegister >= MAX_REGISTERS) {
+						throw new Error(`Program exceeds maximum register count (${MAX_REGISTERS})`)
+					}
+					const boolResultRegister = nextRegister++
 
 					// Since the VM now handles the threshold comparison internally,
 					// we only need to read the sensor value which will return a boolean
 					instructions.push({
 						opcode: BytecodeOpCode.READ_SENSOR,
-						operand1: sensorType,
+						operand1: SensorType.SIDE_RIGHT_PROXIMITY,
 						operand2: boolResultRegister,
 						operand3: 0,
 						operand4: 0

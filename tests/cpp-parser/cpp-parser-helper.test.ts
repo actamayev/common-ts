@@ -30,7 +30,8 @@ describe("CppParserHelper", () => {
 				{ statement: "while(true)", type: CommandType.WHILE_STATEMENT },
 				{ statement: "for (int i = 0; i < 10; i++)", type: CommandType.FOR_STATEMENT },
 				{ statement: "drive(FORWARD, 50)", type: CommandType.DRIVE },
-				{ statement: "is_object_near_side_left()", type: CommandType.SIDE_PROXIMITY_DETECTION },
+				{ statement: "left_distance_sensor.is_object_near()", type: CommandType.LEFT_DISTANCE_SENSOR },
+				{ statement: "right_distance_sensor.is_object_near()", type: CommandType.RIGHT_DISTANCE_SENSOR },
 				{ statement: "front_distance_sensor.is_object_in_front()", type: CommandType.FRONT_PROXIMITY_DETECTION },
 				{ statement: "left_button.wait_for_press()", type: CommandType.WAIT_FOR_BUTTON }
 			]
@@ -444,7 +445,7 @@ describe("CppParserHelper", () => {
 	describe("CppParserHelper.processOperand for proximity sensors", () => {
 		test("should process left side proximity detection", () => {
 			// Setup
-			const expr = "is_object_near_side_left()"
+			const expr = "left_distance_sensor.is_object_near()"
 			const variables = new Map()
 			const nextRegister = 0
 			const instructions: BytecodeInstruction[] = []
@@ -466,7 +467,7 @@ describe("CppParserHelper", () => {
 
 		test("should process right side proximity detection", () => {
 			// Setup
-			const expr = "is_object_near_side_right()"
+			const expr = "right_distance_sensor.is_object_near()"
 			const variables = new Map()
 			const nextRegister = 0
 			const instructions: BytecodeInstruction[] = []
@@ -531,7 +532,7 @@ describe("CppParserHelper", () => {
 
 			// Process first proximity
 			const result1 = CppParserHelper.processOperand(
-				"is_object_near_side_left()",
+				"left_distance_sensor.is_object_near()",
 				variables,
 				nextRegister,
 				instructions
@@ -553,7 +554,7 @@ describe("CppParserHelper", () => {
 
 			// Process third proximity
 			const result3 = CppParserHelper.processOperand(
-				"is_object_near_side_right()",
+				"right_distance_sensor.is_object_near()",
 				variables,
 				nextRegister,
 				instructions
@@ -623,7 +624,7 @@ describe("CppParserHelper", () => {
 
 		test("should use non-zero starting register", () => {
 			// Setup with starting register other than 0
-			const expr = "is_object_near_side_left()"
+			const expr = "left_distance_sensor.is_object_near()"
 			const variables = new Map()
 			const nextRegister = 5 // Start at register 5
 			const instructions: BytecodeInstruction[] = []

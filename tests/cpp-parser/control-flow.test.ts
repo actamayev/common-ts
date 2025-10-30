@@ -631,7 +631,7 @@ describe("Bidirectional Comparisons", () => {
 
 			test("should handle compound AND with proximity sensor functions", () => {
 				const code = `
-        if ((front_distance_sensor.is_object_in_front()) && (is_object_near_side_left())) {
+        if ((front_distance_sensor.is_object_in_front()) && (left_distance_sensor.is_object_near())) {
           rgbLed.set_led_red();
         }
       `
@@ -781,7 +781,7 @@ describe("Bidirectional Comparisons", () => {
 
 			test("should handle compound OR with proximity sensor functions", () => {
 				const code = `
-        if ((front_distance_sensor.is_object_in_front()) || (is_object_near_side_right())) {
+        if ((front_distance_sensor.is_object_in_front()) || (right_distance_sensor.is_object_near())) {
           rgbLed.set_led_red();
         }
       `
