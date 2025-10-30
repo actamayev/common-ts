@@ -70,8 +70,8 @@ export const DRIVING_SCHOOL_CHALLENGE_S3_P5: CqChallengeData = {
 	learningObjectives: [ ],
 	solutionCode: `
 	left_button.wait_for_press();
-	drive_distance(FORWARD, 8, 15);
-	drive_distance(BACKWARD, 8, 15);
+	motors.drive_distance(FORWARD, 8, 15);
+	motors.drive_distance(BACKWARD, 8, 15);
 	`,
 }
 
@@ -102,9 +102,9 @@ export const DRIVING_SCHOOL_CHALLENGE_S4_P5: CqChallengeData = {
 	learningObjectives: [ ],
 	solutionCode: `
 	left_button.wait_for_press();
-	turn(CLOCKWISE, 180);
+	motors.turn(CLOCKWISE, 180);
 	wait(2);
-	turn(COUNTERCLOCKWISE, 180);
+	motors.turn(COUNTERCLOCKWISE, 180);
 	`,
 }
 
@@ -189,14 +189,14 @@ export const DRIVING_SCHOOL_CHALLENGE_S5_P4: CqChallengeData = {
 	learningObjectives: [],
 	solutionCode: `
 	left_button.wait_for_press();
-	drive_distance(FORWARD, 8, 15);
-	turn(CLOCKWISE, 90);
-	drive_distance(FORWARD, 8, 15);
-	turn(CLOCKWISE, 90);
-	drive_distance(FORWARD, 8, 15);
-	turn(CLOCKWISE, 90);
-	drive_distance(FORWARD, 8, 15);
-	turn(CLOCKWISE, 90);
+	motors.drive_distance(FORWARD, 8, 15);
+	motors.turn(CLOCKWISE, 90);
+	motors.drive_distance(FORWARD, 8, 15);
+	motors.turn(CLOCKWISE, 90);
+	motors.drive_distance(FORWARD, 8, 15);
+	motors.turn(CLOCKWISE, 90);
+	motors.drive_distance(FORWARD, 8, 15);
+	motors.turn(CLOCKWISE, 90);
 	`,
 }
 
