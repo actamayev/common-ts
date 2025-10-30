@@ -183,17 +183,19 @@ export class CppParserHelper {
 		}
 
 		// Check if this is a proximity detection function
-		const sideProximityMatch = expr.match(CommandPatterns[CommandType.SIDE_PROXIMITY_DETECTION])
+		const leftDistanceSensorMatch = expr.match(CommandPatterns[CommandType.LEFT_DISTANCE_SENSOR])
+		const rightDistanceSensorMatch = expr.match(CommandPatterns[CommandType.RIGHT_DISTANCE_SENSOR])
 		const frontProximityMatch = expr.match(CommandPatterns[CommandType.FRONT_PROXIMITY_DETECTION])
-		const proximityMatch = sideProximityMatch || frontProximityMatch
+		const proximityMatch = leftDistanceSensorMatch || rightDistanceSensorMatch || frontProximityMatch
 		if (proximityMatch) {
 		// Determine the sensor type based on the function name
 			let sensorType: SensorType
 			if (frontProximityMatch) {
 				sensorType = SensorType.FRONT_PROXIMITY
-			} else if (sideProximityMatch) {
-				const side = sideProximityMatch[1] // 'left' or 'right'
-				sensorType = this.getSensorTypeFromProximity(side)
+			} else if (leftDistanceSensorMatch) {
+				sensorType = SensorType.SIDE_LEFT_PROXIMITY
+			} else if (rightDistanceSensorMatch) {
+				sensorType = SensorType.SIDE_RIGHT_PROXIMITY
 			} else {
 				throw new Error(`Unknown proximity detection: ${expr}`)
 			}

@@ -296,10 +296,10 @@ describe("Else-If Edge Cases and Specific Scenarios", () => {
 					if (front_distance_sensor.is_object_in_front()) {
 						rgbLed.set_led_red();
 						left_button.wait_for_press();
-					} else if (is_object_near_side_left()) {
+					} else if (left_distance_sensor.is_object_near()) {
 						rgbLed.set_led_green();
 						wait(1);
-					} else if (is_object_near_side_right()) {
+					} else if (right_distance_sensor.is_object_near()) {
 						rgbLed.set_led_blue();
 						wait(1);
 					} else {

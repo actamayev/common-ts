@@ -10,10 +10,10 @@ describe("Complex Nested Structures", () => {
         if (front_distance_sensor.is_object_in_front()) {
             rgbLed.set_led_white();
         } else {
-            if (is_object_near_side_right()) {
+            if (right_distance_sensor.is_object_near()) {
                 rgbLed.set_led_red();
             } else {
-                if (is_object_near_side_left()) {
+                if (left_distance_sensor.is_object_near()) {
                     rgbLed.set_led_blue();
                 } else {
                     rgbLed.set_led_green();

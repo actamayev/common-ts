@@ -272,7 +272,7 @@ export const OBSTACLE_AVOIDANCE_CHALLENGE_4: CqChallengeData = {
 	]),
 	solutionCode: `
         while(true) {
-            if (is_object_near_side_right()) {
+            if (right_distance_sensor.is_object_near()) {
                 rgbLed.set_led_blue();
             } else {
                 rgbLed.turn_led_off();
@@ -323,10 +323,10 @@ export const OBSTACLE_AVOIDANCE_CHALLENGE_5: CqChallengeData = {
             if (front_distance_sensor.is_object_in_front()) {
                 rgbLed.set_led_white();
                 turn(CLOCKWISE, 90);
-            } else if (is_object_near_side_left()) {
+            } else if (left_distance_sensor.is_object_near()) {
                 rgbLed.set_led_red();
                 turn(CLOCKWISE, 90);
-            } else if (is_object_near_side_right()) {
+            } else if (right_distance_sensor.is_object_near()) {
                 rgbLed.set_led_blue();
                 turn(COUNTERCLOCKWISE, 90);
             } else {

@@ -116,7 +116,7 @@ describe("Variable assignments", () => {
 		})
 
 		test("should parse boolean variable assignment with left proximity sensor", () => {
-		  const bytecode = CppParser.cppToByte("bool isObjectOnLeft = is_object_near_side_left();")
+		  const bytecode = CppParser.cppToByte("bool isObjectOnLeft = left_distance_sensor.is_object_near();")
 
 		  // First instruction: DECLARE_VAR
 		  expect(bytecode[0]).toBe(BytecodeOpCode.DECLARE_VAR)
@@ -130,7 +130,7 @@ describe("Variable assignments", () => {
 		})
 
 		test("should parse boolean variable assignment with right proximity sensor", () => {
-		  const bytecode = CppParser.cppToByte("bool isObjectOnRight = is_object_near_side_right();")
+		  const bytecode = CppParser.cppToByte("bool isObjectOnRight = right_distance_sensor.is_object_near();")
 
 		  // First instruction: DECLARE_VAR
 		  expect(bytecode[0]).toBe(BytecodeOpCode.DECLARE_VAR)
@@ -146,8 +146,8 @@ describe("Variable assignments", () => {
 		test("should handle multiple proximity sensor variables", () => {
 		  const bytecode = CppParser.cppToByte(`
 			bool front = front_distance_sensor.is_object_in_front();
-			bool left = is_object_near_side_left();
-			bool right = is_object_near_side_right();
+			bool left = left_distance_sensor.is_object_near();
+			bool right = right_distance_sensor.is_object_near();
 		  `)
 
 		  // Check for three DECLARE_VAR instructions
