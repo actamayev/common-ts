@@ -45,7 +45,6 @@ export enum MATH_BLOCK_TYPES {
     NEGATE = "logic_negate",
     NUMBER = "math_number",
     ARITHMETIC = "math_arithmetic",
-    MATH_SINGLE = "math_single"
 }
 
 export enum MATH_FIELD_VALUES {
@@ -60,8 +59,6 @@ export enum MATH_FIELD_VALUES {
     ARITHMETIC_A = "ARITHMETIC_A", // Renamed
     ARITHMETIC_B = "ARITHMETIC_B", // Renamed
     ARITHMETIC_OP = "ARITHMETIC_OP", // Renamed
-    MATH_SINGLE_NUM = "MATH_SINGLE_NUM", // Renamed
-    MATH_SINGLE_OP = "MATH_SINGLE_OP",   // Renamed
     MATH_CONSTRAIN_VALUE = "VALUE",
     MATH_CONSTRAIN_LOW = "LOW",
     MATH_CONSTRAIN_HIGH = "HIGH"
