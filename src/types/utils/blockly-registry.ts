@@ -211,12 +211,6 @@ export const BLOCK_REGISTRY: Record<BlockNames, BlockDefinition> = {
 		category: "Math",
 		parentCategory: "Logic"
 	},
-	[MATH_BLOCK_TYPES.MATH_SINGLE]: {
-		description: "Performs single-value math functions (absolute value, square root, etc.)",
-		codeTemplate: "{abs|sqrt|sin|cos|tan|floor|ceil|round}({value})",
-		category: "Math",
-		parentCategory: "Logic"
-	},
 
 	// Loop blocks
 	[LOOP_BLOCK_TYPES.FOREVER_LOOP]: {
