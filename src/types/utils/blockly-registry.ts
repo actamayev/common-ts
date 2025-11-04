@@ -19,17 +19,17 @@ export interface BlockDefinition {
 export const BLOCK_REGISTRY: Record<BlockNames, BlockDefinition> = {
 	// Motor blocks
 	[MOTOR_BLOCK_TYPES.DRIVE]: {
-		description: "Makes the robot move forward continuously",
+		description: "Makes Pip move forward continuously",
 		codeTemplate: "motors.drive({direction}, {speed});",
 		category: "Motors"
 	},
 	[MOTOR_BLOCK_TYPES.DRIVE_TIME]: {
-		description: "Makes the robot move forward for a specific amount of time",
+		description: "Makes Pip move forward for a specific amount of time",
 		codeTemplate: "motors.drive_time({direction}, {seconds}, {speed});",
 		category: "Motors"
 	},
 	[MOTOR_BLOCK_TYPES.DRIVE_DISTANCE]: {
-		description: "Makes the robot move forward for a specific distance in millimeters",
+		description: "Makes Pip move forward for a specific distance in millimeters",
 		codeTemplate: "motors.drive_distance({direction}, {distance_inches}, {speed});",
 		category: "Motors"
 	},
@@ -39,8 +39,13 @@ export const BLOCK_REGISTRY: Record<BlockNames, BlockDefinition> = {
 		category: "Motors"
 	},
 	[MOTOR_BLOCK_TYPES.TURN]: {
-		description: "Turns the robot in a specific direction by degrees",
+		description: "Turns Pip in a specific direction by degrees",
 		codeTemplate: "motors.turn({CLOCKWISE|COUNTERCLOCKWISE}, {degrees});",
+		category: "Motors"
+	},
+	[MOTOR_BLOCK_TYPES.SPIN]: {
+		description: "Turns Pip in a specific direction indefinitely at a given speed",
+		codeTemplate: "motors.spin({CLOCKWISE|COUNTERCLOCKWISE}, {speed});",
 		category: "Motors"
 	},
 
