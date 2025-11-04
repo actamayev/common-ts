@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-
 export enum MOTOR_BLOCK_TYPES {
     DRIVE = "drive",
     DRIVE_TIME = "drive_time",
     DRIVE_DISTANCE = "drive_distance",
     STOP = "stop",
-    TURN = "turn"
+    TURN = "turn",
+    SPIN = "spin"
 }
 
 export enum MOTOR_DIRECTIONS {
