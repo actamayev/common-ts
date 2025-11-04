@@ -30,6 +30,7 @@ export enum BytecodeOpCode {
     MOTOR_TURN = 0x53,      // Turn by specified degrees
     MOTOR_DRIVE_TIME = 0x54,   // Drive forward/backward for specified time
     MOTOR_DRIVE_DISTANCE = 0x56, // Drive forward/backward for specified distance
+    MOTOR_SPIN = 0x57,        // Spin motors in opposite directions
 
     PLAY_SOUND = 0x60,
     PLAY_TONE = 0x61,
@@ -102,6 +103,7 @@ export enum CommandType {
     DRIVE_DISTANCE = "DRIVE_DISTANCE",
     MOTOR_STOP = "MOTOR_STOP",
     MOTOR_TURN = "MOTOR_TURN",
+    MOTOR_SPIN = "MOTOR_SPIN",
 
     LEFT_DISTANCE_SENSOR = "LEFT_DISTANCE_SENSOR",
     RIGHT_DISTANCE_SENSOR = "RIGHT_DISTANCE_SENSOR",
@@ -144,6 +146,7 @@ export const CommandPatterns: Record<CommandType, RegExp> = {
 	[CommandType.DRIVE_DISTANCE]: /^motors.drive_distance\(\s*(FORWARD|BACKWARD)\s*,\s*(\d+(?:\.\d+)?)\s*,\s*(\d+)\s*\)$/,
 	[CommandType.MOTOR_STOP]: /^motors.stop\(\)$/,
 	[CommandType.MOTOR_TURN]: /^motors.turn\(\s*(CLOCKWISE|COUNTERCLOCKWISE)\s*,\s*(\d+)\s*\)$/,
+	[CommandType.MOTOR_SPIN]: /^motors.spin\(\s*(CLOCKWISE|COUNTERCLOCKWISE)\s*,\s*(\d+)\s*\)$/,
 
 	[CommandType.WAIT_FOR_BUTTON]: /^left_button.wait_for_press\(\)$/,
 	[CommandType.CHECK_IF_RIGHT_BUTTON_PRESSED]: /^right_button.is_pressed\(\)$/,

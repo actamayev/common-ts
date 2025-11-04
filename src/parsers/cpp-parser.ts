@@ -1217,6 +1217,26 @@ export class CppParser {
 				}
 				break
 
+			case CommandType.MOTOR_SPIN:
+				if (command.matches && command.matches.length === 3) {
+					const direction = command.matches[1] // "CLOCKWISE" or "COUNTERCLOCKWISE"
+					const speed = parseInt(command.matches[2], 10)
+
+					// Validate speed percentage
+					if (speed < 0 || speed > 100) {
+						throw new Error(`Invalid speed: ${speed}. Must be between 0 and 100.`)
+					}
+
+					instructions.push({
+						opcode: BytecodeOpCode.MOTOR_SPIN,
+						operand1: direction === "CLOCKWISE" ? 1 : 0,
+						operand2: speed,
+						operand3: 0,
+						operand4: 0
+					})
+				}
+				break
+
 			case CommandType.DRIVE_TIME:
 				if (command.matches && command.matches.length === 4) {
 					const direction = command.matches[1] // "FORWARD" or "BACKWARD"
