@@ -79,7 +79,6 @@ export interface FunctionToBlockAnswerChoice {
 
 export interface MatchingAnswerChoice {
 	matchingAnswerChoicePairId: number
-	order: number
 	codingBlock: CodingBlock
 	matchingAnswerChoiceText: MatchingAnswerChoiceText
 }
