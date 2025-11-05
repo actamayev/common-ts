@@ -103,6 +103,10 @@ export interface CheckMCQResponse {
 	correctAnswerId: number | null
 }
 
+export interface CheckMatchingSelectionResponse {
+	isCorrect: boolean
+}
+
 // Personal Info Responses:
 export interface BasicPersonalInfoResponse {
 	username: string
