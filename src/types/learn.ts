@@ -78,10 +78,10 @@ export interface FunctionToBlockAnswerChoice {
 }
 
 export interface MatchingAnswerChoice {
-	matchingAnswerChoiceId: number
+	matchingAnswerChoicePairId: number
 	order: number
 	codingBlock: CodingBlock
-	blockDescriptionText: string
+	matchingAnswerChoiceText: MatchingAnswerChoiceText
 }
 
 export interface BlockBankData {
@@ -89,13 +89,18 @@ export interface BlockBankData {
 	blockName: BlockNames
 }
 
+export interface ActionToCodeMultipleChoiceAnswerChoice {
+	actionToCodeMultipleChoiceAnswerChoiceId: number
+	order: number
+	codingBlock: CodingBlock
+}
+
 export interface CodingBlock {
 	codingBlockId: number
 	codingBlockJson: BlocklyJson
 }
 
-export interface ActionToCodeMultipleChoiceAnswerChoice {
-	actionToCodeMultipleChoiceAnswerChoiceId: number
-	order: number
-	codingBlock: CodingBlock
+export interface MatchingAnswerChoiceText {
+	matchingAnswerChoiceTextId: number
+	answerChoiceText: string
 }
