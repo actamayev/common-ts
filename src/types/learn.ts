@@ -8,6 +8,7 @@ export type QuestionType =
 	| "FILL_IN_BLANK"
 	| "ACTION_TO_CODE_MULTIPLE_CHOICE"
 	| "ACTION_TO_CODE_OPEN_ENDED"
+	| "MATCHING"
 
 export interface Lesson {
 	lessonId: LessonUUID
