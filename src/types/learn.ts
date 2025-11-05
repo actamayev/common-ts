@@ -58,6 +58,10 @@ export interface Question {
 		referenceSolutionCpp: string
 		availableBlocks: BlockBankData[]
 	} | null
+	matching: {
+		questionText: string
+		matchingAnswerChoice: MatchingAnswerChoice[]
+	} | null
 }
 
 // Nested answer choice/blocks types
@@ -71,6 +75,13 @@ export interface FunctionToBlockAnswerChoice {
 	functionToBlockAnswerChoiceId: number
 	order: number
 	codingBlock: CodingBlock
+}
+
+export interface MatchingAnswerChoice {
+	matchingAnswerChoiceId: number
+	order: number
+	codingBlock: CodingBlock
+	blockDescriptionText: string
 }
 
 export interface BlockBankData {
