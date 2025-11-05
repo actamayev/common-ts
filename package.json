@@ -1,6 +1,6 @@
 {
   "name": "@lever-labs/common-ts",
-  "version": "1.0.343",
+  "version": "1.0.344",
   "packageManager": "pnpm",
   "description": "Shared TypeScript code between frontend and backend",
   "files": [
