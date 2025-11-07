@@ -146,6 +146,10 @@ export interface RetrieveSandboxProjectsResponse {
 	sandboxProjects: SandboxProject[]
 }
 
+export interface BytecodeResponse {
+	bytecode: Float32Array
+}
+
 export interface StudentClassroomData {
 	studentId: number
 	joinedClassroomAt: Date | null
