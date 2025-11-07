@@ -2,7 +2,6 @@
 
 export enum SENSORS_BLOCK_TYPES {
     IMU_READ = "imu_read",
-    // IR_READ = "ir_read",
 	SIDE_TOF_READ = "side_tof_read",
 	CENTER_TOF_READ = "center_tof_read",
 	COLOR_SENSOR_READ = "color_sensor_read",
@@ -11,7 +10,6 @@ export enum SENSORS_BLOCK_TYPES {
 
 export enum SENSORS_FIELD_VALUES {
     IMU_READ = "imu_value",
-    IR_READ = "ir_sensor",
     COLOR_SENSOR_READ = "color_sensor",
 	SIDE_TOF_READ = "side_tof_value",
 	CENTER_TOF_READ = "center_tof_read"
