@@ -317,16 +317,6 @@
         "default": "./dist/src/types/blockly/logic-block-types.js"
       }
     },
-    "./parsers": {
-      "import": {
-        "types": "./dist/src/parsers/cpp-parser.d.ts",
-        "default": "./dist/src/parsers/cpp-parser.js"
-      },
-      "require": {
-        "types": "./dist/src/parsers/cpp-parser.d.ts",
-        "default": "./dist/src/parsers/cpp-parser.js"
-      }
-    },
     "./message-builder": {
       "import": {
         "types": "./dist/src/message-builder/message-builder.d.ts",
@@ -361,9 +351,6 @@
       ],
       "types/career-quest": [
         "./dist/src/types/career-quest.d.ts"
-      ],
-      "types/bytecode-types": [
-        "./dist/src/types/bytecode-types.d.ts"
       ],
       "types/garage": [
         "./dist/src/types/garage.d.ts"
@@ -442,9 +429,6 @@
       ],
       "types/cq-challenge-data/obstacle-avoidance-challenge-data": [
         "./dist/src/types/cq-challenge-data/obstacle-avoidance-challenge-data.d.ts"
-      ],
-      "parsers": [
-        "./dist/src/parsers/cpp-parser.d.ts"
       ],
       "message-builder": [
         "./dist/src/message-builder/message-builder.d.ts"
