@@ -146,8 +146,11 @@ export interface RetrieveSandboxProjectsResponse {
 	sandboxProjects: SandboxProject[]
 }
 
-export interface BytecodeResponse {
+export interface WiFiBytecodeResponse {
 	bytecode: Float32Array
+}
+
+export interface UsbBytecodeResponse extends WiFiBytecodeResponse {
 	isAbleToRunViaUsb: boolean
 }
 
