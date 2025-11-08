@@ -148,6 +148,7 @@ export interface RetrieveSandboxProjectsResponse {
 
 export interface BytecodeResponse {
 	bytecode: Float32Array
+	isAbleToRunViaUsb: boolean
 }
 
 export interface StudentClassroomData {
