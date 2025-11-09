@@ -158,7 +158,7 @@ export interface StudentClassroomData {
 	classCode: ClassCode
 	activeHubs: StudentViewHubData[]
 	garageDrivingAllowed: boolean
-	garageSoundsAllowed: boolean
+	garageTonesAllowed: boolean
 	garageLightsAllowed: boolean
 	garageDisplayAllowed: boolean
 }
@@ -174,7 +174,7 @@ export interface DetailedClassroomData extends BasicTeacherClassroomData {
 		studentId: number
 		username: string
 		garageDrivingAllowed: boolean
-		garageSoundsAllowed: boolean
+		garageTonesAllowed: boolean
 		garageLightsAllowed: boolean
 		garageDisplayAllowed: boolean
 	}[]

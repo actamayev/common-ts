@@ -1,7 +1,7 @@
 import { END_MARKER, START_MARKER } from "../types/utils/constants"
 import { BalancePidsProps, LedControlData } from "../types/garage"
-import { BalanceStatus, CareerType, HeadlightStatus, HornSoundStatus,
-	LightAnimationType, MessageType, SpeakerStatus,
+import { BalanceStatus, CareerType, HeadlightStatus, HornToneStatus,
+	LightAnimationType, MessageType, SpeakerStatus, ToneType,
 	ValidTriggerMessageType, UserConnectedStatus } from "./protocol"
 
 export class MessageBuilder {
@@ -67,13 +67,18 @@ export class MessageBuilder {
 		return this.frameMessage(MessageType.MOTOR_CONTROL, new Uint8Array(payload))
 	}
 
-	static createStopSoundMessage(): ArrayBuffer {
-		return this.frameMessage(MessageType.STOP_SOUND)
+	static createToneCommandMessage(toneType: ToneType): ArrayBuffer {
+		const payload = new Uint8Array([toneType])
+		return this.frameMessage(MessageType.TONE_COMMAND, payload)
 	}
 
-	static createHornSoundMessage(holdSoundType: boolean): ArrayBuffer {
-		const payload = new Uint8Array([holdSoundType ? HornSoundStatus.ON : HornSoundStatus.OFF])
-		return this.frameMessage(MessageType.UPDATE_HORN_SOUND, payload)
+	static createStopToneCommandMessage(): ArrayBuffer {
+		return this.frameMessage(MessageType.STOP_TONE)
+	}
+
+	static createUpdateHornToneMessage(isHornToneButtonPressed: boolean): ArrayBuffer {
+		const payload = new Uint8Array([isHornToneButtonPressed ? HornToneStatus.ON : HornToneStatus.OFF])
+		return this.frameMessage(MessageType.UPDATE_HORN_TONE, payload)
 	}
 
 	static createLightAnimationMessage(lightMessageType: LightAnimationType): ArrayBuffer {

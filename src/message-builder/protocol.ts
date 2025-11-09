@@ -3,6 +3,7 @@ import { LightAnimation } from "../types/garage"
 export enum MessageType {
     UPDATE_AVAILABLE = 0,
     MOTOR_CONTROL = 1,
+    TONE_COMMAND = 2,
     SPEAKER_MUTE = 3,
     BALANCE_CONTROL = 4,
     UPDATE_BALANCE_PIDS = 5,
@@ -21,9 +22,9 @@ export enum MessageType {
     GET_SAVED_WIFI_NETWORKS = 18,
     SOFT_SCAN_WIFI_NETWORKS = 19,
     HARD_SCAN_WIFI_NETWORKS = 20,
-    UPDATE_HORN_SOUND = 21,
+    UPDATE_HORN_TONE = 21,
     SPEAKER_VOLUME = 22,
-    STOP_SOUND = 23,
+    STOP_TONE = 23,
     UPDATE_DISPLAY = 25,
     STOP_SENSOR_POLLING = 26,
     TRIGGER_MESSAGE = 27,
@@ -105,7 +106,7 @@ export enum HeadlightStatus {
     ON = 1
 }
 
-export enum HornSoundStatus {
+export enum HornToneStatus {
     OFF = 0,
     ON = 1
 }

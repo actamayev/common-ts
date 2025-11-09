@@ -35,7 +35,7 @@ export type SocketEventPayloadMap = {
     "student-left-hub": StudentLeftHub
     "dino-score-update-all-peers": DinoScoreUpdateAllPeers
     "garage-driving-status-update": GarageDrivingStatusUpdate
-    "garage-sounds-status-update": GarageSoundsStatusUpdate
+    "garage-tones-status-update": GarageTonesStatusUpdate
     "garage-lights-status-update": GarageLightsStatusUpdate
     "garage-display-status-update": GarageDisplayStatusUpdate
 }
@@ -51,7 +51,7 @@ export type ClientSocketEventPayloadMap = {
 	"motor-control": MotorControlData
 	"new-led-colors": LedControlData
 	"headlight-update": HeadlightData
-	"horn-sound-update": HornData
+	"horn-tone-update": HornData
 }
 
 export type ClientSocketEvents = keyof ClientSocketEventPayloadMap
@@ -109,8 +109,8 @@ export interface GarageDrivingStatusUpdate {
     garageDrivingStatus: boolean
 }
 
-export interface GarageSoundsStatusUpdate {
-    garageSoundsStatus: boolean
+export interface GarageTonesStatusUpdate {
+    garageTonesStatus: boolean
 }
 
 export interface GarageLightsStatusUpdate {
