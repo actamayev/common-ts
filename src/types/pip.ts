@@ -1,4 +1,3 @@
-import { FunSounds } from "./garage"
 import { PipUUID } from "./utils"
 
 // ---------------------------------------------------------------------
@@ -39,10 +38,6 @@ export interface StandardJsonStatusMessage {
 export interface DeviceInitialDataPayload {
   firmwareVersion: number
   batteryData?: BatteryMonitorData
-}
-
-export interface PlayFunSoundPayload {
-  sound: FunSounds | null
 }
 
 export interface BytecodeMessage {
@@ -204,7 +199,6 @@ export type ESPToSerialMessage =
 	| ESPMessage<ScanStartedPayload, "/scan-started">
 	| ESPMessage<StandardJsonStatusMessage, "/motors-disabled-usb">
 	| ESPMessage<StandardJsonStatusMessage, "/program-paused-usb">
-	| ESPMessage<StandardJsonStatusMessage, "/play-fun-sound">
 	| ESPMessage<BatteryMonitorDataItem, "/battery-monitor-data-item">
 	| ESPMessage<BatteryMonitorDataComplete, "/battery-monitor-data-complete">
 	| ESPMessage<DeletedWiFiNetworkPayload, "/wifi-deleted-network">
