@@ -4,7 +4,7 @@ import { ClientPipConnectionStatus } from "./pip"
 import { BlocklyJson, SandboxProject } from "./sandbox"
 import { StudentViewHubData, TeacherViewHubData } from "./hub"
 import { ChallengeChatMessage, SandboxChatMessage } from "./chat"
-import { ChallengeUUID, ClassCode, HubUUID, PipUUID, SiteThemes } from "./utils"
+import { Base64String, ChallengeUUID, ClassCode, HubUUID, PipUUID, SiteThemes } from "./utils"
 
 // Auth
 // Requests
@@ -146,11 +146,8 @@ export interface RetrieveSandboxProjectsResponse {
 	sandboxProjects: SandboxProject[]
 }
 
-export interface WiFiBytecodeResponse {
-	bytecode: Float32Array
-}
-
-export interface UsbBytecodeResponse extends WiFiBytecodeResponse {
+export interface UsbBytecodeResponse {
+	bytecode: Base64String
 	isAbleToRunViaUsb: boolean
 }
 

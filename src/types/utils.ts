@@ -14,3 +14,4 @@ export type ScoreboardUUID = UUID & { readonly __brand: unique symbol }
 export type SandboxProjectUUID = UUID & { readonly __brand: unique symbol }
 export type LessonUUID = UUID & { readonly __brand: unique symbol }
 export type QuestionUUID = UUID & { readonly __brand: unique symbol }
+export type Base64String = string & { readonly __brand: "Base64" }
