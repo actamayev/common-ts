@@ -1,10 +1,8 @@
-import { FunSounds, LightAnimation } from "../types/garage"
-import { TuneToPlay } from "../types/workbench"
+import { LightAnimation } from "../types/garage"
 
 export enum MessageType {
     UPDATE_AVAILABLE = 0,
     MOTOR_CONTROL = 1,
-    SOUND_COMMAND = 2,
     SPEAKER_MUTE = 3,
     BALANCE_CONTROL = 4,
     UPDATE_BALANCE_PIDS = 5,
@@ -76,21 +74,6 @@ type TriggerMessageTypeMap = {
 
 export type ValidTriggerMessageType<T extends CareerType> = TriggerMessageTypeMap[T]
 
-export enum SoundType {
-    CHIME = 1,
-    CHIRP = 2,
-    POP = 3,
-    DROP = 4,
-    FART = 5,
-    MONKEY = 6,
-    ELEPHANT = 7,
-    PARTY = 8,
-    UFO = 9,
-    COUNTDOWN = 10,
-    ENGINE = 11,
-    ROBOT = 12
-}
-
 export enum ToneType {
     A = 1,
     B = 2,
@@ -141,22 +124,6 @@ export enum WiFiConnectionStatus {
     FAILED = "failed",
     WIFI_ONLY = "wifi_only",
     WIFI_AND_WEBSOCKET_SUCCESS = "success"
-}
-
-// Mapping between string enum and numeric enum
-export const tuneToSoundType: Record<TuneToPlay | FunSounds, SoundType> = {
-	"Chime": SoundType.CHIME,
-	"Chirp": SoundType.CHIRP,
-	"Pop": SoundType.POP,
-	"Drop": SoundType.DROP,
-	"Fart": SoundType.FART,
-	"Monkey": SoundType.MONKEY,
-	"Elephant": SoundType.ELEPHANT,
-	"Party": SoundType.PARTY,
-	"UFO": SoundType.UFO,
-	"Countdown": SoundType.COUNTDOWN,
-	"Engine": SoundType.ENGINE,
-	"Robot": SoundType.ROBOT
 }
 
 export const lightToLEDType: Record<LightAnimation, LightAnimationType> = {

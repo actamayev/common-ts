@@ -56,13 +56,6 @@ export const BLOCK_REGISTRY: Record<BlockNames, BlockDefinition> = {
 		category: "LED"
 	},
 
-	// Speaker blocks
-	[SPEAKER_BLOCK_TYPES.PLAY_SOUND]: {
-		description: "Plays a sound",
-		codeTemplate: "speaker.play_sound({sound_name});",
-		category: "Speaker"
-	},
-
 	[SPEAKER_BLOCK_TYPES.PLAY_TONE]: {
 		description: "Plays a tone",
 		codeTemplate: "speaker.play_tone({tone_name});",

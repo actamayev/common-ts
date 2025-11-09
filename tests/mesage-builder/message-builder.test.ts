@@ -1,7 +1,7 @@
 import { MessageBuilder } from "../../src/message-builder/message-builder"
 import {
 	BalanceStatus, CareerType, HeadlightStatus, HornSoundStatus, MeetPipTriggerType, LightAnimationType,
-	MessageType, SoundType, SpeakerStatus, UserConnectedStatus,
+	MessageType, SpeakerStatus, UserConnectedStatus,
 } from "../../src/message-builder/protocol"
 import { END_MARKER, START_MARKER } from "../../src/types/utils/constants"
 import { BalancePidsProps, LedControlData } from "../../src/types/garage"
@@ -100,22 +100,6 @@ describe("MessageBuilder", () => {
 			const offset = getPayloadOffset(buffer)
 			expect(view.getInt16(offset, true)).toBe(minValue)
 			expect(view.getInt16(offset + 2, true)).toBe(minValue)
-		})
-	})
-
-	describe("createSoundMessage", () => {
-		it("should create a valid sound message for each fun sound type", () => {
-			// eslint-disable-next-line max-len
-			const funSoundTypes = [SoundType.FART, SoundType.MONKEY, SoundType.ELEPHANT, SoundType.PARTY, SoundType.UFO, SoundType.COUNTDOWN, SoundType.ENGINE, SoundType.ROBOT, SoundType.CHIME, SoundType.CHIRP, SoundType.POP, SoundType.DROP]
-
-			funSoundTypes.forEach(type => {
-				const buffer = MessageBuilder.createSoundMessage(type)
-				validateFrameStructure(buffer, MessageType.SOUND_COMMAND, 1)
-
-				const view = new DataView(buffer)
-				const offset = getPayloadOffset(buffer)
-				expect(view.getUint8(offset)).toBe(type)
-			})
 		})
 	})
 

@@ -107,16 +107,6 @@
         "default": "./dist/src/types/teacher.js"
       }
     },
-    "./types/workbench": {
-      "import": {
-        "types": "./dist/src/types/workbench.d.ts",
-        "default": "./dist/src/types/workbench.js"
-      },
-      "require": {
-        "types": "./dist/src/types/workbench.d.ts",
-        "default": "./dist/src/types/workbench.js"
-      }
-    },
     "./types/cq-challenge-data": {
       "import": {
         "types": "./dist/src/types/cq-challenge-data/index.d.ts",
@@ -366,9 +356,6 @@
       ],
       "types/teacher": [
         "./dist/src/types/teacher.d.ts"
-      ],
-      "types/workbench": [
-        "./dist/src/types/workbench.d.ts"
       ],
       "types/socket": [
         "./dist/src/types/socket.d.ts"

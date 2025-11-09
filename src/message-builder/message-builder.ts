@@ -1,7 +1,7 @@
 import { END_MARKER, START_MARKER } from "../types/utils/constants"
 import { BalancePidsProps, LedControlData } from "../types/garage"
 import { BalanceStatus, CareerType, HeadlightStatus, HornSoundStatus,
-	LightAnimationType, MessageType, SoundType, SpeakerStatus,
+	LightAnimationType, MessageType, SpeakerStatus,
 	ValidTriggerMessageType, UserConnectedStatus } from "./protocol"
 
 export class MessageBuilder {
@@ -65,11 +65,6 @@ export class MessageBuilder {
 		view.setInt16(2, rightMotor, true) // Little endian
 
 		return this.frameMessage(MessageType.MOTOR_CONTROL, new Uint8Array(payload))
-	}
-
-	static createSoundMessage(soundType: SoundType): ArrayBuffer {
-		const payload = new Uint8Array([soundType])
-		return this.frameMessage(MessageType.SOUND_COMMAND, payload)
 	}
 
 	static createStopSoundMessage(): ArrayBuffer {

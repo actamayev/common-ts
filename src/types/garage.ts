@@ -23,8 +23,6 @@ export interface BalancePidsProps extends PipUUIDInterface {
 	minEffectivePwm: number
 }
 
-export type FunSounds = "Fart" | "Monkey" | "Elephant" | "Party" | "UFO" | "Countdown" | "Engine" | "Robot"
-
 export interface MotorControlInput {
 	vertical: -1 | 1 | 0
 	horizontal: -1 | 1 | 0

@@ -1,4 +1,4 @@
-import { ClientPipConnectionStatus, SensorPayload, BatteryMonitorDataFull, PlayFunSoundPayload, SensorPayloadMZ } from "./pip"
+import { ClientPipConnectionStatus, SensorPayload, BatteryMonitorDataFull, SensorPayloadMZ } from "./pip"
 import { StudentViewHubData } from "./hub"
 import { ClassCode, HubUUID, PipUUIDInterface } from "./utils"
 import {
@@ -52,7 +52,6 @@ export type ClientSocketEventPayloadMap = {
 	"new-led-colors": LedControlData
 	"headlight-update": HeadlightData
 	"horn-sound-update": HornData
-	"play-fun-sound": ExtendedPlayFunSoundPayload
 }
 
 export type ClientSocketEvents = keyof ClientSocketEventPayloadMap
@@ -121,5 +120,3 @@ export interface GarageLightsStatusUpdate {
 export interface GarageDisplayStatusUpdate {
     garageDisplayStatus: boolean
 }
-
-export interface ExtendedPlayFunSoundPayload extends PlayFunSoundPayload, PipUUIDInterface {}
