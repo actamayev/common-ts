@@ -1,6 +1,6 @@
 import { MessageBuilder } from "../../src/message-builder/message-builder"
 import {
-	BalanceStatus, CareerType, HeadlightStatus, HornSoundStatus, MeetPipTriggerType, LightAnimationType,
+	BalanceStatus, CareerType, HeadlightStatus, HornToneStatus, MeetPipTriggerType, LightAnimationType,
 	MessageType, SpeakerStatus, UserConnectedStatus,
 } from "../../src/message-builder/protocol"
 import { END_MARKER, START_MARKER } from "../../src/types/utils/constants"
@@ -103,10 +103,10 @@ describe("MessageBuilder", () => {
 		})
 	})
 
-	describe("createStopSoundMessage", () => {
-		it("should create a valid stop sound message", () => {
-			const buffer = MessageBuilder.createStopSoundMessage()
-			validateFrameStructure(buffer, MessageType.STOP_SOUND, 0)
+	describe("createStopToneCommandMessage", () => {
+		it("should create a valid stop tone command message", () => {
+			const buffer = MessageBuilder.createStopToneCommandMessage()
+			validateFrameStructure(buffer, MessageType.STOP_TONE, 0)
 		})
 	})
 
@@ -299,23 +299,23 @@ describe("MessageBuilder", () => {
 		})
 	})
 
-	describe("createHornSoundMessage", () => {
-		it("should create a horn sound on message when true is passed", () => {
-			const buffer = MessageBuilder.createHornSoundMessage(true)
+	describe("createUpdateHornToneMessage", () => {
+		it("should create a horn tone on message when true is passed", () => {
+			const buffer = MessageBuilder.createUpdateHornToneMessage(true)
 
-			validateFrameStructure(buffer, MessageType.UPDATE_HORN_SOUND, 1)
+			validateFrameStructure(buffer, MessageType.UPDATE_HORN_TONE, 1)
 
 			const view = new DataView(buffer)
 			const offset = getPayloadOffset(buffer)
-			expect(view.getUint8(offset)).toBe(HornSoundStatus.ON)
+			expect(view.getUint8(offset)).toBe(HornToneStatus.ON)
 		})
 
-		it("should create a horn sound off message when false is passed", () => {
-			const buffer = MessageBuilder.createHornSoundMessage(false)
+		it("should create a horn tone off message when false is passed", () => {
+			const buffer = MessageBuilder.createUpdateHornToneMessage(false)
 
 			const view = new DataView(buffer)
 			const offset = getPayloadOffset(buffer)
-			expect(view.getUint8(offset)).toBe(HornSoundStatus.OFF)
+			expect(view.getUint8(offset)).toBe(HornToneStatus.OFF)
 		})
 	})
 
