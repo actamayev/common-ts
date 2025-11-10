@@ -22,7 +22,6 @@ export enum MessageType {
     GET_SAVED_WIFI_NETWORKS = 18,
     SOFT_SCAN_WIFI_NETWORKS = 19,
     HARD_SCAN_WIFI_NETWORKS = 20,
-    UPDATE_HORN_TONE = 21,
     SPEAKER_VOLUME = 22,
     STOP_TONE = 23,
     UPDATE_DISPLAY = 25,
@@ -82,7 +81,8 @@ export enum ToneType {
     D = 4,
     E = 5,
     F = 6,
-    G = 7
+    G = 7,
+    OFF = 8
 }
 
 export enum LightAnimationType {
@@ -102,11 +102,6 @@ export enum SpeakerStatus {
 }
 
 export enum HeadlightStatus {
-    OFF = 0,
-    ON = 1
-}
-
-export enum HornToneStatus {
     OFF = 0,
     ON = 1
 }

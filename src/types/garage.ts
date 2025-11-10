@@ -51,7 +51,3 @@ export interface LedControlData extends PipUUIDInterface {
 export interface HeadlightData extends PipUUIDInterface {
 	areHeadlightsOn: boolean
 }
-
-export interface HornData extends PipUUIDInterface {
-	hornStatus: boolean
-}
