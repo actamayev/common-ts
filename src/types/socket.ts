@@ -11,6 +11,7 @@ import {
 	SandboxChatbotStreamChunkEvent
 } from "./chat"
 import { MotorControlData, LedControlData, HeadlightData, HornData } from "./garage"
+import { ToneType } from "../message-builder/protocol"
 
 export type SocketEventPayloadMap = {
     "pip-connection-status-update": PipConnectionUpdate
@@ -48,10 +49,11 @@ export interface SocketEventMessage<E extends SocketEvents = SocketEvents> {
 }
 
 export type ClientSocketEventPayloadMap = {
-	"motor-control": MotorControlData
-	"new-led-colors": LedControlData
-	"headlight-update": HeadlightData
-	"horn-tone-update": HornData
+    "motor-control": MotorControlData
+    "new-led-colors": LedControlData
+    "headlight-update": HeadlightData
+    "horn-tone-update": HornData
+    "play-tone": PlayToneSoundPayload
 }
 
 export type ClientSocketEvents = keyof ClientSocketEventPayloadMap
@@ -119,4 +121,8 @@ export interface GarageLightsStatusUpdate {
 
 export interface GarageDisplayStatusUpdate {
     garageDisplayStatus: boolean
+}
+
+export interface PlayToneSoundPayload extends PipUUIDInterface {
+    toneType: ToneType | null
 }
