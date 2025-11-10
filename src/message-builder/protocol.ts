@@ -81,8 +81,7 @@ export enum ToneType {
     D = 4,
     E = 5,
     F = 6,
-    G = 7,
-    OFF = 8
+    G = 7
 }
 
 export enum LightAnimationType {
