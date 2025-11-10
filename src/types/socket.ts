@@ -10,7 +10,7 @@ import {
 	SandboxChatbotStreamStartOrCompleteEvent,
 	SandboxChatbotStreamChunkEvent
 } from "./chat"
-import { MotorControlData, LedControlData, HeadlightData, HornData } from "./garage"
+import { MotorControlData, LedControlData, HeadlightData } from "./garage"
 import { ToneType } from "../message-builder/protocol"
 
 export type SocketEventPayloadMap = {
@@ -52,7 +52,6 @@ export type ClientSocketEventPayloadMap = {
     "motor-control": MotorControlData
     "new-led-colors": LedControlData
     "headlight-update": HeadlightData
-    "horn-tone-update": HornData
     "play-tone": PlayTonePayload
 }
 
@@ -124,5 +123,5 @@ export interface GarageDisplayStatusUpdate {
 }
 
 export interface PlayTonePayload extends PipUUIDInterface {
-    toneType: ToneType | null
+    toneType: ToneType
 }

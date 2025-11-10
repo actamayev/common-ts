@@ -1,6 +1,6 @@
 import { MessageBuilder } from "../../src/message-builder/message-builder"
 import {
-	BalanceStatus, CareerType, HeadlightStatus, HornToneStatus, MeetPipTriggerType, LightAnimationType,
+	BalanceStatus, CareerType, HeadlightStatus, MeetPipTriggerType, LightAnimationType,
 	MessageType, SpeakerStatus, UserConnectedStatus,
 } from "../../src/message-builder/protocol"
 import { END_MARKER, START_MARKER } from "../../src/types/utils/constants"
@@ -296,26 +296,6 @@ describe("MessageBuilder", () => {
 			const view = new DataView(buffer)
 			const offset = getPayloadOffset(buffer)
 			expect(view.getUint8(offset)).toBe(HeadlightStatus.OFF)
-		})
-	})
-
-	describe("createUpdateHornToneMessage", () => {
-		it("should create a horn tone on message when true is passed", () => {
-			const buffer = MessageBuilder.createUpdateHornToneMessage(true)
-
-			validateFrameStructure(buffer, MessageType.UPDATE_HORN_TONE, 1)
-
-			const view = new DataView(buffer)
-			const offset = getPayloadOffset(buffer)
-			expect(view.getUint8(offset)).toBe(HornToneStatus.ON)
-		})
-
-		it("should create a horn tone off message when false is passed", () => {
-			const buffer = MessageBuilder.createUpdateHornToneMessage(false)
-
-			const view = new DataView(buffer)
-			const offset = getPayloadOffset(buffer)
-			expect(view.getUint8(offset)).toBe(HornToneStatus.OFF)
 		})
 	})
 

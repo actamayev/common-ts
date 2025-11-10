@@ -1,6 +1,6 @@
 import { END_MARKER, START_MARKER } from "../types/utils/constants"
 import { BalancePidsProps, LedControlData } from "../types/garage"
-import { BalanceStatus, CareerType, HeadlightStatus, HornToneStatus,
+import { BalanceStatus, CareerType, HeadlightStatus,
 	LightAnimationType, MessageType, SpeakerStatus, ToneType,
 	ValidTriggerMessageType, UserConnectedStatus } from "./protocol"
 
@@ -74,11 +74,6 @@ export class MessageBuilder {
 
 	static createStopToneCommandMessage(): ArrayBuffer {
 		return this.frameMessage(MessageType.STOP_TONE)
-	}
-
-	static createUpdateHornToneMessage(isHornToneButtonPressed: boolean): ArrayBuffer {
-		const payload = new Uint8Array([isHornToneButtonPressed ? HornToneStatus.ON : HornToneStatus.OFF])
-		return this.frameMessage(MessageType.UPDATE_HORN_TONE, payload)
 	}
 
 	static createLightAnimationMessage(lightMessageType: LightAnimationType): ArrayBuffer {
