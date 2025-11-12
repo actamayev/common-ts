@@ -97,6 +97,9 @@ export interface ActionToCodeMultipleChoiceAnswerChoice {
 export interface CodingBlock {
 	codingBlockId: number
 	codingBlockJson: BlocklyJson
+	onClickCppToRun?: string
+	onReleaseCppToRun?: string
+	needsManualSendButton?: boolean
 }
 
 export interface MatchingAnswerChoiceText {
