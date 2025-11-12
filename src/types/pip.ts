@@ -107,7 +107,6 @@ export interface BatteryMonitorDataFull {
 export interface SensorPayload {
   leftWheelRPM?: number
   rightWheelRPM?: number
-  irSensorData?: number[] & { length: 5 }
 
   redValue?: number
   greenValue?: number
