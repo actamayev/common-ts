@@ -1,5 +1,5 @@
 import { Scoreboard } from "./scoreboard"
-import { DetailedLesson, Lesson } from "./learn"
+import { DetailedLesson, Lesson } from "./quest"
 import { ClientPipConnectionStatus } from "./pip"
 import { BlocklyJson, SandboxProject, SingleSearchByUsernameResult } from "./sandbox"
 import { StudentViewHubData, TeacherViewHubData } from "./hub"
@@ -90,7 +90,7 @@ export interface CheckCodeResponse {
 	feedback: string
 }
 
-// Learn Responses:
+// Quest Responses:
 export interface DetailedLessonResponse {
 	lesson: DetailedLesson
 }

@@ -1,6 +1,6 @@
+import { BlocklyJson } from "./sandbox"
 import { BlockNames } from "./blockly/blockly"
 import { LessonUUID, QuestionUUID } from "./utils"
-import { BlocklyJson } from "./sandbox"
 
 export type QuestionType =
 	| "BLOCK_TO_FUNCTION"
