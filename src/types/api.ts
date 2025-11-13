@@ -163,6 +163,15 @@ export interface StudentClassroomData {
 	garageDisplayAllowed: boolean
 }
 
+export interface SearchByUsernameResult {
+	users: {
+		userId: number
+		username: string
+		name: string | null
+		profilePictureUrl: string | null
+	}[]
+}
+
 //Teacher Routes
 export interface BasicTeacherClassroomData {
 	classroomName: string
