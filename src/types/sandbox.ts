@@ -29,3 +29,10 @@ export interface SharedWith {
 	userId: number
 	username: string
 }
+
+export interface SearchByUsernameResult {
+	userId: number
+	username: string
+	name: string | null
+	profilePictureUrl: string | null
+}
