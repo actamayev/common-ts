@@ -17,17 +17,12 @@ export interface SandboxProject {
 	projectNotes: string | null
 	sandboxChatMessages: SandboxChatMessage[]
 	isMyProject: boolean
-	sharedWith: SharedWith[]
+	sharedWith: SingleSearchByUsernameResult[]
 }
 
 export interface ToolboxItem {
 	kind: "block"
 	type: BlockNames
-}
-
-export interface SharedWith {
-	userId: number
-	username: string
 }
 
 export interface SingleSearchByUsernameResult {
