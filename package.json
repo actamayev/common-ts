@@ -67,14 +67,14 @@
         "default": "./dist/src/types/garage.js"
       }
     },
-    "./types/learn": {
+    "./types/quest": {
       "import": {
-        "types": "./dist/src/types/learn.d.ts",
-        "default": "./dist/src/types/learn.js"
+        "types": "./dist/src/types/quest.d.ts",
+        "default": "./dist/src/types/quest.js"
       },
       "require": {
-        "types": "./dist/src/types/learn.d.ts",
-        "default": "./dist/src/types/learn.js"
+        "types": "./dist/src/types/quest.d.ts",
+        "default": "./dist/src/types/quest.js"
       }
     },
     "./types/pip": {
@@ -345,8 +345,8 @@
       "types/garage": [
         "./dist/src/types/garage.d.ts"
       ],
-      "types/learn": [
-        "./dist/src/types/learn.d.ts"
+      "types/quest": [
+        "./dist/src/types/quest.d.ts"
       ],
       "types/pip": [
         "./dist/src/types/pip.d.ts"
