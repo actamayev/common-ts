@@ -18,6 +18,7 @@ export interface SandboxProject {
 	sandboxChatMessages: SandboxChatMessage[]
 	isMyProject: boolean
 	sharedWith: SingleSearchByUsernameResult[]
+	ownerDetails: OwnerDetails
 }
 
 export interface ToolboxItem {
@@ -25,9 +26,12 @@ export interface ToolboxItem {
 	type: BlockNames
 }
 
-export interface SingleSearchByUsernameResult {
-	userId: number
+export interface OwnerDetails {
 	username: string
 	name: string | null
 	profilePictureUrl: string | null
+}
+
+export interface SingleSearchByUsernameResult extends OwnerDetails {
+	userId: number
 }
