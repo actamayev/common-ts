@@ -16,9 +16,16 @@ export interface SandboxProject {
 	updatedAt: Date
 	projectNotes: string | null
 	sandboxChatMessages: SandboxChatMessage[]
+	isMyProject: boolean
+	sharedWith: SharedWith[]
 }
 
 export interface ToolboxItem {
 	kind: "block"
 	type: BlockNames
+}
+
+export interface SharedWith {
+	userId: number
+	username: string
 }
