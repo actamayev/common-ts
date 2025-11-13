@@ -13,7 +13,6 @@ export type ParentCategoryName =
   | "Logic"
 
 export type SensorCategoryName =
-  | "IR Sensors"
   | "Distance Sensors"
   | "Motion Sensor"
   | "Color Sensor"
