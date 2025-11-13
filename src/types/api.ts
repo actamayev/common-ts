@@ -1,7 +1,7 @@
 import { Scoreboard } from "./scoreboard"
 import { DetailedLesson, Lesson } from "./learn"
 import { ClientPipConnectionStatus } from "./pip"
-import { BlocklyJson, SandboxProject } from "./sandbox"
+import { BlocklyJson, SandboxProject, SingleSearchByUsernameResult } from "./sandbox"
 import { StudentViewHubData, TeacherViewHubData } from "./hub"
 import { ChallengeChatMessage, SandboxChatMessage } from "./chat"
 import { Base64String, ChallengeUUID, ClassCode, HubUUID, PipUUID, SiteThemes } from "./utils"
@@ -164,12 +164,7 @@ export interface StudentClassroomData {
 }
 
 export interface SearchByUsernameResult {
-	users: {
-		userId: number
-		username: string
-		name: string | null
-		profilePictureUrl: string | null
-	}[]
+	users: SingleSearchByUsernameResult[]
 }
 
 //Teacher Routes

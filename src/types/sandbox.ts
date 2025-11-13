@@ -30,3 +30,9 @@ export interface SharedWith {
 	username: string
 }
 
+export interface SingleSearchByUsernameResult {
+	userId: number
+	username: string
+	name: string | null
+	profilePictureUrl: string | null
+}
