@@ -186,6 +186,7 @@ export type ESPToServerMessage =
 	| ESPCommonMessage
 	| ESPMessage<DeviceInitialDataPayload, "/device-initial-data">
 	| ESPMessage<BatteryMonitorDataFull, "/battery-monitor-data-full">
+	| ESPMessage<StandardJsonStatusMessage, "/heartbeat">
 
 export type ESPToSerialMessage =
 	| ESPCommonMessage
