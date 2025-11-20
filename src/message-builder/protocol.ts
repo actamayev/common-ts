@@ -154,3 +154,4 @@ export const lightToLEDType: Record<LightAnimation, LightAnimationType> = {
 	// "Pause breathing": LightAnimationType.PAUSE_BREATHING,
 	// "Snake": LightAnimationType.SNAKE,
 }
+
