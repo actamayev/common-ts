@@ -36,7 +36,9 @@ export enum MessageType {
 
 export enum CareerType {
     MEET_PIP = 1,
-    TURRET_ARCADE = 2
+    TURRET_ARCADE = 2,
+    FLAPPY_BIRD_ARCADE = 3,
+    CITY_DRIVING_ARCADE = 4
 }
 
 export enum MeetPipTriggerType {
@@ -75,9 +77,21 @@ export enum TurretArcadeTriggerType {
     EXIT_TURRET_ARCADE = 1
 }
 
+export enum FlappyBirdArcadeTriggerType {
+    ENTER_FLAPPY_BIRD_ARCADE = 0,
+    EXIT_FLAPPY_BIRD_ARCADE = 1
+}
+
+export enum CityDrivingArcadeTriggerType {
+    ENTER_CITY_DRIVING_ARCADE = 0,
+    EXIT_CITY_DRIVING_ARCADE = 1
+}
+
 type TriggerMessageTypeMap = {
     [CareerType.MEET_PIP]: MeetPipTriggerType
     [CareerType.TURRET_ARCADE]: TurretArcadeTriggerType
+    [CareerType.FLAPPY_BIRD_ARCADE]: FlappyBirdArcadeTriggerType
+    [CareerType.CITY_DRIVING_ARCADE]: CityDrivingArcadeTriggerType
 }
 
 export type ValidTriggerMessageType<T extends CareerType> = TriggerMessageTypeMap[T]
