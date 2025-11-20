@@ -130,6 +130,10 @@ export interface SensorPayload {
 
   leftSideTofCounts?: number
   rightSideTofCounts?: number
+
+  frontTofDistance?: number
+  leftWheelEncoderPosition?: number
+  rightWheelEncoderPosition?: number
 }
 
 export interface SensorPayloadMZ {
