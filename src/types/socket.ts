@@ -12,6 +12,7 @@ import {
 } from "./chat"
 import { MotorControlData, LedControlData, HeadlightData } from "./garage"
 import { ToneType } from "../message-builder/protocol"
+import { ArcadeGameType } from "./arcade"
 
 export type SocketEventPayloadMap = {
     "pip-connection-status-update": PipConnectionUpdate
@@ -125,6 +126,7 @@ export interface GarageDisplayStatusUpdate {
 }
 
 export interface ArcadeScoreUpdateAllPeers {
+    arcadeGameName: ArcadeGameType
     score: number
     username: string
 }
