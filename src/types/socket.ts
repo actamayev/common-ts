@@ -39,6 +39,7 @@ export type SocketEventPayloadMap = {
     "garage-tones-status-update": GarageTonesStatusUpdate
     "garage-lights-status-update": GarageLightsStatusUpdate
     "garage-display-status-update": GarageDisplayStatusUpdate
+    "arcade-score-update": ArcadeScoreUpdateAllPeers
 }
 
 export type SocketEvents = keyof SocketEventPayloadMap
@@ -121,6 +122,11 @@ export interface GarageLightsStatusUpdate {
 
 export interface GarageDisplayStatusUpdate {
     garageDisplayStatus: boolean
+}
+
+export interface ArcadeScoreUpdateAllPeers {
+    score: number
+    username: string
 }
 
 export interface PlayTonePayload extends PipUUIDInterface {
