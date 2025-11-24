@@ -27,6 +27,16 @@
         "default": "./dist/src/types/auth.js"
       }
     },
+    "./types/arcade": {
+      "import": {
+        "types": "./dist/src/types/arcade.d.ts",
+        "default": "./dist/src/types/arcade.js"
+      },
+      "require": {
+        "types": "./dist/src/types/arcade.d.ts",
+        "default": "./dist/src/types/arcade.js"
+      }
+    },
     "./types/chat": {
       "import": {
         "types": "./dist/src/types/chat.d.ts",
@@ -335,6 +345,9 @@
       ],
       "types/auth": [
         "./dist/src/types/auth.d.ts"
+      ],
+      "types/arcade": [
+        "./dist/src/types/arcade.d.ts"
       ],
       "types/chat": [
         "./dist/src/types/chat.d.ts"
