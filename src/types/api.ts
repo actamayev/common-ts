@@ -5,6 +5,7 @@ import { BlocklyJson, SandboxProject, SingleSearchByUsernameResult } from "./san
 import { StudentViewHubData, TeacherViewHubData } from "./hub"
 import { ChallengeChatMessage, SandboxChatMessage } from "./chat"
 import { Base64String, ChallengeUUID, ClassCode, HubUUID, PipUUID, SiteThemes } from "./utils"
+import { ArcadeScore } from "./arcade"
 
 // Auth
 // Requests
@@ -31,6 +32,7 @@ export interface EmailUpdatesRequest {
 }
 
 // Responses
+// Auth
 export interface RegisterSuccess {
 	success: boolean
 }
@@ -45,6 +47,11 @@ export interface GoogleAuthSuccess extends Omit<LoginSuccess, "personalInfo"> {
 	personalInfo?: BasicPersonalInfoResponse
 	teacherData: TeacherData | null
 	autoConnectedPipUUID: PipUUID | null
+}
+
+// Arcade
+export interface ArcadeScoreRequest {
+	scores: ArcadeScore[]
 }
 
 // Career Quest
