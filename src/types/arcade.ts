@@ -4,6 +4,7 @@ export interface ArcadeScore {
 	score: number
 	username: string
 	createdAt: Date
+	isMyScore: boolean
 }
 
 export type ArcadeGameType = "flappyBird" | "cityDriver" | "turretDefense"
