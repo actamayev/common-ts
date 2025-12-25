@@ -215,4 +215,3 @@ export type ErrorResponse = { error: string }
 export type ErrorResponses = ValidationErrorResponse | ErrorResponse
 export type NonSuccessResponse = MessageResponse | ErrorResponses
 export type AllCommonResponses = SuccessResponse | NonSuccessResponse
-
