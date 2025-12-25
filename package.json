@@ -1,5 +1,5 @@
 {
-  "name": "@lever-labs/common-ts",
+  "name": "@actamayev/lever-labs-common-ts",
   "version": "1.0.377",
   "packageManager": "pnpm",
   "description": "Shared TypeScript code between frontend and backend",
@@ -454,9 +454,9 @@
   "license": "ISC",
   "type": "commonjs",
   "bugs": {
-    "url": "https://github.com/lever-labs/common-ts/issues"
+    "url": "https://github.com/actamayev/lever-labs-common-ts/issues"
   },
-  "homepage": "https://github.com/lever-labs/common-ts#readme",
+  "homepage": "https://github.com/actamayev/lever-labs-common-ts#readme",
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.1",
     "@eslint/js": "^9.38.0",
@@ -478,7 +478,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/lever-labs/common-ts.git"
+    "url": "git+https://github.com/actamayev/lever-labs-common-ts.git"
   },
   "dependencies": {
     "blockly": "^12.3.1"

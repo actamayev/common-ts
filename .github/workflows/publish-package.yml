@@ -28,7 +28,7 @@ jobs:
         with:
           node-version: 'lts/*'
           registry-url: 'https://npm.pkg.github.com'
-          scope: '@lever-labs'
+          scope: '@actamayev'
           cache: 'pnpm'
       
       - name: Configure Git
